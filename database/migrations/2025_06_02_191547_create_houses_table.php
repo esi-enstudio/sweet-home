@@ -16,11 +16,11 @@ return new class extends Migration
             $table->id();
             $table->string('slug');
             $table->foreignIdFor(User::class);
-            $table->string('title');
-            $table->string('location');
             $table->string('division');
             $table->string('district');
             $table->string('thana');
+            $table->string('title');
+            $table->string('location');
             $table->decimal('rent', 8, 2);
             $table->text('description')->nullable();
             $table->string('image')->nullable();
