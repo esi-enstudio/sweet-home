@@ -1,5 +1,11 @@
 <?php
 
+use App\Livewire\HomeComponent;
+use App\Livewire\Pages\ListingDetails;
+use App\Livewire\Pages\Listings;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', \App\Livewire\HomeComponent::class)->name('home');
+Route::get('/', HomeComponent::class)->name('home');
+Route::get('/listing', Listings::class)->name('listing');
+Route::get('/listing/details', ListingDetails::class)->name('listing.details');
+

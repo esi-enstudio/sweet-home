@@ -138,7 +138,7 @@
     </section>
     <!-- end banner section -->
 
-    <!-- start how it works a section -->
+    <!-- start how it works section -->
     <section class="how-work-section section-padding">
         <div class="container">
 
@@ -188,7 +188,7 @@
             <!-- end row -->
         </div>
     </section>
-    <!-- end how it works a section -->
+    <!-- end how it works section -->
 
     <!-- start property section -->
     <section class="home-property-section section-padding bg-dark position-relative overflow-hidden">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 <head>
 
     <!-- Meta Tags -->
@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Dreams Estate is a powerful real estate template for property listings, rentals, and agency dashboards. Built with HTML, React, Vue, Angular, and Laravel. Ideal for property portals and real estate platforms.">
     <meta name="keywords" content="real estate template, property management, real estate dashboard, property listings, rental template, agency admin, HTML real estate, React real estate, Vue dashboard, Angular real estate, Laravel property UI">
-    <title>{{ $title ?? 'Dreams Estate' }}</title>
+    <title>Home | Dreams Estate</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Dreams Technologies">
 
@@ -25,6 +25,7 @@
 
     <!-- Material Icon CSS -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/material-icon/material-icon.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/material/materialdesignicons.css') }}">
 
     <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/fontawesome.min.css') }}">
@@ -32,6 +33,16 @@
 
     <!-- Select2 CSS -->
     <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
+
+    <!-- Fancybox CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/fancybox/jquery.fancybox.min.css') }}">
+
+    <!-- Rangeslider CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/ion-rangeslider/css/ion.rangeSlider.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/plugins/ion-rangeslider/css/ion.rangeSlider.min.css') }}">
+
+    <!-- Simplebar CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/plugins/simplebar/simplebar.min.css') }}">
 
     <!-- Aos CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/aos.css') }}">
@@ -56,13 +67,13 @@
 
             <nav class="navbar navbar-expand-lg header-nav">
                 <div class="navbar-header">
-                    <a wire:navigate href="{{ route('home') }}" class="navbar-brand logo">
+                    <a href="{{ route('home') }}" class="navbar-brand logo">
                         <img src="{{ asset('assets/img/logo.svg') }}" class="img-fluid" alt="Logo">
                     </a>
-                    <a wire:navigate href="{{ route('home') }}" class="navbar-brand logo-dark">
+                    <a href="{{ route('home') }}" class="navbar-brand logo-dark">
                         <img src="{{ asset('assets/img/logo-white.svg') }}" class="img-fluid" alt="Logo">
                     </a>
-                    <a wire:navigate id="mobile_btn" href="javascript:void(0);">
+                    <a id="mobile_btn" href="javascript:void(0);">
                         <i class="material-icons-outlined">menu</i>
                     </a>
                 </div>
@@ -70,10 +81,10 @@
                 <div class="main-menu-wrapper">
 
                     <div class="menu-header">
-                        <a wire:navigate href="{{ route('home') }}" class="menu-logo">
+                        <a href="{{ route('home') }}" class="menu-logo">
                             <img src="{{ asset('assets/img/logo.svg') }}" class="img-fluid" alt="Logo">
                         </a>
-                        <a wire:navigate href="{{ route('home') }}" class="menu-logo menu-logo-dark">
+                        <a href="{{ route('home') }}" class="menu-logo menu-logo-dark">
                             <img src="{{ asset('assets/img/logo-white.svg') }}" class="img-fluid" alt="Logo">
                         </a>
                         <a id="menu_close" class="menu-close" href="javascript:void(0);">
@@ -85,38 +96,15 @@
                     </div>
 
                     <ul class="main-nav">
-                        <li class="has-submenu megamenu active">
-                            <a wire:navigate href="{{ route('home') }}">Home</a>
+                        <li class="active">
+                            <a href="{{ route('home') }}">Home</a>
                         </li>
                         <li class="has-submenu">
-                            <a href="javascript:void(0);">Listing <i  class="material-icons-outlined">expand_more</i></a>
-                            <ul class="submenu">
-                                <li class="has-submenu">
-                                    <a href="javascript:void(0);">Buy Property</a>
-                                    <ul class="submenu">
-                                        <li><a href="buy-property-grid.html">Buy Grid</a></li>
-                                        <li><a href="buy-property-list.html">Buy List</a></li>
-                                        <li><a href="buy-property-grid-sidebar.html">Buy Grid with Sidebar</a></li>
-                                        <li><a href="buy-property-list-sidebar.html">Buy List with Sidebar</a></li>
-                                        <li><a href="buy-grid-map.html">Buy Grid with map</a></li>
-                                        <li><a href="buy-list-map.html">Buy List with map</a></li>
-                                        <li><a href="buy-details.html">Buy Details</a></li>
-                                    </ul>
-                                </li>
-                                <li class="has-submenu">
-                                    <a href="javascript:void(0);">Rent Property</a>
-                                    <ul class="submenu">
-                                        <li><a href="rent-property-grid.html">Rent Grid</a></li>
-                                        <li><a href="rent-property-list.html">Rent List</a></li>
-                                        <li><a href="rent-property-grid-sidebar.html">Rent Grid with Sidebar</a></li>
-                                        <li><a href="rent-property-list-sidebar.html">Rent List with Sidebar</a></li>
-                                        <li><a href="rent-grid-map.html">Rent Grid with map</a></li>
-                                        <li><a href="rent-list-map.html">Rent List with map</a></li>
-                                        <li><a href="rent-details.html">Rent Details</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+                            <a href="{{ route('listing') }}">Listing</a>
                         </li>
+
+
+
                         <li class="has-submenu">
                             <a href="javascript:void(0);">Agent <i class="material-icons-outlined">expand_more</i></a>
                             <ul class="submenu">
@@ -184,20 +172,20 @@
                     <div class="menu-dropdown">
                         <div class="dropdown mb-2">
                             <a href="#" class="dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
-                                <img src="assets/img/flags/us.svg" alt="Language" class="me-1" height="16">English
+                                <img src="{{ asset('assets/img/flags/us.svg') }}" alt="Language" class="me-1" height="16">English
                             </a>
                             <div class="dropdown-menu dropdown-menu-end">
                                 <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">
-                                    <img src="assets/img/flags/us.svg" alt="" class="me-2" height="16"> <span class="align-middle">English</span>
+                                    <img src="{{ asset('assets/img/flags/us.svg') }}" alt="" class="me-2" height="16"> <span class="align-middle">English</span>
                                 </a>
                                 <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">
-                                    <img src="assets/img/flags/de.svg" alt="" class="me-2" height="16"> <span class="align-middle">German</span>
+                                    <img src="{{ asset('assets/img/flags/de.svg') }}" alt="" class="me-2" height="16"> <span class="align-middle">German</span>
                                 </a>
                                 <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">
-                                    <img src="assets/img/flags/fr.svg" alt="" class="me-2" height="16"> <span class="align-middle">French</span>
+                                    <img src="{{ asset('assets/img/flags/fr.svg') }}" alt="" class="me-2" height="16"> <span class="align-middle">French</span>
                                 </a>
                                 <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">
-                                    <img src="assets/img/flags/ae.svg" alt="" class="me-2" height="16"> <span class="align-middle">Arabic</span>
+                                    <img src="{{ asset('assets/img/flags/ae.svg') }}" alt="" class="me-2" height="16"> <span class="align-middle">Arabic</span>
                                 </a>
                             </div>
                         </div>
@@ -227,20 +215,20 @@
 
                     <div class="dropdown topbar-lang">
                         <a href="#" class="topbar-link btn btn-light" data-bs-toggle="dropdown">
-                            <img src="assets/img/flags/us.svg" alt="Language" height="16">
+                            <img src="{{ asset('assets/img/flags/us.svg') }}" alt="Language" height="16">
                         </a>
                         <div class="dropdown-menu dropdown-menu-end">
                             <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">
-                                <img src="assets/img/flags/us.svg" alt="" class="me-2" height="16"> <span class="align-middle">English</span>
+                                <img src="{{ asset('assets/img/flags/us.svg') }}" alt="" class="me-2" height="16"> <span class="align-middle">English</span>
                             </a>
                             <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">
-                                <img src="assets/img/flags/de.svg" alt="" class="me-2" height="16"> <span class="align-middle">German</span>
+                                <img src="{{ asset('assets/img/flags/de.svg') }}" alt="" class="me-2" height="16"> <span class="align-middle">German</span>
                             </a>
                             <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">
-                                <img src="assets/img/flags/fr.svg" alt="" class="me-2" height="16"> <span class="align-middle">French</span>
+                                <img src="{{ asset('assets/img/flags/fr.svg') }}" alt="" class="me-2" height="16"> <span class="align-middle">French</span>
                             </a>
                             <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">
-                                <img src="assets/img/flags/ae.svg" alt="" class="me-2" height="16"> <span class="align-middle">Arabic</span>
+                                <img src="{{ asset('assets/img/flags/ae.svg') }}" alt="" class="me-2" height="16"> <span class="align-middle">Arabic</span>
                             </a>
                         </div>
                     </div>
@@ -265,17 +253,19 @@
 
                 </div>
             </nav>
+
         </div>
     </header>
     <!-- Header End -->
 
     {{ $slot }}
 
+
     <!-- Start Footer -->
     <footer class="footer footer-dark">
         <div class="footer-bg">
-            <img src="assets/img/bg/footer-bg-01.png" class="bg-1" alt="">
-            <img src="assets/img/bg/footer-bg-02.png" class="bg-2" alt="">
+            <img src="{{ asset('assets/img/bg/footer-bg-01.png') }}" class="bg-1" alt="">
+            <img src="{{ asset('assets/img/bg/footer-bg-02.png') }}" class="bg-2" alt="">
         </div>
 
         <!-- Footer Top -->
@@ -287,8 +277,8 @@
                             <h5>Get Our App </h5>
                             <p>Download the app and book your property</p>
                             <div class="download-app">
-                                <a href="javascript:void(0);"><img src="assets/img/icons/goolge-play.svg" alt="google play"></a>
-                                <a href="javascript:void(0);"><img src="assets/img/icons/app-store.svg" alt="app store"></a>
+                                <a href="javascript:void(0);"><img src="{{ asset('assets/img/icons/goolge-play.svg') }}" alt="google play"></a>
+                                <a href="javascript:void(0);"><img src="{{ asset('assets/img/icons/app-store.svg') }}" alt="app store"></a>
                             </div>
                             <div class="social-links">
                                 <h5>Connect with us</h5>
@@ -423,8 +413,23 @@
 <!-- Select2 JS -->
 <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
 
+<!-- Sticky Sidebar JS -->
+<script src="{{ asset('assets/plugins/theia-sticky-sidebar/ResizeSensor.js') }}"></script>
+<script src="{{ asset('assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js') }}"></script>
+
+<!-- Rangeslider JS -->
+<script src="{{ asset('assets/plugins/ion-rangeslider/js/ion.rangeSlider.js') }}"></script>
+<script src="{{ asset('assets/plugins/ion-rangeslider/js/custom-rangeslider.js') }}"></script>
+<script src="{{ asset('assets/plugins/ion-rangeslider/js/ion.rangeSlider.min.js') }}"></script>
+
+<!-- Simplebar JS -->
+<script src="{{ asset('assets/plugins/simplebar/simplebar.min.js') }}"></script>
+
 <!-- Slick Slider -->
 <script src="{{ asset('assets/plugins/slick/slick.js') }}"></script>
+
+<!-- Fancybox JS -->
+<script src="{{ asset('assets/plugins/fancybox/jquery.fancybox.min.js') }}"></script>
 
 <!-- Counter JS -->
 <script src="{{ asset('assets/js/waypoints.js') }}"></script>
@@ -436,17 +441,7 @@
 <!-- Main JS -->
 <script src="{{ asset('assets/js/script.js') }}"></script>
 
-<script src="{{ asset('assets/js/rocket-loader.min.js') }}" data-cf-settings="a7db253fd77adcde08f56921-|49" defer></script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"94affca00f7ec86b","version":"2025.5.0","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"token":"3ca157e612a14eccbb30cf6db6691c29","b":1}' crossorigin="anonymous"></script>
-
-<script>
-    document.addEventListener('livewire:navigated', () => {
-        if (typeof Rocket !== 'undefined' && typeof Rocket.loader !== 'undefined') {
-            Rocket.loader.loadScripts();
-        }
-
-        // Add any custom logic you want to re-initialize here
-        console.log("Livewire navigated - scripts reloaded");
-    });
-</script>
+<script src="{{ asset('assets/js/rocket-loader.min.js') }}" data-cf-settings="a7db253fd77adcde08f56921-|49" defer></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"94affca00f7ec86b","version":"2025.5.0","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"token":"3ca157e612a14eccbb30cf6db6691c29","b":1}' crossorigin="anonymous"></script>
 </body>
 </html>
