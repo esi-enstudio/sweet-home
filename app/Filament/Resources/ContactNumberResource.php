@@ -21,6 +21,8 @@ class ContactNumberResource extends Resource
 
     protected static ?string $navigationParentItem = 'Properties';
 
+    protected static ?string $navigationLabel = 'Contact Detail\'s';
+
     public static function form(Form $form): Form
     {
         return $form
