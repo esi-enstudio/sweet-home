@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedInteger('monthly_rent')->nullable(); // e.g. 20000
             $table->json('rent_includes')->nullable(); // e.g. "ইউটিলিটি বিল, সার্ভিস চার্জ"
             $table->string('rent_increase_possibility')->nullable(); // e.g. "বার্ষিক ৫% বৃদ্ধি", or "সম্ভাবনা নাই"
-            $table->enum('is_negotiable', ['negotiable', 'fixed'])->default('fixed');
+            $table->enum('is_negotiable', ['negotiable', 'fixed'])->default('negotiable');
             $table->unsignedInteger('water_bill')->nullable(); // e.g. ২০০ / নাই
             $table->unsignedInteger('gas_bill')->nullable();
             $table->unsignedInteger('electricity_bill')->nullable();

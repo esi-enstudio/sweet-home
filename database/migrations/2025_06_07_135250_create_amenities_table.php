@@ -20,10 +20,10 @@ return new class extends Migration
             $table->enum('gas_connection', ['cylinder', 'pipeline'])->nullable();
             $table->enum('kitchen_type', ['general', 'cabinet'])->nullable();
             $table->boolean('has_lift')->default(false);
-            $table->string('water_quality')->nullable();  // e.g. "নরম পানি, পানীয়ের জন্য উপযুক্ত"
+            $table->json('water_quality')->nullable();  // e.g. "নরম পানি, পানীয়ের জন্য উপযুক্ত"
             $table->string('water_tank')->nullable();      // e.g. "৫,০০০ লিটার পানির রিজার্ভার"
             $table->enum('electricity_type', ['prepaid', 'postpaid'])->nullable();
-            $table->string('backup_power')->nullable();    // e.g. "জেনারেটর", "IPS/UPS সুবিধা"
+            $table->json('backup_power')->nullable();    // e.g. "জেনারেটর", "IPS/UPS সুবিধা"
             $table->boolean('has_cctv')->default(false);    // e.g. "৪টি সিসিটিভি ক্যামেরা, ২৪ ঘণ্টা মনিটরিং"
             $table->boolean('has_security_guard')->default(false); // e.g. "২৪ ঘণ্টা দারোয়ান সার্ভিস, ২ জন প্রহরী"
             $table->boolean('has_parking')->default(false);     // e.g. "১টি ব্যক্তিগত গাড়ি পার্কিং স্পেস"

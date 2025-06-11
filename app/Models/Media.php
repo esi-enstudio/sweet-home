@@ -14,6 +14,10 @@ class Media extends Model
         'caption',
     ];
 
+    protected $casts = [
+        'file_path' => 'array',
+    ];
+
     public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class);

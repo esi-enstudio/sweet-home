@@ -5,8 +5,6 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Str;
-use Spatie\Sluggable\SlugOptions;
 
 class Property extends Model
 {
@@ -46,6 +44,7 @@ class Property extends Model
 
     protected $casts = [
         'floor_number' => 'array',
+        'floor_plan' => 'array',
     ];
 
     public function user(): BelongsTo

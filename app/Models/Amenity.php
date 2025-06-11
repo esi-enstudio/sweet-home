@@ -28,6 +28,8 @@ class Amenity extends Model
     protected $casts = [
         'nearby_facilities' => 'array',
         'natural_environments' => 'array',
+        'water_quality' => 'array',
+        'backup_power' => 'array',
     ];
 
     public function property(): BelongsTo

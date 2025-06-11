@@ -34,12 +34,12 @@ return new class extends Migration
             $table->unsignedTinyInteger('study_rooms')->nullable();
             $table->unsignedTinyInteger('store_rooms')->nullable();
             $table->unsignedTinyInteger('balconies')->nullable();
-            $table->string('floor_plan')->nullable();
+            $table->json('floor_plan')->nullable();
             $table->json('floor_number')->nullable();
             $table->enum('flooring', ['tiles', 'marble', 'wood', 'cement'])->nullable();
             $table->enum('walls', ['plaster', 'paint', 'wallpaper'])->nullable();
             $table->enum('windows', ['aluminum', 'glass', 'wood', 'iron'])->nullable();
-            $table->enum('condition', ['new', 'old'])->nullable();
+            $table->enum('condition', ['new', 'old', 'very_old'])->nullable();
             $table->enum('facing', ['north', 'south', 'east', 'west'])->nullable();
             $table->date('available_from')->nullable();
             $table->unsignedBigInteger('views_count')->default(0);

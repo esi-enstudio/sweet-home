@@ -16,6 +16,7 @@ class CreateProperty extends CreateRecord
 
     protected function handleRecordCreation(array $data): Model
     {
+//        dd($data);
         return DB::transaction(function () use ($data) {
             // 1. Generate a unique slug from the title
             $baseSlug = Str::slug($data['title']);
@@ -43,7 +44,8 @@ class CreateProperty extends CreateRecord
                 'tenant_type'       => $data['tenant_type'] ?? null,
                 'total_area'        => $data['total_area'] ?? null,
                 'bedrooms'          => $data['bedrooms'] ?? null,
-                'bathrooms'         => $data['bathrooms'] ?? null,
+                'attached_bathroom' => $data['attached_bathroom'] ?? null,
+                'shared_bathroom'   => $data['shared_bathroom'] ?? null,
                 'dining_rooms'      => $data['dining_rooms'] ?? null,
                 'living_rooms'      => $data['living_rooms'] ?? null,
                 'study_rooms'       => $data['study_rooms'] ?? null,
@@ -86,7 +88,7 @@ class CreateProperty extends CreateRecord
                 'monthly_rent'              => $data['monthly_rent'] ?? null,
                 'rent_includes'             => $data['rent_includes'] ?? null,
                 'rent_increase_possibility' => $data['rent_increase_possibility'] ?? null,
-                'is_negotiable'             => $data['is_negotiable'] ?? null,
+                'is_negotiable'             => $data['is_negotiable'] ?? '',
                 'water_bill'                => $data['water_bill'] ?? null,
                 'gas_bill'                  => $data['gas_bill'] ?? null,
                 'electricity_bill'          => $data['electricity_bill'] ?? null,

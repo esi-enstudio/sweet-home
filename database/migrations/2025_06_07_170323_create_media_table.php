@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Property::class)->constrained()->cascadeOnDelete();
             $table->enum('media_type', ['photo', 'video', 'virtual_tour']); // ছবি, ভিডিও, 360-ডিগ্রি ট্যুর
-            $table->string('file_path'); // ফাইল পাথ
+            $table->json('file_path'); // ফাইল পাথ
             $table->string('caption')->nullable(); // ক্যাপশন
             $table->timestamps();
         });
