@@ -27,7 +27,8 @@ return new class extends Migration
             $table->enum('tenant_type', ['small_family', 'large_family', 'bachelor', 'sublet'])->nullable();
             $table->unsignedInteger('total_area')->nullable();
             $table->unsignedTinyInteger('bedrooms')->nullable();
-            $table->unsignedTinyInteger('bathrooms')->nullable();
+            $table->unsignedTinyInteger('attached_bathroom')->nullable();
+            $table->unsignedTinyInteger('shared_bathroom')->nullable();
             $table->unsignedTinyInteger('dining_rooms')->nullable();
             $table->unsignedTinyInteger('living_rooms')->nullable();
             $table->unsignedTinyInteger('study_rooms')->nullable();

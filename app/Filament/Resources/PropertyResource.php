@@ -39,69 +39,79 @@ class PropertyResource extends Resource
                     Wizard\Step::make('Property Details')
                         ->columns(2)
                         ->schema([
-                            Section::make('Primary Information')
+                            Section::make('প্রাথমিক তথ্য')
+                                ->collapsible()
                                 ->columns(2)
                                 ->schema([
                                     TextInput::make('title')
+                                        ->label('শিরোনাম')
                                         ->helperText('একটি সংক্ষিপ্ত, আকর্ষণীয় ভূমিকা লিখুন যা বাসার সেরা বৈশিষ্ট্যগুলো তুলে ধরে। উদাহরণ: “বাস স্ট্যান্ড এ আধুনিক ৩ বেডরুমের ফ্ল্যাট, আলো-বাতাসপূর্ণ, ছোট পরিবারের জন্য আদর্শ।”')
-                                        ->required()
+//                                        ->required()
                                         ->maxLength(255),
 
                                     TextInput::make('address')
+                                        ->label('ঠিকানা')
                                         ->helperText('এলাকার নাম, রাস্তা(যেমন: বঙ্গবন্ধু সরণি রোড, ভৈরব বাজার, ভৈরব, কিশোরগঞ্জ)।')
-                                        ->required()
+//                                        ->required()
                                         ->maxLength(255),
 
                                     TextInput::make('landmark')
-                                        ->helperText('কাছাকাছি সুপরিচিত স্থান বা ল্যান্ডমার্ক (যেমন: “আনয়ারা হাসপাতালের বিপরীত পাশে”)')
+                                        ->label('সুপরিচিত স্থান')
+                                        ->helperText('কাছাকাছি সুপরিচিত স্থান (যেমন: “আনোয়ারা হাসপাতালের বিপরীত পাশে”)')
                                         ->maxLength(255),
 
                                     TextInput::make('environment')
+                                        ->label('পরিবেশ')
                                         ->helperText('এলাকাটি কি শান্ত, পারিবারিক, ব্যস্ত, নিরাপদ? (যেমন: পারিবারিক পরিবেশ, নিরাপদ আবাসিক এলাকা)')
                                         ->maxLength(255),
                                 ]),
 
-                            Section::make('Google Maps Data')
+                            Section::make('গুগল ম্যাপস ডেটা')
+                                ->collapsed()
                                 ->columns(2)
                                 ->schema([
-                                    TextInput::make('latitude')
+                                    TextInput::make('অক্ষাংশ (latitude)')
                                         ->helperText('গুগল ম্যাপ বা ওপেনস্ট্রিটম্যাপ এর জন্য। উদাহরনঃ  24.321456')
                                         ->step('any')
                                         ->numeric(),
 
-                                    TextInput::make('longitude')
+                                    TextInput::make('দ্রাঘিমাংশ (longitude)')
                                         ->helperText('গুগল ম্যাপ বা ওপেনস্ট্রিটম্যাপ এর জন্য। উদাহরনঃ 90.369852')
                                         ->step('any')
                                         ->numeric(),
                                 ]),
 
-                            Section::make('Property Specifications')
+                            Section::make('বাসার বিবরণ')
+                                ->collapsed()
                                 ->columns(2)
                                 ->schema([
                                     Select::make('area_type')
+                                        ->label('এলাকার ধরন')
                                         ->helperText('শহুরে (উচ্চ-ঘনত্ব), আধা-শহুরে, বা গ্রামীণ এলাকা')
                                         ->options([
-                                            'urban' => 'Urban',
-                                            'semi_urban' => 'Semi Urban',
-                                            'rural' => 'Rural',
+                                            'urban' => 'শহুরে',
+                                            'semi_urban' => 'আধা শহুরে',
+                                            'rural' => 'গ্রামীণ',
                                         ]),
 
                                     Select::make('property_type')
+                                        ->label('বাসার ধরন')
                                         ->helperText('টিনশেড, আধা-পাকা, ফ্ল্যাট, ডুপ্লেক্স')
                                         ->options([
-                                            'tin_shed' => 'Tin Shed',
-                                            'semi_pucca' => 'Semi Pucca',
-                                            'flat' => 'Flat',
-                                            'duplex' => 'Duplex',
+                                            'tin_shed' => 'টিনশেড',
+                                            'semi_pucca' => 'আধা-পাকা',
+                                            'flat' => 'ফ্ল্যাট',
+                                            'duplex' => 'ডুপ্লেক্স',
                                         ]),
 
                                     Select::make('tenant_type')
+                                        ->label('ভাড়াটিয়ার ধরন')
                                         ->helperText('ছোট পরিবার, বড় পরিবার, ব্যাচেলর, সাবলেট')
                                         ->options([
-                                            'small_family' => 'Small Family',
-                                            'large_family' => 'Large Family',
-                                            'bachelor' => 'Bachelor',
-                                            'sublet' => 'Sublet',
+                                            'small_family' => 'ছোট পরিবার',
+                                            'large_family' => 'বড় পরিবার',
+                                            'bachelor' => 'ব্যাচেলর',
+                                            'sublet' => 'সাবলেট',
                                         ]),
 
                                     TextInput::make('total_area')
@@ -109,117 +119,247 @@ class PropertyResource extends Resource
                                         ->numeric(),
                                 ]),
 
-                            Section::make('Rooms & Spaces')
+                            Section::make('কক্ষ ও স্থানসমূহ')
+                                ->collapsed()
                                 ->columns(2)
                                 ->schema([
-                                    TextInput::make('bedrooms')
-                                        ->numeric(),
+                                    Select::make('bedrooms')
+                                        ->label('শয়নকক্ষ')
+                                        ->helperText('বেডরুম কতটি আছে নির্বাচন করুন')
+                                        ->options([
+                                            '1' => '১টি',
+                                            '2' => '২টি',
+                                            '3' => '৩টি',
+                                            '4' => '৪টি',
+                                            '5' => '৫টি',
+                                            '6' => '৬টি',
+                                            '7' => '৭টি',
+                                            '8' => '৮টি',
+                                            '9' => '৯টি',
+                                            '10' => '১০টি',
+                                        ]),
 
-                                    TextInput::make('bathrooms')
-                                        ->numeric(),
+                                    Select::make('attached_bathroom')
+                                        ->label('সংযুক্ত বাথরুম')
+                                        ->helperText('সংযুক্ত বাথরুম কতটি আছে নির্বাচন করুন')
+                                        ->options([
+                                            '1' => '১টি',
+                                            '2' => '২টি',
+                                            '3' => '৩টি',
+                                            '4' => '৪টি',
+                                            '5' => '৫টি',
+                                            '6' => '৬টি',
+                                            '7' => '৭টি',
+                                            '8' => '৮টি',
+                                            '9' => '৯টি',
+                                            '10' => '১০টি',
+                                        ]),
 
-                                    TextInput::make('dining_rooms')
-                                        ->numeric(),
+                                    Select::make('shared_bathroom')
+                                        ->label('সাধারণ বাথরুম')
+                                        ->helperText('সাধারণ বাথরুম কতটি আছে নির্বাচন করুন')
+                                        ->options([
+                                            '1' => '১টি',
+                                            '2' => '২টি',
+                                            '3' => '৩টি',
+                                            '4' => '৪টি',
+                                            '5' => '৫টি',
+                                            '6' => '৬টি',
+                                            '7' => '৭টি',
+                                            '8' => '৮টি',
+                                            '9' => '৯টি',
+                                            '10' => '১০টি',
+                                        ]),
 
-                                    TextInput::make('living_rooms')
-                                        ->numeric(),
+                                    Select::make('dining_rooms')
+                                        ->label('ডাইনিং রুম')
+                                        ->helperText('ডাইনিং রুম কতটি আছে নির্বাচন করুন')
+                                        ->options([
+                                            '1' => '১টি',
+                                            '2' => '২টি',
+                                            '3' => '৩টি',
+                                            '4' => '৪টি',
+                                            '5' => '৫টি',
+                                            '6' => '৬টি',
+                                            '7' => '৭টি',
+                                            '8' => '৮টি',
+                                            '9' => '৯টি',
+                                            '10' => '১০টি',
+                                        ]),
 
-                                    TextInput::make('study_rooms')
-                                        ->numeric(),
+                                    Select::make('living_rooms')
+                                        ->label('অতিথি কক্ষ')
+                                        ->helperText('ড্রইং রুম কতটি আছে নির্বাচন করুন')
+                                        ->options([
+                                            '1' => '১টি',
+                                            '2' => '২টি',
+                                            '3' => '৩টি',
+                                            '4' => '৪টি',
+                                            '5' => '৫টি',
+                                            '6' => '৬টি',
+                                            '7' => '৭টি',
+                                            '8' => '৮টি',
+                                            '9' => '৯টি',
+                                            '10' => '১০টি',
+                                        ]),
 
-                                    TextInput::make('store_rooms')
-                                        ->numeric(),
+                                    Select::make('study_rooms')
+                                        ->label('অধ্যয়ন কক্ষ')
+                                        ->helperText('পড়ার ঘর কতটি আছে নির্বাচন করুন')
+                                        ->options([
+                                            '1' => '১টি',
+                                            '2' => '২টি',
+                                            '3' => '৩টি',
+                                            '4' => '৪টি',
+                                            '5' => '৫টি',
+                                            '6' => '৬টি',
+                                            '7' => '৭টি',
+                                            '8' => '৮টি',
+                                            '9' => '৯টি',
+                                            '10' => '১০টি',
+                                        ]),
 
-                                    TextInput::make('balconies')
-                                        ->numeric(),
+                                    Select::make('store_rooms')
+                                        ->label('স্টোর রুম')
+                                        ->helperText('মালপত্র রাখার ঘর কতটি আছে নির্বাচন করুন')
+                                        ->options([
+                                            '1' => '১টি',
+                                            '2' => '২টি',
+                                            '3' => '৩টি',
+                                            '4' => '৪টি',
+                                            '5' => '৫টি',
+                                            '6' => '৬টি',
+                                            '7' => '৭টি',
+                                            '8' => '৮টি',
+                                            '9' => '৯টি',
+                                            '10' => '১০টি',
+                                        ]),
+
+                                    Select::make('balconies')
+                                        ->label('বারান্দা')
+                                        ->helperText('বারান্দা কতটি আছে নির্বাচন করুন')
+                                        ->options([
+                                            '1' => '১টি',
+                                            '2' => '২টি',
+                                            '3' => '৩টি',
+                                            '4' => '৪টি',
+                                            '5' => '৫টি',
+                                            '6' => '৬টি',
+                                            '7' => '৭টি',
+                                            '8' => '৮টি',
+                                            '9' => '৯টি',
+                                            '10' => '১০টি',
+                                        ]),
                                 ]),
 
-                            Section::make('Finishing & Condition')
+                            Section::make('ফিনিশিং ও অবস্থা')
+                                ->collapsed()
                                 ->columns(2)
                                 ->schema([
                                     Select::make('floor_number')
+                                        ->label('ফ্লোর নম্বর')
+                                        ->helperText('বাসা কোন তলায় অবস্থিত (যেমন: ২য় তলা, ৫ম তলা)।')
                                         ->multiple()
                                         ->preload()
                                         ->options([
-                                            'ground' => 'Ground Floor',
-                                            '1st' => '1st Floor',
-                                            '2nd' => '2nd Floor',
-                                            '3rd' => '3rd Floor',
-                                            '4th' => '4th Floor',
-                                            '5th' => '5th Floor',
-                                            '6th' => '6th Floor',
-                                            '7th' => '7th Floor',
-                                            '8th' => '8th Floor',
-                                            '9th' => '9th Floor',
-                                            '10th' => '10th Floor',
-                                            '11th' => '11th Floor',
-                                            '12th' => '12th Floor',
-                                            '13th' => '13th Floor',
-                                            '14th' => '14th Floor',
-                                            '15th' => '15th Floor',
-                                            '16th' => '16th Floor',
-                                            '17th' => '17th Floor',
-                                            '18th' => '18th Floor',
-                                            '19th' => '19th Floor',
-                                            '20th' => '20th Floor',
+                                            'ground' => 'নিচ তলা',
+                                            '1st' => '১ম তলা',
+                                            '2nd' => '২য় তলা',
+                                            '3rd' => '৩য় তলা',
+                                            '4th' => '৪র্থ তলা',
+                                            '5th' => '৫ম তলা',
+                                            '6th' => '৬ষ্ঠ তলা',
+                                            '7th' => '৭ম তলা',
+                                            '8th' => '৮ম তলা',
+                                            '9th' => '৯ম তলা',
+                                            '10th' => '১০ম তলা',
+                                            '11th' => '১১তম তলা',
+                                            '12th' => '১২তম তলা',
+                                            '13th' => '১৩তম তলা',
+                                            '14th' => '১৪তম তলা',
+                                            '15th' => '১৫তম তলা',
+                                            '16th' => '১৬তম তলা',
+                                            '17th' => '১৭তম তলা',
+                                            '18th' => '১৮তম তলা',
+                                            '19th' => '১৯তম তলা',
+                                            '20th' => '২০তম তলা',
                                         ]),
 
                                     Select::make('flooring')
+                                        ->label('মেঝের ধরন')
+                                        ->helperText('মেঝের ধরন নির্বাচন করুন')
                                         ->options([
-                                            'tiles' => 'Tiles',
-                                            'marble' => 'Marble',
-                                            'wood' => 'Wood',
-                                            'cement' => 'Cement',
+                                            'tiles' => 'টাইলস',
+                                            'marble' => 'মার্বেল',
+                                            'wood' => 'কাঠ',
+                                            'cement' => 'সিমেন্ট',
                                         ]),
 
                                     Select::make('walls')
+                                        ->label('দেয়ালের অবস্থা')
+                                        ->helperText('দেয়ালের অবস্থা নির্বাচন করুন')
                                         ->options([
-                                            'plaster' => 'Plaster',
-                                            'paint' => 'Paint',
-                                            'wallpaper' => 'Wallpaper',
+                                            'plaster' => 'প্লাস্টার',
+                                            'paint' => 'রং / পেইন্ট',
+                                            'wallpaper' => 'ওয়ালপেপার',
                                         ]),
 
                                     Select::make('windows')
+                                        ->label('জানালা')
+                                        ->helperText('জানালার ধরন নির্বাচন করুন।')
                                         ->options([
-                                            'aluminum' => 'Aluminum',
-                                            'glass' => 'Glass',
-                                            'wood' => 'Wood',
-                                            'iron' => 'Iron',
+                                            'aluminum' => 'অ্যালুমিনিয়াম',
+                                            'glass' => 'কাচ',
+                                            'wood' => 'কাঠ',
+                                            'iron' => 'লোহা / ইস্পাত',
                                         ]),
 
                                     Select::make('condition')
+                                        ->label('বর্তমান অবস্থা')
+                                        ->helperText('বাসার বর্তমান অবস্থা নির্বাচন করুন।')
                                         ->options([
-                                            'new' => 'New',
-                                            'old' => 'Old',
+                                            'new' => 'নতুন',
+                                            'old' => 'পুরাতন',
+                                            'very_old' => 'অধিক পুরাতন',
                                         ]),
 
                                     Select::make('facing')
+                                        ->label('ঘরের দিক')
+                                        ->helperText('ঘরটি কোন মুখী সেটি নির্বাচন করুন।')
                                         ->options([
-                                            'north' => 'North',
-                                            'south' => 'South',
-                                            'east' => 'East',
-                                            'west' => 'West',
+                                            'north' => 'উত্তর',
+                                            'south' => 'দক্ষিণ',
+                                            'east' => 'পূর্ব',
+                                            'west' => 'পশ্চিম',
                                         ]),
                                 ]),
 
 
                             DatePicker::make('available_from')
+                                ->label('বাড়ি পাওয়া যাবে')
+                                ->helperText('বাসা কবে থেকে ভাড়া দেওয়া যাবে (যেমন: ১ জুলাই, ২০২৫ থেকে)।')
                                 ->native(false),
 
                             Select::make('is_urgent')
+                                ->label('তাত্ক্ষণিক প্রয়োজন?')
+                                ->helperText('যদি জরুরি ভিত্তিতে দিতে চান তবে "হ্যাঁ" নির্বাচন করুন।')
                                 ->options([
-                                    'true' => 'Yes',
-                                    'false' => 'No',
+                                    'true' => 'হ্যাঁ',
+                                    'false' => 'না',
                                 ]),
 
                             Select::make('listing_type')
+                                ->label('লিস্টিং এর ধরণ')
+                                ->helperText('বাসাটি কি ভাড়া হবে নাকি বিক্রি হবে সেটি নির্বাচন করুন।')
                                 ->options([
-                                    'rent' => 'Rent',
-                                    'buy' => 'Buy',
-                                    'sell' => 'Sell',
+                                    'rent' => 'ভাড়া',
+                                    'buy' => 'কেনা',
+                                    'sell' => 'বিক্রি',
                                 ]),
 
                             FileUpload::make('floor_plan')
+                                ->label('ফ্লোরের নকশা')
+                                ->helperText('যদি ফ্লোরের নকশা দিতে চান তবে নকশাগুলো আপলোড করুন।')
                                 ->disk('public')
                                 ->directory('properties/floor-plan'),
                         ]),
@@ -227,119 +367,176 @@ class PropertyResource extends Resource
                     Wizard\Step::make('Amenities')
                         ->columns(2)
                         ->schema([
-                            Section::make('Location & Surroundings')
+                            Section::make('অবস্থান ও পরিবেশ')
+                                ->collapsible()
                                 ->columns(2)
                                 ->schema([
-                                    TagsInput::make('nearby_facilities'),
-                                    TagsInput::make('natural_environments'),
+                                    TagsInput::make('nearby_facilities')
+                                        ->label('নিকটস্থ সুবিধাসমূহ')
+                                        ->hint('প্রতিটি পয়েন্ট লিখার পর Enter button প্রেস করুন।')
+                                        ->helperText('উদাহরণ:হাসপাতাল, স্কুল, বাজার, মসজিদ, বাসস্ট্যান্ড ইত্যাদি।'),
+
+                                    TagsInput::make('natural_environments')
+                                        ->label('প্রাকৃতিক পরিবেশ')
+                                        ->hint('প্রতিটি পয়েন্ট লিখার পর Enter button প্রেস করুন।')
+                                        ->helperText('উদাহরণ:গাছপালা, খোলা জায়গা, নদী, লেক, পার্ক, পাহাড় ইত্যাদি।'),
                                 ]),
 
-                            Section::make('Utility & Infrastructure')
+                            Section::make('ইউটিলিটি ও অবকাঠামো')
+                                ->collapsed()
                                 ->columns(2)
                                 ->schema([
                                     Select::make('gas_connection')
+                                        ->label('গ্যাস সংযোগ')
+                                        ->helperText('বাড়িতে গ্যাস সরবরাহের পদ্ধতি নির্বাচন করুন')
                                         ->options([
-                                            'cylinder' => 'Cylinder',
-                                            'pipeline' => 'Pipeline',
+                                            'cylinder' => 'সিলিন্ডার',
+                                            'pipeline' => 'পাইপলাইন',
                                         ]),
                                     Select::make('kitchen_type')
+                                        ->label('রান্নাঘরের ধরন')
+                                        ->helperText('রান্নাঘরটি সাধারণ নাকি ক্যাবিনেটযুক্ত তা নির্বাচন করুন')
                                         ->options([
-                                            'general' => 'General',
-                                            'cabinet' => 'Cabinet',
+                                            'general' => 'সাধারণ',
+                                            'cabinet' => 'ক্যাবিনেটযুক্ত',
                                         ]),
                                     Select::make('electricity_type')
+                                        ->label('বিদ্যুৎ ব্যবস্থার ধরন')
+                                        ->helperText('প্রি-পেইড বা পোস্ট-পেইড বিদ্যুৎ সংযোগ বেছে নিন')
                                         ->default('postpaid')
                                         ->options([
-                                            'prepaid' => 'Prepaid',
-                                            'postpaid' => 'Postpaid',
+                                            'prepaid' => 'প্রি-পেইড মিটার',
+                                            'postpaid' => 'পোস্ট-পেইড মিটার',
                                         ]),
-                                    TagsInput::make('water_quality'),
-                                    TextInput::make('water_tank')->numeric(),
-                                    TagsInput::make('backup_power')->columnSpanFull(),
+                                    TagsInput::make('water_quality')
+                                        ->label('পানির মান')
+                                        ->hint('প্রতিটি পয়েন্ট লিখার পর Enter button প্রেস করুন।')
+                                        ->helperText('যেমন: গভীর নলকূপ, ফিল্টারকৃত, আয়রন মুক্ত অথবা আয়রন আছে ইত্যাদি।'),
+                                    TextInput::make('water_tank')
+                                        ->numeric()
+                                        ->label('পানির ট্যাঙ্কের ধারণক্ষমতা (লিটার)')
+                                        ->helperText('পানির ট্যাঙ্কের মোট ধারণক্ষমতা সংখ্যায় লিখুন। যেমনঃ ১০০০, ৩০০০, ৫০০০'),
+                                    TagsInput::make('backup_power')
+                                        ->label('ব্যাকআপ পাওয়ার ব্যবস্থা')
+                                        ->hint('প্রতিটি পয়েন্ট লিখার পর Enter button প্রেস করুন।')
+                                        ->helperText('যেমন: জেনারেটর, IPS, সোলার সিস্টেম'),
                                 ]),
 
-                            Section::make('Building Facilities')
+                            Section::make('বিল্ডিং এর সুবিধাসমূহ')
+                                ->collapsed()
                                 ->schema([
-                                    Checkbox::make('has_lift')->label('Lift'),
-                                    Checkbox::make('has_parking')->label('Parking'),
-                                    Checkbox::make('has_roof_access')->label('Roof access'),
+                                    Checkbox::make('has_lift')
+                                        ->label('লিফট')
+                                        ->helperText('ভবনে লিফট সুবিধা রয়েছে কি না'),
+                                    Checkbox::make('has_parking')
+                                        ->label('পার্কিং')
+                                        ->helperText ('গাড়ি পার্কিং এর সুবিধা রয়েছে কি না'),
+                                    Checkbox::make('has_roof_access')
+                                        ->label('ছাদে প্রবেশাধিকার')
+                                        ->helperText('ভবনের ছাদে প্রবেশের অনুমতি রয়েছে কি না'),
                                 ]),
 
-                            Section::make('Security & Monitoring')
+                            Section::make('নিরাপত্তা ও পর্যবেক্ষণ')
+                                ->collapsed()
                                 ->schema([
-                                    Checkbox::make('has_cctv')->label('CCTV'),
-                                    Checkbox::make('has_security_guard')->label('Security guard'),
+                                    Checkbox::make('has_cctv')
+                                        ->label('সিসিটিভি')
+                                        ->helperText('ভবনে সিসিটিভি ক্যামেরা রয়েছে কি না'),
+                                    Checkbox::make('has_security_guard')
+                                        ->label('নিরাপত্তাকর্মী')
+                                        ->helperText('২৪/৭ নিরাপত্তাকর্মী নিয়োজিত রয়েছে কি না'),
                                 ]),
 
-                            Section::make('Other')
+                            Section::make('অন্যান্য')
+                                ->collapsed()
                                 ->schema([
-                                    Checkbox::make('pets_allowed'),
+                                    Checkbox::make('pets_allowed')
+                                        ->label('পোষা প্রাণী অনুমোদিত')
+                                        ->helperText('এই স্থানে পোষা প্রাণী রাখা অনুমোদিত কি না'),
                                 ]),
                         ]),
 
-                    Wizard\Step::make('Rent & Costs')
+                    Wizard\Step::make('ভাড়া ও খরচ')
                         ->schema([
-                            Section::make('Rent Details')
+                            Section::make('ভাড়ার বিস্তারিত')
+                                ->collapsible()
                                 ->columns(2)
                                 ->schema([
                                     TextInput::make('monthly_rent')
-                                        ->helperText('মাসিক ভাড়া')
+                                        ->label('মাসিক ভাড়া')
+                                        ->helperText('বাসার জন্য প্রতি মাসে নির্ধারিত ভাড়া লিখুন')
                                         ->numeric(),
                                     TagsInput::make('rent_includes')
-                                        ->helperText('ভাড়ার সাথে অন্তর্ভুক্ত (ইউটিলিটি বিল, সার্ভিস চার্জ)'),
+                                        ->label('ভাড়ার মধ্যে অন্তর্ভুক্ত')
+                                        ->hint('প্রতিটি পয়েন্ট লিখার পর Enter button প্রেস করুন।')
+                                        ->helperText('যেমন: ইউটিলিটি বিল, সার্ভিস চার্জ'),
                                     TextInput::make('rent_increase_possibility')
-                                        ->helperText('ভাড়া বৃদ্ধির সম্ভাবনা'),
+                                        ->label('ভাড়া বৃদ্ধির সম্ভাবনা')
+                                        ->helperText('ভাড়া বৃদ্ধির সম্ভাবনা লিখুন, যেমন: প্রতি বছর ৫% বৃদ্ধির সম্ভাবনা অথবা অন্যান্য'),
                                     Select::make('is_negotiable')
-                                        ->helperText('দর-কষাকষি করা যাবে কিনা')
+                                        ->label('ভাড়া দর-কষাকষি করা যাবে কিনা')
+                                        ->helperText('দর-কষাকষি সম্ভব কিনা নির্ধারণ করুন')
                                         ->options([
-                                            'negotiable' => 'Negotiable',
-                                            'fixed' => 'Fixed',
+                                            'negotiable' => 'আলোচনা সাপেক্ষ',
+                                            'fixed' => 'নির্ধারিত',
                                         ]),
                                 ]),
 
-                            Section::make('Bills')
+                            Section::make('বিল')
+                                ->collapsed()
                                 ->columns(2)
                                 ->schema([
                                     TextInput::make('water_bill')
-                                        ->helperText('পানির বিল কত রাখতে চান')
+                                        ->label('পানির বিল')
+                                        ->helperText('মাসিক পানির বিলের পরিমাণ লিখুন (যদি থাকে)')
                                         ->numeric(),
                                     TextInput::make('gas_bill')
-                                        ->helperText('গ্যাস বিল কত রাখতে চান')
+                                        ->label('গ্যাস বিল')
+                                        ->helperText('মাসিক গ্যাস বিলের পরিমাণ লিখুন (যদি থাকে)')
                                         ->numeric(),
                                     TextInput::make('electricity_bill')
-                                        ->helperText('বিদ্যুৎ বিল কত রাখতে চান')
+                                        ->label('বিদ্যুৎ বিল')
+                                        ->helperText('মাসিক বিদ্যুৎ বিলের পরিমাণ লিখুন (যদি থাকে)')
                                         ->numeric(),
                                 ]),
 
-                            Section::make('Additional Charges')
+                            Section::make('অতিরিক্ত খরচ')
+                                ->collapsed()
                                 ->columns(2)
                                 ->schema([
                                     TextInput::make('service_charge')
-                                        ->helperText('সার্ভিস চার্জ কত রাখতে চান')
+                                        ->label('সার্ভিস চার্জ')
+                                        ->helperText('যদি থাকে, মাসিক সার্ভিস চার্জ লিখুন')
                                         ->numeric(),
                                     TextInput::make('lift_charge')
-                                        ->helperText('লিফট চার্জ কত রাখতে চান')
+                                        ->label('লিফট চার্জ')
+                                        ->helperText('যদি থাকে, লিফট ব্যবহারের জন্য অতিরিক্ত চার্জ লিখুন')
                                         ->numeric(),
                                     TextInput::make('generator_charge')
-                                        ->helperText('জেনারেটর চার্জ কত রাখতে চান')
+                                        ->label('জেনারেটর চার্জ')
+                                        ->helperText('যদি থাকে, জেনারেটরের জন্য অতিরিক্ত চার্জ লিখুন')
                                         ->numeric(),
                                     TextInput::make('parking_fee')
-                                        ->helperText('পার্কিং ফি (গাড়ি/বাইক) কত রাখতে চান')
+                                        ->label('পার্কিং ফি')
+                                        ->helperText('যদি থাকে, গাড়ি বা বাইকের জন্য পার্কিং চার্জ লিখুন')
                                         ->numeric(),
                                 ]),
 
-                            Section::make('Advance Payment')
+                            Section::make('অগ্রিম পেমেন্ট')
+                                ->collapsed()
                                 ->columns(2)
                                 ->schema([
                                     TextInput::make('advance_rent_months')
+                                        ->label('অগ্রিম ভাড়া (মাস)')
                                         ->helperText('কত মাসের অগ্রিম ভাড়া চাচ্ছেন')
                                         ->maxLength(2)
                                         ->numeric(),
                                     Select::make('advance_payment_terms')
-                                        ->helperText('অগ্রিম ভাড়া ফেরতযোগ্য কিনা')
+                                        ->label('অগ্রিম ফেরতযোগ্যতা')
+                                        ->helperText('অগ্রিম ভাড়া ফেরতযোগ্য কিনা নির্বাচন করুন')
                                         ->options([
-                                            'refundable' => 'Refundable',
-                                            'non-refundable' => 'Non Refundable',
+                                            'refundable' => 'ফেরতযোগ্য',
+                                            'non-refundable' => 'অফেরতযোগ্য',
                                         ]),
                                 ]),
                         ]),
@@ -347,6 +544,7 @@ class PropertyResource extends Resource
                     Wizard\Step::make('Rental Terms')
                         ->schema([
                             Section::make('Contract Terms')
+                                ->collapsible()
                                 ->columns(2)
                                 ->schema([
                                     TextInput::make('contract_duration')
@@ -357,6 +555,7 @@ class PropertyResource extends Resource
                                 ]),
 
                             Section::make('Tenant Eligibility & Verification')
+                                ->collapsed()
                                 ->columns(2)
                                 ->schema([
                                     TextInput::make('tenant_eligibility')
@@ -368,6 +567,7 @@ class PropertyResource extends Resource
                                 ]),
 
                             Section::make('Payment Terms')
+                                ->collapsed()
                                 ->columns(2)
                                 ->schema([
                                     TextInput::make('payment_schedule')
@@ -377,6 +577,7 @@ class PropertyResource extends Resource
                                 ]),
 
                             Section::make('House Usage & Responsibilities')
+                                ->collapsed()
                                 ->columns(2)
                                 ->schema([
                                     TextInput::make('house_usage_rules')
