@@ -9,8 +9,8 @@ class Media extends Model
 {
     protected $fillable = [
         'property_id',
-        'media_type',
-        'file_path',
+        'video_url',
+        'image_path',
         'caption',
     ];
 

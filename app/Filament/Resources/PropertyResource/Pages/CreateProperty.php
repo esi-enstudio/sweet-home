@@ -122,9 +122,9 @@ class CreateProperty extends CreateRecord
 
             // Media
             $property->media()->create([
-                'media_type' => $data['media_type'] ?? null,
                 'caption' => $data['caption'] ?? null,
-                'file_path' => $data['file_path'] ?? null,
+                'video_url' => $data['video_url'] ?? null,
+                'image_path' => $data['image_path'] ?? null,
             ]);
 
             return $property;

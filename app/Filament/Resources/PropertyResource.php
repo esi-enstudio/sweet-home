@@ -550,25 +550,21 @@ class PropertyResource extends Resource
                     Wizard\Step::make('ছবি ও ভিডিও')
                         ->columns(2)
                         ->schema([
-                            Select::make('media_type')
-                                ->label('মিডিয়া ধরণ')
-                                ->helperText('আপনি কোন ধরনের মিডিয়া যুক্ত করতে চান তা নির্বাচন করুন')
-                                ->options([
-                                    'photo' => 'ছবি',
-                                    'video' => 'ভিডিও',
-                                    'virtual_tour' => 'ভার্চুয়াল ট্যুর',
-                                ]),
-
                             TextInput::make('caption')
                                 ->label('ক্যাপশন')
                                 ->helperText('ছবির বা ভিডিওর জন্য একটি সংক্ষিপ্ত বর্ণনা দিন'),
 
-                            FileUpload::make('file_path')
-                                ->label('ফাইল আপলোড করুন')
+                            TextInput::make('video_url')
+                                ->label('ভিডিও লিংক')
+                                ->helperText('ভিডিওটি ইউটিউব এ আপলোড করে লিংক টি এখানে দিন।'),
+
+                            FileUpload::make('image_path')
+                                ->label('ছবি আপলোড')
                                 ->multiple()
+                                ->required()
                                 ->disk('public')
                                 ->directory('properties/images')
-                                ->helperText('ছবি, ভিডিও বা ভার্চুয়াল ট্যুর ফাইল আপলোড করুন'),
+                                ->helperText('ছবিগুলো এখানে আপলোড করুন'),
                         ]),
                 ])->columnSpanFull(),
             ]);
