@@ -15,7 +15,7 @@ class Media extends Model
     ];
 
     protected $casts = [
-        'file_path' => 'array',
+        'image_path' => 'array',
     ];
 
     public function property(): BelongsTo

@@ -61,14 +61,14 @@ class PropertyResource extends Resource
                                 ->helperText('এলাকাটি কি শান্ত, পারিবারিক, ব্যস্ত, নিরাপদ? (যেমন: পারিবারিক পরিবেশ, নিরাপদ আবাসিক এলাকা)')
                                 ->maxLength(255),
 
-                            TextInput::make('অক্ষাংশ (latitude)')
+                            TextInput::make('latitude')
+                                ->label('অক্ষাংশ (latitude)')
                                 ->helperText('গুগল ম্যাপ বা ওপেনস্ট্রিটম্যাপ এর জন্য। উদাহরনঃ  24.321456')
-                                ->step('any')
                                 ->numeric(),
 
-                            TextInput::make('দ্রাঘিমাংশ (longitude)')
+                            TextInput::make('longitude')
+                                ->label('দ্রাঘিমাংশ (longitude)')
                                 ->helperText('গুগল ম্যাপ বা ওপেনস্ট্রিটম্যাপ এর জন্য। উদাহরনঃ 90.369852')
-                                ->step('any')
                                 ->numeric(),
 
                             Select::make('area_type')
@@ -561,7 +561,7 @@ class PropertyResource extends Resource
                             FileUpload::make('image_path')
                                 ->label('ছবি আপলোড')
                                 ->multiple()
-                                ->required()
+//                                ->required()
                                 ->disk('public')
                                 ->directory('properties/images')
                                 ->helperText('ছবিগুলো এখানে আপলোড করুন'),
@@ -584,10 +584,10 @@ class PropertyResource extends Resource
                 Tables\Columns\TextColumn::make('landmark')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('latitude')
-                    ->numeric()
+//                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('longitude')
-                    ->numeric()
+//                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('area_type'),
                 Tables\Columns\TextColumn::make('property_type'),

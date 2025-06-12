@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -46,6 +47,19 @@ class Property extends Model
         'floor_number' => 'array',
         'floor_plan' => 'array',
     ];
+
+//    public function getLatitudeAttribute($value): string
+//    {
+//        return rtrim(rtrim($value, '0'), '.');
+//    }
+
+    protected function latitude(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => rtrim(rtrim($value, '0'), '.'),
+            set: fn($value) => rtrim(rtrim($value, '0'), '.'),
+        );
+    }
 
     public function user(): BelongsTo
     {
