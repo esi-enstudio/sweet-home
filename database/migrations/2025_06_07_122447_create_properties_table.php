@@ -16,13 +16,9 @@ return new class extends Migration
             $table->id();
             $table->string('slug')->unique();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->enum('listing_type', ['rent','buy','sell'])->nullable();
             $table->text('title');
-            $table->string('address')->nullable();
-            $table->string('landmark')->nullable();
             $table->text('environment')->nullable();
-            $table->decimal('latitude', 10, 8)->nullable();
-            $table->decimal('longitude', 11, 8)->nullable();
-            $table->enum('area_type', ['urban', 'semi_urban', 'rural'])->nullable();
             $table->enum('property_type', ['tin_shed', 'semi_pucca', 'flat', 'duplex'])->nullable();
             $table->enum('tenant_type', ['small_family', 'large_family', 'bachelor', 'sublet'])->nullable();
             $table->unsignedInteger('total_area')->nullable();
@@ -34,7 +30,6 @@ return new class extends Migration
             $table->unsignedTinyInteger('study_rooms')->nullable();
             $table->unsignedTinyInteger('store_rooms')->nullable();
             $table->unsignedTinyInteger('balconies')->nullable();
-            $table->json('floor_plan')->nullable();
             $table->json('floor_number')->nullable();
             $table->enum('flooring', ['tiles', 'marble', 'wood', 'cement'])->nullable();
             $table->enum('walls', ['plaster', 'paint', 'wallpaper'])->nullable();
@@ -45,7 +40,7 @@ return new class extends Migration
             $table->unsignedBigInteger('views_count')->default(0);
             $table->boolean('is_urgent')->nullable();
             $table->boolean('is_available')->nullable();
-            $table->enum('listing_type', ['rent','buy','sell'])->nullable();
+            $table->json('floor_plan')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

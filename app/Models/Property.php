@@ -16,13 +16,9 @@ class Property extends Model
     protected $fillable = [
         'user_id',
         'slug',
+        'listing_type',
         'title',
-        'address',
-        'landmark',
         'environment',
-        'latitude',
-        'longitude',
-        'area_type',
         'property_type',
         'tenant_type',
         'total_area',
@@ -34,7 +30,6 @@ class Property extends Model
         'study_rooms',
         'store_rooms',
         'balconies',
-        'floor_plan',
         'floor_number',
         'flooring',
         'walls',
@@ -45,7 +40,7 @@ class Property extends Model
         'views_count',
         'is_urgent',
         'is_available',
-        'listing_type',
+        'floor_plan',
     ];
 
     protected $casts = [
@@ -114,7 +109,9 @@ class Property extends Model
     {
         return $this->hasOne(Media::class);
     }
+
+    public function location(): HasOne
+    {
+        return $this->hasOne(Location::class);
+    }
 }
-
-
-

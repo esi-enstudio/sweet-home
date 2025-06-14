@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             DivisionSeeder::class,
             DistrictSeeder::class,
             UpazilaSeeder::class,
+            UnionSeeder::class,
         ]);
 
         // User::factory(10)->create();
