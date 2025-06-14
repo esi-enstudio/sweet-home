@@ -5,7 +5,10 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ContactNumberResource\Pages;
 use App\Filament\Resources\ContactNumberResource\RelationManagers;
 use App\Models\ContactNumber;
+use App\Models\Property;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -27,15 +30,28 @@ class ContactNumberResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('property_id')
+                Select::make('property_id')
+                    ->label('বাসা নির্বাচন করুন')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('alternate_number')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('whatsapp_number')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('imo_number')
-                    ->maxLength(255),
+                    ->options(fn() => Property::all()->pluck('title','id')),
+
+                TextInput::make('alternate_number')
+                    ->label('বিকল্প মোবাইল নম্বর')
+                    ->numeric()
+                    ->maxLength(11)
+                    ->helperText('প্রয়োজনে যোগাযোগের জন্য একটি বিকল্প নম্বর দিন'),
+
+                TextInput::make('whatsapp_number')
+                    ->label('WhatsApp নম্বর')
+                    ->numeric()
+                    ->maxLength(11)
+                    ->helperText('যদি WhatsApp ব্যবহার করেন, সেই নম্বরটি লিখুন'),
+
+                TextInput::make('imo_number')
+                    ->label('IMO নম্বর')
+                    ->numeric()
+                    ->maxLength(11)
+                    ->helperText('যদি IMO অ্যাপ ব্যবহার করেন, সেই নম্বর দিন'),
             ]);
     }
 

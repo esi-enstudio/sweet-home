@@ -69,14 +69,9 @@ class User extends Authenticatable implements HasAvatar
     public function getSlugOptions(): SlugOptions
     {
         return SlugOptions::create()
-            ->generateSlugsFrom(function () {
-                do {
-                    $slug = Str::random(10);
-                } while (self::where('slug', $slug)->exists());
-                return $slug;
-            })
-            ->saveSlugsTo('slug') // Column to save slug
-            ->doNotGenerateSlugsOnUpdate();
+            ->generateSlugsFrom('name') // Use the 'name' field to generate the slug
+            ->saveSlugsTo('slug')        // Save slug to 'slug' column
+            ->doNotGenerateSlugsOnUpdate(); // Optional: Prevent slug change after update
     }
 
     public function getRouteKeyName(): string

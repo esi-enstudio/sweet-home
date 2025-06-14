@@ -6,9 +6,13 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 class Property extends Model
 {
+    use HasSlug;
+
     protected $fillable = [
         'user_id',
         'slug',
@@ -40,6 +44,7 @@ class Property extends Model
         'available_from',
         'views_count',
         'is_urgent',
+        'is_available',
         'listing_type',
     ];
 
@@ -48,12 +53,31 @@ class Property extends Model
         'floor_plan' => 'array',
     ];
 
-//    public function getLatitudeAttribute($value): string
-//    {
-//        return rtrim(rtrim($value, '0'), '.');
-//    }
+    /**
+     * @return SlugOptions
+     */
+    public function getSlugOptions(): SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('title') // Use the 'title' field to generate the slug
+            ->saveSlugsTo('slug')        // Save slug to 'slug' column
+            ->doNotGenerateSlugsOnUpdate(); // Optional: Prevent slug change after update
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug'; // Use slug instead of id in routes
+    }
 
     protected function latitude(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => rtrim(rtrim($value, '0'), '.'),
+            set: fn($value) => rtrim(rtrim($value, '0'), '.'),
+        );
+    }
+
+    protected function longitude(): Attribute
     {
         return Attribute::make(
             get: fn($value) => rtrim(rtrim($value, '0'), '.'),

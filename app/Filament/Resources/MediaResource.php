@@ -5,7 +5,11 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\MediaResource\Pages;
 use App\Filament\Resources\MediaResource\RelationManagers;
 use App\Models\Media;
+use App\Models\Property;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -25,16 +29,26 @@ class MediaResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('property_id')
+                Select::make('property_id')
+                    ->label('বাসা নির্বাচন করুন')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('media_type')
-                    ->required(),
-                Forms\Components\TextInput::make('file_path')
+                    ->options(fn() => Property::all()->pluck('title','id')),
+
+                TextInput::make('caption')
+                    ->label('ক্যাপশন')
+                    ->helperText('ছবির বা ভিডিওর জন্য একটি সংক্ষিপ্ত বর্ণনা দিন'),
+
+                TextInput::make('video_url')
+                    ->label('ভিডিও লিংক')
+                    ->helperText('ভিডিওটি ইউটিউব এ আপলোড করে লিংক টি এখানে দিন।'),
+
+                FileUpload::make('image_path')
+                    ->label('ছবি আপলোড')
+                    ->multiple()
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('caption')
-                    ->maxLength(255),
+                    ->disk('public')
+                    ->directory('properties/images')
+                    ->helperText('ছবিগুলো এখানে আপলোড করুন'),
             ]);
     }
 

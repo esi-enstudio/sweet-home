@@ -4,8 +4,11 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RentalTermsResource\Pages;
 use App\Filament\Resources\RentalTermsResource\RelationManagers;
+use App\Models\Property;
 use App\Models\RentalTerms;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -25,28 +28,51 @@ class RentalTermsResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('property_id')
+                Select::make('property_id')
+                    ->label('বাসা নির্বাচন করুন')
                     ->required()
-                    ->numeric(),
-                Forms\Components\TextInput::make('contract_duration')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('contract_breach_terms')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('tenant_eligibility')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('identity_verification')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('background_check')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('payment_schedule')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('payment_methods'),
-                Forms\Components\Textarea::make('house_usage_rules')
-                    ->columnSpanFull(),
-                Forms\Components\Textarea::make('maintenance_responsibility')
-                    ->columnSpanFull(),
-                Forms\Components\Textarea::make('damage_liability')
-                    ->columnSpanFull(),
+                    ->options(fn() => Property::all()->pluck('title','id')),
+
+                TextInput::make('contract_duration')
+                    ->label('চুক্তির মেয়াদ')
+                    ->maxLength(255)
+                    ->helperText('উদাহরণ: "ন্যূনতম ১ বছরের চুক্তি প্রয়োজন"'),
+
+                TextInput::make('contract_breach_terms')
+                    ->label('চুক্তি ভঙ্গের শর্ত')
+                    ->helperText('উদাহরণ: "চুক্তি ভঙ্গ করলে ডিপোজিট ফেরতযোগ্য নয়"'),
+
+                TextInput::make('tenant_eligibility')
+                    ->label('ভাড়াটিয়ার যোগ্যতা')
+                    ->helperText('উদাহরণ: "সাবলেট দিতে পারবে, বাড়িওয়ালার অনুমতি সাপেক্ষে"'),
+
+                TextInput::make('identity_verification')
+                    ->label('পরিচয় যাচাই')
+                    ->helperText('উদাহরণ: "জাতীয় পরিচয়পত্র জমা দিতে হবে ইত্যাদি"'),
+
+                TextInput::make('background_check')
+                    ->label('পেছনের তথ্য যাচাই')
+                    ->helperText('উদাহরণ: "পুলিশ ভেরিফিকেশন বা চাকরির তথ্য প্রয়োজন হতে পারে, পূর্ববর্তী বাড়িওয়ালার রেফারেন্স প্রয়োজন"'),
+
+                TextInput::make('payment_schedule')
+                    ->label('পেমেন্টের সময়সূচি')
+                    ->helperText('উদাহরণ: "ভাড়া প্রতি মাসের ১-৭ তারিখের মধ্যে দিতে হবে"'),
+
+                TextInput::make('payment_methods')
+                    ->label('পেমেন্ট পদ্ধতি')
+                    ->helperText('উদাহরণ: "বিকাশ, নগদ, রকেট, ব্যাংক ট্রান্সফার, চেক, ক্যাশ"'),
+
+                TextInput::make('house_usage_rules')
+                    ->label('ব্যবহারের নিয়মাবলী')
+                    ->helperText('উদাহরণ: "দেয়ালে পেইন্টিং, ড্রিলিং বাড়িওয়ালার অনুমতি সাপেক্ষে"'),
+
+                TextInput::make('maintenance_responsibility')
+                    ->label('রক্ষণাবেক্ষণের দায়িত্ব')
+                    ->helperText('উদাহরণ: "ছোট মেরামত ভাড়াটিয়ার, বড় মেরামত বাড়িওয়ালার"'),
+
+                TextInput::make('damage_liability')
+                    ->label('ক্ষতির দায়িত্ব')
+                    ->helperText('উদাহরণ: "চুক্তি শেষে যৌথ পরিদর্শন। ক্ষতির জন্য ডিপোজিট থেকে কাটা হবে"'),
             ]);
     }
 

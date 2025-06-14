@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ContactNumber extends Model
 {
-    protected $fillable = ['alternate_number', 'whatsapp_number', 'imo_number',];
+    protected $fillable = ['property_id', 'alternate_number', 'whatsapp_number', 'imo_number',];
 
     public function property(): BelongsTo
     {

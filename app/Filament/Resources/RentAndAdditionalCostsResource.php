@@ -4,8 +4,12 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\RentAndAdditionalCostsResource\Pages;
 use App\Filament\Resources\RentAndAdditionalCostsResource\RelationManagers;
+use App\Models\Property;
 use App\Models\RentAndAdditionalCosts;
 use Filament\Forms;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -27,34 +31,81 @@ class RentAndAdditionalCostsResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('property_id')
+                Select::make('property_id')
+                    ->label('বাসা নির্বাচন করুন')
                     ->required()
+                    ->options(fn() => Property::all()->pluck('title','id')),
+
+                TextInput::make('monthly_rent')
+                    ->label('মাসিক ভাড়া')
+                    ->helperText('বাসার জন্য প্রতি মাসে নির্ধারিত ভাড়া লিখুন')
                     ->numeric(),
-                Forms\Components\TextInput::make('monthly_rent')
+
+                TagsInput::make('rent_includes')
+                    ->label('ভাড়ার মধ্যে অন্তর্ভুক্ত')
+                    ->helperText('যেমন: ইউটিলিটি বিল, সার্ভিস চার্জ'),
+
+                TextInput::make('rent_increase_possibility')
+                    ->label('ভাড়া বৃদ্ধির সম্ভাবনা')
+                    ->helperText('ভাড়া বৃদ্ধির সম্ভাবনা লিখুন, যেমন: প্রতি বছর ৫% বৃদ্ধির সম্ভাবনা অথবা অন্যান্য'),
+
+                Select::make('is_negotiable')
+                    ->label('ভাড়া দর-কষাকষি করা যাবে কিনা')
+                    ->helperText('দর-কষাকষি সম্ভব কিনা নির্ধারণ করুন')
+                    ->default('negotiable')
+                    ->options([
+                        'negotiable' => 'আলোচনা সাপেক্ষ',
+                        'fixed' => 'নির্ধারিত',
+                    ]),
+
+                TextInput::make('water_bill')
+                    ->label('পানির বিল')
+                    ->helperText('মাসিক পানির বিলের পরিমাণ লিখুন (যদি থাকে)')
                     ->numeric(),
-                Forms\Components\TextInput::make('rent_includes')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('rent_increase_possibility')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('is_negotiable')
-                    ->required(),
-                Forms\Components\TextInput::make('water_bill')
+
+                TextInput::make('gas_bill')
+                    ->label('গ্যাস বিল')
+                    ->helperText('মাসিক গ্যাস বিলের পরিমাণ লিখুন (যদি থাকে)')
                     ->numeric(),
-                Forms\Components\TextInput::make('gas_bill')
+
+                TextInput::make('electricity_bill')
+                    ->label('বিদ্যুৎ বিল')
+                    ->helperText('মাসিক বিদ্যুৎ বিলের পরিমাণ লিখুন (যদি থাকে)')
                     ->numeric(),
-                Forms\Components\TextInput::make('electricity_bill')
+
+                TextInput::make('service_charge')
+                    ->label('সার্ভিস চার্জ')
+                    ->helperText('যদি থাকে, মাসিক সার্ভিস চার্জ লিখুন')
                     ->numeric(),
-                Forms\Components\TextInput::make('service_charge')
+
+                TextInput::make('lift_charge')
+                    ->label('লিফট চার্জ')
+                    ->helperText('যদি থাকে, লিফট ব্যবহারের জন্য অতিরিক্ত চার্জ লিখুন')
                     ->numeric(),
-                Forms\Components\TextInput::make('lift_charge')
+
+                TextInput::make('generator_charge')
+                    ->label('জেনারেটর চার্জ')
+                    ->helperText('যদি থাকে, জেনারেটরের জন্য অতিরিক্ত চার্জ লিখুন')
                     ->numeric(),
-                Forms\Components\TextInput::make('generator_charge')
+
+                TextInput::make('parking_fee')
+                    ->label('পার্কিং ফি')
+                    ->helperText('যদি থাকে, গাড়ি বা বাইকের জন্য পার্কিং চার্জ লিখুন')
                     ->numeric(),
-                Forms\Components\TextInput::make('parking_fee')
+
+                TextInput::make('advance_rent_months')
+                    ->label('অগ্রিম ভাড়া (মাস)')
+                    ->helperText('কত মাসের অগ্রিম ভাড়া চাচ্ছেন')
+                    ->maxLength(2)
                     ->numeric(),
-                Forms\Components\TextInput::make('advance_rent_months')
-                    ->numeric(),
-                Forms\Components\TextInput::make('advance_payment_terms'),
+
+                Select::make('advance_payment_terms')
+                    ->label('অগ্রিম ফেরতযোগ্যতা')
+                    ->helperText('অগ্রিম ভাড়া ফেরতযোগ্য কিনা নির্বাচন করুন')
+                    ->options([
+                        'refundable' => 'ফেরতযোগ্য',
+                        'non-refundable' => 'অফেরতযোগ্য',
+                    ]),
             ]);
     }
 
