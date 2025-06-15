@@ -325,38 +325,6 @@ class PropertyResource extends Resource
                                 ->directory('properties/floor-plan'),
                         ]),
                 ])->columnSpanFull(),
-
-
-
-
-//                TextInput::make('address')
-//                    ->label('ঠিকানা')
-//                    ->helperText('এলাকার নাম, রাস্তা(যেমন: বঙ্গবন্ধু সরণি রোড, ভৈরব বাজার, ভৈরব, কিশোরগঞ্জ)।')
-//                    ->maxLength(255),
-
-//                TextInput::make('landmark')
-//                    ->label('সুপরিচিত স্থান')
-//                    ->helperText('কাছাকাছি সুপরিচিত স্থান (যেমন: “আনোয়ারা হাসপাতালের বিপরীত পাশে”)')
-//                    ->maxLength(255),
-
-//                TextInput::make('latitude')
-//                    ->label('অক্ষাংশ (latitude)')
-//                    ->helperText('গুগল ম্যাপ বা ওপেনস্ট্রিটম্যাপ এর জন্য। উদাহরনঃ  24.321456')
-//                    ->numeric(),
-//
-//                TextInput::make('longitude')
-//                    ->label('দ্রাঘিমাংশ (longitude)')
-//                    ->helperText('গুগল ম্যাপ বা ওপেনস্ট্রিটম্যাপ এর জন্য। উদাহরনঃ 90.369852')
-//                    ->numeric(),
-//
-//                Select::make('area_type')
-//                    ->label('এলাকার ধরন')
-//                    ->helperText('শহুরে (উচ্চ-ঘনত্ব), আধা-শহুরে, বা গ্রামীণ এলাকা')
-//                    ->options([
-//                        'urban' => 'শহুরে',
-//                        'semi_urban' => 'আধা শহুরে',
-//                        'rural' => 'গ্রামীণ',
-//                    ]),
             ]);
     }
 
@@ -374,10 +342,11 @@ class PropertyResource extends Resource
                 TextColumn::make('title')
                     ->label('')
                     ->formatStateUsing(function ($record) {
+//                        dd(isset($record->location->union?->bn_name));
                         return view('filament.tables.columns.property-card', [
                             'title' => $record->title,
-                            'location' => $record?->address,
-                            'rent' => number_format((float)$record->rentAndAdditionalCost?->monthly_rent,0).' / mo',
+                            'location' => isset($record->location->union?->bn_name) ? $record->location?->area_name .', '. $record->location->union?->bn_name .', '. $record->location->upazila?->bn_name .', '. $record->location->district?->bn_name .'।' : $record->location?->area_name .', '. $record->location->upazila?->bn_name .', '. $record->location->district?->bn_name .'।',
+                            'rent' => number_format((float)($record->rentAndAdditionalCost?->monthly_rent ?? 0),0).' / mo',
                         ])->render();
                     })
                     ->html(),

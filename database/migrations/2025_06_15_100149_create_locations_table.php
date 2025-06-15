@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(\App\Models\Property::class);
             $table->foreignIdFor(\App\Models\Division::class);
             $table->foreignIdFor(\App\Models\District::class);
             $table->foreignIdFor(\App\Models\Upazila::class);
-            $table->foreignIdFor(\App\Models\Union::class);
+            $table->foreignIdFor(\App\Models\Union::class)->nullable();
             $table->string('area_name');
             $table->enum('area_type', ['urban', 'semi_urban', 'rural'])->nullable();
             $table->string('landmark');

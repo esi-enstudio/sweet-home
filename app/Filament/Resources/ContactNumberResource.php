@@ -74,9 +74,10 @@ class ContactNumberResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('property_id')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('property.title')
+                    ->limit(30)
+                    ->tooltip(fn($state) => $state)
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('alternate_number')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('whatsapp_number')

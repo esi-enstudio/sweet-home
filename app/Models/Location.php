@@ -20,6 +20,26 @@ class Location extends Model
         'longitude',
     ];
 
+    public function division(): BelongsTo
+    {
+        return $this->belongsTo(Division::class);
+    }
+
+    public function district(): BelongsTo
+    {
+        return $this->belongsTo(District::class);
+    }
+
+    public function upazila(): BelongsTo
+    {
+        return $this->belongsTo(Upazila::class);
+    }
+
+    public function union(): BelongsTo
+    {
+        return $this->belongsTo(Union::class);
+    }
+
     public function property(): BelongsTo
     {
         return $this->belongsTo(Property::class);
