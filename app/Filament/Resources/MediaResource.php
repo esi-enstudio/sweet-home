@@ -36,6 +36,7 @@ class MediaResource extends Resource
                     ->columnSpan(2)
                     ->schema([
                         Section::make('Property Selection')
+                            ->description('Choose the property to which the media (images or videos) will be associated.')
                             ->schema([
                                 Select::make('property_id')
                                     ->label('Select Property')
@@ -44,6 +45,7 @@ class MediaResource extends Resource
                             ]),
 
                         Section::make('Caption and video link')
+                            ->description('Add a short caption for better understanding.')
                             ->schema([
                                 TextInput::make('caption')
 //                                    ->label('ক্যাপশন')
@@ -59,6 +61,7 @@ class MediaResource extends Resource
                     ->columnSpan(1)
                     ->schema([
                         Section::make('Media Upload')
+                            ->description('Add photos to visually represent the property.')
                             ->schema([
                                 FileUpload::make('image_path')
 //                                    ->label('ছবি আপলোড')

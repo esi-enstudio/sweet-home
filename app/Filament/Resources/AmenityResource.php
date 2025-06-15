@@ -9,12 +9,9 @@ use App\Models\Property;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\SpatieTagsInput;
-use Filament\Forms\Components\Split;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -40,6 +37,8 @@ class AmenityResource extends Resource
                     ->columnSpan(2)
                     ->schema([
                         Section::make('Property Selection')
+                            ->collapsible()
+                            ->description('Select the property to which these amenities and features will be associated.')
                             ->schema([
                                 Select::make('property_id')
                                     ->label('Select Property')
@@ -48,6 +47,8 @@ class AmenityResource extends Resource
                             ]),
 
                         Section::make('Utility Information')
+                            ->collapsed()
+                            ->description('Define the available utility connections and their types within the property.')
                             ->schema([
                                 Select::make('gas_connection')
 //                                ->label('গ্যাস সংযোগ')
@@ -90,12 +91,16 @@ class AmenityResource extends Resource
                     ->columnSpan(1)
                     ->schema([
                         Section::make('Nearby & Natural Environment')
+                            ->collapsed()
+                            ->description('List the nearby facilities and natural surroundings that enhance the property\'s value and lifestyle.')
                             ->schema([
                                 TagsInput::make('natural_environments')->splitKeys(['Tab',',']),
                                 TagsInput::make('nearby_facilities')->splitKeys(['Tab',',']),
                             ]),
 
                         Section::make('Backup & Safety Features')
+                            ->collapsed()
+                            ->description('Indicate the backup power systems and security features that ensure comfort and protection.')
                             ->schema([
                                 TagsInput::make('backup_power')
 //                                ->label('ব্যাকআপ পাওয়ার ব্যবস্থা')

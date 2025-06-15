@@ -32,6 +32,7 @@ class ContactNumberResource extends Resource
         return $form
             ->schema([
                 Section::make('Property Selection')
+                    ->description('Select the specific property this contact information is related to.')
                     ->collapsible()
                     ->schema([
                         Select::make('property_id')
@@ -41,6 +42,7 @@ class ContactNumberResource extends Resource
                     ]),
 
                 Section::make('Alternative Contact Information')
+                    ->description('Provide additional phone numbers to ensure reliable communication options.')
                     ->collapsible()
                     ->columns(2)
                     ->schema([
