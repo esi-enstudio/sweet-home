@@ -9,6 +9,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
+/**
+ * @method static where(string $string, int $int)
+ */
 class Property extends Model
 {
     use HasSlug;
@@ -17,12 +20,7 @@ class Property extends Model
         'user_id',
         'slug',
         'title',
-        'address',
-        'landmark',
         'environment',
-        'latitude',
-        'longitude',
-        'area_type',
         'property_type',
         'tenant_type',
         'total_area',
@@ -113,6 +111,11 @@ class Property extends Model
     public function media(): HasOne
     {
         return $this->hasOne(Media::class);
+    }
+
+    public function location(): HasOne
+    {
+        return $this->hasOne(Location::class);
     }
 }
 

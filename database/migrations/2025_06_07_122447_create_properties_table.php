@@ -17,12 +17,7 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->text('title');
-            $table->string('address')->nullable();
-            $table->string('landmark')->nullable();
             $table->text('environment')->nullable();
-            $table->decimal('latitude', 10, 8)->nullable();
-            $table->decimal('longitude', 11, 8)->nullable();
-            $table->enum('area_type', ['urban', 'semi_urban', 'rural'])->nullable();
             $table->enum('property_type', ['tin_shed', 'semi_pucca', 'flat', 'duplex'])->nullable();
             $table->enum('tenant_type', ['small_family', 'large_family', 'bachelor', 'sublet'])->nullable();
             $table->unsignedInteger('total_area')->nullable();

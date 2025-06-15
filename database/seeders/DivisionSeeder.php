@@ -14,17 +14,19 @@ class DivisionSeeder extends Seeder
      */
     public function run(): void
     {
+        // JSON ফাইল থেকে কনটেন্ট পড়া
         $json = File::get('database/bangladesh-geo-local/divisions.json');
         $data = json_decode($json);
-        $divisions = collect($data)->firstWhere('type', 'table');
 
-        if ($divisions && isset($divisions->data))
-        {
-            foreach ($divisions->data as $division)
-            {
+        // type: "table" খুঁজে বের করা
+        $tableData = collect($data)->firstWhere('type', 'table');
+
+        // যদি ডেটা পাওয়া যায়, তাহলে ইনসার্ট করো
+        if ($tableData && isset($tableData->data)) {
+            foreach ($tableData->data as $data) {
                 DB::table('divisions')->insert([
-                    'name' => $division->name,
-                    'bn_name' => $division->bn_name,
+                    'name' => $data->name,
+                    'bn_name' => $data->bn_name,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);

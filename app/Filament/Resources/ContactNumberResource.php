@@ -7,6 +7,7 @@ use App\Filament\Resources\ContactNumberResource\RelationManagers;
 use App\Models\ContactNumber;
 use App\Models\Property;
 use Filament\Forms;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -30,28 +31,40 @@ class ContactNumberResource extends Resource
     {
         return $form
             ->schema([
-                Select::make('property_id')
-                    ->label('বাসা নির্বাচন করুন')
-                    ->required()
-                    ->options(fn() => Property::all()->pluck('title','id')),
+                Section::make('Property Selection')
+                    ->collapsible()
+                    ->schema([
+                        Select::make('property_id')
+                            ->label('Select Property')
+                            ->required()
+                            ->options(fn() => Property::where('is_available', 1)->pluck('title','id')),
+                    ]),
 
-                TextInput::make('alternate_number')
-                    ->label('বিকল্প মোবাইল নম্বর')
-                    ->numeric()
-                    ->maxLength(11)
-                    ->helperText('প্রয়োজনে যোগাযোগের জন্য একটি বিকল্প নম্বর দিন'),
+                Section::make('Alternative Contact Information')
+                    ->collapsible()
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('alternate_number')
+//                            ->label('বিকল্প মোবাইল নম্বর')
+                            ->numeric()
+                            ->maxLength(11)
+                            ->minLength(11)
+                            ->helperText('প্রয়োজনে যোগাযোগের জন্য একটি বিকল্প নম্বর দিন'),
 
-                TextInput::make('whatsapp_number')
-                    ->label('WhatsApp নম্বর')
-                    ->numeric()
-                    ->maxLength(11)
-                    ->helperText('যদি WhatsApp ব্যবহার করেন, সেই নম্বরটি লিখুন'),
+                        TextInput::make('whatsapp_number')
+//                            ->label('WhatsApp নম্বর')
+                            ->numeric()
+                            ->maxLength(11)
+                            ->minLength(11)
+                            ->helperText('যদি WhatsApp ব্যবহার করেন, সেই নম্বরটি লিখুন'),
 
-                TextInput::make('imo_number')
-                    ->label('IMO নম্বর')
-                    ->numeric()
-                    ->maxLength(11)
-                    ->helperText('যদি IMO অ্যাপ ব্যবহার করেন, সেই নম্বর দিন'),
+                        TextInput::make('imo_number')
+//                            ->label('IMO নম্বর')
+                            ->numeric()
+                            ->maxLength(11)
+                            ->minLength(11)
+                            ->helperText('যদি IMO অ্যাপ ব্যবহার করেন, সেই নম্বর দিন'),
+                    ]),
             ]);
     }
 

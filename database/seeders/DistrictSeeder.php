@@ -14,18 +14,20 @@ class DistrictSeeder extends Seeder
      */
     public function run(): void
     {
+        // JSON ফাইল থেকে কনটেন্ট পড়া
         $json = File::get('database/bangladesh-geo-local/districts.json');
         $data = json_decode($json);
-        $districts = collect($data)->firstWhere('type', 'table');
 
-        if ($districts && isset($districts->data))
-        {
-            foreach ($districts->data as $district)
-            {
+        // type: "table" খুঁজে বের করা
+        $tableData = collect($data)->firstWhere('type', 'table');
+
+        // যদি ডেটা পাওয়া যায়, তাহলে ইনসার্ট করো
+        if ($tableData && isset($tableData->data)) {
+            foreach ($tableData->data as $data) {
                 DB::table('districts')->insert([
-                    'division_id' => $district->division_id,
-                    'name' => $district->name,
-                    'bn_name' => $district->bn_name,
+                    'division_id' => $data->division_id,
+                    'name' => $data->name,
+                    'bn_name' => $data->bn_name,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);

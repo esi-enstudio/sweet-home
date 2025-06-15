@@ -8,6 +8,8 @@ use App\Models\Media;
 use App\Models\Property;
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -28,27 +30,49 @@ class MediaResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->columns(3)
             ->schema([
-                Select::make('property_id')
-                    ->label('বাসা নির্বাচন করুন')
-                    ->required()
-                    ->options(fn() => Property::all()->pluck('title','id')),
+                Group::make()
+                    ->columnSpan(2)
+                    ->schema([
+                        Section::make('Property Selection')
+                            ->schema([
+                                Select::make('property_id')
+                                    ->label('Select Property')
+                                    ->required()
+                                    ->options(fn() => Property::where('is_available', 1)->pluck('title','id')),
+                            ]),
 
-                TextInput::make('caption')
-                    ->label('ক্যাপশন')
-                    ->helperText('ছবির বা ভিডিওর জন্য একটি সংক্ষিপ্ত বর্ণনা দিন'),
+                        Section::make('Caption and video link')
+                            ->schema([
+                                TextInput::make('caption')
+//                                    ->label('ক্যাপশন')
+                                    ->helperText('ছবির বা ভিডিওর জন্য একটি সংক্ষিপ্ত বর্ণনা দিন'),
 
-                TextInput::make('video_url')
-                    ->label('ভিডিও লিংক')
-                    ->helperText('ভিডিওটি ইউটিউব এ আপলোড করে লিংক টি এখানে দিন।'),
+                                TextInput::make('video_url')
+//                                    ->label('ভিডিও লিংক')
+                                    ->helperText('ভিডিওটি ইউটিউব এ আপলোড করে লিংক টি এখানে দিন।'),
+                            ]),
+                    ]),
 
-                FileUpload::make('image_path')
-                    ->label('ছবি আপলোড')
-                    ->multiple()
-                    ->required()
-                    ->disk('public')
-                    ->directory('properties/images')
-                    ->helperText('ছবিগুলো এখানে আপলোড করুন'),
+                Group::make()
+                    ->columnSpan(1)
+                    ->schema([
+                        Section::make('Media Upload')
+                            ->schema([
+                                FileUpload::make('image_path')
+//                                    ->label('ছবি আপলোড')
+                                    ->multiple()
+                                    ->required()
+                                    ->disk('public')
+                                    ->directory('properties/images')
+                                    ->helperText('ছবিগুলো এখানে আপলোড করুন'),
+                            ]),
+                    ]),
+
+
+
+
             ]);
     }
 

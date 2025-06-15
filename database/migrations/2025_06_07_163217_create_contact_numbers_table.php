@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('contact_numbers', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Property::class)->constrained()->cascadeOnDelete();
-            $table->string('alternate_number')->nullable();
+            $table->string('alternate_number')->unique()->nullable();
             $table->string('whatsapp_number')->nullable();
             $table->string('imo_number')->nullable();
             $table->timestamps();
