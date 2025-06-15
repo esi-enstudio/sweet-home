@@ -15,8 +15,10 @@ use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class AmenityResource extends Resource
 {
@@ -139,30 +141,57 @@ class AmenityResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('property_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('gas_connection'),
-                Tables\Columns\TextColumn::make('kitchen_type'),
-                Tables\Columns\IconColumn::make('has_lift')
-                    ->boolean(),
+                Tables\Columns\TextColumn::make('property.title')
+                    ->limit(30)
+                    ->tooltip(fn($state) => $state)
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('gas_connection')
+                    ->label('Gas')
+                    ->formatStateUsing(fn($state) => Str::title($state)),
+
+                Tables\Columns\TextColumn::make('kitchen_type')
+                    ->label('Kitchen')
+                    ->formatStateUsing(fn($state) => Str::title($state)),
+
                 Tables\Columns\TextColumn::make('water_quality')
-                    ->searchable(),
+                    ->searchable()
+                    ->formatStateUsing(fn($state) => Str::title($state)),
+
                 Tables\Columns\TextColumn::make('water_tank')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('electricity_type'),
+                    ->searchable()
+                    ->formatStateUsing(fn($state) => $state .' / L'),
+
+                Tables\Columns\TextColumn::make('electricity_type')
+                    ->formatStateUsing(fn($state) => Str::title($state)),
+
                 Tables\Columns\TextColumn::make('backup_power')
-                    ->searchable(),
+                    ->formatStateUsing(fn($state) => Str::title($state)),
+
+                Tables\Columns\IconColumn::make('has_lift')
+                    ->label('Lift')
+                    ->boolean(),
+
                 Tables\Columns\IconColumn::make('has_cctv')
+                    ->label('CCTV')
                     ->boolean(),
+
                 Tables\Columns\IconColumn::make('has_security_guard')
+                    ->label('Security Guard')
                     ->boolean(),
+
                 Tables\Columns\IconColumn::make('has_parking')
+                    ->label('Parking')
                     ->boolean(),
+
                 Tables\Columns\IconColumn::make('has_roof_access')
+                    ->label('Roof Access')
                     ->boolean(),
+
                 Tables\Columns\IconColumn::make('pets_allowed')
+                    ->label('Pet Allowed')
                     ->boolean(),
+                
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
