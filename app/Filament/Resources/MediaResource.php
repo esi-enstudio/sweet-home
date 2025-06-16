@@ -25,7 +25,7 @@ class MediaResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationParentItem = 'Properties';
+    protected static ?string $navigationParentItem = 'My Properties';
 
     public static function form(Form $form): Form
     {
@@ -60,15 +60,26 @@ class MediaResource extends Resource
                 Group::make()
                     ->columnSpan(1)
                     ->schema([
-                        Section::make('Media Upload')
+                        Section::make('Thumbnail')
+                            ->description('A small preview image representing the property visually in listings and overviews.')
+                            ->schema([
+                                FileUpload::make('thumbnail')
+//                                    ->label('ছবি আপলোড')
+                                    ->required()
+                                    ->disk('public')
+                                    ->directory('properties/thumbnails')
+                                    ->helperText('থাম্বনেইল আপলোড করুন'),
+                            ]),
+
+                        Section::make('Gallery')
                             ->description('Add photos to visually represent the property.')
                             ->schema([
-                                FileUpload::make('image_path')
+                                FileUpload::make('gallery')
 //                                    ->label('ছবি আপলোড')
                                     ->multiple()
                                     ->required()
                                     ->disk('public')
-                                    ->directory('properties/images')
+                                    ->directory('properties/gallery')
                                     ->helperText('ছবিগুলো এখানে আপলোড করুন'),
                             ]),
                     ]),

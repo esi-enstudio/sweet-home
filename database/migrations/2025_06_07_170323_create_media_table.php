@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreignIdFor(Property::class)->constrained()->cascadeOnDelete();
             $table->string('caption')->nullable(); // ক্যাপশন
             $table->string('video_url');
-            $table->json('image_path'); // ফাইল পাথ
+            $table->string('thumbnail');
+            $table->json('gallery'); // ফাইল পাথ
             $table->timestamps();
         });
     }

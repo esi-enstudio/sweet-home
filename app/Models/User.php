@@ -85,8 +85,13 @@ class User extends Authenticatable implements HasAvatar
         return $this->$avatarColumn ? Storage::url($this->$avatarColumn) : null;
     }
 
-    public function property(): HasMany
+    public function properties(): HasMany
     {
         return $this->hasMany(Property::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
     }
 }

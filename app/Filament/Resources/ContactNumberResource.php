@@ -23,7 +23,7 @@ class ContactNumberResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationParentItem = 'Properties';
+    protected static ?string $navigationParentItem = 'My Properties';
 
     protected static ?string $navigationLabel = 'Contact Detail\'s';
 

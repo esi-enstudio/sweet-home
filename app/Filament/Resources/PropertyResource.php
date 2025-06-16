@@ -5,36 +5,30 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PropertyResource\Pages;
 use App\Filament\Resources\PropertyResource\RelationManagers;
 use App\Models\Property;
-use Carbon\Carbon;
-use Filament\Forms;
-use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TagsInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\HtmlString;
+use Lartisan\RatingTool\Tables\Columns\RatingColumn;
 
 class PropertyResource extends Resource
 {
     protected static ?string $model = Property::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-home-modern';
+
+    protected static ?string $navigationLabel = 'My Properties';
 
     public static function form(Form $form): Form
     {
@@ -331,46 +325,133 @@ class PropertyResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(
+                fn() => static::getModel()::query()->with(['user','rentAndAdditionalCost','location'])
+            )
+            ->contentGrid([
+                'xl' => 2,
+            ])
             ->columns([
-                ImageColumn::make('media.image_path')
-                    ->label('Title')
-                    ->width(100)
-                    ->height(100)
-                    ->limit(1)
-                    ->circular(),
+                Tables\Columns\Layout\Grid::make()
+                    ->columns(1)
+                    ->schema([
+                        Tables\Columns\Layout\Split::make([
+                            Tables\Columns\Layout\Grid::make()
+                                ->columns(1)
+                                ->schema([
+                                    ImageColumn::make('media.thumbnail')
+                                        ->label('Title')
+                                        ->width(120)
+                                        ->height(150)
+                                        ->extraImgAttributes([
+                                            'class' => 'rounded-md'
+                                        ]),
+                                ])->grow(false),
 
-                TextColumn::make('title')
-                    ->label('')
-                    ->formatStateUsing(function ($record) {
-//                        dd(isset($record->location->union?->bn_name));
-                        return view('filament.tables.columns.property-card', [
-                            'title' => $record->title,
-                            'location' => isset($record->location->union?->bn_name) ? $record->location?->area_name .', '. $record->location->union?->bn_name .', '. $record->location->upazila?->bn_name .', '. $record->location->district?->bn_name .'।' : $record->location?->area_name .', '. $record->location->upazila?->bn_name .', '. $record->location->district?->bn_name .'।',
-                            'rent' => number_format((float)($record->rentAndAdditionalCost?->monthly_rent ?? 0),0).' / mo',
-                        ])->render();
-                    })
-                    ->html(),
+                            Tables\Columns\Layout\Stack::make([
+                                TextColumn::make('title')
+                                    ->weight(FontWeight::Bold),
 
-                TextColumn::make('created_at')
-                    ->label('Published')
-                    ->description(fn($record) => Carbon::parse($record->created_at)->toFormattedDateString())
-                    ->formatStateUsing(fn($record) => Carbon::parse($record->created_at)->diffForHumans()),
+                                TextColumn::make('location.area_name')
+                                    ->icon('heroicon-s-map-pin')
+                                    ->weight(FontWeight::Light),
 
-                TextColumn::make('views_count')->label('Views'),
-                ToggleColumn::make('is_available'),
+                                TextColumn::make('rentAndAdditionalCost.monthly_rent')
+                                    ->icon('heroicon-s-currency-bangladeshi')
+                                    ->formatStateUsing(fn($state) => number_format($state) . ' / mo')
+                                    ->weight(FontWeight::Medium),
+
+                                TextColumn::make('views_count')
+                                    ->icon('heroicon-s-eye')
+                                    ->weight(FontWeight::Light),
+
+                                RatingColumn::make('reviews.rating')
+                                    ->size('sm')
+                                    ->maxValue(5)
+                                    ->maxValue(5)
+                                    ->icon('heroicon-s-star')
+                                    ->color('warning'),
+
+//                                TextColumn::make('details_action')
+//                                    ->default(fn(Property $record) => new HtmlString(
+//                                        Blade::render('<x-filament::button href="'.self::getUrl('').'">View</x-filament::button>')
+//                                    ))
+                            ]),
+                        ])->from('xl'),
+                    ]),
+
+
+
+//                ImageColumn::make('media.thumbnail')
+//                    ->label('Title')
+//                    ->width(120)
+//                    ->height(120)
+//                    ->limit(1)
+//                    ->circular(),
+//
+//                ViewColumn::make('title')
+//                    ->label('')
+//                    ->view('filament.tables.columns.property-card'),
+//
+//                TextColumn::make('created_at')
+//                    ->label('Published')
+//                    ->description(fn($record) => Carbon::parse($record->created_at)->toFormattedDateString())
+//                    ->formatStateUsing(fn($record) => Carbon::parse($record->created_at)->diffForHumans()),
+//
+//                TextColumn::make('views_count')->label('Views'),
+//                ToggleColumn::make('is_available'),
+            ])
+            ->deferLoading()
+            ->filters([
+                //
+            ])
+            ->actions([
+//                Tables\Actions\EditAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => Pages\ListProperties::route('/'),
+            'create' => Pages\CreateProperty::route('/create'),
+            'edit' => Pages\EditProperty::route('/{record}/edit'),
+        ];
+    }
+}
+
+
+
+//                TextColumn::make('title')
+//                    ->label('')
+//                    ->formatStateUsing(function ($record) {
+//                        return view('filament.tables.columns.property-card', [
+//                            'title' => $record->title,
+//                            'location' => $record->location->union?->bn_name ? $record->location?->area_name .', '. $record->location->union?->bn_name .', '. $record->location->upazila?->bn_name .', '. $record->location->district?->bn_name .'।' : $record->location?->area_name .', '. $record->location->upazila?->bn_name .', '. $record->location->district?->bn_name .'।',
+//                            'rent' => number_format((float)($record->rentAndAdditionalCost?->monthly_rent ?? 0),0).' / mo',
+//                        ])->render();
+//                    })
+//                    ->html(),
+
+
+
+
 
 //                Tables\Columns\TextColumn::make('user_id')
 //                    ->numeric()
 //                    ->sortable(),
-//                Tables\Columns\TextColumn::make('landmark')
-//                    ->searchable(),
-//                Tables\Columns\TextColumn::make('latitude')
-//                    ->numeric()
-//                    ->sortable(),
-//                Tables\Columns\TextColumn::make('longitude')
-//                    ->numeric()
-//                    ->sortable(),
-//                Tables\Columns\TextColumn::make('area_type'),
 //                Tables\Columns\TextColumn::make('property_type'),
 //                Tables\Columns\TextColumn::make('tenant_type'),
 //                Tables\Columns\TextColumn::make('total_area')
@@ -428,33 +509,3 @@ class PropertyResource extends Resource
 //                    ->dateTime()
 //                    ->sortable()
 //                    ->toggleable(isToggledHiddenByDefault: true),
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListProperties::route('/'),
-            'create' => Pages\CreateProperty::route('/create'),
-            'edit' => Pages\EditProperty::route('/{record}/edit'),
-        ];
-    }
-}

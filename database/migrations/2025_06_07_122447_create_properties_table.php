@@ -39,7 +39,7 @@ return new class extends Migration
             $table->date('available_from')->nullable();
             $table->unsignedBigInteger('views_count')->default(0);
             $table->boolean('is_urgent')->nullable();
-            $table->boolean('is_available')->nullable();
+            $table->boolean('is_available')->default(1)->nullable();
             $table->enum('listing_type', ['rent','buy','sell'])->nullable();
             $table->softDeletes();
             $table->timestamps();

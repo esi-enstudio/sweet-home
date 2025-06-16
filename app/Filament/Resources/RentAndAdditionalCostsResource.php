@@ -26,22 +26,27 @@ class RentAndAdditionalCostsResource extends Resource
 
     protected static ?string $navigationLabel = 'Rent & Costs';
 
-    protected static ?string $navigationParentItem = 'Properties';
+    protected static ?string $navigationParentItem = 'My Properties';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Section::make('Property Selection')
+                    ->collapsible()
+                    ->description('Select the property to which these amenities and features will be associated.')
+                    ->schema([
+                        Select::make('property_id')
+                            ->label('Select Property')
+                            ->required()
+                            ->options(fn() => Property::where('is_available', 1)->pluck('title','id')),
+                    ]),
+
                 Section::make('Rent Overview')
                     ->description('Basic information about the rent amount and its negotiation terms.')
                     ->collapsible()
                     ->columns(2)
                     ->schema([
-                        Select::make('property_id')
-//                            ->label('Select Property')
-                            ->required()
-                            ->options(fn() => Property::where('is_available', 1)->pluck('title','id')),
-
                         TextInput::make('monthly_rent')
 //                            ->label('মাসিক ভাড়া')
                             ->helperText('বাসার জন্য প্রতি মাসে নির্ধারিত ভাড়া লিখুন')
@@ -113,7 +118,7 @@ class RentAndAdditionalCostsResource extends Resource
                     ->columns(2)
                     ->schema([
                         TextInput::make('advance_rent_months')
-//                    ->label('অগ্রিম ভাড়া (মাস)')
+                            ->label('Advance rent (months)')
                             ->helperText('কত মাসের অগ্রিম ভাড়া চাচ্ছেন')
                             ->maxLength(2)
                             ->numeric(),

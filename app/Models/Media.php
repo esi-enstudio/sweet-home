@@ -10,12 +10,13 @@ class Media extends Model
     protected $fillable = [
         'property_id',
         'video_url',
-        'image_path',
+        'thumbnail',
+        'gallery',
         'caption',
     ];
 
     protected $casts = [
-        'image_path' => 'array',
+        'gallery' => 'array',
     ];
 
     public function property(): BelongsTo

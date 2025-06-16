@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -19,6 +20,22 @@ class Location extends Model
         'latitude',
         'longitude',
     ];
+
+    protected function latitude(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => rtrim(rtrim($value, '0'), '.'),
+            set: fn($value) => rtrim(rtrim($value, '0'), '.'),
+        );
+    }
+
+    protected function longitude(): Attribute
+    {
+        return Attribute::make(
+            get: fn($value) => rtrim(rtrim($value, '0'), '.'),
+            set: fn($value) => rtrim(rtrim($value, '0'), '.'),
+        );
+    }
 
     public function division(): BelongsTo
     {

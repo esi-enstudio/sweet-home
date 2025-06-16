@@ -6,6 +6,7 @@ use App\Filament\Resources\AmenityResource\Pages;
 use App\Filament\Resources\AmenityResource\RelationManagers;
 use App\Models\Amenity;
 use App\Models\Property;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -27,112 +28,106 @@ class AmenityResource extends Resource
 
 //    protected static ?string $navigationLabel = 'সুবিধা ও বৈশিষ্ট্য';
 
-    protected static ?string $navigationParentItem = 'Properties';
+    protected static ?string $navigationParentItem = 'My Properties';
 
     public static function form(Form $form): Form
     {
         return $form
             ->columns(3)
             ->schema([
-                Group::make()
-                    ->columnSpan(2)
+                Fieldset::make('Property Selection')
                     ->schema([
-                        Section::make('Property Selection')
-                            ->collapsible()
-                            ->description('Select the property to which these amenities and features will be associated.')
-                            ->schema([
-                                Select::make('property_id')
-                                    ->label('Select Property')
-                                    ->required()
-                                    ->options(fn() => Property::where('is_available', 1)->pluck('title','id')),
-                            ]),
+                        Select::make('property_id')
+                            ->label('Select Property')
+                            ->required()
+                            ->options(fn() => Property::where('is_available', 1)->pluck('title','id')),
+                    ])
+                    ->columns(2),
 
-                        Section::make('Utility Information')
-                            ->collapsed()
-                            ->description('Define the available utility connections and their types within the property.')
-                            ->schema([
-                                Select::make('gas_connection')
+                Fieldset::make('Utility Information')
+                    ->schema([
+                        Select::make('gas_connection')
 //                                ->label('গ্যাস সংযোগ')
-                                    ->helperText('বাড়িতে গ্যাস সরবরাহের পদ্ধতি নির্বাচন করুন')
-                                    ->options([
-                                        'cylinder' => 'সিলিন্ডার',
-                                        'pipeline' => 'পাইপলাইন',
-                                    ]),
+                            ->helperText('বাড়িতে গ্যাস সরবরাহের পদ্ধতি নির্বাচন করুন')
+                            ->options([
+                                'cylinder' => 'সিলিন্ডার',
+                                'pipeline' => 'পাইপলাইন',
+                            ]),
 
-                                Select::make('kitchen_type')
+                        Select::make('kitchen_type')
 //                                ->label('রান্নাঘরের ধরন')
-                                    ->helperText('রান্নাঘরটি সাধারণ নাকি ক্যাবিনেটযুক্ত তা নির্বাচন করুন')
-                                    ->options([
-                                        'general' => 'সাধারণ',
-                                        'cabinet' => 'ক্যাবিনেটযুক্ত',
-                                    ]),
+                            ->helperText('রান্নাঘরটি সাধারণ নাকি ক্যাবিনেটযুক্ত তা নির্বাচন করুন')
+                            ->options([
+                                'general' => 'সাধারণ',
+                                'cabinet' => 'ক্যাবিনেটযুক্ত',
+                            ]),
 
-                                Select::make('electricity_type')
+                        Select::make('electricity_type')
 //                                ->label('বিদ্যুৎ ব্যবস্থার ধরন')
-                                    ->helperText('প্রি-পেইড বা পোস্ট-পেইড বিদ্যুৎ সংযোগ বেছে নিন')
-                                    ->default('postpaid')
-                                    ->options([
-                                        'prepaid' => 'প্রি-পেইড মিটার',
-                                        'postpaid' => 'পোস্ট-পেইড মিটার',
-                                    ]),
+                            ->helperText('প্রি-পেইড বা পোস্ট-পেইড বিদ্যুৎ সংযোগ বেছে নিন')
+                            ->default('postpaid')
+                            ->options([
+                                'prepaid' => 'প্রি-পেইড মিটার',
+                                'postpaid' => 'পোস্ট-পেইড মিটার',
+                            ]),
 
-                                TagsInput::make('water_quality')
-                                    ->splitKeys(['Tab',','])
+                        TagsInput::make('water_quality')
+                            ->splitKeys(['Tab',','])
 //                                ->label('পানির মান')
-                                    ->helperText('যেমন: গভীর নলকূপ, ফিল্টারকৃত, আয়রন মুক্ত অথবা আয়রন আছে ইত্যাদি।'),
+                            ->helperText('যেমন: গভীর নলকূপ, ফিল্টারকৃত, আয়রন মুক্ত অথবা আয়রন আছে ইত্যাদি।'),
 
-                                TextInput::make('water_tank')
-                                    ->numeric()
-//                                ->label('পানির ট্যাঙ্কের ধারণক্ষমতা (লিটার)')
-                                    ->helperText('পানির ট্যাঙ্কের মোট ধারণক্ষমতা সংখ্যায় লিখুন। যেমনঃ ১০০০, ৩০০০, ৫০০০'),
-                            ]),
-                    ]),
+                        TextInput::make('water_tank')
+                            ->numeric()
+                            ->label('Water tank (L)')
+                            ->helperText('পানির ট্যাঙ্কের মোট ধারণক্ষমতা সংখ্যায় লিখুন। যেমনঃ ১০০০, ৩০০০, ৫০০০'),
+                    ])
+                    ->columns(2),
 
-                Group::make()
-                    ->columnSpan(1)
+                Fieldset::make('Nearby & Natural Environment')
                     ->schema([
-                        Section::make('Nearby & Natural Environment')
-                            ->collapsed()
-                            ->description('List the nearby facilities and natural surroundings that enhance the property\'s value and lifestyle.')
-                            ->schema([
-                                TagsInput::make('natural_environments')->splitKeys(['Tab',',']),
-                                TagsInput::make('nearby_facilities')->splitKeys(['Tab',',']),
-                            ]),
+                        TagsInput::make('natural_environments')
+                            ->helperText('উদাহরণ:গাছপালা, খোলা জায়গা, নদী, লেক, পার্ক, পাহাড় ইত্যাদি।')
+                            ->splitKeys(['Tab',',']),
 
-                        Section::make('Backup & Safety Features')
-                            ->collapsed()
-                            ->description('Indicate the backup power systems and security features that ensure comfort and protection.')
-                            ->schema([
-                                TagsInput::make('backup_power')
+                        TagsInput::make('nearby_facilities')
+                            ->helperText('যউদাহরণ:হাসপাতাল, স্কুল, বাজার, মসজিদ, বাসস্ট্যান্ড ইত্যাদি।')
+                            ->splitKeys(['Tab',',']),
+                    ])
+                    ->columns(2),
+
+                Fieldset::make('Backup & Safety Features')
+                    ->schema([
+                        TagsInput::make('backup_power')
+                            ->columnSpanFull()
 //                                ->label('ব্যাকআপ পাওয়ার ব্যবস্থা')
-                                    ->helperText('যেমন: জেনারেটর, IPS, সোলার সিস্টেম')
-                                    ->splitKeys(['Tab',',']),
+                            ->helperText('যেমন: জেনারেটর, IPS, সোলার সিস্টেম')
+                            ->splitKeys(['Tab',',']),
 
-                                Toggle::make('has_lift')
+                        Toggle::make('has_lift')
 //                                ->label('লিফট')
-                                    ->helperText('ভবনে লিফট সুবিধা রয়েছে কিনা'),
+                            ->helperText('ভবনে লিফট সুবিধা রয়েছে কিনা'),
 
-                                Toggle::make('has_parking')
+                        Toggle::make('has_parking')
 //                                ->label('পার্কিং')
-                                    ->helperText ('গাড়ি পার্কিং এর সুবিধা রয়েছে কিনা'),
+                            ->helperText ('গাড়ি পার্কিং এর সুবিধা রয়েছে কিনা'),
 
-                                Toggle::make('has_roof_access')
+                        Toggle::make('has_roof_access')
 //                                ->label('ছাদে প্রবেশাধিকার')
-                                    ->helperText('ভবনের ছাদে প্রবেশের অনুমতি রয়েছে কিনা'),
+                            ->helperText('ভবনের ছাদে প্রবেশের অনুমতি রয়েছে কিনা'),
 
-                                Toggle::make('has_cctv')
+                        Toggle::make('has_cctv')
 //                                ->label('সিসিটিভি')
-                                    ->helperText('ভবনে সিসিটিভি ক্যামেরা রয়েছে কিনা'),
+                            ->helperText('ভবনে সিসিটিভি ক্যামেরা রয়েছে কিনা'),
 
-                                Toggle::make('has_security_guard')
+                        Toggle::make('has_security_guard')
 //                                ->label('নিরাপত্তাকর্মী')
-                                    ->helperText('২৪/৭ নিরাপত্তাকর্মী নিয়োজিত রয়েছে কিনা'),
+                            ->helperText('২৪/৭ নিরাপত্তাকর্মী নিয়োজিত রয়েছে কিনা'),
 
-                                Toggle::make('pets_allowed')
+                        Toggle::make('pets_allowed')
 //                                ->label('পোষা প্রাণী অনুমোদিত')
-                                    ->helperText('এই স্থানে পোষা প্রাণী রাখা অনুমোদিত কিনা'),
-                            ]),
-                    ]),
+                            ->helperText('এই স্থানে পোষা প্রাণী রাখা অনুমোদিত কিনা'),
+                    ])
+                    ->columns(3),
             ]);
     }
 

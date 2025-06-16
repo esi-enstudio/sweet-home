@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -67,22 +68,6 @@ class Property extends Model
         return 'slug'; // Use slug instead of id in routes
     }
 
-    protected function latitude(): Attribute
-    {
-        return Attribute::make(
-            get: fn($value) => rtrim(rtrim($value, '0'), '.'),
-            set: fn($value) => rtrim(rtrim($value, '0'), '.'),
-        );
-    }
-
-    protected function longitude(): Attribute
-    {
-        return Attribute::make(
-            get: fn($value) => rtrim(rtrim($value, '0'), '.'),
-            set: fn($value) => rtrim(rtrim($value, '0'), '.'),
-        );
-    }
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -116,6 +101,11 @@ class Property extends Model
     public function location(): HasOne
     {
         return $this->hasOne(Location::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
     }
 }
 

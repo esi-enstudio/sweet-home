@@ -23,7 +23,7 @@ class RentalTermsResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationParentItem = 'Properties';
+    protected static ?string $navigationParentItem = 'My Properties';
 
     public static function form(Form $form): Form
     {
