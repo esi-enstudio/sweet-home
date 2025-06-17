@@ -45,6 +45,8 @@ class Property extends Model
         'is_urgent',
         'is_available',
         'listing_type',
+        'average_rating',
+        'review_count',
     ];
 
     protected $casts = [
@@ -103,9 +105,22 @@ class Property extends Model
         return $this->hasOne(Location::class);
     }
 
+    /**
+     * একটি বাসার সকল রিভিউ।
+     */
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    /**
+     * গড় রেটিং ক্যালকুলেট করার জন্য একটি Helper মেথড
+     */
+    public function averageRating(): float
+    {
+        // reviews_avg_rating নামে একটি অ্যাট্রিবিউট থাকলে সেটি ব্যবহার করবে,
+        // নাহলে সরাসরি ডাটাবেস থেকে অ্যাভারেজ ক্যালকুলেট করবে।
+        return $this->reviews()->avg('rating') ?? 0;
     }
 }
 

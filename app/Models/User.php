@@ -90,6 +90,9 @@ class User extends Authenticatable implements HasAvatar
         return $this->hasMany(Property::class);
     }
 
+    /**
+     * একজন ইউজারের সকল রিভিউ।
+     */
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);

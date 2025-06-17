@@ -16,10 +16,13 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Property::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(User::class);
-            $table->unsignedTinyInteger('rating')->nullable(); // 1-5
-            $table->text('comment')->nullable();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->unsignedTinyInteger('rating'); // 1-5
+            $table->text('comment');
             $table->timestamps();
+
+            // একজন ইউজার একটি বাসার জন্য মাত্র একবারই রিভিউ দিতে পারবে
+            $table->unique(['property_id', 'user_id']);
         });
     }
 

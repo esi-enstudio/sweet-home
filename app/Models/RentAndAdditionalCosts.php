@@ -9,7 +9,8 @@ class RentAndAdditionalCosts extends Model
 {
     protected  $fillable = [
         'property_id',
-        'monthly_rent',
+        'rent',
+        'rent_type',
         'rent_includes',
         'rent_increase_possibility',
         'is_negotiable',

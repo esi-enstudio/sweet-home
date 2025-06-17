@@ -1,447 +1,1866 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-    <!-- Meta Tags -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Dreams Estate is a powerful real estate template for property listings, rentals, and agency dashboards. Built with HTML, React, Vue, Angular, and Laravel. Ideal for property portals and real estate platforms.">
-    <meta name="keywords" content="real estate template, property management, real estate dashboard, property listings, rental template, agency admin, HTML real estate, React real estate, Vue dashboard, Angular real estate, Laravel property UI">
-    <title>Home | Dreams Estate</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Dreams Technologies">
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ asset('assets/img/favicon.png') }}">
-
-    <!-- Apple Icon -->
-    <link rel="apple-touch-icon" href="{{ asset('assets/img/apple-icon.png') }}">
-
-    <!-- Theme Settings Js -->
-    <script src="{{ asset('assets/js/theme-script.js') }}"></script>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-
-    <!-- Material Icon CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/material-icon/material-icon.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/material/materialdesignicons.css') }}">
-
-    <!-- Fontawesome CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/fontawesome.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome/css/all.min.css') }}">
-
-    <!-- Select2 CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/select2/css/select2.min.css') }}">
-
-    <!-- Fancybox CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/fancybox/jquery.fancybox.min.css') }}">
-
-    <!-- Rangeslider CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/ion-rangeslider/css/ion.rangeSlider.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/ion-rangeslider/css/ion.rangeSlider.min.css') }}">
-
-    <!-- Simplebar CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/simplebar/simplebar.min.css') }}">
-
-    <!-- Aos CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/aos.css') }}">
-
-    <!-- Slick CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/plugins/slick/slick.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/plugins/slick/slick-theme.css') }}">
-
-    <!-- Main CSS -->
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+    <title>Quarter - Real Estate HTML Template</title>
+    <link
+        rel="shortcut icon"
+        href="{{ asset('assets/img/favicon.png') }}"
+        type="image/x-icon"
+    >
+    <link rel="stylesheet" href="{{ asset('assets/css/font-icons.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/nice-select2.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/swiper-bundle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/glightbox.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-
 </head>
-
 <body>
+<!-- header area start -->
+<header class="absolute top-0 left-0 w-full z-xxl bg-gradient-color-2">
+    <!-- navbar main -->
+    <div
+        class="sticky-header sticky-secondary z-xl bg-transparent transition-all duration-700"
+    >
+        <div
+            class="container flex flex-row justify-between items-center relative py-21px"
+        >
+            <!-- logo area -->
+            <div class="mt-10px mb-22px md:mt-0 md:mb-0 leading-1">
+                <a href="index.html">
+                    <img src="{{ asset('assets/img/logo-2.png') }}" alt="" >
+                </a>
+            </div>
+            <nav class="flex-grow hidden xl:block">
+                <ul class="flex items-center justify-end gap-15px xl:gap-5">
+                    <!-- item 1 -->
+                    <li class="relative group">
+                        <a
+                            href="#"
+                            class="text-lg xl:text-15px 2xl:text-lg text-white hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px"
+                        >Home <span class="text-sm font-extrabold -ml-0.5">+</span></a
+                        >
+                        <!-- dropdown -->
+                        <ul
+                            class="py-15px border-t-[5px] border-secondary-color bg-white w-dropdown shadow-box-shadow-4 absolute left-0 top-full opacity-0 invisible translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-xl"
+                        >
+                            <li class="group/nested relative">
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="index.html"
+                                >Home Style 01</a
+                                >
+                                <img
+                                    src="{{ asset('assets/img/home-demos/home-1.jpg') }}"
+                                    alt="#"
+                                    class="w-130px absolute -bottom-2 -right-3 shadow-box-shadow-3 opacity-0 translate-y-1 invisible transition-all duration-300 group-hover/nested:opacity-100 group-hover/nested:visible group-hover/nested:translate-y-0"
+                                >
+                            </li>
+                            <li class="group/nested relative">
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="index-2.html"
+                                >Home Style 02</a
+                                >
+                                <img
+                                    src="{{ asset('assets/img/home-demos/home-2.jpg') }}"
+                                    alt="#"
+                                    class="w-130px absolute -bottom-2 -right-3 shadow-box-shadow-3 opacity-0 translate-y-1 invisible transition-all duration-300 group-hover/nested:opacity-100 group-hover/nested:visible group-hover/nested:translate-y-0"
+                                >
+                            </li>
+                            <li class="group/nested relative">
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="index-3.html"
+                                >Home Style 03</a
+                                >
+                                <img
+                                    src="{{ asset('assets/img/home-demos/home-3.jpg') }}"
+                                    alt="#"
+                                    class="w-130px absolute -bottom-2 -right-3 shadow-box-shadow-3 opacity-0 translate-y-1 invisible transition-all duration-300 group-hover/nested:opacity-100 group-hover/nested:visible group-hover/nested:translate-y-0"
+                                >
+                            </li>
+                            <li class="group/nested relative">
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="index-4.html"
+                                >Home Style 04</a
+                                >
+                                <img
+                                    src="{{ asset('assets/img/home-demos/home-4.jpg') }}"
+                                    alt="#"
+                                    class="w-130px absolute -bottom-2 -right-3 shadow-box-shadow-3 opacity-0 translate-y-1 invisible transition-all duration-300 group-hover/nested:opacity-100 group-hover/nested:visible group-hover/nested:translate-y-0"
+                                >
+                            </li>
+                            <li class="group/nested relative">
+                                <a
+                                    class="whitespace-nowrap px-30px py-2 relative"
+                                    href="index-5.html"
+                                ><span
+                                        class="text-10px uppercase text-white bg-secondary-color px-3px absolute left-5 -top-1 rounded-sm"
+                                    >video</span
+                                    >
+                                    Home Style 05</a
+                                >
+                                <img
+                                    src="{{ asset('assets/img/home-demos/home-5.jpg') }}"
+                                    alt="#"
+                                    class="w-130px absolute -bottom-2 -right-3 shadow-box-shadow-3 opacity-0 translate-y-1 invisible transition-all duration-300 group-hover/nested:opacity-100 group-hover/nested:visible group-hover/nested:translate-y-0"
+                                >
+                            </li>
+                            <li class="group/nested relative">
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="index-6.html"
+                                >Home Style 06</a
+                                >
+                                <img
+                                    src="{{ asset('assets/img/home-demos/home-6.jpg') }}"
+                                    alt="#"
+                                    class="w-130px absolute -bottom-2 -right-3 shadow-box-shadow-3 opacity-0 translate-y-1 invisible transition-all duration-300 group-hover/nested:opacity-100 group-hover/nested:visible group-hover/nested:translate-y-0"
+                                >
+                            </li>
+                            <li class="group/nested relative">
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="index-7.html"
+                                >Home Style 07</a
+                                >
+                                <img
+                                    src="{{ asset('assets/img/home-demos/home-7.jpg') }}"
+                                    alt="#"
+                                    class="w-130px absolute -bottom-2 -right-3 shadow-box-shadow-3 opacity-0 translate-y-1 invisible transition-all duration-300 group-hover/nested:opacity-100 group-hover/nested:visible group-hover/nested:translate-y-0"
+                                >
+                            </li>
+                            <li class="group/nested relative">
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="index-8.html"
+                                >Home Style 08</a
+                                >
+                                <img
+                                    src="{{ asset('assets/img/home-demos/home-8.jpg') }}"
+                                    alt="#"
+                                    class="w-130px absolute -bottom-2 -right-3 shadow-box-shadow-3 opacity-0 translate-y-1 invisible transition-all duration-300 group-hover/nested:opacity-100 group-hover/nested:visible group-hover/nested:translate-y-0"
+                                >
+                            </li>
+                            <li class="group/nested relative">
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="index-9.html"
+                                >Home Style 09</a
+                                >
+                                <img
+                                    src="{{ asset('assets/img/home-demos/home-9.jpg') }}"
+                                    alt="#"
+                                    class="w-130px absolute -bottom-2 -right-3 shadow-box-shadow-3 opacity-0 translate-y-1 invisible transition-all duration-300 group-hover/nested:opacity-100 group-hover/nested:visible group-hover/nested:translate-y-0"
+                                >
+                            </li>
+                            <li class="group/nested relative">
+                                <a
+                                    class="whitespace-nowrap px-30px py-2 relative"
+                                    href="index-10.html"
+                                ><span
+                                        class="text-10px uppercase text-white bg-secondary-color px-3px absolute left-5 -top-1 rounded-sm"
+                                    >map</span
+                                    >
+                                    Home Style 10</a
+                                >
+                                <img
+                                    src="{{ asset('assets/img/home-demos/home-10.jpg') }}"
+                                    alt="#"
+                                    class="w-130px absolute -bottom-2 -right-3 shadow-box-shadow-3 opacity-0 translate-y-1 invisible transition-all duration-300 group-hover/nested:opacity-100 group-hover/nested:visible group-hover/nested:translate-y-0"
+                                >
+                            </li>
+                            <li class="group/nested relative">
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="index-11.html"
+                                >Home Style 11</a
+                                >
+                                <img
+                                    src="{{ asset('assets/img/home-demos/home-11.jpg') }}"
+                                    alt="#"
+                                    class="w-130px absolute -bottom-2 -right-3 shadow-box-shadow-3 opacity-0 translate-y-1 invisible transition-all duration-300 group-hover/nested:opacity-100 group-hover/nested:visible group-hover/nested:translate-y-0"
+                                >
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- item 2 -->
+                    <li class="relative group">
+                        <a
+                            href="#"
+                            class="text-lg xl:text-15px 2xl:text-lg text-white hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px"
+                        >About
+                            <span class="text-sm font-extrabold -ml-0.5">+</span></a
+                        >
+                        <!-- dropdown -->
+                        <ul
+                            class="py-15px border-t-[5px] border-secondary-color bg-white w-dropdown shadow-box-shadow-4 absolute left-0 top-full opacity-0 invisible translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-xl"
+                        >
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="about.html"
+                                >About</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="service.html"
+                                >Services</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="service-details.html"
+                                >Service Details</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="portfolio.html"
+                                >Portfolio</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="portfolio-2.html"
+                                >Portfolio - 02</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="portfolio-details.html"
+                                >Portfolio Details</a
+                                >
+                            </li>
+                            <li>
+                                <a class="whitespace-nowrap px-30px py-2" href="team.html"
+                                >Team</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="team-details.html"
+                                >Team Details</a
+                                >
+                            </li>
+                            <li>
+                                <a class="whitespace-nowrap px-30px py-2" href="faq.html"
+                                >FAQ</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="locations.html"
+                                >Google Map Locations</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
 
-<!-- Begin Wrapper -->
-<div class="main-wrapper">
+                    <!-- item 3 -->
+                    <li class="relative group">
+                        <a
+                            href="#"
+                            class="text-lg xl:text-15px 2xl:text-lg text-white hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px"
+                        >Property
+                            <span class="text-sm font-extrabold -ml-0.5">+</span></a
+                        >
+                        <!-- dropdown -->
+                        <ul
+                            class="py-15px border-t-[5px] border-secondary-color bg-white w-dropdown shadow-box-shadow-4 absolute left-0 top-full opacity-0 invisible translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-xl"
+                        >
+                            <li>
+                                <a class="whitespace-nowrap px-30px py-2" href="shop.html"
+                                >Property Grid</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="shop-list.html"
+                                >Property List</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="shop-grid.html"
+                                >Property No Sidebar</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="shop-left-sidebar.html"
+                                >Property Left sidebar</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="shop-right-sidebar.html"
+                                >Property right sidebar</a
+                                >
+                            </li>
 
-    <!-- Header Start -->
-    <header class="header">
-        <div class="container">
-
-            <nav class="navbar navbar-expand-lg header-nav">
-                <div class="navbar-header">
-                    <a href="{{ route('home') }}" class="navbar-brand logo">
-                        <img src="{{ asset('assets/img/logo.svg') }}" class="img-fluid" alt="Logo">
-                    </a>
-                    <a href="{{ route('home') }}" class="navbar-brand logo-dark">
-                        <img src="{{ asset('assets/img/logo-white.svg') }}" class="img-fluid" alt="Logo">
-                    </a>
-                    <a id="mobile_btn" href="javascript:void(0);">
-                        <i class="material-icons-outlined">menu</i>
-                    </a>
-                </div>
-
-                <div class="main-menu-wrapper">
-
-                    <div class="menu-header">
-                        <a href="{{ route('home') }}" class="menu-logo">
-                            <img src="{{ asset('assets/img/logo.svg') }}" class="img-fluid" alt="Logo">
-                        </a>
-                        <a href="{{ route('home') }}" class="menu-logo menu-logo-dark">
-                            <img src="{{ asset('assets/img/logo-white.svg') }}" class="img-fluid" alt="Logo">
-                        </a>
-                        <a id="menu_close" class="menu-close" href="javascript:void(0);">
-                            <i class="material-icons-outlined">close</i>
-                        </a>
-                    </div>
-                    <div class="mobile-search">
-                        <input type="text" class="form-control form-control-lg" placeholder="Search">
-                    </div>
-
-                    <ul class="main-nav">
-                        <li class="active">
-                            <a href="{{ route('home') }}">Home</a>
-                        </li>
-                        <li class="has-submenu">
-                            <a href="{{ route('listing') }}">Listing</a>
-                        </li>
-
-
-
-                        <li class="has-submenu">
-                            <a href="javascript:void(0);">Agent <i class="material-icons-outlined">expand_more</i></a>
-                            <ul class="submenu">
-                                <li><a href="agent-grid.html">Agent Grid</a></li>
-                                <li><a href="agent-list.html">Agent List</a></li>
-                                <li><a href="agent-grid-sidebar.html">Agent Grid with Sidebar</a></li>
-                                <li><a href="agent-list-sidebar.html">Agent List with Sidebar</a></li>
-                                <li><a href="agent-details.html">Agent Details</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-submenu">
-                            <a href="javascript:void(0);">Agency <i class="material-icons-outlined">expand_more</i></a>
-                            <ul class="submenu">
-                                <li><a href="agency-grid.html">Agency Grid</a></li>
-                                <li><a href="agency-list.html">Agency List</a></li>
-                                <li><a href="agency-grid-sidebar.html">Agency Grid with Sidebar</a></li>
-                                <li><a href="agency-list-sidebar.html">Agency List with Sidebar</a></li>
-                                <li><a href="agency-details.html">Agency Details</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-submenu">
-                            <a href="javascript:void(0);">Pages <i class="material-icons-outlined">expand_more</i></a>
-                            <ul class="submenu">
-                                <li><a href="about-us.html">About Us</a></li>
-                                <li class="has-submenu">
-                                    <a href="javascript:void(0);">Authentication</a>
-                                    <ul class="submenu">
-                                        <li><a href="signup.html">Sign Up</a></li>
-                                        <li><a href="signin.html">Sign In</a></li>
-                                        <li><a href="forgot-password.html">Forgot Password</a></li>
-                                        <li><a href="reset-password.html">Reset Password</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="invoice-details.html">Invoice Details</a></li>
-                                <li><a href="contact-us.html">Contact Us</a></li>
-                                <li><a href="wishlist.html">Wishlist</a></li>
-                                <li class="has-submenu">
-                                    <a href="javascript:void(0);">Error Page</a>
-                                    <ul class="submenu">
-                                        <li><a href="error-404.html">Error 404</a></li>
-                                        <li><a href="error-500.html">Error 500</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="pricing.html">Pricing</a></li>
-                                <li><a href="faq.html">FAQ</a></li>
-                                <li><a href="gallery.html">Gallery</a></li>
-                                <li><a href="our-team.html">Our Team</a></li>
-                                <li><a href="testimonial.html">Testimonials</a></li>
-                                <li><a href="terms-condition.html">Terms & Conditions</a></li>
-                                <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                <li><a href="maintenance.html">Maintenance</a></li>
-                                <li><a href="coming-soon.html">Coming Soon</a></li>
-                            </ul>
-                        </li>
-                        <li class="has-submenu">
-                            <a href="javascript:void(0);">Blog <i class="material-icons-outlined">expand_more</i></a>
-                            <ul class="submenu">
-                                <li><a href="blog-list.html">Blog List</a></li>
-                                <li><a href="blog-grid.html">Blog Grid</a></li>
-                                <li><a href="blog-details.html">Blog Details</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-
-                    <div class="menu-dropdown">
-                        <div class="dropdown mb-2">
-                            <a href="#" class="dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
-                                <img src="{{ asset('assets/img/flags/us.svg') }}" alt="Language" class="me-1" height="16">English
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">
-                                    <img src="{{ asset('assets/img/flags/us.svg') }}" alt="" class="me-2" height="16"> <span class="align-middle">English</span>
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="product-details.html"
+                                >Property details
                                 </a>
-                                <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">
-                                    <img src="{{ asset('assets/img/flags/de.svg') }}" alt="" class="me-2" height="16"> <span class="align-middle">German</span>
+                            </li>
+                            <li class="relative group/nested">
+                                <a class="whitespace-nowrap px-30px py-2" href="#"
+                                >Other Pages
+                                    <span
+                                        class="absolute top-1/2 -translate-y-1/2 right-3 group-hover/nested:text-secondary-color"
+                                    >&gt;&gt;</span
+                                    >
                                 </a>
-                                <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">
-                                    <img src="{{ asset('assets/img/flags/fr.svg') }}" alt="" class="me-2" height="16"> <span class="align-middle">French</span>
-                                </a>
-                                <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">
-                                    <img src="{{ asset('assets/img/flags/ae.svg') }}" alt="" class="me-2" height="16"> <span class="align-middle">Arabic</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                Light
-                            </a>
-                            <ul class="dropdown-menu mt-2">
-                                <li><a class="dropdown-item light-mode" href="javascript:void(0);">Light</a></li>
-                                <li><a class="dropdown-item dark-mode" href="javascript:void(0);">Dark</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                                <!-- dropdown -->
+                                <ul
+                                    class="py-15px border-t-[5px] border-secondary-color w-dropdown shadow-box-shadow-4 absolute left-full top-0 opacity-0 invisible translate-y-[5px] transition-all duration-300 group-hover/nested:opacity-100 group-hover/nested:visible group-hover/nested:translate-y-0 bg-white"
+                                >
+                                    <li>
+                                        <a
+                                            class="whitespace-nowrap px-30px py-2"
+                                            href="cart.html"
+                                        >Cart</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            class="whitespace-nowrap px-30px py-2"
+                                            href="wishlist.html"
+                                        >Wishlist</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            class="whitespace-nowrap px-30px py-2"
+                                            href="checkout.html"
+                                        >Checkout</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            class="whitespace-nowrap px-30px py-2"
+                                            href="order-tracking.html"
+                                        >Order Tracking</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            class="whitespace-nowrap px-30px py-2"
+                                            href="account.html"
+                                        >My Account</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            class="whitespace-nowrap px-30px py-2"
+                                            href="login.html"
+                                        >Sign in</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <a
+                                            class="whitespace-nowrap px-30px py-2"
+                                            href="register.html"
+                                        >Register</a
+                                        >
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
 
-                    <div class="menu-login">
-                        <a href="signin.html" class="btn btn-primary w-100 mb-2">Sign In</a>
-                        <a href="signup.html" class="btn btn-secondary w-100">Register</a>
-                    </div>
-
-                </div>
-
-                <div class="nav header-items">
-
-                    <a href="#" class="topbar-link btn btn-light topbar-search" data-bs-toggle="modal" data-bs-target="#search-modal">
-                        <i class="material-icons-outlined">search</i>
-                    </a>
-
-                    <div class="dropdown topbar-lang">
-                        <a href="#" class="topbar-link btn btn-light" data-bs-toggle="dropdown">
-                            <img src="{{ asset('assets/img/flags/us.svg') }}" alt="Language" height="16">
+                    <!-- item 4 -->
+                    <li class="relative group">
+                        <a
+                            href="#"
+                            class="text-lg xl:text-15px 2xl:text-lg text-white hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px"
+                        >News <span class="text-sm font-extrabold -ml-0.5">+</span></a
+                        >
+                        <!-- dropdown -->
+                        <ul
+                            class="py-15px border-t-[5px] border-secondary-color bg-white w-dropdown shadow-box-shadow-4 absolute left-0 top-full opacity-0 invisible translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-xl"
+                        >
+                            <li>
+                                <a class="whitespace-nowrap px-30px py-2" href="blog.html"
+                                >News</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="blog-grid.html"
+                                >News Grid</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="blog-left-sidebar.html"
+                                >News Left sidebar</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="blog-right-sidebar.html"
+                                >News Right sidebar</a
+                                >
+                            </li>
+                            <li>
+                                <a
+                                    class="whitespace-nowrap px-30px py-2"
+                                    href="blog-details.html"
+                                >News details</a
+                                >
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- item 5 -->
+                    <li class="group">
+                        <a
+                            href="#"
+                            class="text-lg xl:text-15px 2xl:text-lg text-white hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px"
+                        >Pages
+                            <span class="text-sm font-extrabold -ml-0.5">+</span></a
+                        >
+                        <!-- dropdown -->
+                        <ul
+                            class="container w-full px-0 py-15px border-t-[5px] border-secondary-color bg-white shadow-box-shadow-4 absolute left-0 top-full opacity-0 invisible translate-y-4 transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:-translate-y-4 grid grid-cols-4 z-xl"
+                        >
+                            <li class="pr-3 pt-3 pl-30px">
+                                <ul>
+                                    <li>
+                                        <a
+                                            class="whitespace-nowrap px-10px py-6px bg-section-bg-1 border-b !border-dashed border-border-dashed w-full"
+                                            href="#"
+                                        >Inner Pages</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <ul class="py-15px">
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="portfolio.html"
+                                                >Portfolio</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="portfolio-2.html"
+                                                >Portfolio - 02</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="portfolio-details.html"
+                                                >Portfolio Details</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="team.html"
+                                                >Team</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="team-details.html"
+                                                >Team Details</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="faq.html"
+                                                >FAQ</a
+                                                >
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="pr-3 pt-3 pl-30px">
+                                <ul>
+                                    <li>
+                                        <a
+                                            class="whitespace-nowrap px-10px py-6px bg-section-bg-1 border-b !border-dashed border-border-dashed w-full"
+                                            href="#"
+                                        >Inner Pages</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <ul class="py-15px">
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="history.html"
+                                                >History</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="add-listing.html"
+                                                >Add Listing</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="locations.html"
+                                                >Google Map Locations</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="404.html"
+                                                >404</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="contact.html"
+                                                >Contact</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="coming-soon.html"
+                                                >Coming Soon</a
+                                                >
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="pr-3 pt-3 pl-30px">
+                                <ul>
+                                    <li>
+                                        <a
+                                            class="whitespace-nowrap px-10px py-6px bg-section-bg-1 border-b !border-dashed border-border-dashed w-full"
+                                            href="#"
+                                        >Shop Pages</a
+                                        >
+                                    </li>
+                                    <li>
+                                        <ul class="py-15px">
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="shop.html"
+                                                >Shop</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="shop-left-sidebar.html"
+                                                >Shop Left sidebar</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="shop-right-sidebar.html"
+                                                >Shop right sidebar</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="shop-grid.html"
+                                                >Shop Grid</a
+                                                >
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="product-details.html"
+                                                >Shop details
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a
+                                                    class="whitespace-nowrap px-10px py-2"
+                                                    href="cart.html"
+                                                >Cart</a
+                                                >
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="pr-3 pt-3 pl-30px">
+                                <a
+                                    class="whitespace-nowrap p-10px bg-section-bg-1 border-b !border-dashed border-border-dashed w-full"
+                                    href="shop.html"
+                                ><img
+                                        src="{{ asset('assets/img/banner/menu-banner-1.jpg') }}"
+                                        alt=""
+                                        class="w-full inline-block"
+                                    ></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- item 6 -->
+                    <li>
+                        <a
+                            href="contact.html"
+                            class="text-lg xl:text-15px 2xl:text-lg text-white hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px"
+                        >Contact
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">
-                                <img src="{{ asset('assets/img/flags/us.svg') }}" alt="" class="me-2" height="16"> <span class="align-middle">English</span>
-                            </a>
-                            <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">
-                                <img src="{{ asset('assets/img/flags/de.svg') }}" alt="" class="me-2" height="16"> <span class="align-middle">German</span>
-                            </a>
-                            <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">
-                                <img src="{{ asset('assets/img/flags/fr.svg') }}" alt="" class="me-2" height="16"> <span class="align-middle">French</span>
-                            </a>
-                            <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center">
-                                <img src="{{ asset('assets/img/flags/ae.svg') }}" alt="" class="me-2" height="16"> <span class="align-middle">Arabic</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="dropdown">
-                        <a href="javascript:void(0);" class="topbar-link btn btn-light" data-bs-toggle="dropdown">
-                            <i class="material-icons-outlined">wb_sunny</i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center" id="light-mode-toggle">
-                                <i class="material-icons-outlined me-2">wb_sunny</i> <span class="align-middle">Light Mode</span>
-                            </a>
-                            <a href="javascript:void(0);" class="dropdown-item d-flex align-items-center" id="dark-mode-toggle">
-                                <i class="material-icons-outlined me-2">dark_mode</i> <span class="align-middle">Dark Mode</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <a href="signup.html" class="btn btn-lg btn-primary d-inline-flex align-items-center"><i class="material-icons-outlined me-1">lock</i>Sign In</a>
-
-                    <a href="signin.html" class="btn btn-lg btn-dark d-inline-flex align-items-center"><i class="material-icons-outlined me-1">perm_identity</i>Register</a>
-
-                </div>
+                    </li>
+                </ul>
             </nav>
-
+            <!-- header right -->
+            <div>
+                <ul class="flex items-center gap-10px">
+                    <li class="hidden xl:block">
+                        <a
+                            href="add-listing.html"
+                            class="px-30px py-14px ml-43px text-lg xl:text-15px 2xl:text-lg bg-secondary-color hover:bg-section-bg-1 font-semibold text-white hover:text-primary-color inline-block"
+                        >Add Listing</a
+                        >
+                    </li>
+                    <li class="block xl:hidden">
+                        <div
+                            class="show-drawer d-xl-none h-50px w-50px text-heading-color shadow-box-shadow-1 flex justify-center items-center transition-all duration-300 relative bg-white"
+                        >
+                            <a href="#ltn__utilize-drawer " class="utilize-toggle">
+                                <svg viewBox="0 0 800 600">
+                                    <path
+                                        d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200"
+                                        id="top"
+                                    ></path>
+                                    <path d="M300,320 L540,320" id="middle"></path>
+                                    <path
+                                        d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190"
+                                        id="bottom"
+                                        transform="translate(480, 320) scale(1, -1) translate(-480, -318) "
+                                    ></path>
+                                </svg>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </header>
-    <!-- Header End -->
+    </div>
 
-    {{ $slot }}
+    <!-- mobile menu -->
+    <div class="drawer-container mobile-menu-container">
+        <div
+            class="drawer-overlay fixed top-0 left-0 w-full h-full bg-black -z-1 close-drawer opacity-0 transition-all duration-300 invisible cursor-zoom-out block xl:hidden"
+        ></div>
+        <div
+            class="drawer mobile-menu fixed top-0 -left-[300px] xs:-left-[400px] px-5 xs:px-10 py-50px w-300px xs:w-100 h-full transition-all duration-500 shadow-dropdown-secodary bg-whiteColor z-high block xl:hidden bg-white"
+        >
+            <div class="pr-15px overflow-auto h-full">
+                <!-- mobile menu wrapper -->
+                <div>
+                    <!-- mobile logo area -->
+                    <div
+                        class="flex justify-between items-center border-b border-border-primary pt-3px pb-10px mb-25px"
+                    >
+                        <div>
+                            <a href="index.html">
+                                <img src="{{ asset('assets/img/logo.png') }}" alt="" >
+                            </a>
+                        </div>
+                        <div>
+                            <button class="close-drawer text-black text-3xl px-15px py-2">
+                                ×
+                            </button>
+                        </div>
+                    </div>
 
+                    <!-- search input  -->
+                    <div class="mb-50px">
+                        <form class="w-full relative">
+                            <input
+                                type="text"
+                                placeholder="Search..."
+                                class="text-sm text-paragraph-color pl-5 pr-50px placeholder:text-paragraph-color outline-none border-2 border-border-color-9 focus:border focus:border-secondary-color h-65px block w-full rounded-none"
+                            >
+                            <button
+                                type="submit"
+                                class="absolute top-1/2 -translate-y-1/2 right-7 text-heading-color"
+                            >
+                                <i class="icon-search text-lg font-bold"></i>
+                            </button>
+                        </form>
+                    </div>
 
-    <!-- Start Footer -->
-    <footer class="footer footer-dark">
-        <div class="footer-bg">
-            <img src="{{ asset('assets/img/bg/footer-bg-01.png') }}" class="bg-1" alt="">
-            <img src="{{ asset('assets/img/bg/footer-bg-02.png') }}" class="bg-2" alt="">
-        </div>
-
-        <!-- Footer Top -->
-        <div class="footer-top">
-            <div class="container">
-                <div class="row row-gap-4">
-                    <div class="col-lg-4 col-md-6 col-sm-8">
-                        <div class="footer-widget footer-about">
-                            <h5>Get Our App </h5>
-                            <p>Download the app and book your property</p>
-                            <div class="download-app">
-                                <a href="javascript:void(0);"><img src="{{ asset('assets/img/icons/goolge-play.svg') }}" alt="google play"></a>
-                                <a href="javascript:void(0);"><img src="{{ asset('assets/img/icons/app-store.svg') }}" alt="app store"></a>
-                            </div>
-                            <div class="social-links">
-                                <h5>Connect with us</h5>
-                                <div class="social-icon">
-                                    <a href="javascript:void(0);"><i class="fa-brands fa-facebook"></i></a>
-                                    <a href="javascript:void(0);"><i class="fa-brands fa-x-twitter"></i></a>
-                                    <a href="javascript:void(0);"><i class="fa-brands fa-instagram"></i></a>
-                                    <a href="javascript:void(0);"><i class="fa-brands fa-linkedin"></i></a>
-                                    <a href="javascript:void(0);"><i class="fa-brands fa-pinterest"></i></a>
+                    <!-- mobile menu accordions -->
+                    <div
+                        class="border-b border-border-primary dark:border-borderColor-dark pb-8"
+                    >
+                        <ul class="accordion-container">
+                            <li class="accordion mt-4">
+                                <!-- accordion header -->
+                                <div
+                                    class="accordion-controller flex items-center justify-between cursor-pointer hover:text-secondary-color uppercase text-sm lg:text-base py-2 lg:py-2.5"
+                                >
+                                    Home
+                                    <button class="px-3 h-full">
+                        <span
+                            class="w-[10px] h-0.5 bg-gray1 block dark:bg-whiteColor bg-opacity-75"
+                        ></span
+                        ><span
+                                            class="w-[10px] h-0.5 bg-gray1 block dark:bg-whiteColor bg-opacity-75 rotate-90 -mt-[2px] transition-all duration-500"
+                                        ></span>
+                                    </button>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-6 col-sm-4">
-                        <div class="footer-widget">
-                            <h5 class="footer-title">Pages</h5>
-                            <ul class="footer-menu">
-                                <li><a href="our-team.html">Our Team</a></li>
-                                <li><a href="pricing.html">Pricing Plans</a></li>
-                                <li><a href="gallery.html">Gallery</a></li>
-                                <li><a href="javascript:void(0);">Settings</a></li>
-                                <li><a href="javascript:void(0);">Profile</a></li>
-                                <li><a href="buy-property-list.html">Listings</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-4 col-sm-4">
-                        <div class="footer-widget">
-                            <h5 class="footer-title">Company</h5>
-                            <ul class="footer-menu">
-                                <li><a href="about-us.html">About Us</a></li>
-                                <li><a href="javascript:void(0);">Careers</a></li>
-                                <li><a href="blog-grid.html">Blog</a></li>
-                                <li><a href="javascript:void(0);">Affiliate Program</a></li>
-                                <li><a href="add-property-buy.html">Add Your Listing</a></li>
-                                <li><a href="javascript:void(0);">Our Partners</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-4 col-sm-4">
-                        <div class="footer-widget">
-                            <h5 class="footer-title">Destinations</h5>
-                            <ul class="footer-menu">
-                                <li><a href="javascript:void(0);">Hawai</a></li>
-                                <li><a href="javascript:void(0);">Istanbul</a></li>
-                                <li><a href="javascript:void(0);">San Diego</a></li>
-                                <li><a href="javascript:void(0);">Belgium</a></li>
-                                <li><a href="javascript:void(0);">Newyork</a></li>
-                                <li><a href="javascript:void(0);">Los Angeles</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-md-4 col-sm-4">
-                        <div class="footer-widget">
-                            <h5 class="footer-title">Useful Links</h5>
-                            <ul class="footer-menu">
-                                <li><a href="javascript:void(0);">Legal Notice</a></li>
-                                <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                                <li><a href="terms-condition.html">Terms & Conditions</a></li>
-                                <li><a href="javascript:void(0);">Support</a></li>
-                                <li><a href="javascript:void(0);">Refund Policy</a></li>
-                                <li><a href="contact-us.html">Contact Us</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Footer Top -->
+                                <!-- accordion content -->
+                                <div
+                                    class="accordion-content h-0 overflow-hidden transition-all duration-500"
+                                >
+                                    <div class="content-wrapper pl-15px">
+                                        <ul>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
 
-        <!-- Footer Bottom -->
-        <div class="footer-bottom">
-            <div class="container">
-                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
-                    <div class="copyright">
-                        <p>Copyright &copy; <script type="a7db253fd77adcde08f56921-text/javascript">document.write(new Date().getFullYear())</script>. All Rights Reserved, Dreams Estate</p>
+                                                <a
+                                                    href="index.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Home Style 01</a
+                                                >
+                                            </li>
+                                            <li class="accordion mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="index-2.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Home Style 02</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="index-3.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Home Style 03</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="index-4.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Home Style 04</a
+                                                >
+                                            </li>
+                                            <li class="mt-4 relative">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="index-5.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                ><span
+                                                        class="text-10px uppercase text-white bg-secondary-color px-3px absolute -left-2 -top-3 rounded-sm"
+                                                    >video</span
+                                                    >
+                                                    Home Style 05</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="index-6.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Home Style 06</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="index-7.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Home Style 07</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="index-8.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Home Style 08</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="index-9.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Home Style 09</a
+                                                >
+                                            </li>
+                                            <li class="mt-4 relative">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="index-10.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                ><span
+                                                        class="text-10px uppercase text-white bg-secondary-color px-3px absolute -left-2 -top-3 rounded-sm"
+                                                    >map</span
+                                                    >
+                                                    Home Style 10</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="index-11.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Home Style 11</a
+                                                >
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="accordion mt-4">
+                                <!-- accordion header -->
+                                <div
+                                    class="accordion-controller flex items-center justify-between cursor-pointer hover:text-secondary-color uppercase text-sm lg:text-base py-2 lg:py-2.5"
+                                >
+                                    About
+                                    <button class="px-3 h-full">
+                        <span
+                            class="w-[10px] h-0.5 bg-gray1 block dark:bg-whiteColor bg-opacity-75"
+                        ></span
+                        ><span
+                                            class="w-[10px] h-0.5 bg-gray1 block dark:bg-whiteColor bg-opacity-75 rotate-90 -mt-[2px] transition-all duration-500"
+                                        ></span>
+                                    </button>
+                                </div>
+                                <!-- accordion content -->
+                                <div
+                                    class="accordion-content h-0 overflow-hidden transition-all duration-500"
+                                >
+                                    <div class="content-wrapper pl-15px">
+                                        <ul>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="about.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >About1</a
+                                                >
+                                            </li>
+                                            <li class="accordion mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="service.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Services</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="service-details.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Service Details</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="portfolio.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Portfolio</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="portfolio-2.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >
+                                                    Portfolio - 02</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="portfolio-details.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Portfolio Details</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="team.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Team</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="team-details.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Team Details</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="faq.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >FAQ</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="locations.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Google Map Locations</a
+                                                >
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="accordion mt-4">
+                                <!-- accordion header -->
+                                <div
+                                    class="accordion-controller flex items-center justify-between cursor-pointer hover:text-secondary-color uppercase text-sm lg:text-base py-2 lg:py-2.5"
+                                >
+                                    Property
+                                    <button class="px-3 h-full">
+                        <span
+                            class="w-[10px] h-0.5 bg-gray1 block dark:bg-whiteColor bg-opacity-75"
+                        ></span
+                        ><span
+                                            class="w-[10px] h-0.5 bg-gray1 block dark:bg-whiteColor bg-opacity-75 rotate-90 -mt-[2px] transition-all duration-500"
+                                        ></span>
+                                    </button>
+                                </div>
+                                <!-- accordion content -->
+                                <div
+                                    class="accordion-content h-0 overflow-hidden transition-all duration-500"
+                                >
+                                    <div class="content-wrapper pl-15px">
+                                        <ul>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="shop.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Property Grid</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="shop-list.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Property List</a
+                                                >
+                                            </li>
+                                            <li class="accordion mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="shop-grid.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Property No Sidebar</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="shop-left-sidebar.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Property Left sidebar</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="shop-right-sidebar.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Property right sidebar</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="product-details.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >
+                                                    Property details
+                                                </a>
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="cart.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Cart</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="wishlist.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Wishlist</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="checkout.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Checkout</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="order-tracking.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Order Tracking</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="account.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >My Account</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="login.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Sign in</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="register.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Register</a
+                                                >
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="accordion mt-4">
+                                <!-- accordion header -->
+                                <div
+                                    class="accordion-controller flex items-center justify-between cursor-pointer hover:text-secondary-color uppercase text-sm lg:text-base py-2 lg:py-2.5"
+                                >
+                                    News
+                                    <button class="px-3 h-full">
+                        <span
+                            class="w-[10px] h-0.5 bg-gray1 block dark:bg-whiteColor bg-opacity-75"
+                        ></span
+                        ><span
+                                            class="w-[10px] h-0.5 bg-gray1 block dark:bg-whiteColor bg-opacity-75 rotate-90 -mt-[2px] transition-all duration-500"
+                                        ></span>
+                                    </button>
+                                </div>
+                                <!-- accordion content -->
+                                <div
+                                    class="accordion-content h-0 overflow-hidden transition-all duration-500"
+                                >
+                                    <div class="content-wrapper pl-15px">
+                                        <ul>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="blog.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >News</a
+                                                >
+                                            </li>
+                                            <li class="accordion mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="blog-grid.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >News Grid</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="blog-left-sidebar.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >News Left sidebar</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="blog-right-sidebar.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >News Right sidebar</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="blog-details.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >
+                                                    News details</a
+                                                >
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="accordion mt-4">
+                                <!-- accordion header -->
+                                <div
+                                    class="accordion-controller flex items-center justify-between cursor-pointer hover:text-secondary-color uppercase text-sm lg:text-base py-2 lg:py-2.5"
+                                >
+                                    Pages
+                                    <button class="px-3 h-full">
+                        <span
+                            class="w-[10px] h-0.5 bg-gray1 block dark:bg-whiteColor bg-opacity-75"
+                        ></span
+                        ><span
+                                            class="w-[10px] h-0.5 bg-gray1 block dark:bg-whiteColor bg-opacity-75 rotate-90 -mt-[2px] transition-all duration-500"
+                                        ></span>
+                                    </button>
+                                </div>
+                                <!-- accordion content -->
+                                <div
+                                    class="accordion-content h-0 overflow-hidden transition-all duration-500"
+                                >
+                                    <div class="content-wrapper pl-15px">
+                                        <ul>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="about.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >About</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="service.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Services</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="service-details.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Service Details</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="portfolio.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Portfolio</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="portfolio-2.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >
+                                                    Portfolio - 02</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="portfolio-details.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Portfolio Details</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="team.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Team</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="team-details.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Team Details</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="faq.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >FAQ</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="history.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >History</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="add-listing.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Add Listing</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="locations.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Google Map Locations</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="404.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >404</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="contact.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Contact</a
+                                                >
+                                            </li>
+                                            <li class="mt-4">
+                                                <!-- accordion header -->
+
+                                                <a
+                                                    href="coming-soon.html"
+                                                    class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
+                                                >Coming Soon</a
+                                                >
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="mt-4">
+                                <!-- accordion header -->
+                                <a
+                                    href="contact.html"
+                                    class="accordion-controller flex items-center justify-between cursor-pointer hover:text-secondary-color uppercase text-sm lg:text-base py-2 lg:py-2.5"
+                                >
+                                    CONTACT</a
+                                >
+                            </li>
+                        </ul>
                     </div>
-                    <div class="company-logo">
-                        <p>Product of
-                            <a href="https://dreamstechnologies.com/" class="link-primary" target="_blank">Dreams Technologies</a></p>
+
+                    <!-- my account -->
+                    <div>
+                        <ul class="mb-30px pb-5 pt-5px border-b border-border-primary">
+                            <li class="group mt-4">
+                                <!-- accordion header -->
+                                <a href="account.html" class="text-sm lg:text-base">
+                      <span
+                          class="inline-block h-50px w-50px border-2 border-border-color-1 text-center leading-50px mr-3"
+                      >
+                        <i class="far fa-user"></i>
+                      </span>
+                                    My Account
+                                </a>
+                            </li>
+                            <li class="group mt-4">
+                                <!-- accordion header -->
+                                <a href="wishlist.html#" class="text-sm lg:text-base">
+                      <span
+                          class="inline-block h-50px w-50px border-2 border-border-color-1 text-center leading-50px mr-3"
+                      >
+                        <i class="far fa-heart"></i><sup class="pl-0.5">3</sup>
+                      </span>
+                                    Wishlist
+                                </a>
+                            </li>
+                            <li class="group mt-4">
+                                <!-- accordion header -->
+                                <a href="cart.html" class="text-sm lg:text-base">
+                      <span
+                          class="inline-block h-50px w-50px border-2 border-border-color-1 text-center leading-50px mr-3"
+                      >
+                        <i class="fas fa-shopping-cart"></i>
+                        <sup>5</sup>
+                      </span>
+                                    Shoping Cart
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                </div>
-            </div>
-        </div>
-        <!-- /Footer Bottom -->
-
-    </footer>
-    <!-- End Footer -->
-
-
-    <!-- Search Modal -->
-    <div class="modal fade" id="search-modal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog  modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-body search-wrap">
-                    <form class="search-form" id="search-form" action="https://dreamsestate.dreamstechnologies.com/html/rent-property-grid.html">
-                        <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h5>What Are You Looking for?</h5>
-                            <a href="javascript:void(0);" class="close" data-bs-dismiss="modal"><i class="material-icons-outlined">close</i></a>
-                        </div>
-                        <div class="input-group input-group-flat">
-                            <input type="text" class="form-control" placeholder="Type a Keyword....">
-                            <span class="input-group-text">
-									<i class="material-icons-outlined">search</i>
-								</span>
-                        </div>
-                        <h6>Popular Properties</h6>
-                        <div class="search-list">
-                            <p><a href="rent-property-grid.html">Beautiful Condo Room</a></p>
-                            <p><a href="rent-property-grid.html">Royal Apartment</a></p>
-                            <p><a href="rent-property-grid.html">Grand Villa House</a></p>
-                            <p><a href="rent-property-grid.html">Grand Mahaka</a></p>
-                            <p><a href="rent-property-grid.html">Lunaria Residence</a></p>
-                            <p><a href="rent-property-grid.html">Stephen Alexander Homes</a></p>
-                        </div>
-                    </form>
+                    <!-- Mobile menu social area -->
+                    <div>
+                        <ul class="flex gap-3 items-center pt-4">
+                            <li>
+                                <a
+                                    class="h-10 w-10 bg-section-bg-1 hover:bg-secondary-color hover:text-white text-center text-sm lg:text-base"
+                                    href="https://www.facebook.com/"
+                                ><i class="fab fa-facebook-f leading-10"></i
+                                    ></a>
+                            </li>
+                            <li>
+                                <a
+                                    class="h-10 w-10 bg-section-bg-1 hover:bg-secondary-color hover:text-white text-center text-sm lg:text-base"
+                                    href="https://www.twiter.com/"
+                                ><i class="fab fab fa-twitter leading-10"></i
+                                    ></a>
+                            </li>
+                            <li>
+                                <a
+                                    class="h-10 w-10 bg-section-bg-1 hover:bg-secondary-color hover:text-white text-center text-sm lg:text-base"
+                                    href="https://www.linkedin.com/"
+                                ><i class="fab fa-linkedin leading-10"></i
+                                    ></a>
+                            </li>
+                            <li>
+                                <a
+                                    class="h-10 w-10 bg-section-bg-1 hover:bg-secondary-color hover:text-white text-center text-sm lg:text-base"
+                                    href="https://www.instagram.com/"
+                                ><i class="fab fa-instagram leading-10"></i
+                                    ></a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- End Search Modal -->
+</header>
+<!-- header area end -->
+<!-- main body start -->
 
-</div>
-<!-- End Wrapper -->
+{{ $slot }}
 
-<!-- jQuery -->
-<script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
+<!-- footer start -->
+<footer>
+    <div
+        class="pt-187px pb-5 px-15px 3xl:px-[2%] 4xl:px-[5%] mt-95px bg-section-bg-2 text-sm lg:text-base text-white relative"
+    >
+        <div class="px-15px">
+            <!-- footer top -->
+            <div
+                class="container w-full absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            >
+                <div
+                    class="px-25px lg:px-60px py-50px bg-secondary-color text-white flex justify-center lg:justify-between items-center flex-col lg:flex-row gap-y-30px lg:gap-0 sm:whitespace-nowrap"
+                >
+                    <div>
+                        <h5
+                            class="text-xl md:text-26px lg:text-3xl xl:text-4xl text-white font-bold mb-15px"
+                        >
+                            <span class="leading-1.3">Looking for a dream home?</span>
+                        </h5>
+                        <p class="text-white leading-1.8">
+                            We can help you realize your dream of a new home
+                        </p>
+                    </div>
+                    <div>
+                        <h5
+                            class="capitalize inline-block text-sm md:text-base text-primary-color hover:text-white hover:bg-primary-color relative group whitespace-nowrap font-normal transition-all duration-300 shadow-box-shadow-3 mb-0"
+                        >
+                  <span
+                      class="inline-block absolute top-0 right-0 w-full h-full bg-white group-hover:bg-secondary-color z-1 group-hover:w-0 transition-all duration-300"
+                  ></span>
+                            <a
+                                href="contact.html"
+                                class="relative z-10 px-5 md:px-25px lg:px-10 py-10px md:py-3 lg:py-17px group-hover:text-white leading-23px"
+                            >Explore Properties <i class="icon-next"></i
+                                ></a>
+                        </h5>
+                    </div>
+                </div>
+            </div>
 
-<!-- Bootstrap Core JS -->
-<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+            <!-- footer main -->
+            <div
+                class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-12 gap-x-30px text-sm lg:text-base text-white"
+            >
+                <!-- footer about-->
+                <div class="xl:col-start-1 xl:col-span-3 mb-60px lg:pr-35px">
+                    <div class="mb-15px">
+                        <a href="index.html">
+                            <img src="{{ asset('assets/img/logo-2.png') }}" alt="" >
+                        </a>
+                        <p class="leading-1.8 mb-5 lg:mb-25px text-white">
+                            Lorem Ipsum is simply dummy text of the and typesetting
+                            industry. Lorem Ipsum is dummy text of the printing.
+                        </p>
+                        <ul class="space-y-2">
+                            <li>
+                                <p class="leading-1.8 text-white flex">
+                                    <i class="icon-placeholder mr-15px mt-1"></i>
+                                    <span>Brooklyn, New York, United States</span>
+                                </p>
+                            </li>
+                            <li>
+                                <a href="tel:+0123-456789" class="leading-1.8 flex">
+                                    <i class="icon-call mr-15px mt-1"></i>
+                                    <span>+0123-456789</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    href="mailto:example@example.com"
+                                    class="leading-1.8 flex"
+                                >
+                                    <i class="icon-mail mr-15px mt-1"></i>
+                                    <span>example@example.com</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="flex items-center gap-x-5 mt-5">
+                            <li>
+                                <a href="https://www.facebook.com/" class="leading-1.8">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://x.com/" class="leading-1.8">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.linkedin.com/" class="leading-1.8">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.youtube.com/" class="leading-1.8">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- footer company-->
+                <div class="xl:col-start-4 xl:col-span-2 mb-60px">
+                    <h3 class="text-22px font-bold mb-25px text-white">
+                        <span class="leading-1.3"> Company </span>
+                    </h3>
+                    <ul class="space-y-[15px]">
+                        <li>
+                            <a
+                                href="about.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                About</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="blog.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                Blog</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="shop.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                All Products</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="locations.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                Locations Map</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="faq.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                FAQ</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="contact.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                Contact us</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+                <!-- footer services-->
+                <div class="xl:col-start-6 xl:col-span-2 mb-60px">
+                    <h3 class="text-22px font-bold mb-25px text-white">
+                        <span class="leading-1.3"> Services </span>
+                    </h3>
+                    <ul class="space-y-[15px]">
+                        <li>
+                            <a
+                                href="order-tracking.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                Order tracking</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="wishlist.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                Wish List</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="login.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                Login</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="account.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                My account</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="about.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                Terms & Conditions</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="about.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                Promotional Offers</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+                <!-- footer customer care-->
+                <div class="xl:col-start-8 xl:col-span-2 mb-60px">
+                    <h3 class="text-22px font-bold mb-25px text-white">
+                        <span class="leading-1.3"> Customer Care </span>
+                    </h3>
+                    <ul class="space-y-[15px]">
+                        <li>
+                            <a
+                                href="login.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                Login</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="account.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                My account</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="wishlist.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                Wish List</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="order-tracking.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                Order tracking</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="faq.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                FAQ</a
+                            >
+                        </li>
+                        <li>
+                            <a
+                                href="contact.html"
+                                class="hover:text-secondary-color -translate-x-5 hover:translate-x-0 group leading-1.8"
+                            ><span
+                                    class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
+                                >//</span
+                                >
+                                Contact us</a
+                            >
+                        </li>
+                    </ul>
+                </div>
+                <!-- footer newsletter-->
+                <div class="xl:col-start-10 xl:col-span-3 mb-60px">
+                    <h3 class="text-22px font-bold mb-25px text-white">
+                        <span class="leading-1.3"> Newsletter </span>
+                    </h3>
+                    <p class="leading-1.8 mb-5 lg:mb-25px text-white">
+                        Subscribe to our weekly Newsletter and receive updates via
+                        email.
+                    </p>
 
-<!-- Select2 JS -->
-<script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
+                    <!-- subscription input  -->
+                    <div>
+                        <form class="w-full relative">
+                            <input
+                                type="text"
+                                placeholder="Email*"
+                                class="w-full text-sm text-paragraph-color pl-5 pr-50px placeholder:text-paragraph-color outline-none border-2 border-border-color-9 focus:border focus:border-secondary-color h-65px block rounded-none"
+                            >
+                            <button
+                                type="submit"
+                                class="absolute top-0 right-0 h-full px-18px text-white bg-secondary-color hover:bg-primary-color"
+                            >
+                                <i class="fas fa-location-arrow text-lg font-bold"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <!-- payment methods -->
+                    <div>
+                        <h3
+                            class="text-base lg:text-lg font-bold mt-30px mb-15px text-white"
+                        >
+                            <span class="leading-1.3"> We Accept </span>
+                        </h3>
+                        <img
+                            src="{{ asset('assets/img/icons/payment-4.png') }}"
+                            alt="Payment Image"
+                        >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- footer copyright -->
+    <div
+        class="py-25px px-15px 3xl:px-[2%] 4xl:px-[5%] bg-section-bg-7 text-sm lg:text-base text-white"
+    >
+        <div class="px-15px">
+            <div class="grid grid-cols-1 md:grid-cols-2">
+                <div>
+                    <p class="leading-1.8 text-center lg:text-start text-white">
+                        All Rights Reserved @ Company 2024
+                    </p>
+                </div>
 
-<!-- Sticky Sidebar JS -->
-<script src="{{ asset('assets/plugins/theia-sticky-sidebar/ResizeSensor.js') }}"></script>
-<script src="{{ asset('assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js') }}"></script>
+                <ul
+                    class="flex gap-x-25px items-center justify-center lg:justify-end capitalize font-semibold font-poppins text-sm"
+                >
+                    <li>
+                        <a href="#" class="leading-1.8">Terms & Conditions</a>
+                    </li>
+                    <li>
+                        <a href="#" class="leading-1.8"> Claim</a>
+                    </li>
+                    <li>
+                        <a href="#" class="leading-1.8"> Privacy & Policy</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
 
-<!-- Rangeslider JS -->
-<script src="{{ asset('assets/plugins/ion-rangeslider/js/ion.rangeSlider.js') }}"></script>
-<script src="{{ asset('assets/plugins/ion-rangeslider/js/custom-rangeslider.js') }}"></script>
-<script src="{{ asset('assets/plugins/ion-rangeslider/js/ion.rangeSlider.min.js') }}"></script>
+<!-- scroll top -->
+<button
+    class="scroll-up w-30px h-30px lg:w-10 lg:h-10 lg:text-xl bg-section-bg-1 text-heading-color hover:bg-secondary-color hover:text-white rotate-[45deg] shadow-box-shadow-3 fixed bottom-[50px] lg:bottom-[70px] right-[3%] flex justify-center items-center z-xl"
+>
+    <i class="fa fa-angle-up leading-1 -rotate-[45deg] inline-block"></i>
+</button>
 
-<!-- Simplebar JS -->
-<script src="{{ asset('assets/plugins/simplebar/simplebar.min.js') }}"></script>
+<script src="{{ asset('assets/js/stickyHeader.js') }}"></script>
+<script src="{{ asset('assets/js/accordion.js') }}"></script>
+<script src="{{ asset('assets/js/service.js') }}"></script>
+<script src="{{ asset('assets/js/nice-select2.js') }}"></script>
+<script src="{{ asset('assets/js/search.js') }}"></script>
+<script src="{{ asset('assets/js/drawer.js') }}"></script>
+<script src="{{ asset('assets/js/swiper-bundle.min.js') }}"></script>
+<script src="{{ asset('assets/js/silder.js') }}"></script>
+<script src="{{ asset('assets/js/counterup.js') }}"></script>
+<script src="{{ asset('assets/js/modal.js') }}"></script>
+<script src="{{ asset('assets/js/tabs.js') }}"></script>
 
-<!-- Slick Slider -->
-<script src="{{ asset('assets/plugins/slick/slick.js') }}"></script>
+<script src="{{ asset('assets/js/glightbox.min.js') }}"></script>
+<script src="{{ asset('assets/js/scrollUp.js') }}"></script>
+<script src="{{ asset('assets/js/smoothScroll.js') }}"></script>
+<script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
+<script src="{{ asset('assets/js/filter.js') }}"></script>
+<script src="{{ asset('assets/js/nice_checkbox.js') }}"></script>
+<script src="{{ asset('assets/js/count.js') }}"></script>
+<script src="{{ asset('assets/js/main.js') }}"></script>
 
-<!-- Fancybox JS -->
-<script src="{{ asset('assets/plugins/fancybox/jquery.fancybox.min.js') }}"></script>
-
-<!-- Counter JS -->
-<script src="{{ asset('assets/js/waypoints.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.counterup.min.js') }}"></script>
-
-<!-- Aos JS -->
-<script src="{{ asset('assets/js/aos.js') }}"></script>
-
-<!-- Main JS -->
-<script src="{{ asset('assets/js/script.js') }}"></script>
-
-<script src="{{ asset('assets/js/rocket-loader.min.js') }}" data-cf-settings="a7db253fd77adcde08f56921-|49" defer></script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"94affca00f7ec86b","version":"2025.5.0","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"token":"3ca157e612a14eccbb30cf6db6691c29","b":1}' crossorigin="anonymous"></script>
 </body>
 </html>

@@ -7,6 +7,7 @@ use App\Filament\Resources\PropertyResource\RelationManagers;
 use App\Models\Property;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -20,7 +21,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Lartisan\RatingTool\Tables\Columns\RatingColumn;
+use Illuminate\Support\Facades\Blade;
 
 class PropertyResource extends Resource
 {
@@ -365,12 +366,28 @@ class PropertyResource extends Resource
                                     ->icon('heroicon-s-eye')
                                     ->weight(FontWeight::Light),
 
-                                RatingColumn::make('reviews.rating')
-                                    ->size('sm')
-                                    ->maxValue(5)
-                                    ->maxValue(5)
-                                    ->icon('heroicon-s-star')
-                                    ->color('warning'),
+//                                Radio::make('rating')
+//                                    ->label('Product Rating')
+//                                    // This is the corrected part
+//                                    ->options([
+//                                        1 => Blade::render('<x-heroicon-s-star class="w-6 h-6" />'),
+//                                        2 => Blade::render('<x-heroicon-s-star class="w-6 h-6" />'),
+//                                        3 => Blade::render('<x-heroicon-s-star class="w-6 h-6" />'),
+//                                        4 => Blade::render('<x-heroicon-s-star class="w-6 h-6" />'),
+//                                        5 => Blade::render('<x-heroicon-s-star class="w-6 h-6" />'),
+//                                    ])
+//                                    ->columns(5)
+//                                    ->inlineLabel(false)
+//                                    ->required()
+//                                    ->helperText('Click a star to rate.')
+//                                    ->extraAttributes(['class' => 'filament-rating-star-radio']),
+
+//                                RatingColumn::make('reviews.rating')
+//                                    ->size('sm')
+//                                    ->maxValue(5)
+//                                    ->maxValue(5)
+//                                    ->icon('heroicon-s-star')
+//                                    ->color('warning'),
 
 //                                TextColumn::make('details_action')
 //                                    ->default(fn(Property $record) => new HtmlString(

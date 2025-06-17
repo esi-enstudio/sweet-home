@@ -14,8 +14,8 @@
         "joaopaulolndev/filament-edit-profile": "^1.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
-        "lartisan/filament-rating-tool": "^1.0",
         "livewire/livewire": "^3.6",
+        "mokhosh/filament-rating": "^1.4",
         "spatie/laravel-sluggable": "^3.7"
     },
     "require-dev": {

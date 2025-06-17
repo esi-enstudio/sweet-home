@@ -15,7 +15,8 @@ return new class extends Migration
         Schema::create('rent_and_additional_costs', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Property::class)->constrained()->cascadeOnDelete();
-            $table->unsignedInteger('monthly_rent')->nullable(); // e.g. 20000
+            $table->unsignedInteger('rent'); // e.g. 20000
+            $table->string('rent_type');
             $table->json('rent_includes')->nullable(); // e.g. "ইউটিলিটি বিল, সার্ভিস চার্জ"
             $table->string('rent_increase_possibility')->nullable(); // e.g. "বার্ষিক ৫% বৃদ্ধি", or "সম্ভাবনা নাই"
             $table->enum('is_negotiable', ['negotiable', 'fixed'])->default('negotiable');
