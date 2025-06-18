@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Amenity;
 use App\Models\Property;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -14,21 +15,24 @@ return new class extends Migration
     {
         Schema::create('amenities', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique(); // e.g., "Lift", "Generator", "Gas Connection", "Parking"
+            $table->string('slug')->unique();
+            $table->string('icon_class')->nullable(); // For FontAwesome or other icon libraries
+            $table->enum('type', ['facility', 'utility', 'safety', 'environment'])->default('facility'); // Amenities গ্রুপ করার জন্য
+            $table->timestamps();
+        });
+
+        // পিভট টেবিলের নামে সাধারণত দুটি মডেলের নাম singular এবং alphabetical order-এ থাকে
+        Schema::create('amenity_property', function (Blueprint $table) {
+            // কোনো foreignId এর জন্য id() লেখার প্রয়োজন নেই
+            $table->foreignIdFor(Amenity::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Property::class)->constrained()->cascadeOnDelete();
-            $table->json('nearby_facilities')->nullable();
-            $table->json('natural_environments')->nullable();
-            $table->enum('gas_connection', ['cylinder', 'pipeline'])->nullable();
-            $table->enum('kitchen_type', ['general', 'cabinet'])->nullable();
-            $table->boolean('has_lift')->default(false);
-            $table->json('water_quality')->nullable();  // e.g. "নরম পানি, পানীয়ের জন্য উপযুক্ত"
-            $table->string('water_tank')->nullable();      // e.g. "৫,০০০ লিটার পানির রিজার্ভার"
-            $table->enum('electricity_type', ['prepaid', 'postpaid'])->nullable();
-            $table->json('backup_power')->nullable();    // e.g. "জেনারেটর", "IPS/UPS সুবিধা"
-            $table->boolean('has_cctv')->default(false);    // e.g. "৪টি সিসিটিভি ক্যামেরা, ২৪ ঘণ্টা মনিটরিং"
-            $table->boolean('has_security_guard')->default(false); // e.g. "২৪ ঘণ্টা দারোয়ান সার্ভিস, ২ জন প্রহরী"
-            $table->boolean('has_parking')->default(false);     // e.g. "১টি ব্যক্তিগত গাড়ি পার্কিং স্পেস"
-            $table->boolean('has_roof_access')->default(false);     // e.g. "ব্যক্তিগত, শেয়ার্ড ছাদ, কাপড় শুকানোর জন্য উপযুক্ত"
-            $table->boolean('pets_allowed')->default(false);
+
+            // প্রতিটি সুবিধার জন্য অতিরিক্ত তথ্য রাখার কলাম
+            $table->string('details')->nullable(); // যেমন: Parking এর জন্য: "1 car", Gas এর জন্য: "Cylinder"
+
+            // ডুপ্লিকেট ডেটা এড়ানোর জন্য দুটি কলামকে একসাথে Primary Key বানানো হলো
+            $table->primary(['amenity_id', 'property_id']);
             $table->timestamps();
         });
     }

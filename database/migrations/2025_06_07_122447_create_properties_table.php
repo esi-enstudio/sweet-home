@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\District;
+use App\Models\Division;
+use App\Models\Union;
+use App\Models\Upazila;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -12,35 +16,57 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // final_migrations/xxxx_xx_xx_create_properties_table.php
+
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->string('slug')->unique();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
-            $table->text('title');
-            $table->text('environment')->nullable();
-            $table->enum('property_type', ['tin_shed', 'semi_pucca', 'flat', 'duplex'])->nullable();
-            $table->enum('tenant_type', ['small_family', 'large_family', 'bachelor', 'sublet'])->nullable();
-            $table->unsignedInteger('total_area')->nullable();
-            $table->unsignedTinyInteger('bedrooms')->nullable();
-            $table->unsignedTinyInteger('attached_bathroom')->nullable();
-            $table->unsignedTinyInteger('shared_bathroom')->nullable();
-            $table->unsignedTinyInteger('dining_rooms')->nullable();
-            $table->unsignedTinyInteger('living_rooms')->nullable();
-            $table->unsignedTinyInteger('study_rooms')->nullable();
-            $table->unsignedTinyInteger('store_rooms')->nullable();
-            $table->unsignedTinyInteger('balconies')->nullable();
-            $table->json('floor_plan')->nullable();
-            $table->json('floor_number')->nullable();
-            $table->enum('flooring', ['tiles', 'marble', 'wood', 'cement'])->nullable();
-            $table->enum('walls', ['plaster', 'paint', 'wallpaper'])->nullable();
-            $table->enum('windows', ['aluminum', 'glass', 'wood', 'iron'])->nullable();
-            $table->enum('condition', ['new', 'old', 'very_old'])->nullable();
-            $table->enum('facing', ['north', 'south', 'east', 'west'])->nullable();
-            $table->date('available_from')->nullable();
+            $table->string('title', 255);
+            $table->text('description')->nullable();
+
+            // --- Property Details ---
+            $table->enum('property_type', ['flat', 'room', 'duplex', 'semi_pucca', 'tin_shed']);
+            $table->enum('listing_type', ['rent', 'sell']);
+            $table->enum('tenant_type', ['family', 'bachelor', 'student', 'any']);
+            $table->unsignedInteger('total_area');
+            $table->unsignedTinyInteger('bedrooms')->default(0);
+            $table->unsignedTinyInteger('bathrooms')->default(0);
+            $table->unsignedTinyInteger('balconies')->default(0);
+            $table->string('floor_number')->nullable();
+            $table->enum('facing', ['north', 'south', 'east', 'west', 'north_east', 'south_west'])->nullable();
+            $table->string('thumbnail')->nullable();
+
+            // --- Location Details (Merged from locations table) ---
+            $table->foreignIdFor(Division::class)->constrained();
+            $table->foreignIdFor(District::class)->constrained();
+            $table->foreignIdFor(Upazila::class)->constrained();
+            $table->foreignIdFor(Union::class)->nullable()->constrained();
+            $table->string('area_name'); // e.g., Mirpur DOHS, Block C
+            $table->string('full_address'); // Complete address for display
+            $table->string('landmark')->nullable();
+            $table->decimal('latitude', 10, 8)->nullable();
+            $table->decimal('longitude', 11, 8)->nullable();
+
+            // --- Rent & Cost Details (nullable) ---
+            $table->unsignedInteger('rent_amount')->nullable();
+            $table->enum('rent_negotiable', ['negotiable', 'fixed'])->default('negotiable');
+            $table->unsignedInteger('service_charge')->nullable();
+            $table->unsignedInteger('security_deposit')->nullable();
+            $table->text('rent_summary')->nullable();
+
+            // --- Additional Details ---
+            $table->date('available_from');
+            $table->boolean('is_available')->default(true);
+            $table->text('house_rules')->nullable();
+
+            // --- Contact Details ---
+            $table->string('contact_number_primary');
+            $table->string('contact_whatsapp')->nullable();
+
+            // --- System Columns ---
             $table->unsignedBigInteger('views_count')->default(0);
-            $table->boolean('is_urgent')->nullable();
-            $table->boolean('is_available')->default(1)->nullable();
-            $table->enum('listing_type', ['rent','buy','sell'])->nullable();
+            $table->string('status')->default('pending');
             $table->softDeletes();
             $table->timestamps();
         });

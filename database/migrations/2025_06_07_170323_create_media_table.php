@@ -15,10 +15,10 @@ return new class extends Migration
         Schema::create('media', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Property::class)->constrained()->cascadeOnDelete();
-            $table->string('caption')->nullable(); // ক্যাপশন
-            $table->string('video_url');
-            $table->string('thumbnail');
-            $table->json('gallery'); // ফাইল পাথ
+            $table->string('path'); // File path in storage
+            $table->enum('type', ['image', 'video_url', 'floor_plan']);
+            $table->string('caption')->nullable();
+            $table->unsignedSmallInteger('order_column')->default(0); // ছবি সাজানোর জন্য
             $table->timestamps();
         });
     }

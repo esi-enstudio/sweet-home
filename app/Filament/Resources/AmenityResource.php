@@ -14,9 +14,11 @@ use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Str;
 
@@ -35,99 +37,27 @@ class AmenityResource extends Resource
         return $form
             ->columns(3)
             ->schema([
-                Fieldset::make('Property Selection')
-                    ->schema([
-                        Select::make('property_id')
-                            ->label('Select Property')
-                            ->required()
-                            ->options(fn() => Property::where('is_available', 1)->pluck('title','id')),
-                    ])
-                    ->columns(2),
-
                 Fieldset::make('Utility Information')
                     ->schema([
-                        Select::make('gas_connection')
-//                                ->label('গ্যাস সংযোগ')
-                            ->helperText('বাড়িতে গ্যাস সরবরাহের পদ্ধতি নির্বাচন করুন')
+                        TextInput::make('name')
+                            ->required()
+                            ->unique()
+                            ->maxLength(255),
+
+                        TextInput::make('icon_class')
+                            ->label('Icon Class (e.g., fas fa-wifi)')
+                            ->maxLength(255),
+
+                        Select::make('type')
                             ->options([
-                                'cylinder' => 'সিলিন্ডার',
-                                'pipeline' => 'পাইপলাইন',
-                            ]),
-
-                        Select::make('kitchen_type')
-//                                ->label('রান্নাঘরের ধরন')
-                            ->helperText('রান্নাঘরটি সাধারণ নাকি ক্যাবিনেটযুক্ত তা নির্বাচন করুন')
-                            ->options([
-                                'general' => 'সাধারণ',
-                                'cabinet' => 'ক্যাবিনেটযুক্ত',
-                            ]),
-
-                        Select::make('electricity_type')
-//                                ->label('বিদ্যুৎ ব্যবস্থার ধরন')
-                            ->helperText('প্রি-পেইড বা পোস্ট-পেইড বিদ্যুৎ সংযোগ বেছে নিন')
-                            ->default('postpaid')
-                            ->options([
-                                'prepaid' => 'প্রি-পেইড মিটার',
-                                'postpaid' => 'পোস্ট-পেইড মিটার',
-                            ]),
-
-                        TagsInput::make('water_quality')
-                            ->splitKeys(['Tab',','])
-//                                ->label('পানির মান')
-                            ->helperText('যেমন: গভীর নলকূপ, ফিল্টারকৃত, আয়রন মুক্ত অথবা আয়রন আছে ইত্যাদি।'),
-
-                        TextInput::make('water_tank')
-                            ->numeric()
-                            ->label('Water tank (L)')
-                            ->helperText('পানির ট্যাঙ্কের মোট ধারণক্ষমতা সংখ্যায় লিখুন। যেমনঃ ১০০০, ৩০০০, ৫০০০'),
+                                'facility' => 'Facility',
+                                'utility' => 'Utility',
+                                'safety' => 'Safety',
+                                'environment' => 'Environment',
+                            ])
+                            ->required()
                     ])
                     ->columns(2),
-
-                Fieldset::make('Nearby & Natural Environment')
-                    ->schema([
-                        TagsInput::make('natural_environments')
-                            ->helperText('উদাহরণ:গাছপালা, খোলা জায়গা, নদী, লেক, পার্ক, পাহাড় ইত্যাদি।')
-                            ->splitKeys(['Tab',',']),
-
-                        TagsInput::make('nearby_facilities')
-                            ->helperText('যউদাহরণ:হাসপাতাল, স্কুল, বাজার, মসজিদ, বাসস্ট্যান্ড ইত্যাদি।')
-                            ->splitKeys(['Tab',',']),
-                    ])
-                    ->columns(2),
-
-                Fieldset::make('Backup & Safety Features')
-                    ->schema([
-                        TagsInput::make('backup_power')
-                            ->columnSpanFull()
-//                                ->label('ব্যাকআপ পাওয়ার ব্যবস্থা')
-                            ->helperText('যেমন: জেনারেটর, IPS, সোলার সিস্টেম')
-                            ->splitKeys(['Tab',',']),
-
-                        Toggle::make('has_lift')
-//                                ->label('লিফট')
-                            ->helperText('ভবনে লিফট সুবিধা রয়েছে কিনা'),
-
-                        Toggle::make('has_parking')
-//                                ->label('পার্কিং')
-                            ->helperText ('গাড়ি পার্কিং এর সুবিধা রয়েছে কিনা'),
-
-                        Toggle::make('has_roof_access')
-//                                ->label('ছাদে প্রবেশাধিকার')
-                            ->helperText('ভবনের ছাদে প্রবেশের অনুমতি রয়েছে কিনা'),
-
-                        Toggle::make('has_cctv')
-//                                ->label('সিসিটিভি')
-                            ->helperText('ভবনে সিসিটিভি ক্যামেরা রয়েছে কিনা'),
-
-                        Toggle::make('has_security_guard')
-//                                ->label('নিরাপত্তাকর্মী')
-                            ->helperText('২৪/৭ নিরাপত্তাকর্মী নিয়োজিত রয়েছে কিনা'),
-
-                        Toggle::make('pets_allowed')
-//                                ->label('পোষা প্রাণী অনুমোদিত')
-                            ->helperText('এই স্থানে পোষা প্রাণী রাখা অনুমোদিত কিনা'),
-                    ])
-                    ->columns(3),
             ]);
     }
 
@@ -135,66 +65,13 @@ class AmenityResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('property.title')
-                    ->limit(30)
-                    ->tooltip(fn($state) => $state)
-                    ->searchable(),
-
-                Tables\Columns\TextColumn::make('gas_connection')
-                    ->label('Gas')
+                Tables\Columns\TextColumn::make('name')->searchable(),
+                Tables\Columns\TextColumn::make('type')
+                    ->badge()
                     ->formatStateUsing(fn($state) => Str::title($state)),
-
-                Tables\Columns\TextColumn::make('kitchen_type')
-                    ->label('Kitchen')
-                    ->formatStateUsing(fn($state) => Str::title($state)),
-
-                Tables\Columns\TextColumn::make('water_quality')
-                    ->searchable()
-                    ->formatStateUsing(fn($state) => Str::title($state)),
-
-                Tables\Columns\TextColumn::make('water_tank')
-                    ->searchable()
-                    ->formatStateUsing(fn($state) => $state .' / L'),
-
-                Tables\Columns\TextColumn::make('electricity_type')
-                    ->formatStateUsing(fn($state) => Str::title($state)),
-
-                Tables\Columns\TextColumn::make('backup_power')
-                    ->formatStateUsing(fn($state) => Str::title($state)),
-
-                Tables\Columns\IconColumn::make('has_lift')
-                    ->label('Lift')
-                    ->boolean(),
-
-                Tables\Columns\IconColumn::make('has_cctv')
-                    ->label('CCTV')
-                    ->boolean(),
-
-                Tables\Columns\IconColumn::make('has_security_guard')
-                    ->label('Security Guard')
-                    ->boolean(),
-
-                Tables\Columns\IconColumn::make('has_parking')
-                    ->label('Parking')
-                    ->boolean(),
-
-                Tables\Columns\IconColumn::make('has_roof_access')
-                    ->label('Roof Access')
-                    ->boolean(),
-
-                Tables\Columns\IconColumn::make('pets_allowed')
-                    ->label('Pet Allowed')
-                    ->boolean(),
-
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('icon_class'),
             ])
+            ->defaultPaginationPageOption(5)
             ->filters([
                 //
             ])
@@ -219,8 +96,13 @@ class AmenityResource extends Resource
     {
         return [
             'index' => Pages\ListAmenities::route('/'),
-            'create' => Pages\CreateAmenity::route('/create'),
-            'edit' => Pages\EditAmenity::route('/{record}/edit'),
+//            'create' => Pages\CreateAmenity::route('/create'),
+//            'edit' => Pages\EditAmenity::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->latest();
     }
 }

@@ -4,20 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\EloquentSortable\Sortable;
+use Spatie\EloquentSortable\SortableTrait;
 
-class Media extends Model
+class Media extends Model implements Sortable
 {
-    protected $fillable = [
-        'property_id',
-        'video_url',
-        'thumbnail',
-        'gallery',
-        'caption',
-    ];
+    use SortableTrait;
 
-    protected $casts = [
-        'gallery' => 'array',
-    ];
+    protected $fillable = ['property_id', 'path', 'type', 'caption', 'order_column',];
 
     public function property(): BelongsTo
     {

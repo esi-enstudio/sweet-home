@@ -12,11 +12,15 @@ use Livewire\Component;
 #[Layout('layouts.app')]
 class ListingDetails extends Component
 {
-    public ?Property $property; // টাইপটিকে nullable (?) করুন
-
+    public Property $property;
     // রাউট মডেল বাইন্ডিং ব্যবহার করে স্বয়ংক্রিয়ভাবে $property লোড হবে
     public function mount(Property $property): void
     {
+        // রাউট মডেল বাইন্ডিংয়ের মাধ্যমে $property মডেলটি এখানে চলে এসেছে।
+        // এখন load() মেথড ব্যবহার করে এর রিলেশনগুলো লোড করুন।
+//        $property->load(['user','amenity','rentAndAdditionalCost','rentalTerms','contactNumber','media','location']);
+
+        // এখন $property অবজেক্টের মধ্যে রিলেশনগুলোও লোড হয়ে গেছে।
         $this->property = $property;
     }
 

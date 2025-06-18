@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use App\Traits\HasUniqueSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 
@@ -15,43 +16,14 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Property extends Model
 {
-    use HasSlug;
+    use HasSlug, SoftDeletes, HasUniqueSlug;
 
     protected $fillable = [
-        'user_id',
-        'slug',
-        'title',
-        'environment',
-        'property_type',
-        'tenant_type',
-        'total_area',
-        'bedrooms',
-        'attached_bathroom',
-        'shared_bathroom',
-        'dining_rooms',
-        'living_rooms',
-        'study_rooms',
-        'store_rooms',
-        'balconies',
-        'floor_plan',
-        'floor_number',
-        'flooring',
-        'walls',
-        'windows',
-        'condition',
-        'facing',
-        'available_from',
-        'views_count',
-        'is_urgent',
-        'is_available',
-        'listing_type',
-        'average_rating',
-        'review_count',
+        'slug','user_id','title','description','property_type','listing_type','tenant_type','total_area','bedrooms','bathrooms','balconies','floor_number','facing','thumbnail','division_id','district_id','upazila_id','union_id','area_name','full_address','landmark','latitude','longitude','rent_amount','rent_negotiable','service_charge','security_deposit','rent_summary','available_from','is_available','house_rules','contact_number_primary','contact_whatsapp','views_count',
     ];
 
     protected $casts = [
-        'floor_number' => 'array',
-        'floor_plan' => 'array',
+        'available_from' => 'datetime',
     ];
 
     /**
@@ -70,39 +42,52 @@ class Property extends Model
         return 'slug'; // Use slug instead of id in routes
     }
 
+
+
+    // --- RELATIONSHIPS ---
+
+    // Belongs To User
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function amenity(): HasOne
+    // Belongs To Location Hierarchy
+    public function division(): BelongsTo
     {
-        return $this->hasOne(Amenity::class);
+        return $this->belongsTo(Division::class);
     }
 
-    public function rentAndAdditionalCost(): HasOne
+    public function district(): BelongsTo
     {
-        return $this->hasOne(RentAndAdditionalCosts::class);
+        return $this->belongsTo(District::class);
     }
 
-    public function rentalTerms(): HasOne
+    public function upazila(): BelongsTo
     {
-        return $this->hasOne(RentalTerms::class);
+        return $this->belongsTo(Upazila::class);
     }
 
-    public function contactNumber(): HasOne
+    public function union(): BelongsTo
     {
-        return $this->hasOne(ContactNumber::class);
+        return $this->belongsTo(Union::class);
     }
 
-    public function media(): HasOne
+    // Has Many Media Files
+    public function media(): HasMany
     {
-        return $this->hasOne(Media::class);
+        return $this->hasMany(Media::class)->orderBy('order_column');
     }
 
-    public function location(): HasOne
+    /**
+     * The amenities that belong to the property.
+     */
+    public function amenities(): BelongsToMany
     {
-        return $this->hasOne(Location::class);
+        // একটি প্রপার্টির অনেকগুলো সুবিধা থাকতে পারে
+        return $this->belongsToMany(Amenity::class)
+            ->withPivot('details') // <-- পিভট টেবিলের 'details' কলামটি অ্যাক্সেস করার জন্য
+            ->withTimestamps();
     }
 
     /**
@@ -123,6 +108,3 @@ class Property extends Model
         return $this->reviews()->avg('rating') ?? 0;
     }
 }
-
-
-
