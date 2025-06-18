@@ -67,25 +67,46 @@ class PropertyResource extends Resource
                         Fieldset::make('Location Details')
                             ->schema([
                                 Select::make('division_id')
-                                    ->relationship('division', 'name')
                                     ->searchable()
+                                    ->required()
                                     ->preload()
                                     ->live()
+                                    ->relationship('division', 'name')
                                     ->afterStateUpdated(fn (Set $set) => $set('district_id', null)),
 
                                 Select::make('district_id')
-                                    ->options(fn (Get $get): Collection => District::query()->where('division_id', $get('division_id'))
-                                        ->pluck('bn_name', 'id'))
+                                    ->label('District')
+                                    ->required()
                                     ->searchable()
                                     ->preload()
                                     ->live()
+                                    ->options(fn (Get $get): Collection => District::query()
+                                        ->where('division_id', $get('division_id'))
+                                        ->pluck('bn_name', 'id'))
                                     ->afterStateUpdated(fn (Set $set) => $set('upazila_id', null)),
 
-                                Select::make('upazila_id')->options(fn (Get $get): Collection => Upazila::query()->where('district_id', $get('district_id'))->pluck('bn_name', 'id'))->searchable()->preload()->live()->afterStateUpdated(fn (Set $set) => $set('union_id', null)),
+                                Select::make('upazila_id')
+                                    ->label('Upazila')
+                                    ->required()
+                                    ->searchable()
+                                    ->preload()
+                                    ->live()
+                                    ->options(fn (Get $get): Collection => Upazila::query()
+                                        ->where('district_id', $get('district_id'))
+                                        ->pluck('bn_name', 'id'))
+                                    ->afterStateUpdated(fn (Set $set) => $set('union_id', null)),
 
-                                Select::make('union_id')->options(fn (Get $get): Collection => Union::query()->where('upazila_id', $get('upazila_id'))->pluck('bn_name', 'id'))->searchable()->preload()->live()->nullable(),
+                                Select::make('union_id')
+                                    ->label('Union')
+                                    ->searchable()
+                                    ->preload()
+                                    ->live()
+                                    ->nullable()
+                                    ->options(fn (Get $get): Collection => Union::query()
+                                        ->where('upazila_id', $get('upazila_id'))
+                                        ->pluck('bn_name', 'id')),
 
-                                TextInput::make('area_name')->label('Area / Neighborhood')->required(),
+                                TextInput::make('area_name')->label('Area / Neighborhood'),
                                 TextInput::make('landmark')->nullable(),
                                 Textarea::make('full_address')->required()->columnSpanFull(),
                                 TextInput::make('latitude')->numeric()->nullable(),
@@ -109,29 +130,34 @@ class PropertyResource extends Resource
                         Fieldset::make('Status')
                             ->columns(1)
                             ->schema([
-                                Select::make('user_id')->relationship('user', 'name')->label('Owner / Lister')->searchable()->required()->default(auth()->id()),
+                                Select::make('user_id')
+                                    ->relationship('user', 'name')
+                                    ->label('Owner / Lister')
+                                    ->searchable()
+                                    ->required()
+                                    ->default(auth()->id()),
                                 Toggle::make('is_available')->label('Available for Rent/Sell')->required()->default(true),
                                 DatePicker::make('available_from')->required()->default(now()),
                             ]),
 
                         // --- Property Type & Layout ---
                         Fieldset::make('Type & Layout')
-                            ->columns(2)
+                            ->columns(1)
                             ->schema([
                                 Select::make('listing_type')->options(['rent' => 'For Rent', 'sell' => 'For Sell'])->required(),
                                 Select::make('property_type')->options(['flat' => 'Flat', 'room' => 'Room', 'duplex' => 'Duplex'])->required(),
                                 Select::make('tenant_type')->options(['family' => 'Family', 'bachelor' => 'Bachelor', 'student' => 'Student'])->required(),
                                 TextInput::make('total_area')->label('Total Area (sq. ft.)')->numeric()->required(),
-                                TextInput::make('bedrooms')->numeric()->required()->default(1),
-                                TextInput::make('bathrooms')->numeric()->required()->default(1),
-                                TextInput::make('balconies')->numeric()->required()->default(0),
+                                TextInput::make('bedrooms')->numeric()->default(1),
+                                TextInput::make('bathrooms')->numeric()->default(1),
+                                TextInput::make('balconies')->numeric()->default(0),
                                 TextInput::make('floor_number')->nullable(),
                                 Select::make('facing')->options(['north'=>'North', 'south'=>'South', 'east'=>'East', 'west'=>'West'])->nullable(),
                             ]),
 
                         // --- Rent & Cost Section ---
                         Fieldset::make('Rent & Costs')
-                            ->columns(2)
+                            ->columns(1)
                             ->schema([
                                 TextInput::make('rent_amount')->numeric()->prefix('BDT')->nullable(),
                                 TextInput::make('service_charge')->numeric()->prefix('BDT')->nullable(),
