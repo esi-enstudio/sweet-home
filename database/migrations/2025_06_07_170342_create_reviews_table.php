@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->unsignedTinyInteger('rating'); // 1-5
             $table->text('comment');
+            $table->boolean('is_approved')->default(true);
             $table->timestamps();
 
             // একজন ইউজার একটি বাসার জন্য মাত্র একবারই রিভিউ দিতে পারবে

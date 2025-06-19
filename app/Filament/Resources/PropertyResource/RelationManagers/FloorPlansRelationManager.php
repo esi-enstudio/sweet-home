@@ -38,9 +38,7 @@ class FloorPlansRelationManager extends RelationManager
                             ->columnSpanFull(),
 
                         Forms\Components\TextInput::make('total_area')->numeric()->suffix('sq. ft.')->nullable(),
-                        Forms\Components\TextInput::make('bedroom_area')->numeric()->suffix('sq. ft.')->nullable(),
-                        Forms\Components\TextInput::make('lounge_area')->numeric()->suffix('sq. ft.')->nullable(),
-                        Forms\Components\TextInput::make('balcony_pets')->label('Balcony / Pets')->nullable(),
+
                     ])->columns(2),
             ]);
     }
@@ -50,9 +48,12 @@ class FloorPlansRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\ImageColumn::make('image_path')->label('Plan'),
-                Tables\Columns\TextColumn::make('name')->searchable(),
-                Tables\Columns\TextColumn::make('total_area')->suffix(' sq. ft.'),
+                Tables\Columns\ImageColumn::make('image_path')
+                    ->label('Plan'),
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('total_area')
+                    ->suffix(' sq. ft.'),
             ])
             ->filters([
                 //

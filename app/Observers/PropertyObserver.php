@@ -38,7 +38,7 @@ class PropertyObserver
      */
     public function deleted(Property $property): void
     {
-        $property->category->decrement('properties_count');
+        $property->propertyType->decrement('properties_count');
     }
 
     /**

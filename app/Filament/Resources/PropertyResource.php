@@ -71,11 +71,11 @@ class PropertyResource extends Resource
                         Fieldset::make('Location Details')
                             ->schema([
                                 Select::make('division_id')
-                                    ->searchable()
                                     ->required()
+                                    ->relationship('division', 'name')
+                                    ->searchable()
                                     ->preload()
                                     ->live()
-                                    ->relationship('division', 'name')
                                     ->afterStateUpdated(fn (Set $set) => $set('district_id', null)),
 
                                 Select::make('district_id')
@@ -101,18 +101,24 @@ class PropertyResource extends Resource
                                     ->afterStateUpdated(fn (Set $set) => $set('union_id', null)),
 
                                 Select::make('union_id')
-                                    ->label('Union')
-                                    ->searchable()
-                                    ->preload()
-                                    ->live()
-                                    ->nullable()
                                     ->options(fn (Get $get): Collection => Union::query()
                                         ->where('upazila_id', $get('upazila_id'))
-                                        ->pluck('bn_name', 'id')),
+                                        ->pluck('bn_name', 'id'))
+                                    ->searchable()
+                                    ->preload()
+                                    ->nullable(),
 
-                                TextInput::make('area_name')->label('Area / Neighborhood'),
-                                TextInput::make('landmark')->nullable(),
-                                Textarea::make('full_address')->required()->columnSpanFull(),
+                                TextInput::make('area_name')
+                                    ->label('Area / Neighborhood')
+                                    ->required(),
+
+                                TextInput::make('landmark')
+                                    ->nullable(),
+
+                                Textarea::make('full_address')
+                                    ->required()
+                                    ->columnSpanFull(),
+
                                 TextInput::make('latitude')->numeric()->nullable(),
                                 TextInput::make('longitude')->numeric()->nullable(),
                             ])->columns(2),
@@ -148,26 +154,47 @@ class PropertyResource extends Resource
                         Fieldset::make('Type & Layout')
                             ->columns(1)
                             ->schema([
-                                Select::make('listing_type')->options(['rent' => 'For Rent', 'sell' => 'For Sell'])->required(),
+                                Select::make('listing_type')
+                                    ->options(['rent' => 'For Rent', 'sell' => 'For Sell'])
+                                    ->required(),
+
                                 Select::make('property_type_id')
                                     ->relationship('propertyType', 'name')
                                     ->searchable()
                                     ->preload()
                                     ->required()
                                     ->label('Property Type'),
-                                
-                                CheckboxList::make('tenants')
-                                    ->relationship('tenants', 'name')
-                                    ->label('Allowed Tenant Types')
-                                    ->columns(3) // চেকবক্সগুলো কয়টি কলামে দেখাবে
+
+                                Select::make('tenant_type')
+                                    ->options(['family' => 'Family', 'bachelor' => 'Bachelor', 'student' => 'Student'])
                                     ->required(),
 
-                                TextInput::make('total_area')->label('Total Area (sq. ft.)')->numeric()->required(),
-                                TextInput::make('bedrooms')->numeric()->default(1),
-                                TextInput::make('bathrooms')->numeric()->default(1),
-                                TextInput::make('balconies')->numeric()->default(0),
-                                TextInput::make('floor_number')->nullable(),
-                                Select::make('facing')->options(['north'=>'North', 'south'=>'South', 'east'=>'East', 'west'=>'West'])->nullable(),
+                                TextInput::make('total_area')
+                                    ->label('Total Area (sq. ft.)')
+                                    ->numeric()
+                                    ->required(),
+
+                                TextInput::make('bedrooms')
+                                    ->numeric()
+                                    ->required()
+                                    ->default(1),
+
+                                TextInput::make('bathrooms')
+                                    ->numeric()
+                                    ->required()
+                                    ->default(1),
+
+                                TextInput::make('balconies')
+                                    ->numeric()
+                                    ->required()
+                                    ->default(0),
+
+                                TextInput::make('floor_number')
+                                    ->nullable(),
+
+                                Select::make('facing')
+                                    ->options(['north'=>'North', 'south'=>'South', 'east'=>'East', 'west'=>'West'])
+                                    ->nullable(),
                             ]),
 
                         // --- Rent & Cost Section ---

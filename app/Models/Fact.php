@@ -6,16 +6,11 @@ use App\Traits\HasUniqueSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-/**
- * @property mixed $name
- * @property mixed|string $slug
- * @method static create(array $array)
- */
-class Amenity extends Model
+class Fact extends Model
 {
     use HasUniqueSlug;
 
-    protected $fillable = ['name','slug','icon_class','type'];
+    protected $fillable = ['name','slug','icon_class'];
 
     /**
      * The properties that have this amenity.
@@ -24,7 +19,7 @@ class Amenity extends Model
     {
         // একটি সুবিধার অনেকগুলো প্রপার্টি থাকতে পারে
         return $this->belongsToMany(Property::class)
-            ->withPivot('details')
+            ->withPivot('dimensions')
             ->withTimestamps();
     }
 
