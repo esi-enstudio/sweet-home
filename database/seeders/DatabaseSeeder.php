@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             AmenitySeeder::class,
+            PropertyTypeSeeder::class,
+            TenantSeeder::class,
             DivisionSeeder::class,
             DistrictSeeder::class,
             UpazilaSeeder::class,

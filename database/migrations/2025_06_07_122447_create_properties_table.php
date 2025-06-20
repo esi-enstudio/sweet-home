@@ -2,6 +2,8 @@
 
 use App\Models\District;
 use App\Models\Division;
+use App\Models\PropertyType;
+use App\Models\Tenant;
 use App\Models\Union;
 use App\Models\Upazila;
 use App\Models\User;
@@ -16,25 +18,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // final_migrations/xxxx_xx_xx_create_properties_table.php
-
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
+            $table->string('property_id')->unique(); // For display like "HZ29"
             $table->string('slug')->unique();
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(PropertyType::class)->constrained();
+            $table->foreignIdFor(Tenant::class)->constrained();
             $table->string('title', 255);
             $table->text('description')->nullable();
 
             // --- Property Details ---
-            $table->enum('property_type', ['flat', 'room', 'duplex', 'semi_pucca', 'tin_shed']);
-            $table->enum('listing_type', ['rent', 'sell']);
-            $table->enum('tenant_type', ['family', 'bachelor', 'student', 'any']);
+            $table->enum('listing_type', ['rent', 'sell', 'buy']);
             $table->unsignedInteger('total_area');
             $table->unsignedTinyInteger('bedrooms')->default(0);
             $table->unsignedTinyInteger('bathrooms')->default(0);
             $table->unsignedTinyInteger('balconies')->default(0);
             $table->string('floor_number')->nullable();
             $table->enum('facing', ['north', 'south', 'east', 'west', 'north_east', 'south_west'])->nullable();
+            $table->year('year_built')->nullable();
             $table->string('thumbnail')->nullable();
 
             // --- Location Details (Merged from locations table) ---
@@ -42,9 +44,8 @@ return new class extends Migration
             $table->foreignIdFor(District::class)->constrained();
             $table->foreignIdFor(Upazila::class)->constrained();
             $table->foreignIdFor(Union::class)->nullable()->constrained();
-            $table->string('area_name'); // e.g., Mirpur DOHS, Block C
-            $table->string('full_address'); // Complete address for display
-            $table->string('landmark')->nullable();
+            $table->string('landmark'); // e.g., Mirpur DOHS, Block C
+            $table->string('address'); // Complete address for display
             $table->decimal('latitude', 10, 8)->nullable();
             $table->decimal('longitude', 11, 8)->nullable();
 
@@ -58,6 +59,7 @@ return new class extends Migration
             // --- Additional Details ---
             $table->date('available_from');
             $table->boolean('is_available')->default(true);
+            $table->boolean('is_featured')->default(false);
             $table->text('house_rules')->nullable();
 
             // --- Contact Details ---

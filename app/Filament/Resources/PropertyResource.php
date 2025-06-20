@@ -5,7 +5,9 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PropertyResource\Pages;
 use App\Filament\Resources\PropertyResource\RelationManagers;
 use App\Filament\Resources\PropertyResource\RelationManagers\AmenitiesRelationManager;
+use App\Filament\Resources\PropertyResource\RelationManagers\FloorPlansRelationManager;
 use App\Filament\Resources\PropertyResource\RelationManagers\MediaRelationManager;
+use App\Filament\Resources\PropertyResource\RelationManagers\SpaceOverviewsRelationManager;
 use App\Models\District;
 use App\Models\Property;
 use App\Models\Union;
@@ -230,6 +232,8 @@ class PropertyResource extends Resource
         return [
             AmenitiesRelationManager::class,
             MediaRelationManager::class,
+            FloorPlansRelationManager::class,
+            SpaceOverviewsRelationManager::class,
         ];
     }
 

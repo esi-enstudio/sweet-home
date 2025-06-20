@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Property;
 use App\Models\Review;
 use App\Models\User;
+use App\Observers\PropertyObserver;
 use App\Observers\ReviewObserver;
 use App\Observers\UserObserver;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
@@ -26,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
     {
         User::observe(UserObserver::class);
         Review::observe(ReviewObserver::class);
+        Property::observe(PropertyObserver::class);
 
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch

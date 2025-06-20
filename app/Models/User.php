@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Traits\HasUniqueSlug;
 use Database\Factories\UserFactory;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,10 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 /**
  * @method static where(string $string, mixed $value)
@@ -21,7 +19,7 @@ use Spatie\Sluggable\SlugOptions;
 class User extends Authenticatable implements HasAvatar
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasRoles, HasSlug;
+    use HasFactory, Notifiable, HasRoles, HasUniqueSlug;
 
     /**
      * The attributes that are mass assignable.
@@ -61,17 +59,6 @@ class User extends Authenticatable implements HasAvatar
             'password' => 'hashed',
             'custom_fields' => 'array'
         ];
-    }
-
-    /**
-     * @return SlugOptions
-     */
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name') // Use the 'name' field to generate the slug
-            ->saveSlugsTo('slug')        // Save slug to 'slug' column
-            ->doNotGenerateSlugsOnUpdate(); // Optional: Prevent slug change after update
     }
 
     public function getRouteKeyName(): string

@@ -16,26 +16,15 @@ use Spatie\Sluggable\SlugOptions;
  */
 class Property extends Model
 {
-    use HasSlug, SoftDeletes, HasUniqueSlug;
+    use SoftDeletes, HasUniqueSlug;
 
     protected $fillable = [
-        'slug','user_id','title','description','property_type','listing_type','tenant_type','total_area','bedrooms','bathrooms','balconies','floor_number','facing','thumbnail','division_id','district_id','upazila_id','union_id','area_name','full_address','landmark','latitude','longitude','rent_amount','rent_negotiable','service_charge','security_deposit','rent_summary','available_from','is_available','house_rules','contact_number_primary','contact_whatsapp','views_count',
+        'user_id','property_type_id','tenant_id','division_id','district_id','upazila_id','union_id','property_id','slug','title','description','listing_type','total_area','bedrooms','bathrooms','balconies','floor_number','facing','year_built','thumbnail','landmark','address','latitude','longitude','rent_amount','rent_negotiable','service_charge','security_deposit','rent_summary','available_from','is_available','is_featured','house_rules','contact_number_primary','contact_whatsapp','views_count','status'
     ];
 
     protected $casts = [
         'available_from' => 'datetime',
     ];
-
-    /**
-     * @return SlugOptions
-     */
-    public function getSlugOptions(): SlugOptions
-    {
-        return SlugOptions::create()
-            ->generateSlugsFrom('title') // Use the 'title' field to generate the slug
-            ->saveSlugsTo('slug')        // Save slug to 'slug' column
-            ->doNotGenerateSlugsOnUpdate(); // Optional: Prevent slug change after update
-    }
 
     public function getRouteKeyName(): string
     {
@@ -80,6 +69,14 @@ class Property extends Model
     }
 
     /**
+     * Get the property type that owns the Property.
+     */
+    public function propertyType(): BelongsTo
+    {
+        return $this->belongsTo(PropertyType::class);
+    }
+
+    /**
      * The amenities that belong to the property.
      */
     public function amenities(): BelongsToMany
@@ -96,6 +93,21 @@ class Property extends Model
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function floorPlans(): HasMany
+    {
+        return $this->hasMany(FloorPlan::class);
+    }
+
+    /**
+     * The facts that belong to the Property.
+     */
+    public function spaces(): BelongsToMany
+    {
+        return $this->belongsToMany(SpaceOverview::class, 'property_space_overview')
+            ->withPivot('dimensions')
+            ->withTimestamps(); // পিভট টেবিলের 'dimensions' কলামটি অ্যাক্সেস করার জন্য
     }
 
     /**
