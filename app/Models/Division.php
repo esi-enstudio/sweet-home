@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @method static where(string $string, int $int)
+ * @method static find(mixed $division_id)
  */
 class Division extends Model
 {

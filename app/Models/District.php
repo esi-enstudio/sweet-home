@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @method static find(mixed $district_id)
+ */
 class District extends Model
 {
     protected $fillable = ['division_id','name','bn_name'];

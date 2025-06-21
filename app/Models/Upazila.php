@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @method static find(mixed $upazila_id)
+ */
 class Upazila extends Model
 {
     protected $fillable = ['district_id','name','bn_name'];

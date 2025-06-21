@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tenants', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->unique();
-            $table->string('slug')->unique();
-            $table->timestamps();
+        Schema::create('property_tenant', function (Blueprint $table) {
+            $table->foreignIdFor(Property::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Tenant::class)->constrained()->cascadeOnDelete();
+            $table->primary(['property_id', 'tenant_id']);
         });
     }
 
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tenants');
+        Schema::dropIfExists('property_tenant_pivot');
     }
 };
