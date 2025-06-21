@@ -7,12 +7,14 @@ use App\Filament\Resources\PropertyResource\RelationManagers;
 use App\Filament\Resources\PropertyResource\RelationManagers\AmenitiesRelationManager;
 use App\Filament\Resources\PropertyResource\RelationManagers\FloorPlansRelationManager;
 use App\Filament\Resources\PropertyResource\RelationManagers\MediaRelationManager;
+use App\Filament\Resources\PropertyResource\RelationManagers\MessagesRelationManager;
 use App\Filament\Resources\PropertyResource\RelationManagers\SpaceOverviewsRelationManager;
 use App\Models\District;
 use App\Models\Property;
 use App\Models\Union;
 use App\Models\Upazila;
 use Exception;
+use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
@@ -147,8 +149,19 @@ class PropertyResource extends Resource
                             ->columns(1)
                             ->schema([
                                 Select::make('listing_type')->options(['rent' => 'For Rent', 'sell' => 'For Sell'])->required(),
-                                Select::make('property_type')->options(['flat' => 'Flat', 'room' => 'Room', 'duplex' => 'Duplex'])->required(),
-                                Select::make('tenant_type')->options(['family' => 'Family', 'bachelor' => 'Bachelor', 'student' => 'Student'])->required(),
+                                Select::make('property_type_id')
+                                    ->relationship('propertyType', 'name')
+                                    ->searchable()
+                                    ->preload()
+                                    ->required()
+                                    ->label('Property Type'),
+                                
+                                CheckboxList::make('tenants')
+                                    ->relationship('tenants', 'name')
+                                    ->label('Allowed Tenant Types')
+                                    ->columns(3) // চেকবক্সগুলো কয়টি কলামে দেখাবে
+                                    ->required(),
+
                                 TextInput::make('total_area')->label('Total Area (sq. ft.)')->numeric()->required(),
                                 TextInput::make('bedrooms')->numeric()->default(1),
                                 TextInput::make('bathrooms')->numeric()->default(1),
@@ -234,6 +247,7 @@ class PropertyResource extends Resource
             MediaRelationManager::class,
             FloorPlansRelationManager::class,
             SpaceOverviewsRelationManager::class,
+            MessagesRelationManager::class,
         ];
     }
 

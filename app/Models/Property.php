@@ -76,6 +76,11 @@ class Property extends Model
         return $this->belongsTo(PropertyType::class);
     }
 
+    public function tenants(): BelongsToMany
+    {
+        return $this->belongsToMany(Tenant::class, 'property_tenant');
+    }
+
     /**
      * The amenities that belong to the property.
      */
@@ -108,6 +113,15 @@ class Property extends Model
         return $this->belongsToMany(SpaceOverview::class, 'property_space_overview')
             ->withPivot('dimensions')
             ->withTimestamps(); // পিভট টেবিলের 'dimensions' কলামটি অ্যাক্সেস করার জন্য
+    }
+
+    /**
+     * Get all of the messages for the Property.
+     * একটি প্রপার্টির জন্য অনেকগুলো মেসেজ থাকতে পারে।
+     */
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
     }
 
     /**

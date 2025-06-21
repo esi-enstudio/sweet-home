@@ -15,12 +15,12 @@ return new class extends Migration
         Schema::create('floor_plans', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Property::class)->constrained()->cascadeOnDelete();
-            $table->string('name'); // e.g., "First Floor", "Top Garden"
+            $table->string('name')->unique(); // e.g., "First Floor", "Top Garden"
+            $table->string('slug')->unique();
             $table->string('image_path');
             $table->text('description')->nullable();
-            $table->unsignedInteger('total_area')->nullable();
-            $table->unsignedInteger('bedroom_area')->nullable();
-            $table->unsignedInteger('lounge_area')->nullable();
+            $table->unsignedInteger('total_area');
+            $table->json('others')->nullable();
             $table->timestamps();
         });
     }

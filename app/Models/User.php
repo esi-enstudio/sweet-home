@@ -84,4 +84,13 @@ class User extends Authenticatable implements HasAvatar
     {
         return $this->hasMany(Review::class);
     }
+
+    /**
+     * Get all of the messages sent by the User.
+     * একজন ব্যবহারকারী অনেকগুলো মেসেজ পাঠাতে পারেন।
+     */
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
 }

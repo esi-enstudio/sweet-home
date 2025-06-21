@@ -2,11 +2,16 @@
 
 namespace App\Models;
 
+use App\Traits\HasUniqueSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class SpaceOverview extends Model
 {
+    use HasUniqueSlug;
+
+    protected $fillable = ['name','slug','icon_class'];
+
     /**
      * The properties that belong to the Fact.
      */

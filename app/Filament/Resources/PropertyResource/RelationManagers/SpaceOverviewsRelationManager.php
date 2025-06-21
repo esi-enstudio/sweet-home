@@ -29,15 +29,15 @@ class SpaceOverviewsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('name')
             ->columns([
-                Tables\Columns\IconColumn::make('icon_class')->label('Icon'),
                 Tables\Columns\TextColumn::make('name')->searchable(),
+                Tables\Columns\IconColumn::make('icon_class')->label('Icon'),
                 Tables\Columns\TextColumn::make('pivot.dimensions')->label('Dimensions'),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                // বিদ্যমান Fact যুক্ত করার জন্য
+                // বিদ্যমান SpaceOverview যুক্ত করার জন্য
                 Tables\Actions\AttachAction::make()
                     ->form(fn (Tables\Actions\AttachAction $action): array => [
                         $action->getRecordSelect(),

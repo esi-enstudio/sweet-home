@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PropertyTypeResource\Pages;
-use App\Filament\Resources\PropertyTypeResource\RelationManagers;
-use App\Models\PropertyType;
+use App\Filament\Resources\TenantResource\Pages;
+use App\Filament\Resources\TenantResource\RelationManagers;
+use App\Models\Tenant;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PropertyTypeResource extends Resource
+class TenantResource extends Resource
 {
-    protected static ?string $model = PropertyType::class;
+    protected static ?string $model = Tenant::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,8 +23,7 @@ class PropertyTypeResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
-                    ->required(),
+                //
             ]);
     }
 
@@ -32,8 +31,7 @@ class PropertyTypeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->searchable(),
-                Tables\Columns\TextColumn::make('properties_count')->label('Properties Count')->sortable(),
+                //
             ])
             ->filters([
                 //
@@ -58,9 +56,9 @@ class PropertyTypeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPropertyTypes::route('/'),
-            'create' => Pages\CreatePropertyType::route('/create'),
-            'edit' => Pages\EditPropertyType::route('/{record}/edit'),
+            'index' => Pages\ListTenants::route('/'),
+            'create' => Pages\CreateTenant::route('/create'),
+            'edit' => Pages\EditTenant::route('/{record}/edit'),
         ];
     }
 }
