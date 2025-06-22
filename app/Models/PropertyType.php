@@ -17,6 +17,14 @@ class PropertyType extends Model
     protected $fillable = ['name', 'slug', 'properties_count'];
 
     /**
+     * Define which field to use for slug generation.
+     */
+    public function getSluggableField(): string
+    {
+        return 'name';
+    }
+
+    /**
      * Get all the properties for the PropertyType.
      */
     public function properties(): HasMany

@@ -38,6 +38,14 @@ class User extends Authenticatable implements HasAvatar
     ];
 
     /**
+     * Define which field to use for slug generation.
+     */
+    public function getSluggableField(): string
+    {
+        return 'name';
+    }
+
+    /**
      * The attributes that should be hidden for serialization.
      *
      * @var list<string>

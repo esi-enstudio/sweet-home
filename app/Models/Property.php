@@ -133,7 +133,7 @@ class Property extends Model
     /**
      * The facts that belong to the Property.
      */
-    public function spaces(): BelongsToMany
+    public function spaceOverviews(): BelongsToMany
     {
         return $this->belongsToMany(SpaceOverview::class, 'property_space_overview')
             ->withPivot('dimensions')

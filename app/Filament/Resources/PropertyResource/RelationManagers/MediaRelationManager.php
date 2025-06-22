@@ -70,9 +70,11 @@ class MediaRelationManager extends RelationManager
             ])
             ->actions([
                 // EditAction এখন শুধুমাত্র একটি ছবির ক্যাপশন এডিট করতে ব্যবহৃত হবে
-                Tables\Actions\EditAction::make()->form([
-                    Forms\Components\Textarea::make('caption')->label('Image Caption'),
-                ]),
+                Tables\Actions\EditAction::make()
+                    ->modalHeading('Edit Image Details') // মডালের প্রধান শিরোনাম
+                    ->form([
+                        Forms\Components\Textarea::make('caption')->label('Image Caption'),
+                    ]),
                 Tables\Actions\DeleteAction::make()
                     ->modalHeading('Delete Images')
                     ->modalDescription('Are you sure you want to delete the selected images? This action cannot be undone.'),

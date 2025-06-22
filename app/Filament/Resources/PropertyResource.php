@@ -139,16 +139,6 @@ class PropertyResource extends Resource
                                     ->dehydrateStateUsing(fn (?string $state): ?string => $state ? rtrim(rtrim($state, '0'), '.') : null)
                                     ->rule('regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'), // দ্রাঘিমাংশের জন্য ভ্যালিডাউনলোড
 
-//                                TextInput::make('latitude')
-//                                    ->helperText('গুগল ম্যাপে সঠিক অবস্থান দেখানোর জন্য এটি ব্যবহার করা হয়।')
-//                                    ->numeric()
-//                                    ->nullable(),
-//
-//                                TextInput::make('longitude')
-//                                    ->helperText('গুগল ম্যাপে সঠিক অবস্থান দেখানোর জন্য এটি ব্যবহার করা হয়।')
-//                                    ->numeric()
-//                                    ->nullable(),
-
                             ])->columns(2),
 
                         // --- Rent & Cost Section ---
@@ -157,17 +147,18 @@ class PropertyResource extends Resource
                                 TextInput::make('rent_amount')
                                     ->helperText('শুধুমাত্র সংখ্যা লিখুন, যেমন- 25000।')
                                     ->numeric()
+                                    ->required()
                                     ->prefix('BDT')
                                     ->nullable(),
 
                                 TextInput::make('service_charge')
-                                    ->helperText('লিফট, জেনারেটর, নিরাপত্তা ইত্যাদি সহ মাসিক সার্ভিস চার্জ উল্লেখ করুন।')
+                                    ->helperText('লিফট, জেনারেটর, নিরাপত্তা ইত্যাদি সহ মাসিক সার্ভিস চার্জ উল্লেখ করুন। (যদি থাকে)')
                                     ->numeric()
                                     ->prefix('BDT')
                                     ->nullable(),
 
                                 TextInput::make('security_deposit')
-                                    ->helperText('ভাড়াটিয়াকে শুরুতে কত টাকা অগ্রিম বা জামানত হিসেবে দিতে হবে তা লিখুন।')
+                                    ->helperText('ভাড়াটিয়াকে শুরুতে কত টাকা অগ্রিম বা জামানত হিসেবে দিতে হবে তা লিখুন। (যদি থাকে)')
                                     ->numeric()
                                     ->prefix('BDT')
                                     ->nullable(),
@@ -179,7 +170,7 @@ class PropertyResource extends Resource
 
                                 Textarea::make('rent_summary')
                                     ->label('Rent Summary (e.g., what is included)')
-                                    ->helperText('ভাড়ার সাথে কী কী বিল অন্তর্ভুক্ত আছে (যেমন- গ্যাস, পানি), তা এখানে সংক্ষেপে লিখুন।')
+                                    ->helperText('ভাড়ার সাথে কী কী বিল অন্তর্ভুক্ত আছে (যেমন- গ্যাস, পানি), তা এখানে সংক্ষেপে লিখুন। (যদি থাকে)')
                                     ->nullable()
                                     ->columnSpanFull(),
                             ])->columns(2),
@@ -198,12 +189,12 @@ class PropertyResource extends Resource
                                     ->tel()
                                     ->minLength(11)
                                     ->maxLength(11)
-                                    ->helperText('হোয়াটসঅ্যাপে যোগাযোগের জন্য নম্বরটি দিন।')
+                                    ->helperText('হোয়াটসঅ্যাপে যোগাযোগের জন্য নম্বরটি দিন। (যদি থাকে)')
                                     ->nullable(),
 
                                 RichEditor::make('house_rules')
                                     ->nullable()
-                                    ->helperText('ভাড়াটিয়াদের জন্য কোনো বিশেষ নিয়ম (যেমন- রাত ১১টার পর গেট বন্ধ) থাকলে তা এখানে লিখুন।')
+                                    ->helperText('ভাড়াটিয়াদের জন্য কোনো বিশেষ নিয়ম (যেমন- রাত ১১টার পর গেট বন্ধ) থাকলে তা এখানে লিখুন। (যদি থাকে)')
                                     ->columnSpanFull(),
                             ])->columns(2),
 
@@ -228,8 +219,7 @@ class PropertyResource extends Resource
 
                                 Toggle::make('is_featured')
                                     ->label('Featured Property')
-                                    ->helperText('এটি চালু করলে প্রপার্টিটি হোমপেজ বা বিশেষ সেকশনে দেখানো হবে।')
-                                    ->required(),
+                                    ->helperText('এটি চালু করলে প্রপার্টিটি হোমপেজ বা বিশেষ সেকশনে দেখানো হবে।'),
 
                                 DatePicker::make('available_from')
                                     ->required()
@@ -316,14 +306,10 @@ class PropertyResource extends Resource
                                     ->helperText('বাসাটি কোন দিকে মুখ করে আছে (যেমন- দক্ষিণমুখী)।')
                                     ->nullable(),
 
-                                DatePicker::make('year_built')
+                                TextInput::make('year_built')
                                     ->label('Year Built')
-                                    ->native(false) // JavaScript পিকার ব্যবহার করার জন্য (UI সুন্দর হয়)
-                                    ->displayFormat('Y') // শুধুমাত্র সাল দেখানোর জন্য ফরম্যাট
-                                    ->maxDate(now()) // সর্বোচ্চ তারিখ
                                     ->nullable()
-                                    ->helperText('প্রপার্টিটি কোন সালে তৈরি করা হয়েছে তা লিখুন।')
-                                    ->closeOnDateSelection(), // তারিখ সিলেক্ট করার সাথে সাথে পিকার বন্ধ হয়ে যাবে
+                                    ->helperText('প্রপার্টিটি কোন সালে তৈরি করা হয়েছে তা লিখুন।'),
                             ])->columns(1),
 
                         // --- Thumbnail Section ---

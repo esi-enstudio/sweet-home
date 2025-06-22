@@ -30,7 +30,7 @@ class AmenityResource extends Resource
 
 //    protected static ?string $navigationLabel = 'সুবিধা ও বৈশিষ্ট্য';
 
-    protected static ?string $navigationParentItem = 'My Properties';
+//    protected static ?string $navigationParentItem = 'My Properties';
 
     public static function form(Form $form): Form
     {

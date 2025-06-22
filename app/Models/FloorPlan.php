@@ -13,6 +13,14 @@ class FloorPlan extends Model
     protected $fillable = ['property_id','name','slug','image_path','description','total_area','others'];
 
     /**
+     * Define which field to use for slug generation.
+     */
+    public function getSluggableField(): string
+    {
+        return 'name';
+    }
+
+    /**
      * Get the property that owns the FloorPlan.
      * প্রতিটি ফ্লোর প্ল্যান একটি নির্দিষ্ট প্রপার্টির অন্তর্গত।
      */

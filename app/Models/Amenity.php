@@ -18,6 +18,14 @@ class Amenity extends Model
     protected $fillable = ['name','slug','icon_class','type'];
 
     /**
+     * Define which field to use for slug generation.
+     */
+    public function getSluggableField(): string
+    {
+        return 'name';
+    }
+
+    /**
      * The properties that have this amenity.
      */
     public function properties(): BelongsToMany

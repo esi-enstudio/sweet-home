@@ -13,6 +13,14 @@ class SpaceOverview extends Model
     protected $fillable = ['name','slug','icon_class'];
 
     /**
+     * Define which field to use for slug generation.
+     */
+    public function getSluggableField(): string
+    {
+        return 'name';
+    }
+
+    /**
      * The properties that belong to the Fact.
      */
     public function properties(): BelongsToMany

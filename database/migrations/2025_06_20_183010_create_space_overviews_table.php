@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name')->unique();
             $table->string('slug')->unique();
             $table->string('icon_class')->nullable();
+            $table->timestamps();
         });
 
         Schema::create('property_space_overview', function (Blueprint $table) {

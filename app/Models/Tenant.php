@@ -15,6 +15,14 @@ class Tenant extends Model
 
     protected $fillable = ['name','slug'];
 
+    /**
+     * Define which field to use for slug generation.
+     */
+    public function getSluggableField(): string
+    {
+        return 'name';
+    }
+
     public function properties(): BelongsToMany
     {
         return $this->belongsToMany(Property::class, 'property_tenant');
