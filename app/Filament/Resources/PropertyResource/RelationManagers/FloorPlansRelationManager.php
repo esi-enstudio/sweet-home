@@ -59,7 +59,9 @@ class FloorPlansRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                    ->icon('heroicon-o-plus')
+                    ->label('Add New'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

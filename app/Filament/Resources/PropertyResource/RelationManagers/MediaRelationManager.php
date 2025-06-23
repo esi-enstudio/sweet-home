@@ -20,14 +20,23 @@ class MediaRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\FileUpload::make('path')
-                    ->label('Images')
+                    ->label('Images / Video')
                     ->multiple() // <<-- একাধিক ফাইল আপলোডের জন্য এটি সবচেয়ে গুরুত্বপূর্ণ
                     ->reorderable() // ব্যবহারকারীকে ছবি সাজানোর সুযোগ দেবে
                     ->appendFiles() // নতুন ছবি যোগ করার সময় পুরোনো গুলো দেখাবে
                     ->image()
-                    ->directory('property-gallery')
+                    ->directory('property/gallery')
                     ->required()
                     ->columnSpanFull(),
+
+                Forms\Components\Select::make('type')
+                    ->label('Image/Video Type')
+                    ->required()
+                    ->helperText('Choose the type of content you want to display. Select "Image" to upload an image, or "Video" to provide a video URL.')
+                    ->options([
+                        'image' => 'Image',
+                        'video_url' => 'Video'
+                    ]),
 
                 Forms\Components\Textarea::make('caption')
                     ->label('Common Caption (Optional)')
@@ -55,6 +64,8 @@ class MediaRelationManager extends RelationManager
             ->headerActions([
                 // আমরা CreateAction-এর ডিফল্ট আচরণ পরিবর্তন করব
                 Tables\Actions\CreateAction::make()
+                    ->icon('heroicon-o-plus')
+                    ->label('Add New')
                     ->using(function (array $data, RelationManager $livewire): Model {
                         $createdRecords = [];
                         // $data['path'] এখন একটি অ্যারে, তাই আমরা লুপ চালাব

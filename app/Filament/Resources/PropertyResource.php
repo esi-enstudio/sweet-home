@@ -13,6 +13,7 @@ use App\Models\District;
 use App\Models\Property;
 use App\Models\Union;
 use App\Models\Upazila;
+use Carbon\Carbon;
 use Exception;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
@@ -27,8 +28,16 @@ use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\Alignment;
+use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\Layout\Grid;
+use Filament\Tables\Columns\Layout\Panel;
+use Filament\Tables\Columns\Layout\Split;
+use Filament\Tables\Columns\Layout\Stack;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -40,6 +49,8 @@ class PropertyResource extends Resource
     protected static ?string $model = Property::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-home-modern';
+
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationLabel = 'My Properties';
 
@@ -63,7 +74,8 @@ class PropertyResource extends Resource
                                     ->label('Property ID')
                                     ->visibleOn(['edit']) // ব্যবহারকারী এটি পরিবর্তন করতে পারবে না
                                     ->placeholder('Will be generated automatically')
-                                    ->helperText('এটি লোকেশনের উপর ভিত্তি করে স্বয়ংক্রিয়ভাবে তৈরি হবে।'),
+                                    ->disabled()
+                                    ->helperText('এটি স্বয়ংক্রিয়ভাবে তৈরি হবে।'),
 
                                 RichEditor::make('description')
                                     ->columnSpanFull()
@@ -183,10 +195,12 @@ class PropertyResource extends Resource
                                     ->minLength(11)
                                     ->maxLength(11)
                                     ->tel()
+                                    ->unique(ignoreRecord: true)
                                     ->required(),
 
                                 TextInput::make('contact_whatsapp')
                                     ->tel()
+                                    ->unique(ignoreRecord: true)
                                     ->minLength(11)
                                     ->maxLength(11)
                                     ->helperText('হোয়াটসঅ্যাপে যোগাযোগের জন্য নম্বরটি দিন। (যদি থাকে)')
@@ -335,21 +349,103 @@ class PropertyResource extends Resource
             ->query(
                 fn() => static::getModel()::query()->with(['user'])
             )
+            ->contentGrid([
+                'xl' => 2,
+            ])
             ->columns([
-                Tables\Columns\ImageColumn::make('thumbnail')->label('Thumbnail'),
-                Tables\Columns\TextColumn::make('title')
-                    ->searchable()
-                    ->description(fn (Property $record): string => $record->area_name . ', ' . $record->district->name),
-                Tables\Columns\TextColumn::make('user.name')->label('Owner')->sortable(),
-                Tables\Columns\TextColumn::make('rent_amount')->money('BDT')->sortable(),
-                Tables\Columns\IconColumn::make('is_available')->boolean(),
-                Tables\Columns\TextColumn::make('created_at')->dateTime()->sortable()->toggleable(isToggledHiddenByDefault: true),
+                // Split কার্ডটিকে দুটি প্রধান অংশে ভাগ করবে: বামে ছবি, ডানে তথ্য
+                Split::make([
+                    // --- বাম অংশ: ছবি ---
+                    ImageColumn::make('thumbnail')
+                        ->width('200px')
+                        ->height('150px')
+                        ->extraImgAttributes(['class' => 'rounded-lg']),
+
+                    // --- ডান অংশ: তথ্যের স্ট্যাক ---
+                    Stack::make([
+                        // উপরের অংশে টাইটেল এবং স্ট্যাটাস ব্যাজ
+                        Grid::make(1)
+                            ->schema([
+                                TextColumn::make('title')
+                                    ->weight(FontWeight::Bold)
+                                    ->searchable()
+                                    ->limit(50),
+                            ]),
+
+                        // মাঝের অংশে ঠিকানা
+                        TextColumn::make('address')
+                            ->color('gray')
+                            ->icon('heroicon-o-map-pin')
+                            ->limit(30),
+
+                        // নিচের অংশে প্রধান ফিচারগুলো
+                        Grid::make()
+                            ->columns([
+                                'xl' => 3,
+                                'md' => 3
+                            ])
+                            ->schema([
+                                TextColumn::make('bedrooms')
+                                    ->suffix(' Bed')
+                                    ->weight(FontWeight::Medium),
+
+                                TextColumn::make('bathrooms')
+                                    ->suffix(' Bath')
+                                    ->weight(FontWeight::Medium),
+
+                                TextColumn::make('total_area')
+                                    ->weight(FontWeight::Medium)
+                                    ->suffix(' sq.ft.'),
+                            ]),
+
+                        TextColumn::make('property_id')->icon('heroicon-o-cube'),
+                    ])->space(2), // স্ট্যাকের আইটেমগুলোর মধ্যে স্পেস
+                ])
+                    ->from('xl')->extraAttributes(['class' => 'mb-5']), // মিডিয়াম স্ক্রিন থেকে Split লেআউট শুরু হবে
+
+                // Panel প্রতিটি প্রপার্টিকে একটি আলাদা কার্ড হিসেবে দেখাবে
+                Panel::make([
+                    Grid::make(3)
+                        ->schema([
+                            Stack::make([
+                                TextColumn::make('rent_amount')->label('Rent')->money('BDT')->weight(FontWeight::SemiBold),
+                                TextColumn::make('available_from')->label('Available From')->date(),
+                                TextColumn::make('user.name')->label('Owner/Lister')->icon('heroicon-o-user-circle'),
+                            ])->space(1),
+
+                            Stack::make([
+                                TextColumn::make('propertyType.name')
+                                    ->label('Type')
+                                    ->grow(false)
+                                    ->icon('heroicon-o-tag'),
+
+                                TextColumn::make('listing_type')
+                                    ->label('Listing For')
+                                    ->grow(false)
+                                    ->icon('heroicon-o-receipt-percent')
+                                    ->formatStateUsing(fn($state) => Str::title($state))
+                                    ->badge(),
+
+                                TextColumn::make('created_at')
+                                    ->label('Listed On')
+                                    ->grow(false)
+                                    ->since(),
+                            ])
+                                ->alignment(Alignment::End)
+                                ->space(1),
+
+                            TextColumn::make('status')
+                                ->badge()
+                                ->formatStateUsing(fn($state) => Str::title($state))
+                                ->alignEnd(), // ব্যাজটিকে ডানে অ্যালাইন করা হয়েছে
+                        ]),
+                ]),
             ])
             ->defaultPaginationPageOption(5)
             ->deferLoading()
             ->filters([
                 Tables\Filters\SelectFilter::make('district')
-                    ->relationship('district', 'name'),
+                    ->relationship('district', 'bn_name'),
                 Tables\Filters\TernaryFilter::make('is_available'),
             ])
             ->actions([
@@ -386,6 +482,7 @@ class PropertyResource extends Resource
         return [
             'index' => Pages\ListProperties::route('/'),
             'create' => Pages\CreateProperty::route('/create'),
+            'view' => Pages\ViewProperty::route('/{record}'),
             'edit' => Pages\EditProperty::route('/{record}/edit'),
         ];
     }

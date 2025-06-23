@@ -136,7 +136,7 @@ class Property extends Model
     public function spaceOverviews(): BelongsToMany
     {
         return $this->belongsToMany(SpaceOverview::class, 'property_space_overview')
-            ->withPivot('dimensions')
+            ->withPivot('length', 'width', 'total_sq_feet')
             ->withTimestamps(); // পিভট টেবিলের 'dimensions' কলামটি অ্যাক্সেস করার জন্য
     }
 

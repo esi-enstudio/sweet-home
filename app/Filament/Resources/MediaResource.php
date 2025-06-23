@@ -6,7 +6,9 @@ use App\Filament\Resources\MediaResource\Pages;
 use App\Filament\Resources\MediaResource\RelationManagers;
 use App\Models\Media;
 use App\Models\Property;
+use Carbon\Carbon;
 use Filament\Forms;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Section;
@@ -17,13 +19,17 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Str;
 
 class MediaResource extends Resource
 {
     protected static ?string $model = Media::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?int $navigationSort = 7;
 
 //    protected static ?string $navigationParentItem = 'My Properties';
 
@@ -35,52 +41,49 @@ class MediaResource extends Resource
                 Group::make()
                     ->columnSpan(2)
                     ->schema([
-                        Section::make('Property Selection')
-                            ->description('Choose the property to which the media (images or videos) will be associated.')
+                        Fieldset::make('Property Selection')
                             ->schema([
                                 Select::make('property_id')
+                                    ->searchable()
+                                    ->preload()
+                                    ->relationship('property', 'property_id')
+                                    ->columnSpanFull()
                                     ->label('Select Property')
-                                    ->required()
-                                    ->options(fn() => Property::where('is_available', 1)->pluck('title','id')),
+                                    ->required(),
+//                                    ->options(fn() => Property::where('is_available', 1)->pluck('title','id')),
                             ]),
 
-                        Section::make('Caption and video link')
-                            ->description('Add a short caption for better understanding.')
+                        Fieldset::make('Caption and video link')
                             ->schema([
-                                TextInput::make('caption')
-//                                    ->label('ক্যাপশন')
-                                    ->helperText('ছবির বা ভিডিওর জন্য একটি সংক্ষিপ্ত বর্ণনা দিন'),
+                                Forms\Components\Select::make('type')
+                                    ->label('Image/Video Type')
+                                    ->required()
+                                    ->helperText('Choose the type of content you want to display. Select "Image" to upload an image, or "Video" to provide a video URL.')
+                                    ->options([
+                                        'image' => 'Image',
+                                        'video_url' => 'Video'
+                                    ]),
 
-                                TextInput::make('video_url')
-//                                    ->label('ভিডিও লিংক')
-                                    ->helperText('ভিডিওটি ইউটিউব এ আপলোড করে লিংক টি এখানে দিন।'),
+                                Forms\Components\Textarea::make('caption')
+                                    ->label('Common Caption (Optional)')
+                                    ->placeholder('This caption will be applied to all uploaded images.'),
                             ]),
                     ]),
 
                 Group::make()
-                    ->columnSpan(1)
                     ->schema([
-                        Section::make('Thumbnail')
-                            ->description('A small preview image representing the property visually in listings and overviews.')
+                        Fieldset::make('Images / Video')
                             ->schema([
-                                FileUpload::make('thumbnail')
-//                                    ->label('ছবি আপলোড')
+                                Forms\Components\FileUpload::make('path')
+                                    ->label('')
+                                    ->multiple() // <<-- একাধিক ফাইল আপলোডের জন্য এটি সবচেয়ে গুরুত্বপূর্ণ
+                                    ->reorderable() // ব্যবহারকারীকে ছবি সাজানোর সুযোগ দেবে
+                                    ->appendFiles() // নতুন ছবি যোগ করার সময় পুরোনো গুলো দেখাবে
+                                    ->image()
+                                    ->directory('property/gallery')
                                     ->required()
-                                    ->disk('public')
-                                    ->directory('properties/thumbnails')
-                                    ->helperText('থাম্বনেইল আপলোড করুন'),
-                            ]),
-
-                        Section::make('Gallery')
-                            ->description('Add photos to visually represent the property.')
-                            ->schema([
-                                FileUpload::make('gallery')
-//                                    ->label('ছবি আপলোড')
-                                    ->multiple()
-                                    ->required()
-                                    ->disk('public')
-                                    ->directory('properties/gallery')
-                                    ->helperText('ছবিগুলো এখানে আপলোড করুন'),
+                                    ->downloadable()
+                                    ->columnSpanFull(),
                             ]),
                     ]),
 
@@ -94,16 +97,26 @@ class MediaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('property_id')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('media_type'),
-                Tables\Columns\TextColumn::make('file_path')
+                Tables\Columns\TextColumn::make('property.property_id')
+                    ->label('Property ID')
+                    ->url(fn(Model $record) => PropertyResource::getUrl('view', ['record' => $record->property]))
+                    ->openUrlInNewTab()
                     ->searchable(),
+
+                Tables\Columns\ImageColumn::make('path')
+                    ->label('Image')
+                    ->width(80)
+                    ->extraImgAttributes(['class' => 'rounded-lg']),
+
+                Tables\Columns\TextColumn::make('type')
+                    ->formatStateUsing(fn($state) => Str::title($state)),
+
                 Tables\Columns\TextColumn::make('caption')
                     ->searchable(),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
+                    ->formatStateUsing(fn($state) => Carbon::parse($state)->toDayDateTimeString())
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
@@ -111,6 +124,7 @@ class MediaResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultPaginationPageOption(5)
             ->filters([
                 //
             ])

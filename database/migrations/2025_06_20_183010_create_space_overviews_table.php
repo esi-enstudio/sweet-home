@@ -24,7 +24,9 @@ return new class extends Migration
         Schema::create('property_space_overview', function (Blueprint $table) {
             $table->foreignIdFor(Property::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(SpaceOverview::class)->constrained()->cascadeOnDelete();
-            $table->string('dimensions')->nullable(); // e.g., "20 x 16 sq feet"
+            $table->decimal('length', 8, 2)->nullable()->comment('in feet'); // দৈর্ঘ্য (e.g., 20.00)
+            $table->decimal('width', 8, 2)->nullable()->comment('in feet');  // প্রস্থ (e.g., 16.00)
+            $table->decimal('total_sq_feet', 8, 2)->nullable(); // স্বয়ংক্রিয়ভাবে গণনা করা হবে
             $table->primary(['property_id', 'space_overview_id']);
             $table->timestamps();
         });

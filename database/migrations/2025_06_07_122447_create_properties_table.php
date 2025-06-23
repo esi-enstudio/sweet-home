@@ -63,8 +63,8 @@ return new class extends Migration
             $table->text('house_rules')->nullable();
 
             // --- Contact Details ---
-            $table->string('contact_number_primary');
-            $table->string('contact_whatsapp')->nullable();
+            $table->string('contact_number_primary')->unique();
+            $table->string('contact_whatsapp')->unique()->nullable();
 
             // --- System Columns ---
             $table->unsignedBigInteger('views_count')->default(0);

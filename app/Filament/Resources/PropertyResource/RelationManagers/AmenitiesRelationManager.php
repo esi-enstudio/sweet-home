@@ -46,7 +46,8 @@ class AmenitiesRelationManager extends RelationManager
             ->headerActions([
                 // অ্যাকশন ১: নতুন Amenity তৈরি এবং যুক্ত করার জন্য
                 Tables\Actions\CreateAction::make()
-                    ->label('Create New Amenity')
+                    ->icon('heroicon-o-plus')
+                    ->label('Add New')
                     ->form([
                         // নতুন Amenity তৈরির জন্য প্রয়োজনীয় ফিল্ড
                         Forms\Components\TextInput::make('name')

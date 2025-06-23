@@ -26,7 +26,7 @@ class SpaceOverview extends Model
     public function properties(): BelongsToMany
     {
         return $this->belongsToMany(Property::class, 'property_space_overview')
-            ->withPivot('dimensions')
+            ->withPivot('length', 'width', 'total_sq_feet')
             ->withTimestamps();
     }
 }
