@@ -20,7 +20,7 @@ class Property extends Model
     use SoftDeletes, HasUniqueSlug;
 
     protected $fillable = [
-        'user_id','property_type_id','tenant_id','division_id','district_id','upazila_id','union_id','property_id','slug','title','description','listing_type','total_area','bedrooms','bathrooms','balconies','floor_number','facing','year_built','thumbnail','landmark','address','latitude','longitude','rent_amount','rent_negotiable','service_charge','security_deposit','rent_summary','available_from','is_available','is_featured','house_rules','contact_number_primary','contact_whatsapp','views_count','status'
+        'user_id','property_type_id','tenant_id','division_id','district_id','upazila_id','union_id','property_id','slug','title','description','listing_type','total_area','bedrooms','bathrooms','balconies','floor_number','facing','year_built','thumbnail','landmark','address','latitude','longitude','rent_amount','rent_negotiable','service_charge','security_deposit','rent_summary','available_from','is_available','is_featured','house_rules','contact_number_primary','contact_whatsapp','views_count','status','is_hero_featured','hero_order_column',
     ];
 
     /**
@@ -43,8 +43,6 @@ class Property extends Model
             // --- নতুন Property ID জেনারেট করার লজিক ---
             $property->property_id = self::generateUniquePropertyId($property);
         });
-
-        // ... created, deleted, updated ইভেন্টগুলো
     }
 
     protected $casts = [

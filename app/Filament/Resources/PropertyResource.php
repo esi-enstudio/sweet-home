@@ -232,8 +232,20 @@ class PropertyResource extends Resource
                                     ->default(true),
 
                                 Toggle::make('is_featured')
-                                    ->label('Featured Property')
-                                    ->helperText('এটি চালু করলে প্রপার্টিটি হোমপেজ বা বিশেষ সেকশনে দেখানো হবে।'),
+                                    ->label('Featured in Lists')
+                                    ->helperText('সাধারণ ফিচার্ড লিস্টে দেখানো হবে।'),
+
+                                Toggle::make('is_hero_featured')
+                                    ->label('Feature in Homepage Hero')
+                                    ->helperText('হোমপেজের প্রধান স্লাইডারে দেখানো হবে।')
+                                    ->reactive(), // অথবা live()
+
+                                TextInput::make('hero_order_column')
+                                    ->label('Hero Slider Order')
+                                    ->numeric()
+                                    ->helperText('স্লাইডারে প্রদর্শনের ক্রম (ছোট সংখ্যা আগে)।')
+                                    // শুধুমাত্র is_hero_featured অন থাকলেই এই ফিল্ডটি দেখানো হবে
+                                    ->visible(fn (Get $get) => $get('is_hero_featured')),
 
                                 DatePicker::make('available_from')
                                     ->required()

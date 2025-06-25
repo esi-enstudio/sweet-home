@@ -4,7 +4,7 @@ return [
 
     /*
      |--------------------------------------------------------------------------
-     | Debugbar Settings
+     | Debugbar Setting
      |--------------------------------------------------------------------------
      |
      | Debugbar is enabled by default, when debug is set to true in app.php.

@@ -60,6 +60,10 @@ return new class extends Migration
             $table->date('available_from');
             $table->boolean('is_available')->default(true);
             $table->boolean('is_featured')->default(false);
+            // এই কলামটি নির্ধারণ করবে প্রপার্টিটি হিরো স্লাইডারে যাবে কি না
+            $table->boolean('is_hero_featured')->default(false)->after('is_featured');
+            // প্রতিটি হিরো স্লাইডের জন্য একটি কাস্টম সাজানোর ক্রম
+            $table->unsignedInteger('hero_order_column')->nullable()->after('is_hero_featured');
             $table->text('house_rules')->nullable();
 
             // --- Contact Details ---

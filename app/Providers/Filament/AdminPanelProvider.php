@@ -14,7 +14,11 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationBuilder;
+use Filament\Navigation\NavigationGroup;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
+use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\SpatieLaravelTranslatablePlugin;
@@ -110,6 +114,17 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->navigationGroups([
+                // একটি নেভিগেশন গ্রুপ তৈরি করা হচ্ছে
+                NavigationGroup::make()
+                    ->label('Settings')
+                    ->icon('heroicon-o-cog-6-tooth'), // <-- গ্রুপের জন্য আইকন
+
+                // আপনি চাইলে আরও গ্রুপ যোগ করতে পারেন
+//                NavigationGroup::make()
+//                    ->label('Blog')
+//                    ->icon('heroicon-o-pencil-square'),
             ])
             ->spa();
     }
