@@ -35,7 +35,7 @@ class AmenitiesRelationManager extends RelationManager
             ->modifyQueryUsing(fn(Builder $query) => $query->orderBy('amenity_property.created_at', 'desc'))
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('type')->badge(),
+                Tables\Columns\TextColumn::make('type')->badge()->formatStateUsing(fn($state): string => Str::title($state)),
                 // পিভট টেবিলের 'details' কলামটি দেখানোর জন্য
                 Tables\Columns\TextColumn::make('pivot.details')->label('Details'),
                 Tables\Columns\ToggleColumn::make('is_key_feature'),

@@ -19,28 +19,37 @@ class MediaRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('path')
-                    ->label('Images / Video')
-                    ->multiple() // <<-- একাধিক ফাইল আপলোডের জন্য এটি সবচেয়ে গুরুত্বপূর্ণ
-                    ->reorderable() // ব্যবহারকারীকে ছবি সাজানোর সুযোগ দেবে
-                    ->appendFiles() // নতুন ছবি যোগ করার সময় পুরোনো গুলো দেখাবে
-                    ->image()
-                    ->directory('property/gallery')
-                    ->required()
-                    ->columnSpanFull(),
-
                 Forms\Components\Select::make('type')
                     ->label('Image/Video Type')
                     ->required()
-                    ->helperText('Choose the type of content you want to display. Select "Image" to upload an image, or "Video" to provide a video URL.')
                     ->options([
                         'image' => 'Image',
-                        'video_url' => 'Video'
-                    ]),
+                        'video_url' => 'Video',
+                    ])
+                    ->live(), // এটি প্রয়োজন যাতে শর্তভিত্তিক ইনপুট রিয়েলটাইমে আপডেট হয়
 
                 Forms\Components\Textarea::make('caption')
                     ->label('Common Caption (Optional)')
                     ->placeholder('This caption will be applied to all uploaded images.'),
+
+                Forms\Components\FileUpload::make('path')
+                    ->label('Upload Images')
+                    ->multiple()
+                    ->reorderable()
+                    ->appendFiles()
+                    ->image()
+                    ->directory('property/gallery')
+                    ->required(fn (callable $get) => $get('type') === 'image')
+                    ->visible(fn (callable $get) => $get('type') === 'image')
+                    ->columnSpanFull(),
+
+                Forms\Components\TextInput::make('video_url')
+                    ->label('Video URL')
+                    ->placeholder('https://youtube.com/...')
+                    ->required(fn (callable $get) => $get('type') === 'video_url')
+                    ->visible(fn (callable $get) => $get('type') === 'video_url')
+                    ->prefix('https://')
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -54,6 +63,7 @@ class MediaRelationManager extends RelationManager
                     ->extraImgAttributes(['class' => 'rounded-md'])
                     ->width(100)
                     ->height(100),
+                Tables\Columns\TextColumn::make('video_url')->searchable(),
                 Tables\Columns\TextColumn::make('caption')->searchable(),
             ])
             ->deferLoading()
@@ -68,13 +78,24 @@ class MediaRelationManager extends RelationManager
                     ->label('Add New')
                     ->using(function (array $data, RelationManager $livewire): Model {
                         $createdRecords = [];
+
                         // $data['path'] এখন একটি অ্যারে, তাই আমরা লুপ চালাব
-                        foreach ($data['path'] as $filePath) {
+                        if ($data['type'] === 'image') {
+                            foreach ($data['path'] as $filePath) {
+                                $createdRecords[] = $livewire->getRelationship()->create([
+                                    'type' => $data['type'],
+                                    'path' => $filePath,
+                                    'caption' => $data['caption'],
+                                ]);
+                            }
+                        } elseif ($data['type'] === 'video_url') {
                             $createdRecords[] = $livewire->getRelationship()->create([
-                                'path' => $filePath,
-                                'caption' => $data['caption'], // প্রতিটি ছবির জন্য একই ক্যাপশন ব্যবহার করা হচ্ছে
+                                'type' => $data['type'],
+                                'path' => $data['video_url'], // এখানে এটা স্ট্রিং, যেমন ইউটিউব URL
+                                'caption' => $data['caption'],
                             ]);
                         }
+
                         // ফিলামেন্টকে জানানোর জন্য শেষ রেকর্ডটি রিটার্ন করতে হবে
                         return last($createdRecords);
                     }),
@@ -85,6 +106,14 @@ class MediaRelationManager extends RelationManager
                     ->modalHeading('Edit Image Details') // মডালের প্রধান শিরোনাম
                     ->form([
                         Forms\Components\Textarea::make('caption')->label('Image Caption'),
+
+                        Forms\Components\TextInput::make('video_url')
+                            ->label('Video URL')
+                            ->placeholder('https://youtube.com/...')
+                            ->required(fn (callable $get) => $get('type') === 'video_url')
+                            ->visible(fn (callable $get) => $get('type') === 'video_url')
+                            ->prefix('https://')
+                            ->columnSpanFull(),
                     ]),
                 Tables\Actions\DeleteAction::make()
                     ->modalHeading('Delete Images')

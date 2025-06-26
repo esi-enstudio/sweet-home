@@ -53,8 +53,10 @@ class PropertyFactory extends Factory
 
             'available_from' => $this->faker->dateTimeBetween('now', '+3 months'),
             'is_available' => true,
-            'is_featured' => $this->faker->boolean(20),
-            'is_hero_featured' => $this->faker->boolean(10),
+            'is_featured' => $this->faker->boolean(1),
+            'is_spotlight' => $this->faker->boolean(1),
+            'is_featured_showcase' => $this->faker->boolean(1),
+            'is_hero_featured' => $this->faker->boolean(1),
             'hero_order_column' => $this->faker->optional()->numberBetween(1, 10),
             'house_rules' => $this->faker->text(100),
 

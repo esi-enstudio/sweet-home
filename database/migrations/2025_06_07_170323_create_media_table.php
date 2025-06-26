@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Property::class)->constrained()->cascadeOnDelete();
             $table->string('path'); // File a path in storage
+            $table->string('video_url');
             $table->enum('type', ['image', 'video_url']);
             $table->string('caption')->nullable();
             $table->unsignedSmallInteger('order_column')->default(0); // ছবি সাজানোর জন্য

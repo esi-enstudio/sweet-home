@@ -11,7 +11,7 @@ class Media extends Model implements Sortable
 {
     use SortableTrait;
 
-    protected $fillable = ['property_id', 'path', 'type', 'caption', 'order_column',];
+    protected $fillable = ['property_id', 'path','video_url', 'type', 'caption', 'order_column',];
 
     public function property(): BelongsTo
     {
