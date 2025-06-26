@@ -51,13 +51,13 @@ class AmenityResource extends Resource
                             ->maxLength(255),
 
                         Select::make('type')
+                            ->required()
                             ->options([
                                 'facility' => 'Facility',
                                 'utility' => 'Utility',
                                 'safety' => 'Safety',
                                 'environment' => 'Environment',
-                            ])
-                            ->required()
+                            ]),
                     ])
                     ->columns(2),
             ]);

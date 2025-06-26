@@ -225,6 +225,14 @@ class PropertyResource extends Resource
                                     ->options(['pending' => 'Pending', 'active' => 'Active', 'inactive' => 'Inactive'])
                                     ->default('pending'),
 
+                                Toggle::make('is_spotlight')
+                                    ->label('Spotlight Property')
+                                    ->helperText(''),
+
+                                Toggle::make('is_featured_showcase')
+                                    ->label('Featured Showcase Property')
+                                    ->helperText(''),
+
                                 Toggle::make('is_available')
                                     ->label('Available for Rent/Sell')
                                     ->helperText('এটি চালু থাকলে প্রপার্টিটি ভাড়া/বিক্রির জন্য ওয়েবসাইটে দেখানো হবে।')
@@ -442,9 +450,7 @@ class PropertyResource extends Resource
                                     ->label('Listed On')
                                     ->grow(false)
                                     ->since(),
-                            ])
-                                ->alignment(Alignment::End)
-                                ->space(1),
+                            ])->space(1),
 
                             TextColumn::make('status')
                                 ->badge()

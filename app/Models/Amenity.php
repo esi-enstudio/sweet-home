@@ -15,7 +15,7 @@ class Amenity extends Model
 {
     use HasUniqueSlug;
 
-    protected $fillable = ['name','slug','icon_class','type'];
+    protected $fillable = ['name','slug','icon_class','type','is_key_feature'];
 
     /**
      * Define which field to use for slug generation.
@@ -32,7 +32,7 @@ class Amenity extends Model
     {
         // একটি সুবিধার অনেকগুলো প্রপার্টি থাকতে পারে
         return $this->belongsToMany(Property::class)
-            ->withPivot('details')
+            ->withPivot('details','is_key_feature')
             ->withTimestamps();
     }
 

@@ -38,6 +38,7 @@ class AmenitiesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('type')->badge(),
                 // পিভট টেবিলের 'details' কলামটি দেখানোর জন্য
                 Tables\Columns\TextColumn::make('pivot.details')->label('Details'),
+                Tables\Columns\ToggleColumn::make('is_key_feature'),
             ])
             ->defaultPaginationPageOption(5)
             ->filters([

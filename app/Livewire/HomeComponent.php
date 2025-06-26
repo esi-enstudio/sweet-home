@@ -14,7 +14,11 @@ use Livewire\Component;
 #[Layout('layouts.app')]
 class HomeComponent extends Component
 {
-    #[Computed(cache: true, key: 'hero-properties')]
+    /**
+     * হিরো সেকশনের জন্য ফিচার্ড প্রপার্টিগুলো লোড করে।
+     * is_hero_featured = true
+     */
+    #[Computed(seconds: 30, cache: true, key: 'hero-properties')]
     public function heroProperties(): Collection
     {
         return Property::with('user','propertyType','media') // SEO-এর জন্য প্রয়োজনীয় রিলেশন
@@ -24,6 +28,24 @@ class HomeComponent extends Component
             ->orderBy('updated_at', 'desc')
             ->take(5)
             ->get();
+    }
+
+    /**
+     * "Spotlight Property" সেকশনের জন্য প্রপার্টি লোড করে।
+     * is_spotlight = true
+     */
+    #[Computed(seconds: 30, cache: true, key: 'spotlight-property')]
+    public function spotlightProperty(): ?Property
+    {
+        return Property::with([
+            'media',
+            'amenities' => function($query){
+                $query->wherePivot('is_key_feature', true)->take(4);
+            },
+        ])
+            ->where('is_spotlight', true)
+            ->where('is_available', true)
+            ->first();
     }
 
     public function render(): Factory|View|Application

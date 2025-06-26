@@ -72,87 +72,83 @@
                     </div>
                 </div>
                 @empty
-                    <p>No slider found.</p>
+                    <!-- Hero 2 -->
+                    <div class="swiper-slide relative z-0 py-100px 4xl:min-h-[780px] overflow-hidden flex items-center bg-section-bg-1">
+                        <div class="container w-full">
+                            <div class="grid grid-cols-1 lg:grid-cols-2">
+                                <!-- banner Left -->
+                                <div
+                                    class="lg:col-start-2 lg:col-span-1 flex flex-col items-end text-end slide-animation"
+                                >
+                                    <p
+                                        class="text-sm md:text-15px lg:text-base text-heading-color font-bold mb-5 animated"
+                                    >
+                                        <i class="fas fa-home text-secondary-color"></i>
+                                        Real Estate Company
+                                    </p>
+                                    <h1
+                                        class="text-3xl md:text-40px lg:text-50px 4xl:text-65px leading-30px md:leading-10 lg:leading-50px 4xl:leading-65px font-bold mb-5 animated"
+                                    >
+                          <span
+                              class="leading-30px md:leading-10 lg:leading-50px 4xl:leading-65px"
+                          >
+                            Want Place An Advertise <br >
+                            of Your House
+                          </span>
+                                    </h1>
+                                    <p
+                                        class="text-sm lg:text-base mb-5 max-w-450px pr-15px xl:pr-30px border-r border-border-color-14 animated"
+                                    >
+                          <span class="leading-25px lg:leading-1.8">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing
+                            elit, sed do eiusmod tempor incididunt ut labore.
+                          </span>
+                                    </p>
+                                    <div class="lg:mt-5 mb-30px xl:mb-0 animated">
+                                        <h5
+                                            class="capitalize text-sm md:text-base text-white relative group whitespace-nowrap font-normal transition-all duration-300 border border-secondary-color hover:border-heading-color inline-block mr-15px"
+                                        >
+                            <span
+                                class="inline-block absolute top-0 right-0 w-full h-full bg-secondary-color group-hover:bg-primary-color z-1 group-hover:w-0 transition-all duration-300"
+                            ></span>
+                                            <a
+                                                href="#"
+                                                class="relative z-10 px-5 md:px-25px lg:px-10 py-10px md:py-3 lg:py-17px group-hover:text-heading-color leading-23px"
+                                            >Call Now</a
+                                            >
+                                        </h5>
+                                        <h5
+                                            class="capitalize inline-block text-sm md:text-base text-primary-color hover:text-white hover:bg-primary-color relative group whitespace-nowrap font-normal transition-all duration-300 shadow-box-shadow-3"
+                                        >
+                            <span
+                                class="inline-block absolute top-0 right-0 w-full h-full bg-white group-hover:bg-secondary-color z-1 group-hover:w-0 transition-all duration-300"
+                            ></span>
+                                            <a
+                                                href="#"
+                                                class="relative z-10 px-5 md:px-25px lg:px-10 py-10px md:py-3 lg:py-17px group-hover:text-white leading-23px"
+                                            >LEARN MORE</a
+                                            >
+                                        </h5>
+                                    </div>
+                                </div>
+                                <!-- banner right -->
+                                <div
+                                    class="lg:row-start-1 lg:row-span-1 lg:col-start-1 lg:col-span-1"
+                                >
+                                    <div
+                                        class="4xl:absolute left-[60px] xl:left-[150px] bottom-[100px] 4xl:h-[70%] 4xl:w-[45%]"
+                                    >
+                                        <img
+                                            class="4xl:h-full 4xl:ml-auto"
+                                            src="{{ asset('assets/img/slider/21.png') }}"
+                                            alt=""
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @endforelse
-
-                <!-- Hero 2 -->
-{{--                <div--}}
-{{--                    class="swiper-slide relative z-0 py-100px 4xl:min-h-[780px] overflow-hidden flex items-center bg-section-bg-1"--}}
-{{--                >--}}
-{{--                    <div class="container w-full">--}}
-{{--                        <div class="grid grid-cols-1 lg:grid-cols-2">--}}
-{{--                            <!-- banner Left -->--}}
-{{--                            <div--}}
-{{--                                class="lg:col-start-2 lg:col-span-1 flex flex-col items-end text-end slide-animation"--}}
-{{--                            >--}}
-{{--                                <p--}}
-{{--                                    class="text-sm md:text-15px lg:text-base text-heading-color font-bold mb-5 animated"--}}
-{{--                                >--}}
-{{--                                    <i class="fas fa-home text-secondary-color"></i>--}}
-{{--                                    Real Estate Agency--}}
-{{--                                </p>--}}
-{{--                                <h1--}}
-{{--                                    class="text-3xl md:text-40px lg:text-50px 4xl:text-65px leading-30px md:leading-10 lg:leading-50px 4xl:leading-65px font-bold mb-5 animated"--}}
-{{--                                >--}}
-{{--                          <span--}}
-{{--                              class="leading-30px md:leading-10 lg:leading-50px 4xl:leading-65px"--}}
-{{--                          >--}}
-{{--                            The Right Place <br >--}}
-{{--                            of House Finding--}}
-{{--                          </span>--}}
-{{--                                </h1>--}}
-{{--                                <p--}}
-{{--                                    class="text-sm lg:text-base mb-5 max-w-450px pr-15px xl:pr-30px border-r border-border-color-14 animated"--}}
-{{--                                >--}}
-{{--                          <span class="leading-25px lg:leading-1.8">--}}
-{{--                            Lorem ipsum dolor sit amet, consectetur adipisicing--}}
-{{--                            elit, sed do eiusmod tempor incididunt ut labore.--}}
-{{--                          </span>--}}
-{{--                                </p>--}}
-{{--                                <div class="lg:mt-5 mb-30px xl:mb-0 animated">--}}
-{{--                                    <h5--}}
-{{--                                        class="capitalize text-sm md:text-base text-white relative group whitespace-nowrap font-normal transition-all duration-300 border border-secondary-color hover:border-heading-color inline-block mr-15px"--}}
-{{--                                    >--}}
-{{--                            <span--}}
-{{--                                class="inline-block absolute top-0 right-0 w-full h-full bg-secondary-color group-hover:bg-primary-color z-1 group-hover:w-0 transition-all duration-300"--}}
-{{--                            ></span>--}}
-{{--                                        <a--}}
-{{--                                            href="service.html"--}}
-{{--                                            class="relative z-10 px-5 md:px-25px lg:px-10 py-10px md:py-3 lg:py-17px group-hover:text-heading-color leading-23px"--}}
-{{--                                        >OUR SERVICES</a--}}
-{{--                                        >--}}
-{{--                                    </h5>--}}
-{{--                                    <h5--}}
-{{--                                        class="capitalize inline-block text-sm md:text-base text-primary-color hover:text-white hover:bg-primary-color relative group whitespace-nowrap font-normal transition-all duration-300 shadow-box-shadow-3"--}}
-{{--                                    >--}}
-{{--                            <span--}}
-{{--                                class="inline-block absolute top-0 right-0 w-full h-full bg-white group-hover:bg-secondary-color z-1 group-hover:w-0 transition-all duration-300"--}}
-{{--                            ></span>--}}
-{{--                                        <a--}}
-{{--                                            href="about.html"--}}
-{{--                                            class="relative z-10 px-5 md:px-25px lg:px-10 py-10px md:py-3 lg:py-17px group-hover:text-white leading-23px"--}}
-{{--                                        >LEARN MORE</a--}}
-{{--                                        >--}}
-{{--                                    </h5>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                            <!-- banner right -->--}}
-{{--                            <div--}}
-{{--                                class="lg:row-start-1 lg:row-span-1 lg:col-start-1 lg:col-span-1"--}}
-{{--                            >--}}
-{{--                                <div--}}
-{{--                                    class="4xl:absolute left-[60px] xl:left-[150px] bottom-[100px] 4xl:h-[70%] 4xl:w-[45%]"--}}
-{{--                                >--}}
-{{--                                    <img--}}
-{{--                                        class="4xl:h-full 4xl:ml-auto"--}}
-{{--                                        src="{{ asset('assets/img/slider/21.png') }}"--}}
-{{--                                        alt=""--}}
-{{--                                    >--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                </div>--}}
             </div>
 
             <div class="hidden xl:block">
