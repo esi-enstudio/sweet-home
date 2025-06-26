@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasUniqueSlug;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,10 +15,12 @@ use Illuminate\Support\Str;
  * @method static where(string $string, int $int)
  * @property mixed|string $property_id
  * @property int|mixed|string|null $user_id
+ * @property mixed $is_hero_featured
+ * @property mixed $propertyType
  */
 class Property extends Model
 {
-    use SoftDeletes, HasUniqueSlug;
+    use SoftDeletes, HasUniqueSlug, HasFactory;
 
     protected $fillable = [
         'user_id','property_type_id','tenant_id','division_id','district_id','upazila_id','union_id','property_id','slug','title','description','listing_type','total_area','bedrooms','bathrooms','balconies','floor_number','facing','year_built','thumbnail','landmark','address','latitude','longitude','rent_amount','rent_negotiable','service_charge','security_deposit','rent_summary','available_from','is_available','is_featured','house_rules','contact_number_primary','contact_whatsapp','views_count','status','is_hero_featured','hero_order_column',

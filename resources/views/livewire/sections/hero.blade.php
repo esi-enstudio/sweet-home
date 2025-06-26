@@ -64,8 +64,8 @@
                             <div class="4xl:absolute right-[60px] xl:right-[150px] bottom-[100px] 4xl:h-[70%] 4xl:w-[45%]">
                                 <img
                                     class="4xl:h-full 4xl:ml-auto"
-                                    src="{{ \Illuminate\Support\Facades\Storage::url($property->thumbnail) }}"
-                                    alt=""
+                                    src="{{ Storage::url($property->thumbnail) }}"
+                                    alt="{{ $property->title }}"
                                 >
                             </div>
                         </div>

@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\Property;
 use App\Models\PropertyType;
+use Illuminate\Support\Facades\Cache;
 
 class PropertyObserver
 {
@@ -13,6 +14,10 @@ class PropertyObserver
     public function created(Property $property): void
     {
         $property->propertyType->increment('properties_count');
+
+        if ($property->is_hero_featured) {
+            Cache::forget('hero-properties');
+        }
     }
 
     /**
@@ -31,6 +36,10 @@ class PropertyObserver
             // নতুন ক্যাটাগরির কাউন্টার বাড়াও
             $property->propertyType->increment('properties_count');
         }
+
+        if ($property->is_hero_featured) {
+            Cache::forget('hero-properties');
+        }
     }
 
     /**
@@ -39,6 +48,10 @@ class PropertyObserver
     public function deleted(Property $property): void
     {
         $property->propertyType->decrement('properties_count');
+
+        if ($property->is_hero_featured) {
+            Cache::forget('hero-properties');
+        }
     }
 
     /**

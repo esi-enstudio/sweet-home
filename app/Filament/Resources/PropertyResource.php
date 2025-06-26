@@ -362,7 +362,7 @@ class PropertyResource extends Resource
                 fn() => static::getModel()::query()->with(['user'])
             )
             ->contentGrid([
-                'xl' => 2,
+                'xl' => 1,
             ])
             ->columns([
                 // Split কার্ডটিকে দুটি প্রধান অংশে ভাগ করবে: বামে ছবি, ডানে তথ্য
@@ -459,6 +459,7 @@ class PropertyResource extends Resource
                 Tables\Filters\SelectFilter::make('district')
                     ->relationship('district', 'bn_name'),
                 Tables\Filters\TernaryFilter::make('is_available'),
+                Tables\Filters\TernaryFilter::make('is_hero_featured'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
