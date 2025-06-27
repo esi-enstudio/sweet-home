@@ -18,6 +18,7 @@ use Exception;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
@@ -32,6 +33,7 @@ use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\FontWeight;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\Layout\Grid;
 use Filament\Tables\Columns\Layout\Panel;
@@ -40,6 +42,7 @@ use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
@@ -69,13 +72,6 @@ class PropertyResource extends Resource
                                     ->maxLength(255)
                                     ->helperText('একটি সংক্ষিপ্ত, আকর্ষণীয় ভূমিকা লিখুন যা বাসার সেরা বৈশিষ্ট্যগুলো তুলে ধরে। উদাহরণ: “ভৈরবের কেন্দ্রস্থলে আধুনিক ৩ বেডরুমের ফ্ল্যাট।”')
                                     ->columnSpanFull(),
-
-                                TextInput::make('property_id')
-                                    ->label('Property ID')
-                                    ->visibleOn(['edit']) // ব্যবহারকারী এটি পরিবর্তন করতে পারবে না
-                                    ->placeholder('Will be generated automatically')
-                                    ->disabled()
-                                    ->helperText('এটি স্বয়ংক্রিয়ভাবে তৈরি হবে।'),
 
                                 RichEditor::make('description')
                                     ->columnSpanFull()
@@ -220,6 +216,10 @@ class PropertyResource extends Resource
                         // --- Status & Association Section ---
                         Section::make('Status & Association')
                             ->schema([
+                                Placeholder::make('property_id')
+                                    ->label('')
+                                    ->content(fn(?Model $record) => 'ID: ' . $record->property_id),
+
                                 Select::make('status')
                                     ->visibleOn(['edit'])
                                     ->options(['pending' => 'Pending', 'active' => 'Active', 'inactive' => 'Inactive'])
@@ -370,15 +370,15 @@ class PropertyResource extends Resource
                 fn() => static::getModel()::query()->with(['user'])
             )
             ->contentGrid([
-                'xl' => 1,
+                'xl' => 2,
             ])
             ->columns([
                 // Split কার্ডটিকে দুটি প্রধান অংশে ভাগ করবে: বামে ছবি, ডানে তথ্য
                 Split::make([
                     // --- বাম অংশ: ছবি ---
                     ImageColumn::make('thumbnail')
-                        ->width('200px')
-                        ->height('150px')
+                        ->width('150px')
+                        ->height('170px')
                         ->extraImgAttributes(['class' => 'rounded-lg']),
 
                     // --- ডান অংশ: তথ্যের স্ট্যাক ---
@@ -389,20 +389,19 @@ class PropertyResource extends Resource
                                 TextColumn::make('title')
                                     ->weight(FontWeight::Bold)
                                     ->searchable()
-                                    ->limit(50),
+                                    ->limit(30),
                             ]),
 
                         // মাঝের অংশে ঠিকানা
                         TextColumn::make('address')
                             ->color('gray')
-                            ->icon('heroicon-o-map-pin')
                             ->limit(30),
 
                         // নিচের অংশে প্রধান ফিচারগুলো
                         Grid::make()
                             ->columns([
-                                'xl' => 3,
-                                'md' => 3
+                                'lg' => 3,
+                                'sm' => 3,
                             ])
                             ->schema([
                                 TextColumn::make('bedrooms')
@@ -418,46 +417,52 @@ class PropertyResource extends Resource
                                     ->suffix(' sq.ft.'),
                             ]),
 
-                        TextColumn::make('property_id')->icon('heroicon-o-cube'),
+                        Grid::make([
+                            'lg' => 2,
+                        ])
+                            ->schema([
+                                IconColumn::make('status')
+                                    ->color(fn (string $state): string => match ($state) {
+                                        'approved' => 'success',
+                                        'rejected' => 'danger',
+                                        'pending' => 'warning',
+                                        default => 'gray',
+                                    })
+                                    ->icon(fn(string $state): string => match ($state){
+                                    'approved' => 'heroicon-o-check-circle',
+                                    'pending' => 'heroicon-o-pause-circle',
+                                    'rejected' => 'heroicon-o-x-circle',
+                                }),
+                                TextColumn::make('rent_amount')->label('Rent')->money('BDT')->weight(FontWeight::SemiBold),
+                        ]),
                     ])->space(2), // স্ট্যাকের আইটেমগুলোর মধ্যে স্পেস
                 ])
-                    ->from('xl')->extraAttributes(['class' => 'mb-5']), // মিডিয়াম স্ক্রিন থেকে Split লেআউট শুরু হবে
+                    ->from('md')->extraAttributes(['class' => 'mb-5']), // মিডিয়াম স্ক্রিন থেকে Split লেআউট শুরু হবে
 
                 // Panel প্রতিটি প্রপার্টিকে একটি আলাদা কার্ড হিসেবে দেখাবে
-                Panel::make([
-                    Grid::make(3)
-                        ->schema([
-                            Stack::make([
-                                TextColumn::make('rent_amount')->label('Rent')->money('BDT')->weight(FontWeight::SemiBold),
-                                TextColumn::make('available_from')->label('Available From')->date(),
-                                TextColumn::make('user.name')->label('Owner/Lister')->icon('heroicon-o-user-circle'),
-                            ])->space(1),
-
-                            Stack::make([
-                                TextColumn::make('propertyType.name')
-                                    ->label('Type')
-                                    ->grow(false)
-                                    ->icon('heroicon-o-tag'),
-
-                                TextColumn::make('listing_type')
-                                    ->label('Listing For')
-                                    ->grow(false)
-                                    ->icon('heroicon-o-receipt-percent')
-                                    ->formatStateUsing(fn($state) => Str::title($state))
-                                    ->badge(),
-
-                                TextColumn::make('created_at')
-                                    ->label('Listed On')
-                                    ->grow(false)
-                                    ->since(),
-                            ])->space(1),
-
-                            TextColumn::make('status')
-                                ->badge()
-                                ->formatStateUsing(fn($state) => Str::title($state))
-                                ->alignEnd(), // ব্যাজটিকে ডানে অ্যালাইন করা হয়েছে
-                        ]),
-                ]),
+//                Panel::make([
+//                    Grid::make()
+//                        ->schema([
+//                            Stack::make([
+//                                TextColumn::make('propertyType.name')
+//                                    ->label('Type')
+//                                    ->grow(false)
+//                                    ->icon('heroicon-o-tag'),
+//
+//                                TextColumn::make('listing_type')
+//                                    ->label('Listing For')
+//                                    ->grow(false)
+//                                    ->icon('heroicon-o-receipt-percent')
+//                                    ->formatStateUsing(fn($state) => Str::title($state))
+//                                    ->badge(),
+//
+//                                TextColumn::make('created_at')
+//                                    ->label('Listed On')
+//                                    ->grow(false)
+//                                    ->since(),
+//                            ])->space(1),
+//                        ]),
+//                ])->collapsed(),
             ])
             ->defaultPaginationPageOption(5)
             ->deferLoading()

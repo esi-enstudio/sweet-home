@@ -17,15 +17,17 @@
                                     <i class="fas fa-home text-secondary-color"></i>
                                     {{ $property->propertyType->name }}
                                 </p>
-                                <h1 class="text-3xl md:text-40px lg:text-50px 4xl:text-65px leading-30px md:leading-10 lg:leading-50px 4xl:leading-65px font-bold mb-5 animated">
+                                <h1
+                                    class="text-3xl md:text-40px lg:text-50px 4xl:text-65px leading-30px md:leading-10 lg:leading-50px 4xl:leading-65px font-bold mb-5 animated"
+                                    title="{{ $property->title }}">
                                     <span class="leading-30px md:leading-10 lg:leading-50px 4xl:leading-65px">
-                                        {{ $property->title }}
+                                        {{ \Illuminate\Support\Str::limit($property->title, 25) }}
                                       </span>
                                 </h1>
 
                                 <p class="text-sm lg:text-base mb-5 max-w-450px pl-15px xl:pl-30px border-l border-border-color-14 animated">
                                     <span class="leading-25px lg:leading-1.8">
-                                          {{ $property->address }}
+                                        {{ \Illuminate\Support\Str::limit($property->address, 50) }}
                                     </span>
                                 </p>
                                 <div class="mt-5 lg:mt-10 mb-30px xl:mb-0 animated">

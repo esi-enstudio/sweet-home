@@ -10,6 +10,7 @@
         type="image/x-icon"
     >
     <link rel="stylesheet" href="{{ asset('assets/css/font-icons.css') }}">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-thin-straight/css/uicons-thin-straight.css'>
     <link rel="stylesheet" href="{{ asset('assets/css/nice-select2.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/swiper-bundle.min.css') }}">

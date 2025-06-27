@@ -43,7 +43,7 @@ class AmenityResource extends Resource
                     ->schema([
                         TextInput::make('name')
                             ->required()
-                            ->unique()
+                            ->unique(ignoreRecord: true)
                             ->maxLength(255),
 
                         TextInput::make('icon_class')

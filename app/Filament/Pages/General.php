@@ -9,8 +9,6 @@ use Filament\Pages\SettingsPage;
 
 class General extends SettingsPage
 {
-//    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
-
     protected static ?string $navigationGroup = 'Settings';
 
     protected static ?int $navigationSort = 1;
@@ -24,7 +22,6 @@ class General extends SettingsPage
             ->schema([
                 Forms\Components\Group::make([
                     Forms\Components\Section::make('Primary')
-
                         ->schema([
                             Forms\Components\TextInput::make('site_name')->required(),
                             Forms\Components\Toggle::make('is_site_active')->label('Site Active'),
@@ -35,7 +32,8 @@ class General extends SettingsPage
                     Forms\Components\Section::make('Logo')
                         ->schema([
                             Forms\Components\FileUpload::make('site_logo')->image()->directory('logos'),
-                            Forms\Components\FileUpload::make('favicon')->image()->directory('logos'),
+                            Forms\Components\FileUpload::make('site_second_logo')->image()->directory('logos'),
+                            Forms\Components\FileUpload::make('favicon')->image()->directory('logos/favicon'),
                         ])
                 ])->columnSpan(1),
             ]);
