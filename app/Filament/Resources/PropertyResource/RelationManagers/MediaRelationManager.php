@@ -25,10 +25,11 @@ class MediaRelationManager extends RelationManager
                     ->options([
                         'image' => 'Image',
                         'video_url' => 'Video',
+                        'showcase_image' => 'Showcase Image',
                     ])
                     ->live(), // এটি প্রয়োজন যাতে শর্তভিত্তিক ইনপুট রিয়েলটাইমে আপডেট হয়
 
-                Forms\Components\Textarea::make('caption')
+                Forms\Components\TextInput::make('caption')
                     ->label('Common Caption (Optional)')
                     ->placeholder('This caption will be applied to all uploaded images.'),
 
@@ -42,6 +43,15 @@ class MediaRelationManager extends RelationManager
                     ->directory('property/gallery')
                     ->required(fn (callable $get) => $get('type') === 'image')
                     ->visible(fn (callable $get) => $get('type') === 'image')
+                    ->columnSpanFull(),
+
+                Forms\Components\FileUpload::make('showcase_image_path')
+                    ->label('Upload Showcase Image')
+                    ->imageEditor()
+                    ->image()
+                    ->directory('property/gallery/showcase')
+                    ->required(fn (callable $get) => $get('type') === 'showcase_image')
+                    ->visible(fn (callable $get) => $get('type') === 'showcase_image')
                     ->columnSpanFull(),
 
                 Forms\Components\TextInput::make('video_url')
@@ -64,6 +74,13 @@ class MediaRelationManager extends RelationManager
                     ->extraImgAttributes(['class' => 'rounded-md'])
                     ->width(100)
                     ->height(100),
+
+                Tables\Columns\ImageColumn::make('showcase_image_path')
+                    ->label('Showcase Image')
+                    ->extraImgAttributes(['class' => 'rounded-md'])
+                    ->width(100)
+                    ->height(100),
+
                 Tables\Columns\TextColumn::make('video_url')->searchable(),
                 Tables\Columns\TextColumn::make('caption')->searchable(),
             ])
@@ -89,10 +106,16 @@ class MediaRelationManager extends RelationManager
                                     'caption' => $data['caption'],
                                 ]);
                             }
+                        } elseif ($data['type'] === 'showcase_image') {
+                            $createdRecords[] = $livewire->getRelationship()->create([
+                                'type' => $data['type'],
+                                'showcase_image_path' => $data['showcase_image_path'], // এখানে এটা স্ট্রিং, যেমন ইউটিউব URL
+                                'caption' => $data['caption'],
+                            ]);
                         } elseif ($data['type'] === 'video_url') {
                             $createdRecords[] = $livewire->getRelationship()->create([
                                 'type' => $data['type'],
-                                'path' => $data['video_url'], // এখানে এটা স্ট্রিং, যেমন ইউটিউব URL
+                                'video_url' => $data['video_url'], // এখানে এটা স্ট্রিং, যেমন ইউটিউব URL
                                 'caption' => $data['caption'],
                             ]);
                         }

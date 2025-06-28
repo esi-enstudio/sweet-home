@@ -6,6 +6,9 @@ use App\Traits\HasUniqueSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property mixed $image_path
+ */
 class FloorPlan extends Model
 {
     use HasUniqueSlug;

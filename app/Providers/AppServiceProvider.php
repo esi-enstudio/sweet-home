@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\FloorPlan;
 use App\Models\Media;
 use App\Models\Property;
 use App\Models\Review;
 use App\Models\User;
+use App\Observers\FloorPlanObserver;
 use App\Observers\MediaObserver;
 use App\Observers\PropertyObserver;
 use App\Observers\ReviewObserver;
@@ -32,6 +34,7 @@ class AppServiceProvider extends ServiceProvider
         Review::observe(ReviewObserver::class);
         Property::observe(PropertyObserver::class);
         Media::observe(MediaObserver::class);
+        FloorPlan::observe(FloorPlanObserver::class);
 
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch
