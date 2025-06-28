@@ -469,8 +469,10 @@ class PropertyResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('district')
                     ->relationship('district', 'bn_name'),
-                Tables\Filters\TernaryFilter::make('is_available'),
-                Tables\Filters\TernaryFilter::make('is_hero_featured'),
+                Tables\Filters\TernaryFilter::make('is_available')->label('Available'),
+                Tables\Filters\TernaryFilter::make('is_hero_featured')->label('Hero Property'),
+                Tables\Filters\TernaryFilter::make('is_spotlight')->label('Spotlight Property'),
+                Tables\Filters\TernaryFilter::make('is_featured_showcase')->label('Showcase Property'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
