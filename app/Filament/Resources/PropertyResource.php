@@ -222,7 +222,7 @@ class PropertyResource extends Resource
 
                                 Select::make('status')
                                     ->visibleOn(['edit'])
-                                    ->options(['pending' => 'Pending', 'active' => 'Active', 'inactive' => 'Inactive'])
+                                    ->options(['pending' => 'Pending', 'approved' => 'Approve', 'rejected' => 'Reject'])
                                     ->default('pending'),
 
                                 Toggle::make('is_spotlight')

@@ -18,12 +18,13 @@ class HomeComponent extends Component
      * হিরো সেকশনের জন্য ফিচার্ড প্রপার্টিগুলো লোড করে।
      * is_hero_featured = true
      */
-    #[Computed(seconds: 30, cache: true, key: 'hero-properties')]
+    #[Computed(seconds: 5, cache: true, key: 'hero-properties')]
     public function heroProperties(): Collection
     {
         return Property::with('user','propertyType','media') // SEO-এর জন্য প্রয়োজনীয় রিলেশন
             ->where('is_hero_featured', true)
             ->where('is_available', true)
+            ->where('status', 'approved')
             ->orderBy('hero_order_column', 'asc')
             ->orderBy('updated_at', 'desc')
             ->take(5)
@@ -34,7 +35,7 @@ class HomeComponent extends Component
      * "Spotlight Property" সেকশনের জন্য প্রপার্টি লোড করে।
      * is_spotlight = true
      */
-    #[Computed(seconds: 30, cache: true, key: 'spotlight-property')]
+    #[Computed(seconds: 5, cache: true, key: 'spotlight-property')]
     public function spotlightProperty(): ?Property
     {
         return Property::with([
@@ -45,6 +46,30 @@ class HomeComponent extends Component
         ])
             ->where('is_spotlight', true)
             ->where('is_available', true)
+            ->where('status', 'approved')
+            ->first();
+    }
+
+
+    /**
+     * "Featured Showcase Property" সেকশনের জন্য প্রপার্টি লোড করে।
+     * is_featured_showcase = true
+     */
+    #[Computed(seconds: 5, cache: true, key: 'showcase-property')]
+    public function showcaseProperty(): ?Property
+    {
+        return Property::with([
+            'media' => function($query){
+                $query->where('type','image')->take(3);
+            },
+
+            'amenities' => function($query){
+                $query->wherePivot('is_key_feature', true)->take(4);
+            },
+        ])
+            ->where('is_featured_showcase', true)
+            ->where('is_available', true)
+            ->where('status', 'approved')
             ->first();
     }
 
