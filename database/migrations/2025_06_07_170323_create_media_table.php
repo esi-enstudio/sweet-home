@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('media', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Property::class)->constrained()->cascadeOnDelete();
-            $table->string('path'); // File a path in storage
-            $table->string('video_url');
+            $table->string('path')->nullable(); // File a path in storage
+            $table->string('video_url')->nullable();
             $table->enum('type', ['image', 'video_url']);
             $table->string('caption')->nullable();
             $table->unsignedSmallInteger('order_column')->default(0); // ছবি সাজানোর জন্য

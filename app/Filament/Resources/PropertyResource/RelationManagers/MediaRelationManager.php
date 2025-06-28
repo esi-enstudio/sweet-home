@@ -35,6 +35,7 @@ class MediaRelationManager extends RelationManager
                 Forms\Components\FileUpload::make('path')
                     ->label('Upload Images')
                     ->multiple()
+                    ->imageEditor()
                     ->reorderable()
                     ->appendFiles()
                     ->image()

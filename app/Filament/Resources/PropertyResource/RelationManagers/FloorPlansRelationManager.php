@@ -29,7 +29,8 @@ class FloorPlansRelationManager extends RelationManager
                         Forms\Components\FileUpload::make('image_path')
                             ->label('Floor Plan Image')
                             ->image()
-                            ->directory('floor-plans')
+                            ->imageEditor()
+                            ->directory('property/floor-plans')
                             ->required()
                             ->columnSpanFull(),
 
@@ -37,7 +38,10 @@ class FloorPlansRelationManager extends RelationManager
                             ->nullable()
                             ->columnSpanFull(),
 
-                        Forms\Components\TextInput::make('total_area')->numeric()->suffix('sq. ft.')->nullable(),
+                        Forms\Components\TextInput::make('total_area')
+                            ->numeric()
+                            ->required()
+                            ->suffix('sq. ft.'),
 
                     ])->columns(2),
             ]);

@@ -2,9 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Media;
 use App\Models\Property;
 use App\Models\Review;
 use App\Models\User;
+use App\Observers\MediaObserver;
 use App\Observers\PropertyObserver;
 use App\Observers\ReviewObserver;
 use App\Observers\UserObserver;
@@ -29,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         User::observe(UserObserver::class);
         Review::observe(ReviewObserver::class);
         Property::observe(PropertyObserver::class);
+        Media::observe(MediaObserver::class);
 
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch

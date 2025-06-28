@@ -17,9 +17,6 @@
     <link rel="stylesheet" href="{{ asset('assets/css/glightbox.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/ui-widget.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-
-    @vite('resources/css/app.css')
-    @vite('resources/js/app.js')
 </head>
 <body>
 

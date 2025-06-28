@@ -352,6 +352,7 @@ class PropertyResource extends Resource
                                 FileUpload::make('thumbnail')
                                     ->label('')
                                     ->image()
+                                    ->imageEditor()
                                     ->helperText('বিজ্ঞাপনের প্রধান এবং সবচেয়ে আকর্ষণীয় ছবিটি এখানে আপলোড করুন।')
                                     ->directory('property/thumbnails'),
                             ]),

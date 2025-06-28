@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 /**
@@ -17,10 +17,12 @@ use Illuminate\Support\Str;
  * @property int|mixed|string|null $user_id
  * @property mixed $is_hero_featured
  * @property mixed $propertyType
+ * @property mixed $thumbnail
+ * @property mixed $media
  */
 class Property extends Model
 {
-    use SoftDeletes, HasUniqueSlug, HasFactory;
+    use HasUniqueSlug, HasFactory;
 
     protected $fillable = [
         'user_id','property_type_id','tenant_id','division_id','district_id','upazila_id','union_id','property_id','slug','title','description','listing_type','total_area','bedrooms','bathrooms','balconies','floor_number','facing','year_built','thumbnail','landmark','address','latitude','longitude','rent_amount','rent_negotiable','service_charge','security_deposit','rent_summary','available_from','is_available','is_featured','house_rules','contact_number_primary','contact_whatsapp','views_count','status','is_hero_featured','hero_order_column','is_spotlight','is_featured_showcase',
@@ -45,6 +47,25 @@ class Property extends Model
 
             // --- নতুন Property ID জেনারেট করার লজিক ---
             $property->property_id = self::generateUniquePropertyId($property);
+        });
+
+
+        // --- deleting ইভেন্ট ---
+        static::deleting(function (Property $property){
+            // প্রোপার্টি ডিলিট হওয়ার সময় এর সাথে থাকা সমস্ত মিডিয়া এবং
+            // ফ্লোর প্ল্যানগুলো ও ডাইরেক্টরি থেকে ডিলিট হয়ে যাবে।
+            foreach ($property->media as $mediaItem) {
+                if ($mediaItem->path && Storage::disk('public')->exists($mediaItem->path)) {
+                    Storage::disk('public')->delete($mediaItem->path);
+                }
+            }
+
+            // ফ্লোর প্ল্যানের ছবিগুলো ডিলিট করুন
+            foreach ($property->floorPlans as $floorPlan) {
+                if ($floorPlan->image_path && Storage::disk('public')->exists($floorPlan->image_path)) {
+                    Storage::disk('public')->delete($floorPlan->image_path);
+                }
+            }
         });
     }
 
