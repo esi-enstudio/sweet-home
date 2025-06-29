@@ -16,6 +16,7 @@ use App\Models\Upazila;
 use Carbon\Carbon;
 use Exception;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
 use Filament\Forms\Components\Placeholder;
@@ -65,7 +66,7 @@ class PropertyResource extends Resource
                 Group::make()
                     ->schema([
                         // --- Basic Information Section ---
-                        Section::make('Basic Information')
+                        Fieldset::make('Basic Information')
                             ->schema([
                                 TextInput::make('title')
                                     ->required()
@@ -80,7 +81,7 @@ class PropertyResource extends Resource
                             ])->columns(2),
 
                         // --- Location Section ---
-                        Section::make('Location Details')
+                        Fieldset::make('Location Details')
                             ->schema([
                                 Select::make('division_id')
                                     ->required()
@@ -122,15 +123,6 @@ class PropertyResource extends Resource
                                     ->preload()
                                     ->nullable(),
 
-                                TextInput::make('landmark')
-                                    ->helperText('কাছাকাছি কোনো পরিচিত স্থান বা রাস্তার নাম লিখুন, যেমন- "আনোয়ারা হাস্পাতালের বিপরীত পাশে"।')
-                                    ->required(),
-
-                                Textarea::make('address')
-                                    ->label('Full Address')
-                                    ->helperText('বাসা/হোল্ডিং নম্বর, রোড নম্বর, এলাকার নাম সহ সম্পূর্ণ ঠিকানা লিখুন।')
-                                    ->required(),
-
                                 TextInput::make('latitude')
                                     ->label('Latitude (অক্ষাংশ)')
                                     ->helperText('যেমন: 23.77701234')
@@ -147,10 +139,20 @@ class PropertyResource extends Resource
                                     ->dehydrateStateUsing(fn (?string $state): ?string => $state ? rtrim(rtrim($state, '0'), '.') : null)
                                     ->rule('regex:/^[-]?((((1[0-7][0-9])|([0-9]?[0-9]))\.(\d+))|180(\.0+)?)$/'), // দ্রাঘিমাংশের জন্য ভ্যালিডাউনলোড
 
+                                Textarea::make('address')
+                                    ->label('Full Address')
+                                    ->helperText('বাসা/হোল্ডিং নম্বর, রোড নম্বর, এলাকার নাম সহ সম্পূর্ণ ঠিকানা লিখুন।')
+                                    ->columnSpanFull()
+                                    ->required(),
+
+                                TextInput::make('landmark')
+                                    ->helperText('কাছাকাছি কোনো পরিচিত স্থান বা রাস্তার নাম লিখুন, যেমন- "আনোয়ারা হাস্পাতালের বিপরীত পাশে"।')
+                                    ->required(),
+
                             ])->columns(2),
 
                         // --- Rent & Cost Section ---
-                        Section::make('Rent & Costs')
+                        Fieldset::make('Rent & Costs')
                             ->schema([
                                 TextInput::make('rent_amount')
                                     ->helperText('শুধুমাত্র সংখ্যা লিখুন, যেমন- 25000।')
@@ -184,7 +186,7 @@ class PropertyResource extends Resource
                             ])->columns(2),
 
                         // --- Rules & Contact Section ---
-                        Section::make('Rules & Contact')
+                        Fieldset::make('Rules & Contact')
                             ->schema([
                                 TextInput::make('contact_number_primary')
                                     ->helperText('গ্রাহকরা এই নম্বরে সরাসরি যোগাযোগ করবে।')
@@ -214,37 +216,11 @@ class PropertyResource extends Resource
                 Group::make()
                     ->schema([
                         // --- Status & Association Section ---
-                        Section::make('Status & Association')
+                        Fieldset::make('Homepage Properties')
+                            ->columns(1)
                             ->schema([
-                                Placeholder::make('property_id')
-                                    ->label('')
-                                    ->content(fn(?Model $record) => 'ID: ' . $record->property_id),
-
-                                Select::make('status')
-                                    ->visibleOn(['edit'])
-                                    ->options(['pending' => 'Pending', 'approved' => 'Approve', 'rejected' => 'Reject'])
-                                    ->default('pending'),
-
-                                Toggle::make('is_spotlight')
-                                    ->label('Spotlight Property')
-                                    ->helperText(''),
-
-                                Toggle::make('is_featured_showcase')
-                                    ->label('Featured Showcase Property')
-                                    ->helperText(''),
-
-                                Toggle::make('is_available')
-                                    ->label('Available for Rent/Sell')
-                                    ->helperText('এটি চালু থাকলে প্রপার্টিটি ভাড়া/বিক্রির জন্য ওয়েবসাইটে দেখানো হবে।')
-                                    ->required()
-                                    ->default(true),
-
-                                Toggle::make('is_featured')
-                                    ->label('Featured in Lists')
-                                    ->helperText('সাধারণ ফিচার্ড লিস্টে দেখানো হবে।'),
-
                                 Toggle::make('is_hero_featured')
-                                    ->label('Feature in Homepage Hero')
+                                    ->label('Hero Property')
                                     ->helperText('হোমপেজের প্রধান স্লাইডারে দেখানো হবে।')
                                     ->reactive(), // অথবা live()
 
@@ -255,6 +231,39 @@ class PropertyResource extends Resource
                                     // শুধুমাত্র is_hero_featured অন থাকলেই এই ফিল্ডটি দেখানো হবে
                                     ->visible(fn (Get $get) => $get('is_hero_featured')),
 
+                                Toggle::make('is_spotlight')
+                                    ->label('Spotlight Property')
+                                    ->helperText(''),
+
+                                Toggle::make('is_featured_showcase')
+                                    ->label('Featured Showcase Property')
+                                    ->helperText(''),
+
+                                Toggle::make('is_featured')
+                                    ->label('Featured in Lists')
+                                    ->helperText('সাধারণ ফিচার্ড লিস্টে দেখানো হবে।'),
+                            ]),
+
+                        // --- Status & Association Section ---
+                        Fieldset::make('Status & Association')
+                            ->columns(1)
+                            ->schema([
+                                Placeholder::make('property_id')
+                                    ->label('')
+                                    ->visibleOn(['edit','view'])
+                                    ->content(fn(?Model $record) => 'ID: ' . $record?->property_id),
+
+                                Select::make('status')
+                                    ->visibleOn(['edit'])
+                                    ->options(['pending' => 'Pending', 'approved' => 'Approve', 'rejected' => 'Reject'])
+                                    ->default('pending'),
+
+                                Toggle::make('is_available')
+                                    ->label('Available for Rent/Sell')
+                                    ->helperText('এটি চালু থাকলে প্রপার্টিটি ভাড়া/বিক্রির জন্য ওয়েবসাইটে দেখানো হবে।')
+                                    ->required()
+                                    ->default(true),
+
                                 DatePicker::make('available_from')
                                     ->required()
                                     ->helperText('কোন তারিখ থেকে প্রপার্টিটি ভাড়া বা বিক্রির জন্য প্রস্তুত হবে তা নির্বাচন করুন।')
@@ -262,7 +271,8 @@ class PropertyResource extends Resource
                             ]),
 
                         // --- Property Type & Layout ---
-                        Section::make('Type & Layout')
+                        Fieldset::make('Type & Layout')
+                            ->columns(1)
                             ->schema([
                                 Select::make('listing_type')
                                     ->options(['rent' => 'For Rent', 'sell' => 'For Sell', 'buy' => 'For Buy'])
@@ -344,10 +354,11 @@ class PropertyResource extends Resource
                                     ->label('Year Built')
                                     ->nullable()
                                     ->helperText('প্রপার্টিটি কোন সালে তৈরি করা হয়েছে তা লিখুন।'),
-                            ])->columns(1),
+                            ]),
 
                         // --- Thumbnail Section ---
-                        Section::make('Thumbnail')
+                        Fieldset::make('Thumbnail')
+                            ->columns(1)
                             ->schema([
                                 FileUpload::make('thumbnail')
                                     ->label('')
@@ -474,7 +485,7 @@ class PropertyResource extends Resource
                 Tables\Filters\TernaryFilter::make('is_hero_featured')->label('Hero Property'),
                 Tables\Filters\TernaryFilter::make('is_spotlight')->label('Spotlight Property'),
                 Tables\Filters\TernaryFilter::make('is_featured_showcase')->label('Showcase Property'),
-            ])
+            ], layout: Tables\Enums\FiltersLayout::AboveContentCollapsible)
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
@@ -512,5 +523,10 @@ class PropertyResource extends Resource
             'view' => Pages\ViewProperty::route('/{record}'),
             'edit' => Pages\EditProperty::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
     }
 }

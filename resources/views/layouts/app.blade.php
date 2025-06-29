@@ -6,7 +6,7 @@
     <title>Quarter - Real Estate HTML Template</title>
     <link
         rel="shortcut icon"
-        href="{{ asset('assets/img/favicon.png') }}"
+        href="{{ Storage::url(app(\App\Settings\GeneralSettings::class)->favicon) }}"
         type="image/x-icon"
     >
     <link rel="stylesheet" href="{{ asset('assets/css/font-icons.css') }}">

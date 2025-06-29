@@ -22,7 +22,8 @@
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.6",
         "mokhosh/filament-rating": "^1.4",
-        "spatie/eloquent-sortable": "^4.5"
+        "spatie/eloquent-sortable": "^4.5",
+        "spatie/laravel-sluggable": "^3.7"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15",
@@ -41,6 +42,9 @@
             "Database\\Seeders\\": "database/seeders/"
         }
     },
+    "files": [
+        "app/Helpers/helpers.php"
+    ],
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"

@@ -27,7 +27,18 @@ class Homepage extends SettingsPage
                         ->schema([
                             Forms\Components\TextInput::make('spotlight_section_title')->label('Title')->required(),
                             Forms\Components\TextInput::make('spotlight_section_btn_label')->label('Button Text')->required(),
-                        ])
+                        ]),
+
+                    Forms\Components\Fieldset::make('Featured Showcase Section')
+                        ->schema([
+                            Forms\Components\TextInput::make('featured_showcase_section_title')->label('Title')->required(),
+                        ]),
+
+                    Forms\Components\Fieldset::make('Our Service Section')
+                        ->schema([
+                            Forms\Components\TextInput::make('our_service_section_name')->label('Name')->required(),
+                            Forms\Components\TextInput::make('our_service_section_title')->label('Title')->required(),
+                        ]),
                 ])->columnSpan(2),
 
                 Forms\Components\Group::make([

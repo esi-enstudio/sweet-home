@@ -44,8 +44,8 @@
                 <!-- footer about-->
                 <div class="xl:col-start-1 xl:col-span-3 mb-60px lg:pr-35px">
                     <div class="mb-15px">
-                        <a href="index.html">
-                            <img src="{{ asset('assets/img/logo-2.png') }}" alt="" >
+                        <a href="{{ route('home') }}">
+                            <img src="{{ Storage::url(app(\App\Settings\GeneralSettings::class)->footer_logo) }}" alt="" >
                         </a>
                         <p class="leading-1.8 mb-5 lg:mb-25px text-white">
                             Lorem Ipsum is simply dummy text of the and typesetting

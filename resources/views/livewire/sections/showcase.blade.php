@@ -1,9 +1,9 @@
-@php
-    $title = \Illuminate\Support\Str::limit($showcaseProperty?->title, 40);
-    $description = \Illuminate\Support\Str::limit($showcaseProperty?->description, 190);
-@endphp
-
 @if(isset($showcaseProperty))
+    @php
+        $title = \Illuminate\Support\Str::limit($showcaseProperty?->title, 40);
+        $description = \Illuminate\Support\Str::limit($showcaseProperty?->description, 190);
+    @endphp
+
     <section>
         <div class="container pt-30 pb-90px">
             <div
@@ -15,7 +15,7 @@
                         <p
                             class="text-sm md:text-15px lg:text-base text-secondary-color bg-secondary-color bg-opacity-10 capitalize mb-15px py-1px px-5 rounded-full inline-block font-semibold"
                         >
-                            <span class="leading-1.3">featured showcase</span>
+                            <span class="leading-1.3">{{ app(\App\Settings\HomepageSettings::class)->featured_showcase_section_title }}</span>
                         </p>
                         <h2
                             class="text-2xl sm:text-3xl md:text-26px lg:text-3xl xl:text-44px text-heading-color font-bold mb-15px"
@@ -73,7 +73,7 @@
 
                     <div>
                         <ul class="flex gap-15px pt-4">
-                            @foreach($showcaseProperty->media as $media)
+                            @foreach($showcaseProperty->media->where('type','image')->take(3) as $media)
                                 <li>
                                     <a class="w-[180px] h-[128px] glightbox2" href="{{ route('listing.details', $showcaseProperty->slug) }}" data-glightbox="type:image;">
                                         <img src="{{ \Illuminate\Support\Facades\Storage::url($media->path) }}" alt="{{ $media->caption }}">
@@ -86,7 +86,16 @@
 
                 <!-- featured showcase right -->
                 <div class="lg:ml-30px relative mb-10 lg:mb-0">
-                    <img src="{{ asset('assets/img/others/9.png') }}" alt="" class="max-w-full" >
+                    @php
+                        $path = $showcaseProperty->media->firstWhere('type','showcase_image')?->showcase_image_path;
+                    @endphp
+
+                    <img
+                        src="{{ \Illuminate\Support\Facades\Storage::url($path) }}"
+                        alt="{{ $showcaseProperty->title }}"
+                        class="max-w-full"
+                    >
+
                 </div>
             </div>
         </div>
@@ -160,7 +169,7 @@
                             <p class="leading-1.8 font-bold">
                                 2<i class="flaticon-clean ml-1"></i>
                             </p>
-                            <p class="leading-1.8">Bedrooms</p>
+                            <p class="leading-1.8">Bathrooms</p>
                         </li>
                         <li
                             class="text-sm pr-4 border-r border-primary-color border-opacity-20"
@@ -168,7 +177,7 @@
                             <p class="leading-1.8 font-bold">
                                 2<i class="flaticon-car ml-1"></i>
                             </p>
-                            <p class="leading-1.8">Car parking</p>
+                            <p class="leading-1.8">Balconies</p>
                         </li>
                         <li class="text-sm">
                             <p class="leading-1.8 font-bold">
@@ -183,22 +192,13 @@
                     <div>
                         <ul class="flex gap-15px pt-4">
                             <li>
-                                <a
-                                    class="glightbox2"
-                                    href="{{ asset('assets/img/img-slide/11.jpg') }}"
-                                    data-glightbox="type:image;"
-                                ><img src="{{ asset('assets/img/img-slide/11.jpg') }}" alt=""
-                                    ></a>
+                                <a class="glightbox2" href="assets/img/img-slide/11.jpg" data-glightbox="type:image;"><img src="assets/img/img-slide/11.jpg" alt=""></a>
                             </li>
                             <li>
-                                <a class="glightbox2" href="{{ asset('assets/img/img-slide/12.jpg') }}">
-                                    <img src="{{ asset('assets/img/img-slide/12.jpg') }}'" alt="">
-                                </a>
+                                <a class="glightbox2" href="assets/img/img-slide/12.jpg"><img src="assets/img/img-slide/12.jpg" alt=""></a>
                             </li>
                             <li>
-                                <a class="glightbox2" href="{{ asset('assets/img/img-slide/13.jpg') }}">
-                                    <img src="{{ asset('assets/img/img-slide/13.jpg') }}'" alt="">
-                                </a>
+                                <a class="glightbox2" href="assets/img/img-slide/13.jpg"><img src="assets/img/img-slide/13.jpg" alt=""></a>
                             </li>
                         </ul>
                     </div>

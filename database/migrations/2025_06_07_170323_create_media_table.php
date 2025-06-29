@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('path')->nullable(); // File a path in storage
             $table->string('video_url')->nullable();
             $table->string('showcase_image_path')->nullable();
-            $table->enum('type', ['image', 'video_url','showcase_image']);
+            $table->enum('type', ['image', 'video','showcase']);
             $table->string('caption')->nullable();
             $table->unsignedSmallInteger('order_column')->default(0); // ছবি সাজানোর জন্য
             $table->timestamps();

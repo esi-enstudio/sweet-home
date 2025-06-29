@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Traits\HasUniqueSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * @property mixed $name
@@ -13,16 +15,18 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Amenity extends Model
 {
-    use HasUniqueSlug;
+    use HasSlug;
 
     protected $fillable = ['name','slug','icon_class','type','is_key_feature'];
 
     /**
-     * Define which field to use for slug generation.
+     * Get the options for generating the slug.
      */
-    public function getSluggableField(): string
+    public function getSlugOptions(): SlugOptions
     {
-        return 'name';
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
     }
 
     /**

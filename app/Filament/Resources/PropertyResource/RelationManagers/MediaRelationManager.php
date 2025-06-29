@@ -24,8 +24,8 @@ class MediaRelationManager extends RelationManager
                     ->required()
                     ->options([
                         'image' => 'Image',
-                        'video_url' => 'Video',
-                        'showcase_image' => 'Showcase Image',
+                        'video' => 'Video',
+                        'showcase' => 'Showcase Image',
                     ])
                     ->live(), // এটি প্রয়োজন যাতে শর্তভিত্তিক ইনপুট রিয়েলটাইমে আপডেট হয়
 
@@ -50,15 +50,15 @@ class MediaRelationManager extends RelationManager
                     ->imageEditor()
                     ->image()
                     ->directory('property/gallery/showcase')
-                    ->required(fn (callable $get) => $get('type') === 'showcase_image')
-                    ->visible(fn (callable $get) => $get('type') === 'showcase_image')
+                    ->required(fn (callable $get) => $get('type') === 'showcase')
+                    ->visible(fn (callable $get) => $get('type') === 'showcase')
                     ->columnSpanFull(),
 
                 Forms\Components\TextInput::make('video_url')
                     ->label('Video URL')
                     ->placeholder('https://youtube.com/...')
-                    ->required(fn (callable $get) => $get('type') === 'video_url')
-                    ->visible(fn (callable $get) => $get('type') === 'video_url')
+                    ->required(fn (callable $get) => $get('type') === 'video')
+                    ->visible(fn (callable $get) => $get('type') === 'video')
                     ->prefix('https://')
                     ->columnSpanFull(),
             ]);
@@ -81,7 +81,7 @@ class MediaRelationManager extends RelationManager
                     ->width(100)
                     ->height(100),
 
-                Tables\Columns\TextColumn::make('video_url')->searchable(),
+                Tables\Columns\TextColumn::make('video_url')->searchable()->wrap(),
                 Tables\Columns\TextColumn::make('caption')->searchable(),
             ])
             ->deferLoading()
@@ -101,22 +101,22 @@ class MediaRelationManager extends RelationManager
                         if ($data['type'] === 'image') {
                             foreach ($data['path'] as $filePath) {
                                 $createdRecords[] = $livewire->getRelationship()->create([
-                                    'type' => $data['type'],
-                                    'path' => $filePath,
-                                    'caption' => $data['caption'],
+                                    'type'      => $data['type'],
+                                    'path'      => $filePath,
+                                    'caption'   => $data['caption'],
                                 ]);
                             }
-                        } elseif ($data['type'] === 'showcase_image') {
+                        } elseif ($data['type'] === 'showcase') {
                             $createdRecords[] = $livewire->getRelationship()->create([
-                                'type' => $data['type'],
-                                'showcase_image_path' => $data['showcase_image_path'], // এখানে এটা স্ট্রিং, যেমন ইউটিউব URL
-                                'caption' => $data['caption'],
+                                'type'                  => $data['type'],
+                                'showcase_image_path'   => $data['showcase_image_path'], // এখানে এটা স্ট্রিং, যেমন ইউটিউব URL
+                                'caption'               => $data['caption'],
                             ]);
-                        } elseif ($data['type'] === 'video_url') {
+                        } elseif ($data['type'] === 'video') {
                             $createdRecords[] = $livewire->getRelationship()->create([
-                                'type' => $data['type'],
+                                'type'      => $data['type'],
                                 'video_url' => $data['video_url'], // এখানে এটা স্ট্রিং, যেমন ইউটিউব URL
-                                'caption' => $data['caption'],
+                                'caption'   => $data['caption'],
                             ]);
                         }
 

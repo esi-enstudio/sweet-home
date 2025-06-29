@@ -21,18 +21,21 @@ class General extends SettingsPage
             ->columns(3)
             ->schema([
                 Forms\Components\Group::make([
-                    Forms\Components\Section::make('Primary')
+                    Forms\Components\Fieldset::make('Basic Info')
                         ->schema([
                             Forms\Components\TextInput::make('site_name')->required(),
-                            Forms\Components\Toggle::make('is_site_active')->label('Site Active'),
+                            Forms\Components\Toggle::make('is_site_active')
+                                ->columnSpanFull()
+                                ->label('Site Active'),
                         ])
                 ])->columnSpan(2),
 
                 Forms\Components\Group::make([
-                    Forms\Components\Section::make('Logo')
+                    Forms\Components\Fieldset::make('Logo/Favicon')
+                        ->columns(1)
                         ->schema([
-                            Forms\Components\FileUpload::make('site_logo')->image()->directory('logos'),
-                            Forms\Components\FileUpload::make('site_second_logo')->image()->directory('logos'),
+                            Forms\Components\FileUpload::make('header_logo')->image()->directory('logos'),
+                            Forms\Components\FileUpload::make('footer_logo')->image()->directory('logos'),
                             Forms\Components\FileUpload::make('favicon')->image()->directory('logos/favicon'),
                         ])
                 ])->columnSpan(1),

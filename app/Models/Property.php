@@ -10,9 +10,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
 
 /**
  * @method static where(string $string, int $int)
+ * @method static withCount(array $array)
+ * @method static select()
  * @property mixed|string $property_id
  * @property int|mixed|string|null $user_id
  * @property mixed $is_hero_featured
@@ -22,18 +26,23 @@ use Illuminate\Support\Str;
  */
 class Property extends Model
 {
-    use HasUniqueSlug, HasFactory;
+    use HasSlug, HasFactory;
 
     protected $fillable = [
         'user_id','property_type_id','tenant_id','division_id','district_id','upazila_id','union_id','property_id','slug','title','description','listing_type','total_area','bedrooms','bathrooms','balconies','floor_number','facing','year_built','thumbnail','landmark','address','latitude','longitude','rent_amount','rent_negotiable','service_charge','security_deposit','rent_summary','available_from','is_available','is_featured','house_rules','contact_number_primary','contact_whatsapp','views_count','status','is_hero_featured','hero_order_column','is_spotlight','is_featured_showcase',
     ];
 
     /**
-     * Define which field to use for slug generation.
+     * Get the options for generating the slug.
      */
-    public function getSluggableField(): string
+    public function getSlugOptions() : SlugOptions
     {
-        return 'title';
+        return SlugOptions::create()
+            ->generateSlugsFrom('title') // কোন ফিল্ড থেকে স্লাগ তৈরি হবে
+            ->saveSlugsTo('slug') // কোন কলামে স্লাগ সেভ হবে
+            ->doNotGenerateSlugsOnUpdate() // আপডেটের সময় স্লাগ পরিবর্তন হবে না (ঐচ্ছিক)
+            ->usingLanguage('bn') // বাংলা ভাষার জন্য সেট করুন
+            ->usingSeparator('-');
     }
 
     protected static function booted(): void

@@ -1,10 +1,11 @@
-@php
-    $title = \Illuminate\Support\Str::limit($spotlightProperty?->title, 40);
-    $description = \Illuminate\Support\Str::limit($spotlightProperty?->description, 190);
-    $rentSummary = \Illuminate\Support\Str::limit($spotlightProperty?->rent_summary, 140);
-@endphp
-
 @if(isset($spotlightProperty))
+
+    @php
+        $title = \Illuminate\Support\Str::limit($spotlightProperty?->title, 40);
+        $description = \Illuminate\Support\Str::limit($spotlightProperty?->description, 190);
+        $rentSummary = \Illuminate\Support\Str::limit($spotlightProperty?->rent_summary, 140);
+    @endphp
+
     <section>
     <div class="container pt-30 pb-90px">
         <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-30px">
@@ -13,7 +14,11 @@
                 <img src="{{ \Illuminate\Support\Facades\Storage::url($spotlightProperty->thumbnail) }}" alt="{{ $spotlightProperty->title }}" class="max-w-full" >
                 <div class="absolute left-[10px] bottom-[70px] w-150px md:w-300px">
                     <div class="relative">
-                        <img src="{{ \Illuminate\Support\Facades\Storage::url($spotlightProperty->thumbnail) }}" alt="" class="w-full" >
+                        <img
+                            src="{{ \Illuminate\Support\Facades\Storage::url($spotlightProperty->thumbnail) }}"
+                            alt="{{ $spotlightProperty->title }}"
+                            class="w-full"
+                        >
                         <div class="absolute left-0 top-0 w-full h-full flex items-center justify-center">
                             <a
                                 class="glightbox2 w-50px h-50px lg:w-20 lg:h-20 text-center lg:text-lg text-secondary-color shadow-box-shadow-2 rounded-full bg-white flex items-center justify-center animate-pulse1"

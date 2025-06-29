@@ -65,7 +65,7 @@
             <!-- logo area -->
             <div class="mt-10px mb-22px md:mt-0 md:mb-0 leading-1">
                 <a href="{{ route('home') }}">
-                    <img src="{{ Storage::url(app(\App\Settings\GeneralSettings::class)->site_logo) }}"
+                    <img src="{{ Storage::url(app(\App\Settings\GeneralSettings::class)->header_logo) }}"
                          alt="Sweet Home Logo">
                 </a>
             </div>
