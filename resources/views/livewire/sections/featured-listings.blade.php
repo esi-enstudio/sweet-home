@@ -22,7 +22,6 @@
                 <div class="swiper featured-apartments-slider static">
                     <div class="swiper-wrapper">
                         <!-- card -->
-{{--                        {{ dd($featuredListings) }}--}}
                         @forelse($featuredListings as $listing)
                             <div class="swiper-slide mb-65px px-15px">
                                 <div
@@ -31,7 +30,7 @@
                                     <!-- card thumbs -->
                                     <div class="relative leading-1">
                                         <a
-                                            href="{{ route('listing.details', $listing->slug) }}"
+                                            href="{{ route('single.property', $listing->slug) }}"
                                             class="overflow-hidden"
                                         >
                                             <img
@@ -48,7 +47,7 @@
                                                 class="text-sm text-white flex justify-between items-center"
                                             >
                                                 <a
-                                                    href="{{ route('listing.details', $listing->slug) }}"
+                                                    href="{{ route('single.property', $listing->slug) }}"
                                                     class="hover:text-secondary-color"
                                                 >
                                                     <i class="flaticon-pin"></i>
@@ -58,7 +57,7 @@
                                                     <li>
                                                         <a
                                                             class="w-30px lg:w-42px h-30px flex justify-center items-center bg-transparent lg:bg-white lg:bg-opacity-35 hover:text-secondary-color"
-                                                            href="{{ route('listing.details', $listing->slug) }}"
+                                                            href="{{ route('single.property', $listing->slug) }}"
                                                         >
                                                             <i class="fas fa-camera pr-1 leading-1"></i>
                                                             {{ $listing?->images_count }}
@@ -67,7 +66,7 @@
                                                     <li>
                                                         <a
                                                             class="w-30px lg:w-42px h-30px flex justify-center items-center bg-transparent lg:bg-white lg:bg-opacity-35 hover:text-secondary-color"
-                                                            href="{{ route('listing.details', $listing->slug) }}"
+                                                            href="{{ route('single.property', $listing->slug) }}"
                                                         >
                                                             <i class="fas fa-film pr-1 leading-1"></i>
                                                             {{ $listing?->videos_count }}
@@ -110,7 +109,7 @@
                                         </h5>
                                         <h4 class="text-lg md:text-xl lg:text-22px font-semibold text-heading-color mb-15px">
                                             <a
-                                                href="{{ route('listing.details', $listing->slug) }}"
+                                                href="{{ route('single.property', $listing->slug) }}"
                                                 class="hover:text-secondary-color leading-1.3"
                                             >
                                                 {{ $listing?->title }}
@@ -164,7 +163,6 @@
                                                              ? Storage::url($listing->user->avatar_url)
                                                              : asset('assets/img/default-user-avatar.png') }}"
                                                         alt="{{ $listing->title }}"
-
                                                     >
                                                 </a>
                                                 <div>
@@ -223,7 +221,7 @@
                                     <!-- card thumbs -->
                                     <div class="relative leading-1">
                                         <a
-                                            href="{{ route('listing.details', $featuredListings->slug) }}"
+                                            href="{{ route('single.property', $featuredListings->slug) }}"
                                             class="overflow-hidden"
                                         >
                                             <img

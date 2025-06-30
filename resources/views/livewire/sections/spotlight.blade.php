@@ -90,7 +90,7 @@
                     <h5 class="uppercase text-sm md:text-base text-white relative group whitespace-nowrap font-normal mb-0 transition-all duration-300 border border-secondary-color hover:border-heading-color inline-block">
                         <span class="inline-block absolute top-0 right-0 w-full h-full bg-secondary-color group-hover:bg-black hover:bg-primary-cogroup-lor z-1 group-hover:w-0 transition-all duration-300"></span>
                         <a
-                            href="{{ route('listing.details', $spotlightProperty->slug) }}"
+                            href="{{ route('single.property', $spotlightProperty->slug) }}"
                             class="relative z-10 px-5 md:px-25px lg:px-10 py-10px md:py-3 lg:py-17px group-hover:text-heading-color leading-23px">
                             {{ app(\App\Settings\HomepageSettings::class)->spotlight_section_btn_label }}
                         </a>

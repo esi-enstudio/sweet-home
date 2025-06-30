@@ -39,6 +39,12 @@ class Homepage extends SettingsPage
                             Forms\Components\TextInput::make('our_service_section_name')->label('Name')->required(),
                             Forms\Components\TextInput::make('our_service_section_title')->label('Title')->required(),
                         ]),
+
+                    Forms\Components\Fieldset::make('Amenity Section')
+                        ->schema([
+                            Forms\Components\TextInput::make('amenity_section_name')->label('Name')->required(),
+                            Forms\Components\TextInput::make('amenity_section_title')->label('Title')->required(),
+                        ]),
                 ])->columnSpan(2),
 
                 Forms\Components\Group::make([

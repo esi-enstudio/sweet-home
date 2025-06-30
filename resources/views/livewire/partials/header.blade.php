@@ -92,7 +92,7 @@
                     <!-- Property -->
                     <li class="relative group">
                         <a
-                                href="{{ route('listings') }}"
+                                href="{{ route('properties') }}"
                                 class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px"
                         >
                             Property

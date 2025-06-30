@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('icon_class')->nullable(); // For FontAwesome or other icon libraries
             $table->enum('type', ['facility', 'utility', 'safety', 'environment']); // Amenities গ্রুপ করার জন্য
+            $table->boolean('show_on_homepage')->default(false); // হোমপেজে দেখানোর জন্য ফ্ল্যাগ
+            $table->unsignedInteger('properties_count')->default(0);
             $table->timestamps();
         });
 

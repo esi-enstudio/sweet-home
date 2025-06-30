@@ -12,6 +12,7 @@ use Spatie\Sluggable\SlugOptions;
  * @property mixed $name
  * @property mixed|string $slug
  * @method static create(array $array)
+ * @method static where(string $string, true $true)
  */
 class Amenity extends Model
 {

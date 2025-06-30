@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Amenity;
 use App\Models\Property;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -101,6 +102,12 @@ class HomeComponent extends Component
             ->latest()
             ->take(10)
             ->get();
+    }
+
+    #[Computed(seconds: 20, cache: true, key: 'amenity-cards')]
+    public function buildingAmenities(): Collection
+    {
+        return Amenity::where('show_on_homepage', true)->take(8)->get();
     }
 
     public function render(): Factory|View|Application

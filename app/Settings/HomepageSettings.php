@@ -11,6 +11,8 @@ class HomepageSettings extends Settings
     public string $featured_showcase_section_title;
     public string $our_service_section_name;
     public string $our_service_section_title;
+    public string $amenity_section_name;
+    public string $amenity_section_title;
 
     public static function group(): string
     {
