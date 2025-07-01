@@ -2,32 +2,31 @@
 
 namespace App\Models;
 
-use App\Traits\HasUniqueSlug;
+use App\Traits\HasCustomSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Spatie\Sluggable\HasSlug;
-use Spatie\Sluggable\SlugOptions;
 
 /**
  * @property mixed $name
  * @property mixed|string $slug
  * @method static create(array $array)
  * @method static where(string $string, true $true)
+ * @method static find(mixed $amenityId)
  */
 class Amenity extends Model
 {
-    use HasSlug;
+    use HasCustomSlug;
 
     protected $fillable = ['name','slug','icon_class','type','is_key_feature'];
 
-    /**
-     * Get the options for generating the slug.
-     */
-    public function getSlugOptions(): SlugOptions
+    public function getSluggableField(): string
     {
-        return SlugOptions::create()
-            ->generateSlugsFrom('name')
-            ->saveSlugsTo('slug');
+        return 'name';
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'slug'; // Use slug instead of id in routes
     }
 
     /**
@@ -41,8 +40,4 @@ class Amenity extends Model
             ->withTimestamps();
     }
 
-    public function getRouteKeyName(): string
-    {
-        return 'slug'; // Use slug instead of id in routes
-    }
 }

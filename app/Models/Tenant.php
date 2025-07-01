@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Traits\HasUniqueSlug;
+use App\Traits\HasCustomSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  */
 class Tenant extends Model
 {
-    use HasUniqueSlug;
+    use HasCustomSlug;
 
     protected $fillable = ['name','slug'];
 

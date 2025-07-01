@@ -8,7 +8,9 @@
         >
             <div class="container py-110px">
                 <h1 class="text-2xl sm:text-3xl md:text-26px lg:text-3xl xl:text-4xl font-bold text-heading-color mb-15px">
-                    <span class="leading-1.3 md:leading-1.3 lg:leading-1.3 xl:leading-1.3">Property List</span>
+                    <span class="leading-1.3 md:leading-1.3 lg:leading-1.3 xl:leading-1.3">
+                        Properties with: {{ $amenity->name }}
+                    </span>
                 </h1>
                 <ul
                     class="breadcrumb flex gap-30px items-center text-sm lg:text-base font-bold pt-4"
@@ -19,7 +21,7 @@
                         </a>
                     </li>
                     <li class="leading-1.8 lg:leading-1.8 text-heading-color">
-                        Property List
+                        {{ $amenity->name }}
                     </li>
                 </ul>
             </div>
@@ -38,8 +40,8 @@
                             <li class="pr-30px">
                                 <form class="form-primary property-form">
                                     <select class="selectize">
-                                        <option data-display="Select" value="all">
-                                            Select Sorting
+                                        <option data-display="Select" value="Default Sorting">
+                                            Default Sorting
                                         </option>
                                         <option value="Sort by popularity">
                                             Sort by popularity
@@ -53,6 +55,19 @@
                                         <option value="Sort by price: high to low">
                                             Sort by price: high to low
                                         </option>
+                                    </select>
+                                </form>
+                            </li>
+                            <li class="pr-30px">
+                                <form class="form-primary property-form">
+                                    <select class="selectize">
+                                        <option data-display="Select" value="Per Page: 12">
+                                            Per Page: 12
+                                        </option>
+                                        <option value="Per Page: 20">Per Page: 20</option>
+                                        <option value="Per Page: 30">Per Page: 30</option>
+                                        <option value="Per Page: 50">Per Page: 50</option>
+                                        <option value="Per Page: 100">Per Page: 100</option>
                                     </select>
                                 </form>
                             </li>
@@ -252,34 +267,39 @@
                 <div class="lg:col-start-9 lg:col-span-4 pt-100px lg:pt-0">
                     <!-- sidebar heading -->
                     <div>
-                        <h4 class="mb-10px text-lg md:text-xl lg:text-22px xl:text-2xl text-heading-color font-bold">
-                            <span class="leading-1.3 md:leading-1.3 xl:leading-1.3">Advance Information</span>
+                        <h4
+                            class="mb-10px text-lg md:text-xl lg:text-22px xl:text-2xl text-heading-color font-bold"
+                        >
+                  <span class="leading-1.3 md:leading-1.3 xl:leading-1.3"
+                  >Advance Information</span
+                  >
                         </h4>
-
                         <p class="mb-30px text-[12.25px] lg:text-sm">
-                            <span class="lg:leading-1 8">
-                                About
-                                {{ number_format($this->totalResults) }}
-                                results
-                                ({{ number_format($this->queryTime, 4) }} seconds)
-                            </span>
+                  <span class="lg:leading-1 8">
+                    About
+                      {{ number_format($this->totalResults) }}
+                      results
+                      ({{ number_format($this->queryTime, 4) }} seconds)
+                  </span>
                         </p>
                     </div>
-
                     <!-- sidebar filter -->
                     <div class="px-5 pt-35px pb-10 xl:pl-35px xl:pr-30px border-2 border-border-color-11">
                         <!-- type filter -->
-                        <div class="pb-35px mb-35px border-b border-border-color-12 border-opacity-25">
+                        <div
+                            class="pb-35px mb-35px border-b border-border-color-12 border-opacity-25"
+                        >
                             <h5 class="mb-25px text-lg text-heading-color font-semibold">
                                 <span class="leading-1.3">Property Type</span>
                             </h5>
-
                             <ul class="flex flex-col gap-y-15px">
-                                <li class="text-sm font-bold flex justify-between items-center">
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
                                     <label
                                         for="house-type"
-                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer">
-                                        <input
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
                                             type="checkbox"
                                             id="house-type"
                                             class="hidden"
@@ -288,16 +308,17 @@
                                         <span
                                             class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
                                         ></span>
-                                        Flat
+                                        House
                                     </label>
                                     <span class="leading-1.8">3,924 </span>
                                 </li>
-
-                                <li class="text-sm font-bold flex justify-between items-center">
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
                                     <label
                                         for="sigle-family-type"
-                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer">
-                                        <input
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
                                             type="checkbox"
                                             id="sigle-family-type"
                                             class="hidden"
@@ -305,24 +326,99 @@
                                         <span
                                             class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
                                         ></span>
-                                        Semi Pucca
+                                        Single Family
                                     </label>
                                     <span class="leading-1.8">3,610 </span>
                                 </li>
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
+                                    <label
+                                        for="apartment-type"
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
+                                            type="checkbox"
+                                            id="apartment-type"
+                                            class="hidden"
+                                        >
+                                        <span
+                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
+                                        ></span>
+                                        Apartment
+                                    </label>
+                                    <span class="leading-1.8">2,912 </span>
+                                </li>
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
+                                    <label
+                                        for="office-villa-type"
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
+                                            type="checkbox"
+                                            id="office-villa-type"
+                                            class="hidden"
+                                        >
+                                        <span
+                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
+                                        ></span>
+                                        Office Villa
+                                    </label>
+                                    <span class="leading-1.8">2,687 </span>
+                                </li>
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
+                                    <label
+                                        for="luxary-home-type"
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
+                                            type="checkbox"
+                                            id="luxary-home-type"
+                                            class="hidden"
+                                        >
+                                        <span
+                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
+                                        ></span>
+                                        Luxary Home
+                                    </label>
+                                    <span class="leading-1.8">1,853 </span>
+                                </li>
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
+                                    <label
+                                        for="studio-type"
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
+                                            type="checkbox"
+                                            id="studio-type"
+                                            class="hidden"
+                                        >
+                                        <span
+                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
+                                        ></span>
+                                        Studio
+                                    </label>
+                                    <span class="leading-1.8">893 </span>
+                                </li>
                             </ul>
                         </div>
-
                         <!-- amenities filter -->
-                        <div class="pb-35px mb-35px border-b border-border-color-12 border-opacity-25">
+                        <div
+                            class="pb-35px mb-35px border-b border-border-color-12 border-opacity-25"
+                        >
                             <h5 class="mb-25px text-lg text-heading-color font-semibold">
                                 <span class="leading-1.3">Amenities</span>
                             </h5>
                             <ul class="flex flex-col gap-y-15px">
-                                <li class="text-sm font-bold flex justify-between items-center">
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
                                     <label
                                         for="dishwasher-type"
-                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer">
-                                        <input
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
                                             type="checkbox"
                                             id="dishwasher-type"
                                             class="hidden"
@@ -331,16 +427,17 @@
                                         <span
                                             class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
                                         ></span>
-                                        Gas
+                                        Dishwasher
                                     </label>
                                     <span class="leading-1.8">3,924 </span>
                                 </li>
-
-                                <li class="text-sm font-bold flex justify-between items-center">
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
                                     <label
                                         for="floor-coverings-type"
-                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer">
-                                        <input
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
                                             type="checkbox"
                                             id="floor-coverings-type"
                                             class="hidden"
@@ -348,13 +445,243 @@
                                         <span
                                             class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
                                         ></span>
-                                        Parking
+                                        Floor Coverings
                                     </label>
                                     <span class="leading-1.8">3,610 </span>
+                                </li>
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
+                                    <label
+                                        for="internet-type"
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
+                                            type="checkbox"
+                                            id="internet-type"
+                                            class="hidden"
+                                        >
+                                        <span
+                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
+                                        ></span>
+                                        Internet
+                                    </label>
+                                    <span class="leading-1.8">2,912 </span>
+                                </li>
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
+                                    <label
+                                        for="build-wardrobes-type"
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
+                                            type="checkbox"
+                                            id="build-wardrobes-type"
+                                            class="hidden"
+                                        >
+                                        <span
+                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
+                                        ></span>
+                                        Build Wardrobes
+                                    </label>
+                                    <span class="leading-1.8">2,687 </span>
+                                </li>
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
+                                    <label
+                                        for="supermarket-type"
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
+                                            type="checkbox"
+                                            id="supermarket-type"
+                                            class="hidden"
+                                        >
+                                        <span
+                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
+                                        ></span>
+                                        Supermarket
+                                    </label>
+                                    <span class="leading-1.8">1,853 </span>
+                                </li>
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
+                                    <label
+                                        for="kids-zone-type"
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
+                                            type="checkbox"
+                                            id="kids-zone-type"
+                                            class="hidden"
+                                        >
+                                        <span
+                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
+                                        ></span>
+                                        Kids Zone
+                                    </label>
+                                    <span class="leading-1.8">893 </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- price filter -->
+                        <div class="pb-35px mb-35px border-b border-border-color-12 border-opacity-25">
+                            <h5 class="mb-25px text-lg text-heading-color font-semibold">
+                                <span class="leading-1.3">Price Renge</span>
+                            </h5>
+                            <ul class="flex flex-col gap-y-15px">
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
+                                    <label
+                                        for="low-budget-type"
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
+                                            type="checkbox"
+                                            id="low-budget-type"
+                                            class="hidden"
+                                            checked
+                                        >
+                                        <span
+                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
+                                        ></span>
+                                        Low Budget
+                                    </label>
+                                    <span class="leading-1.8">$5,000 - $10,000 </span>
+                                </li>
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
+                                    <label
+                                        for="medium-type"
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
+                                            type="checkbox"
+                                            id="medium-type"
+                                            class="hidden"
+                                        >
+                                        <span
+                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
+                                        ></span>
+                                        Medium
+                                    </label>
+                                    <span class="leading-1.8">$10,000 - $30,000 </span>
+                                </li>
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
+                                    <label
+                                        for="high-budget-type"
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
+                                            type="checkbox"
+                                            id="high-budget-type"
+                                            class="hidden"
+                                        >
+                                        <span
+                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
+                                        ></span>
+                                        High Budget
+                                    </label>
+                                    <span class="leading-1.8">$30,000 Up </span>
                                 </li>
                             </ul>
                         </div>
 
+                        <!-- price Range filter -->
+                        <div class="pb-35px mb-35px border-b border-border-color-12 border-opacity-25">
+                            <h4 class="ltn__widget-title ltn__widget-title-border---">Filter by price</h4>
+                            <div class="price_filter">
+                                <div class="price_slider_amount">
+                                    <input type="submit" value="Your range:">
+                                    <input type="text" class="amount" name="price" placeholder="Add Your Price">
+                                </div>
+                                <div class="slider-range ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 0%; width: 74.0404%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 0%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 74.0404%;"></span></div>
+                            </div>
+                        </div>
+
+                        <!-- Bed/bath filter -->
+                        <div
+                            class="pb-35px mb-35px border-b border-border-color-12 border-opacity-25"
+                        >
+                            <h5 class="mb-25px text-lg text-heading-color font-semibold">
+                                <span class="leading-1.3">Bed/bath</span>
+                            </h5>
+                            <ul class="flex flex-col gap-y-15px">
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
+                                    <label
+                                        for="single-type"
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
+                                            type="checkbox"
+                                            id="single-type"
+                                            class="hidden"
+                                            checked
+                                        >
+                                        <span
+                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
+                                        ></span>
+                                        Single
+                                    </label>
+                                    <span class="leading-1.8">3,924 </span>
+                                </li>
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
+                                    <label
+                                        for="double-type"
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
+                                            type="checkbox"
+                                            id="double-type"
+                                            class="hidden"
+                                        >
+                                        <span
+                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
+                                        ></span>
+                                        Double
+                                    </label>
+                                    <span class="leading-1.8">3,610 </span>
+                                </li>
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
+                                    <label
+                                        for="up-to-3-type"
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
+                                            type="checkbox"
+                                            id="up-to-3-type"
+                                            class="hidden"
+                                        >
+                                        <span
+                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
+                                        ></span>
+                                        Up To 3
+                                    </label>
+                                    <span class="leading-1.8">2,912 </span>
+                                </li>
+                                <li
+                                    class="text-sm font-bold flex justify-between items-center"
+                                >
+                                    <label
+                                        for="up-to-5-type"
+                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
+                                    ><input
+                                            type="checkbox"
+                                            id="up-to-5-type"
+                                            class="hidden"
+                                        >
+                                        <span
+                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
+                                        ></span>
+                                        Up To 3
+                                    </label>
+                                    <span class="leading-1.8">2,687 </span>
+                                </li>
+                            </ul>
+                        </div>
                         <!-- catagory filter -->
                         <div>
                             <h5 class="mb-25px text-lg text-heading-color font-semibold">
@@ -418,70 +745,11 @@
                                 </li>
                             </ul>
                         </div>
-
-                        <!-- price Range filter -->
-                        <div class="pb-35px mb-35px border-b border-border-color-12 border-opacity-25">
-                            <h4 class="ltn__widget-title ltn__widget-title-border---">Filter by price</h4>
-                            <div class="price_filter">
-                                <div class="price_slider_amount">
-                                    <input type="submit" value="Your range:">
-                                    <input type="text" class="amount" name="price" placeholder="Add Your Price">
-                                </div>
-                                <div class="slider-range ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all"><div class="ui-slider-range ui-widget-header ui-corner-all" style="left: 0%; width: 74.0404%;"></div><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 0%;"></span><span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0" style="left: 74.0404%;"></span></div>
-                            </div>
-                        </div>
-
-                        <!-- Bedroom/Bathroom/Balconies filter -->
-                        <div class="pb-35px mb-35px border-b border-border-color-12 border-opacity-25">
-                            <h5 class="mb-25px text-lg text-heading-color font-semibold">
-                                <span class="leading-1.3">Bedroom</span>
-                            </h5>
-                            <form class="form-primary property-form">
-                                <select class="selectize">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </form>
-                        </div>
-
-                        <div class="pb-35px mb-35px border-b border-border-color-12 border-opacity-25">
-                            <h5 class="mb-25px text-lg text-heading-color font-semibold">
-                                <span class="leading-1.3">Bathroom</span>
-                            </h5>
-                            <form class="form-primary property-form">
-                                <select class="selectize">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </form>
-                        </div>
-
-                        <div class="pb-35px mb-35px border-b border-border-color-12 border-opacity-25">
-                            <h5 class="mb-25px text-lg text-heading-color font-semibold">
-                                <span class="leading-1.3">Balconies</span>
-                            </h5>
-                            <form class="form-primary property-form">
-                                <select class="selectize">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- modals -->
-
             <!-- modal apartment details-->
             <div
                 class="modal hidden fixed top-0 left-0 w-full h-full z-xxl transition-all duration-500 bg-lightBlack opacity-0 overflow-y-auto"
@@ -812,3 +1080,4 @@
         </div>
     </section>
 </main>
+

@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Traits\HasUniqueSlug;
+use App\Traits\HasCustomSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class FloorPlan extends Model
 {
-    use HasUniqueSlug;
+    use HasCustomSlug;
 
     protected $fillable = ['property_id','name','slug','image_path','description','total_area','others'];
 

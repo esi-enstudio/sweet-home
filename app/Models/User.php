@@ -3,7 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Traits\HasUniqueSlug;
+use App\Traits\HasCustomSlug;
 use Database\Factories\UserFactory;
 use Filament\Models\Contracts\HasAvatar;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,7 +19,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements HasAvatar
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, HasRoles, HasUniqueSlug;
+    use HasFactory, Notifiable, HasRoles, HasCustomSlug;
 
     /**
      * The attributes that are mass assignable.

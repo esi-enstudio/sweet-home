@@ -24,7 +24,7 @@
                 @forelse($buildingAmenities as $amenity)
                     <div class="basis-1/2 md:basis-1/3 lg:basis-1/4 px-2 md:px-15px mb-50px">
                         <a
-                            href="#"
+                            href="{{ route('amenity.properties', ['amenity' => $amenity->slug]) }}"
                             class="pt-10 pb-35px px-15px md:px-5 xl:px-30px bg-white hover:bg-secondary-color transition-all duration-300 shadow-box-shadow-4 rounded-10px flex flex-col items-center group relative">
 
                         <span class="block w-60px md:w-20 xl:w-100px h-60px md:h-20 xl:h-100px text-25px md:text-3xl xl:text-45px bg-section-bg-5 rounded-100% transition-all duration-300 group-hover:bg-white text-secondary-color mb-5 text-center leading-1">

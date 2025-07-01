@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0" >
-    <title>Quarter - Real Estate HTML Template</title>
+    <title>{{ $title ?? config('app.name', 'Laravel') }}</title>
     <link
         rel="shortcut icon"
         href="{{ Storage::url(app(\App\Settings\GeneralSettings::class)->favicon) }}"
@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/glightbox.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/ui-widget.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+
+    @livewireStyles
 </head>
 <body>
 
@@ -57,5 +59,6 @@
 <script src="{{ asset('assets/js/ui-widget.js') }}"></script>
 <script src="{{ asset('assets/js/main.js') }}"></script>
 
+@livewireScripts
 </body>
 </html>

@@ -26,6 +26,7 @@ class MediaRelationManager extends RelationManager
                         'image' => 'Image',
                         'video' => 'Video',
                         'showcase' => 'Showcase Image',
+                        'spotlight' => 'Spotlight Image',
                     ])
                     ->live(), // এটি প্রয়োজন যাতে শর্তভিত্তিক ইনপুট রিয়েলটাইমে আপডেট হয়
 
@@ -54,6 +55,15 @@ class MediaRelationManager extends RelationManager
                     ->visible(fn (callable $get) => $get('type') === 'showcase')
                     ->columnSpanFull(),
 
+                Forms\Components\FileUpload::make('spotlight_image_path')
+                    ->label('Upload Spotlight Image')
+                    ->imageEditor()
+                    ->image()
+                    ->directory('property/gallery/spotlight')
+                    ->required(fn (callable $get) => $get('type') === 'spotlight')
+                    ->visible(fn (callable $get) => $get('type') === 'spotlight')
+                    ->columnSpanFull(),
+
                 Forms\Components\TextInput::make('video_url')
                     ->label('Video URL')
                     ->placeholder('https://youtube.com/...')
@@ -77,6 +87,12 @@ class MediaRelationManager extends RelationManager
 
                 Tables\Columns\ImageColumn::make('showcase_image_path')
                     ->label('Showcase Image')
+                    ->extraImgAttributes(['class' => 'rounded-md'])
+                    ->width(100)
+                    ->height(100),
+
+                Tables\Columns\ImageColumn::make('spotlight_image_path')
+                    ->label('Spotlight Image')
                     ->extraImgAttributes(['class' => 'rounded-md'])
                     ->width(100)
                     ->height(100),
@@ -109,7 +125,13 @@ class MediaRelationManager extends RelationManager
                         } elseif ($data['type'] === 'showcase') {
                             $createdRecords[] = $livewire->getRelationship()->create([
                                 'type'                  => $data['type'],
-                                'showcase_image_path'   => $data['showcase_image_path'], // এখানে এটা স্ট্রিং, যেমন ইউটিউব URL
+                                'showcase_image_path'   => $data['showcase_image_path'],
+                                'caption'               => $data['caption'],
+                            ]);
+                        } elseif ($data['type'] === 'spotlight') {
+                            $createdRecords[] = $livewire->getRelationship()->create([
+                                'type'                  => $data['type'],
+                                'spotlight_image_path'  => $data['spotlight_image_path'],
                                 'caption'               => $data['caption'],
                             ]);
                         } elseif ($data['type'] === 'video') {
@@ -119,7 +141,6 @@ class MediaRelationManager extends RelationManager
                                 'caption'   => $data['caption'],
                             ]);
                         }
-
                         // ফিলামেন্টকে জানানোর জন্য শেষ রেকর্ডটি রিটার্ন করতে হবে
                         return last($createdRecords);
                     }),

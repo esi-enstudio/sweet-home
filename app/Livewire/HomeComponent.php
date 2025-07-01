@@ -107,7 +107,9 @@ class HomeComponent extends Component
     #[Computed(seconds: 20, cache: true, key: 'amenity-cards')]
     public function buildingAmenities(): Collection
     {
-        return Amenity::where('show_on_homepage', true)->take(8)->get();
+        return Amenity::where('show_on_homepage', true)
+            ->take(8)
+            ->get();
     }
 
     public function render(): Factory|View|Application

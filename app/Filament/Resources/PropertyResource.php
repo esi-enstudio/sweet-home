@@ -255,7 +255,11 @@ class PropertyResource extends Resource
 
                                 Select::make('status')
                                     ->visibleOn(['edit'])
-                                    ->options(['pending' => 'Pending', 'approved' => 'Approve', 'rejected' => 'Reject'])
+                                    ->options([
+                                        'pending' => 'Pending',
+                                        'approved' => 'Approved',
+                                        'rejected' => 'Reject'
+                                    ])
                                     ->default('pending'),
 
                                 Toggle::make('is_available')
@@ -363,6 +367,7 @@ class PropertyResource extends Resource
                                 FileUpload::make('thumbnail')
                                     ->label('')
                                     ->image()
+                                    ->required()
                                     ->imageEditor()
                                     ->helperText('বিজ্ঞাপনের প্রধান এবং সবচেয়ে আকর্ষণীয় ছবিটি এখানে আপলোড করুন।')
                                     ->directory('property/thumbnails'),
@@ -487,8 +492,9 @@ class PropertyResource extends Resource
                 Tables\Filters\TernaryFilter::make('is_featured_showcase')->label('Showcase Property'),
             ], layout: Tables\Enums\FiltersLayout::AboveContentCollapsible)
             ->actions([
-                Tables\Actions\ViewAction::make(),
+//                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -529,4 +535,9 @@ class PropertyResource extends Resource
     {
         return static::getModel()::count();
     }
+
+//    public static function getEloquentQuery(): Builder
+//    {
+//        return parent::getEloquentQuery()->latest();
+//    }
 }
