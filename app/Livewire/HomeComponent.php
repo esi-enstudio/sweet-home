@@ -96,8 +96,8 @@ class HomeComponent extends Component
                 },
             ])
             ->with(['user'])
-            ->where('is_featured', true)
-            ->where('is_available', true)
+            ->where('is_featured', 1)
+            ->where('is_available', 1)
             ->where('status', 'approved')
             ->latest()
             ->take(10)
