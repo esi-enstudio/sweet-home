@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @method static create(array $array)
  * @method static find(mixed $originalCategoryId)
+ * @method static withCount(string $string)
  */
 class PropertyType extends Model
 {

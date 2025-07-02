@@ -75,7 +75,7 @@
                         <ul class="flex gap-15px pt-4">
                             @foreach($showcaseProperty->media->where('type','image')->take(3) as $media)
                                 <li>
-                                    <a class="w-[180px] h-[128px] glightbox2" href="{{ route('single.property', $showcaseProperty->slug) }}" data-glightbox="type:image;">
+                                    <a class="w-[180px] h-[128px] glightbox2" href="{{ \Illuminate\Support\Facades\Storage::url($media->path) }}" data-glightbox="type:image;">
                                         <img src="{{ \Illuminate\Support\Facades\Storage::url($media->path) }}" alt="{{ $media->caption }}">
                                     </a>
                                 </li>

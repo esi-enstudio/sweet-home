@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static create(array $array)
  * @method static where(string $string, true $true)
  * @method static find(mixed $amenityId)
+ * @method static withCount(string $string)
  */
 class Amenity extends Model
 {

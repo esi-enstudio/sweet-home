@@ -15,4 +15,5 @@ Route::get('/properties', Properties::class)->name('properties');
 // এখানে Route Model Binding ব্যবহার করা হচ্ছে
 Route::get('/properties/{property:slug}', SingleProperty::class)->name('single.property');
 
+// এমিনিটি সম্বলিত প্রপার্টির তালিকা এবং ফিল্টারিং-এর জন্য
 Route::get('/amenities/{amenity:slug}', AmenityProperties::class)->name('amenity.properties');
