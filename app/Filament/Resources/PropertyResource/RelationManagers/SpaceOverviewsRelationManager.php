@@ -60,12 +60,14 @@ class SpaceOverviewsRelationManager extends RelationManager
                             ->columns(2)
                             ->schema([
                                 Forms\Components\TextInput::make('length')
+                                    ->label('Length (দৈর্ঘ্য)')
                                     ->numeric()
                                     ->suffix('ft')
                                     ->placeholder(20)
                                     ->nullable(),
 
                                 Forms\Components\TextInput::make('width')
+                                    ->label('Width (প্রস্থ)')
                                     ->numeric()
                                     ->suffix('ft')
                                     ->placeholder(16)

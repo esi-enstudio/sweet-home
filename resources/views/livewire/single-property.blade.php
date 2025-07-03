@@ -2,631 +2,45 @@
 {{--    {{ $property->media }}--}}
     <!-- banner section -->
     <section>
-        <!-- banner section -->
-        <div
-            class="w-full bg-[url('../img/bg/14.html')] bg-no-repeat bg-cover bg-center relative z-0 after:w-full after:h-full after:absolute after:top-0 after:left-0 after:bg-white after:bg-opacity-30 after:-z-1"
-        >
-            <div class="container py-110px">
-                <h1
-                    class="text-2xl sm:text-3xl md:text-26px lg:text-3xl xl:text-4xl font-bold text-heading-color mb-15px"
-                >
-              <span
-                  class="leading-1.3 md:leading-1.3 lg:leading-1.3 xl:leading-1.3"
-              >Property details</span
-              >
-                </h1>
-                <ul
-                    class="breadcrumb flex gap-30px items-center text-sm lg:text-base font-bold pt-4"
-                >
-                    <li class="home relative leading-1.8 lg:leading-1.8">
-                        <a href="index.html"
-                        ><i class="fas fa-home text-secondary-color"></i> Home</a
-                        >
-                    </li>
-                    <li class="leading-1.8 lg:leading-1.8 text-heading-color">
-                        Property details
-                    </li>
-                </ul>
-            </div>
-        </div>
+        {{-- ব্যানার এবং ব্রেডক্রাম্ব সেকশন --}}
+        <x-single-property.banner :title="$property->title" />
     </section>
-    <!-- details slider -->
-    <div>
-        <div class="news-slider-container swiper-container relative">
-            <!-- product details -->
-            <div class="swiper product-details-slider static">
-                <div class="swiper-wrapper mb-10">
-                    <!-- card -->
-                    @forelse($property->media as $mediaItem)
-                        <div class="swiper-slide cursor-default">
-                            <a
-                                href="{{ asset('storage/' . $mediaItem->path) }}"
-                                class="glightbox overflow-hidden"
-                                data-width="118vh"
-                            >
-                                <img
-                                    class="hover:scale-110 transition-all duration-700"
-                                    src="{{ asset('storage/'. $mediaItem->path) }}"
-                                    alt="{{ $property->title }}"
-                                >
-                            </a>
-                        </div>
-                    @empty
-                    @endforelse
-                </div>
 
-                <!-- pagination -->
-                <div
-                    class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal !-bottom-[6px] block lg:hidden"
-                >
-              <span
-                  class="swiper-pagination-bullet"
-                  tabindex="0"
-                  role="button"
-                  aria-label="Go to slide 1"
-              ></span
-              ><span
-                        class="swiper-pagination-bullet swiper-pagination-bullet-active"
-                        tabindex="0"
-                        role="button"
-                        aria-label="Go to slide 2"
-                        aria-current="true"
-                    ></span
-                    ><span
-                        class="swiper-pagination-bullet"
-                        tabindex="0"
-                        role="button"
-                        aria-label="Go to slide 3"
-                    ></span>
-                </div>
-                <!--  navigation -->
-                <div class="hidden lg:block">
-                    <div class="swiper-button-next bg-white z-1">
-                        <i class="fas fa-arrow-right" ></i>
-                    </div>
-                    <div class="swiper-button-prev bg-white z-1">
-                        <i class="fas fa-arrow-left" ></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    {{-- মিডিয়া স্লাইডার (প্রধান ছবি) --}}
+    <x-single-property.media-slider :property="$property" />
 
-    <!-- product details section -->
+    <!-- প্রধান কন্টেন্ট (বাম অংশ) -->
     <section>
         <div class="container modal-container property-tab pt-70px pb-20">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-x-30px">
                 <!-- details body -->
                 <div class="lg:col-start-1 lg:col-span-8">
-                    <!--  top -->
-                    <ul class="flex flex-wrap gap-x-15px md:gap-x-35px gap-y-15px items-center mb-30px">
-                        <li>
-                            <ul class="flex gap-x-15px md:gap-x-30px items-center">
-                                <li>
-                                    <a
-                                        class="text-xs md:text-sm uppercase text-white px-15px pt-5px pb-0.5 bg-secondary-color hover:bg-primary-color hover:text-white font-semibold"
-                                        href="#"
-                                    >
-                                        <span class="leading-1.8 md:leading-1.8">
-                                            Featured
-                                        </span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a
-                                        class="text-xs md:text-sm uppercase text-white px-15px pt-5px pb-0.5 bg-orange font-semibold hover:text-white"
-                                        href="#"
-                                    >
-                                        <span class="leading-1.8 md:leading-1.8">
-                                            For Rent
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                    <!--  featured//rent//date//comments//title//address -->
+                    <x-single-property.header :property="$property" />
+                    <!-- Description -->
+                    <x-single-property.description :description="$property->description" />
+                    <!-- Property Information -->
+                    <x-single-property.property-info :property="$property" />
+                    <!-- Space and Overviews-->
+                    <x-single-property.space-overview :spaces="$property->spaceOverviews" />
+                    <!-- Gallery -->
+                    <x-single-property.gallery :property="$property" />
+                    <!-- Amenities -->
+                    <x-single-property.amenities :amenities="$property->amenities" />
+                    <!-- Location -->
+                    <x-single-property.location-map :lat="$property->latitude" :lng="$property->longitude" />
+                    <x-single-property.floor-plans :floorPlans="$property->floorPlans" />
+                    <x-single-property.video :videoUrl="$property->video_url" :thumbnail="$property->thumbnail" />
+                    <x-single-property.customer-reviews :reviews="$property->reviews" :propertyId="$property->id" />
+                    <x-single-property.related-properties :properties="$this->relatedProperties" />
 
-                        <li>
-                            <ul class="flex gap-x-15px md:gap-x-30px items-center">
-                                <li>
-                                    <p class="text-xs md:text-sm font-semibold">
-                                        <span class="leading-1.8 md:leading-1.8">
-                                            <i class="far fa-calendar-alt text-secondary-color mr-5px"></i>
-                                            May 19, 2024
-                                        </span>
-                                    </p>
-                                </li>
-                                <li>
-                                    <a class="text-xs md:text-sm font-semibold" href="#"
-                                    ><span class="leading-1.8 md:leading-1.8"
-                                        ><i
-                                                class="far fa-comments text-secondary-color mr-5px"
-                                            ></i>
-                          35 Comments</span
-                                        ></a
-                                    >
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
 
-                    <!-- main -->
-                    <div>
-                        <h4
-                            class="text-2xl md:text-26px lg:text-3xl xl:text-4xl font-bold text-heading-color mb-15px"
-                        >
-                  <span class="leading-1.3 lg:leading-1.3 xl:leading-1.3"
-                  >Diamond Manor Apartment</span
-                  >
-                        </h4>
-                        <p class="text-sm">
-                  <span class="leading-1.8"
-                  ><i class="flaticon-pin text-secondary-color"></i> Belmont
-                    Gardens, Chicago</span
-                  >
-                        </p>
-                        <!-- Description -->
-                        <h4
-                            class="text-22px font-semibold leading-1.3 pl-10px border-l-2 border-secondary-color text-heading-color my-30px"
-                        >
-                            Description
-                        </h4>
-                        <p class="text-sm lg:text-base my-5">
-                  <span class="leading-1.8 lg:leading-1.8"
-                  >Massa tempor nec feugiat nisl pretium. Egestas fringilla
-                    phasellus faucibus scelerisque eleifend donec Porta nibh
-                    venenatis cras sed felis eget velit aliquet. Neque volutpat
-                    ac tincidunt vitae semper quis lectus. Turpis in eu mi
-                    bibendum neque egestas congue quisque. Sed elementum tempus
-                    egestas sed sed risus pretium quam. Dignissim sodales ut eu
-                    sem. Nibh mauris cursus mattis molestee iaculis at erat
-                    pellentesque. Id interdum velit laoreet id donec ultrices
-                    tincidunt.</span
-                  >
-                        </p>
 
-                        <p class="text-sm lg:text-base my-5">
-                  <span class="leading-1.8 lg:leading-1.8"
-                  >To the left is the modern kitchen with central island,
-                    leading through to the unique breakfast family room which
-                    feature glass walls and doors out onto the garden and access
-                    to the separate utility room.</span
-                  >
-                        </p>
-                        <!-- Property Detail -->
-                        <h4
-                            class="text-22px font-semibold leading-1.3 pl-10px border-l-2 border-secondary-color text-heading-color my-30px"
-                        >
-                            Property Detail
-                        </h4>
-                        <div class="flex flex-col md:flex-row bg-section-bg-1 mb-60px">
-                            <ul
-                                class="px-30px md:px-50px py-5 md:pt-30px md:pb-10 md:border-r md:border-border-color-7"
-                            >
-                                <li class="text-sm mt-4 font-semibold">
-                      <span
-                          class="leading-1.8 min-w-[110px] inline-block flex-shrink-0"
-                      >Property ID:</span
-                      >
-                                    <p
-                                        class="text-sm lg:text-base inline-block text-heading-color"
-                                    >
-                                        <span class="leading-1.8 lg:leading-1.8"> HZ29</span>
-                                    </p>
-                                </li>
-                                <li class="text-sm mt-4 font-semibold">
-                      <span
-                          class="leading-1.8 min-w-[110px] inline-block flex-shrink-0"
-                      >Home Area:
-                      </span>
-                                    <p
-                                        class="text-sm lg:text-base inline-block text-heading-color"
-                                    >
-                        <span class="leading-1.8 lg:leading-1.8">
-                          120 sqft</span
-                        >
-                                    </p>
-                                </li>
-                                <li class="text-sm mt-4 font-semibold">
-                      <span
-                          class="leading-1.8 min-w-[110px] inline-block flex-shrink-0"
-                      >Rooms:</span
-                      >
-                                    <p
-                                        class="text-sm lg:text-base inline-block text-heading-color"
-                                    >
-                                        <span class="leading-1.8 lg:leading-1.8"> 7</span>
-                                    </p>
-                                </li>
-                                <li class="text-sm mt-4 font-semibold">
-                      <span
-                          class="leading-1.8 min-w-[110px] inline-block flex-shrink-0"
-                      >Baths</span
-                      >
-                                    <p
-                                        class="text-sm lg:text-base inline-block text-heading-color"
-                                    >
-                                        <span class="leading-1.8 lg:leading-1.8"> 2</span>
-                                    </p>
-                                </li>
-                                <li class="text-sm mt-4 font-semibold">
-                      <span
-                          class="leading-1.8 min-w-[110px] inline-block flex-shrink-0"
-                      >Year built:</span
-                      >
-                                    <p
-                                        class="text-sm lg:text-base inline-block text-heading-color"
-                                    >
-                                        <span class="leading-1.8 lg:leading-1.8"> 1992</span>
-                                    </p>
-                                </li>
-                            </ul>
-                            <ul class="px-30px md:px-50px py-5 md:pt-30px md:pb-10">
-                                <li class="text-sm mt-4 font-semibold">
-                      <span
-                          class="leading-1.8 min-w-[110px] inline-block flex-shrink-0"
-                      >Lot Area:</span
-                      >
-                                    <p
-                                        class="text-sm lg:text-base inline-block text-heading-color"
-                                    >
-                                        <span class="leading-1.8 lg:leading-1.8"> HZ29</span>
-                                    </p>
-                                </li>
-                                <li class="text-sm mt-4 font-semibold">
-                      <span
-                          class="leading-1.8 min-w-[110px] inline-block flex-shrink-0"
-                      >Lot dimensions:
-                      </span>
-                                    <p
-                                        class="text-sm lg:text-base inline-block text-heading-color"
-                                    >
-                        <span class="leading-1.8 lg:leading-1.8">
-                          120 sqft</span
-                        >
-                                    </p>
-                                </li>
-                                <li class="text-sm mt-4 font-semibold">
-                      <span
-                          class="leading-1.8 min-w-[110px] inline-block flex-shrink-0"
-                      >Beds:</span
-                      >
-                                    <p
-                                        class="text-sm lg:text-base inline-block text-heading-color"
-                                    >
-                                        <span class="leading-1.8 lg:leading-1.8"> 7</span>
-                                    </p>
-                                </li>
-                                <li class="text-sm mt-4 font-semibold">
-                      <span
-                          class="leading-1.8 min-w-[110px] inline-block flex-shrink-0"
-                      >Price:</span
-                      >
-                                    <p
-                                        class="text-sm lg:text-base inline-block text-heading-color"
-                                    >
-                                        <span class="leading-1.8 lg:leading-1.8"> 2</span>
-                                    </p>
-                                </li>
-                                <li class="text-sm mt-4 font-semibold">
-                      <span
-                          class="leading-1.8 min-w-[110px] inline-block flex-shrink-0"
-                      >Property Status:</span
-                      >
-                                    <p
-                                        class="text-sm lg:text-base inline-block text-heading-color"
-                                    >
-                        <span class="leading-1.8 lg:leading-1.8">
-                          For Sale</span
-                        >
-                                    </p>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- Facts and Features-->
-                        <h4
-                            class="text-22px font-semibold leading-1.3 pl-10px border-l-2 border-secondary-color text-heading-color my-30px"
-                        >
-                            Facts and Features
-                        </h4>
 
-                        <ul class="flex flex-wrap mb-45px">
-                            <li class="text-sm pt-4 pb-10px pr-6 flex items-center gap-4">
-                                <div
-                                    class="w-10 h-10 flex items-center justify-center flex-shrink-0 bg-section-bg-5"
-                                >
-                                    <i
-                                        class="flaticon-double-bed text-22px text-secondary-color"
-                                    ></i>
-                                </div>
-                                <div>
-                                    <h6 class="text-sm text-heading-color font-normal mb-0.5">
-                                        <span class="leading-1.3"> Living Room</span>
-                                    </h6>
-                                    <p class="text-[12.25px] lg:text-sm">
-                                        <span class="lg:leading-1.8"> 20 x 16 sq feet </span>
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="text-sm pt-4 pb-10px pr-6 flex items-center gap-4">
-                                <div
-                                    class="w-10 h-10 flex items-center justify-center flex-shrink-0 bg-section-bg-5"
-                                >
-                                    <i
-                                        class="flaticon-double-bed text-22px text-secondary-color"
-                                    ></i>
-                                </div>
-                                <div>
-                                    <h6 class="text-sm text-heading-color font-normal mb-0.5">
-                                        <span class="leading-1.3"> Garage</span>
-                                    </h6>
-                                    <p class="text-[12.25px] lg:text-sm">
-                                        <span class="lg:leading-1.8"> 20 x 16 sq feet </span>
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="text-sm pt-4 pb-10px pr-6 flex items-center gap-4">
-                                <div
-                                    class="w-10 h-10 flex items-center justify-center flex-shrink-0 bg-section-bg-5"
-                                >
-                                    <i
-                                        class="flaticon-double-bed text-22px text-secondary-color"
-                                    ></i>
-                                </div>
-                                <div>
-                                    <h6 class="text-sm text-heading-color font-normal mb-0.5">
-                                        <span class="leading-1.3"> Dining Area</span>
-                                    </h6>
-                                    <p class="text-[12.25px] lg:text-sm">
-                                        <span class="lg:leading-1.8"> 20 x 16 sq feet </span>
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="text-sm pt-4 pb-10px pr-6 flex items-center gap-4">
-                                <div
-                                    class="w-10 h-10 flex items-center justify-center flex-shrink-0 bg-section-bg-5"
-                                >
-                                    <i
-                                        class="flaticon-double-bed text-22px text-secondary-color"
-                                    ></i>
-                                </div>
-                                <div>
-                                    <h6 class="text-sm text-heading-color font-normal mb-0.5">
-                                        <span class="leading-1.3"> Bedroom</span>
-                                    </h6>
-                                    <p class="text-[12.25px] lg:text-sm">
-                                        <span class="lg:leading-1.8"> 20 x 16 sq feet </span>
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="text-sm pt-4 pb-10px pr-6 flex items-center gap-4">
-                                <div
-                                    class="w-10 h-10 flex items-center justify-center flex-shrink-0 bg-section-bg-5"
-                                >
-                                    <i
-                                        class="flaticon-double-bed text-22px text-secondary-color"
-                                    ></i>
-                                </div>
-                                <div>
-                                    <h6 class="text-sm text-heading-color font-normal mb-0.5">
-                                        <span class="leading-1.3"> Bathroom</span>
-                                    </h6>
-                                    <p class="text-[12.25px] lg:text-sm">
-                                        <span class="lg:leading-1.8"> 20 x 16 sq feet </span>
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="text-sm pt-4 pb-10px pr-6 flex items-center gap-4">
-                                <div
-                                    class="w-10 h-10 flex items-center justify-center flex-shrink-0 bg-section-bg-5"
-                                >
-                                    <i
-                                        class="flaticon-double-bed text-22px text-secondary-color"
-                                    ></i>
-                                </div>
-                                <div>
-                                    <h6 class="text-sm text-heading-color font-normal mb-0.5">
-                                        <span class="leading-1.3"> Gym Area</span>
-                                    </h6>
-                                    <p class="text-[12.25px] lg:text-sm">
-                                        <span class="lg:leading-1.8"> 20 x 16 sq feet </span>
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="text-sm pt-4 pb-10px pr-6 flex items-center gap-4">
-                                <div
-                                    class="w-10 h-10 flex items-center justify-center flex-shrink-0 bg-section-bg-5"
-                                >
-                                    <i
-                                        class="flaticon-double-bed text-22px text-secondary-color"
-                                    ></i>
-                                </div>
-                                <div>
-                                    <h6 class="text-sm text-heading-color font-normal mb-0.5">
-                                        <span class="leading-1.3"> Garden</span>
-                                    </h6>
-                                    <p class="text-[12.25px] lg:text-sm">
-                                        <span class="lg:leading-1.8"> 20 x 16 sq feet </span>
-                                    </p>
-                                </div>
-                            </li>
-                            <li class="text-sm pt-4 pb-10px pr-6 flex items-center gap-4">
-                                <div
-                                    class="w-10 h-10 flex items-center justify-center flex-shrink-0 bg-section-bg-5"
-                                >
-                                    <i
-                                        class="flaticon-double-bed text-22px text-secondary-color"
-                                    ></i>
-                                </div>
-                                <div>
-                                    <h6 class="text-sm text-heading-color font-normal mb-0.5">
-                                        <span class="leading-1.3"> Parking</span>
-                                    </h6>
-                                    <p class="text-[12.25px] lg:text-sm">
-                                        <span class="lg:leading-1.8"> 20 x 16 sq feet </span>
-                                    </p>
-                                </div>
-                            </li>
-                        </ul>
-                        <!-- Gallery -->
-                        <h4
-                            class="text-22px font-semibold leading-1.3 pl-10px border-l-2 border-secondary-color text-heading-color my-30px"
-                        >
-                            From Our Gallery
-                        </h4>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-30px mb-60px">
-                            <div class="md:cols-start-1 md:col-span-1 leading-1">
-                                <a
-                                    href="assets/img/others/14.jpg"
-                                    class="glightbox w-full leading-1 md:h-full"
-                                >
-                                    <img
-                                        src="assets/img/others/14.jpg"
-                                        alt=""
-                                        class="w-full md:h-full"
-                                    >
-                                </a>
-                            </div>
 
-                            <div
-                                class="md:cols-start-1 md:col-span-1 md:row-start-2 md:row-sapn-1 leading-1"
-                            >
-                                <a
-                                    href="assets/img/others/15.jpg"
-                                    class="glightbox w-full leading-1"
-                                >
-                                    <img
-                                        src="assets/img/others/15.jpg"
-                                        alt=""
-                                        class="w-full"
-                                    >
-                                </a>
-                            </div>
-                            <div
-                                class="md:cols-start-2 md:col-span-1 md:row-start-1 md:row-span-2 leading-1"
-                            >
-                                <a
-                                    href="assets/img/others/16.jpg"
-                                    class="glightbox w-full leading-1 md:h-full"
-                                    data-width="56vh"
-                                >
-                                    <img
-                                        src="assets/img/others/16.jpg"
-                                        alt=""
-                                        class="w-full md:h-full"
-                                    >
-                                </a>
-                            </div>
-                        </div>
 
-                        <!-- Amenities -->
-                        <h4
-                            class="text-22px font-semibold leading-1.3 pl-10px border-l-2 border-secondary-color text-heading-color my-30px"
-                        >
-                            Amenities
-                        </h4>
-                        <div
-                            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mb-60px gap-y-15px"
-                        >
-                            <ul class="flex flex-col gap-y-15px">
-                                <li class="text-sm font-bold">
-                                    <label
-                                        for="dishwasher-type"
-                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
-                                    ><input
-                                            type="checkbox"
-                                            id="dishwasher-type"
-                                            class="hidden"
-                                            checked
-                                        >
-                                        <span
-                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
-                                        ></span>
-                                        Air Conditioning
-                                    </label>
-                                </li>
-                                <li class="text-sm font-bold">
-                                    <label
-                                        for="floor-coverings-type"
-                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
-                                    ><input
-                                            type="checkbox"
-                                            id="floor-coverings-type"
-                                            class="hidden"
-                                            checked
-                                        >
-                                        <span
-                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
-                                        ></span>
-                                        Gym
-                                    </label>
-                                </li>
-                                <li class="text-sm font-bold">
-                                    <label
-                                        for="internet-type"
-                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
-                                    ><input
-                                            type="checkbox"
-                                            id="internet-type"
-                                            class="hidden"
-                                            checked
-                                        >
-                                        <span
-                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
-                                        ></span>
-                                        Microwave
-                                    </label>
-                                </li>
-                                <li class="text-sm font-bold">
-                                    <label
-                                        for="build-wardrobes-type"
-                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
-                                    ><input
-                                            type="checkbox"
-                                            id="build-wardrobes-type"
-                                            class="hidden"
-                                            checked
-                                        >
-                                        <span
-                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
-                                        ></span>
-                                        Swimming Pool
-                                    </label>
-                                </li>
-                                <li class="text-sm font-bold">
-                                    <label
-                                        for="supermarket-type"
-                                        class="checkbox-item leading-1.8 group flex items-center cursor-pointer"
-                                    ><input
-                                            type="checkbox"
-                                            id="supermarket-type"
-                                            class="hidden"
-                                            checked
-                                        >
-                                        <span
-                                            class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
-                                        ></span>
-                                        Swimming Pool
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- Location -->
-                        <h4
-                            class="text-22px font-semibold leading-1.3 pl-10px border-l-2 border-secondary-color text-heading-color my-30px"
-                        >
-                            Location
-                        </h4>
-                        <div class="h-360px mb-60px">
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d9334.271551495209!2d-73.97198251485975!3d40.668170674982946!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25b0456b5a2e7%3A0x68bdf865dda0b669!2sBrooklyn%20Botanic%20Garden%20Shop!5e0!3m2!1sen!2sbd!4v1590597267201!5m2!1sen!2sbd"
 
-                                style="height:100%;width:100%;border:0px;"
 
-                                allowfullscreen=""
-                                aria-hidden="false"
-                                tabindex="0"
-                            ></iframe>
-                        </div>
 
                         <!-- Floor Plans -->
                         <h4
@@ -1967,10 +1381,23 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+{{--                    </div>--}}
                 </div>
-                <!-- sidebar -->
+
+
+                <!-- সাইডবার (ডান অংশ) -->
                 <div class="lg:col-start-9 lg:col-span-4 pt-60px lg:pt-0">
+
+                    <x-single-property.owner-info :agent="$property->user" />
+                    <x-single-property.booking-form :propertyId="$property->id" />
+
+                    {{-- পুনরায় ব্যবহারযোগ্য সাইডবার উইজেট --}}
+                    <x-single-property.sidebar.top-rated-properties />
+                    <x-single-property.sidebar.top-categories />
+                    <x-single-property.sidebar.popular-properties />
+                    <x-single-property.sidebar.latest-blogs />
+                    <x-single-property.sidebar.popular-tags />
+
                     <!-- author details -->
                     <div
                         class="px-5 pt-35px pb-10 xl:pl-35px xl:pr-30px mb-10 border-2 border-border-color-11"
@@ -2043,34 +1470,7 @@
                         </div>
                     </div>
 
-                    <!-- Search Objects -->
-                    <div
-                        class="px-5 pt-35px pb-10 xl:pl-35px xl:pr-30px mb-10 border-2 border-border-color-11"
-                    >
-                        <h4 class="text-lg font-semibold text-heading-color mb-25px">
-                  <span
-                      class="leading-1.3 pl-10px border-l-2 border-secondary-color"
-                  >Search Objects</span
-                  >
-                        </h4>
-                        <form>
-                            <div class="flex items-center">
-                                <input
-                                    type="text"
-                                    placeholder="Search your keyword..."
-                                    class="flex-grow text-paragraph-color text-sm font-semibold bg-section-bg-1 px-5 outline-none border-2 border-r-0 border-border-color-9 focus:border focus:border-secondary-color h-60px placeholder:text-heading-color block rounded-none"
-                                >
-                                <button
-                                    type="submit"
-                                    class="flex-shrink-0 text-sm lg:text-base h-60px w-14 flex items-center justify-center text-white bg-secondary-color hover:bg-primary-color"
-                                >
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
                     <!-- Drop Messege For Book -->
-
                     <div
                         class="px-5 pt-35px pb-10 xl:pl-35px xl:pr-30px mb-10 border-2 border-border-color-11"
                     >
@@ -2126,6 +1526,7 @@
                             </div>
                         </form>
                     </div>
+
                     <!-- Top Rated Properties -->
                     <div
                         class="px-5 pt-35px pb-10 xl:pl-35px xl:pr-30px mb-10 border-2 border-border-color-11"
@@ -2268,6 +1669,7 @@
                             </li>
                         </ul>
                     </div>
+
                     <!-- Top Categories-->
                     <div
                         class="px-5 pt-35px pb-10 xl:pl-35px xl:pr-30px mb-10 border-2 border-border-color-11"
@@ -2336,6 +1738,7 @@
                             </li>
                         </ul>
                     </div>
+
                     <!-- Popular Properties-->
                     <div
                         class="px-5 pt-35px pb-10 xl:pl-35px xl:pr-30px mb-10 border-2 border-border-color-11"
@@ -2754,6 +2157,7 @@
                             </li>
                         </ul>
                     </div>
+
                     <!-- Follow Us -->
                     <div
                         class="px-5 pt-35px pb-10 xl:pl-35px xl:pr-30px mb-10 border-2 border-border-color-11"
@@ -2795,6 +2199,7 @@
                             </li>
                         </ul>
                     </div>
+
                     <!-- Popular Tags -->
                     <div
                         class="px-5 pt-35px pb-10 xl:pl-35px xl:pr-30px border-2 border-border-color-11"

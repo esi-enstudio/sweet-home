@@ -150,7 +150,7 @@ class MediaRelationManager extends RelationManager
                 Tables\Actions\EditAction::make()
                     ->modalHeading('Edit Image Details') // মডালের প্রধান শিরোনাম
                     ->form([
-                        Forms\Components\Textarea::make('caption')->label('Image Caption'),
+                        Forms\Components\TextInput::make('caption')->label('Image Caption'),
 
                         Forms\Components\TextInput::make('video_url')
                             ->label('Video URL')
