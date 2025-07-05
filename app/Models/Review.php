@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @method static create(array $array)
+ * @method static where(string $string, mixed $id)
  */
 class Review extends Model
 {
-    protected $fillable = ['property_id','user_id','rating','comment'];
+    protected $fillable = ['property_id','user_id','name','phone','email','rating','comment','is_approved'];
 
     /**
      * এই রিভিউটি কোন বাসার জন্য।

@@ -34,7 +34,7 @@ class FloorPlansRelationManager extends RelationManager
                             ->required()
                             ->columnSpanFull(),
 
-                        Forms\Components\RichEditor::make('description')
+                        Forms\Components\Textarea::make('description')
                             ->nullable()
                             ->columnSpanFull(),
 

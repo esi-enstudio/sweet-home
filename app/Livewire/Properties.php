@@ -65,7 +65,7 @@ class Properties extends Component
             ->where('is_available', 1)
             ->where('status', 'approved')
             // সার্চ ফিল্টার
-            ->when($this->search, fn($q) => $q->where('title', 'like', '%' . $this->search . '%'))
+            ->when($this->search, fn($q) => $q->where('title', 'like', '%' . $this->search . '%')->orWhere('property_id', 'like', '%' . $this->search . '%'))
             // Property Type ফিল্টার (Checkbox)
             ->when($this->selectedTypes, fn($q) => $q->whereIn('property_type_id', $this->selectedTypes))
             // Amenities ফিল্টার (Checkbox - Many-to-Many)

@@ -72,6 +72,7 @@ class AmenityResource extends Resource
                     ->badge()
                     ->formatStateUsing(fn($state) => Str::title($state)),
                 Tables\Columns\TextColumn::make('icon_class'),
+                Tables\Columns\ToggleColumn::make('show_on_homepage'),
             ])
             ->defaultPaginationPageOption(5)
             ->filters([

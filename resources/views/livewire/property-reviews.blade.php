@@ -1,83 +1,193 @@
-<div class="mt-8">
-    <h2 class="text-2xl font-bold tracking-tight text-gray-900">Customer Reviews</h2>
+<div>
+    {{-- Customer Reviews হেডার এবং গড় রেটিং --}}
+    <h4 class="text-22px font-semibold leading-1.3 pl-10px border-l-2 border-secondary-color text-heading-color my-30px">
+        Customer Reviews
+    </h4>
 
-    {{-- রিভিউ দেওয়ার ফর্ম --}}
-    @auth
-        @if ($hasReviewed)
-            <div class="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
-                <p class="font-bold">Thank you!</p>
-                <p>You have already submitted a review for this property.</p>
-            </div>
-        @else
-            <div class="mt-6" x-data="{ rating: @entangle('rating'), hoverRating: 0 }">
-                <h3 class="text-lg font-medium text-gray-900">Write a review</h3>
+    @if($this->reviewSummary['total'] > 0)
+    <div>
+        <ul class="text-xs text-ratings flex items-center">
+            {{-- ডাইনামিক স্টার রেটিং --}}
+            @for ($i = 1; $i <= 5; $i++)
+            <li class="pt-2">
+                <a href="#">
+                    <i class="{{ $i <= $this->reviewSummary['average'] ? 'fas fa-star' : 'far fa-star' }}"></i>
+                </a>
+            </li>
+            @endfor
 
-                @if (session('success'))
-                    <div class="my-4 p-3 bg-green-100 text-green-800 rounded">{{ session('success') }}</div>
-                @endif
-                @if (session('error'))
-                    <div class="my-4 p-3 bg-red-100 text-red-800 rounded">{{ session('error') }}</div>
-                @endif
+            <li class="pt-2"><a href="#"> ( {{ $this->reviewSummary['total'] }} Reviews )</a></li>
+        </ul>
+    </div>
+    @endif
 
-                <form wire:submit.prevent="saveReview" class="mt-4 space-y-4">
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700">Your Rating</label>
-                        <div class="mt-1 flex items-center" @mouseleave="hoverRating = 0">
-                            @for ($i = 1; $i <= 5; $i++)
-                                <svg @click="rating = {{ $i }}"
-                                     @mouseenter="hoverRating = {{ $i }}"
-                                     :class="{
-                                         'text-yellow-400': hoverRating >= {{ $i }} || rating >= {{ $i }},
-                                         'text-gray-300': hoverRating < {{ $i }} && rating < {{ $i }}
-                                     }"
-                                     class="h-8 w-8 cursor-pointer" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
-                            @endfor
+    <hr class="my-50px border-t border-border-color-11 opacity-40">
+
+    <!-- reviews -->
+    <ul class="mb-20px">
+        @forelse($this->reviews as $review)
+            <li class="flex gap-x-30px gap-y-5 pb-30px @if(!$loop->iteration >= 1) border-t border-border-color-12 @endif">
+                {{-- বাম অংশ: প্রোফাইল ছবি --}}
+                <div class="flex-shrink-0">
+                    @if($review->user && $review->user->avatar_url)
+                        <img src="{{ Storage::url($review->user->avatar_url) }}" alt="{{ $review->name }}" class="w-20 h-20 md:w-100px md:h-100px rounded-100%">
+                    @else
+                        <div class="w-16 h-16 md:w-24 md:h-24 bg-red-100 rounded-full flex items-center justify-center">
+                            <span class="text-2xl md:text-4xl font-bold text-red-500">{{ strtoupper(substr($review->name, 0, 1)) }}</span>
                         </div>
-                        @error('rating') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+                    @endif
+                </div>
+
+                {{-- ডান অংশ: রিভিউয়ের সম্পূর্ণ কন্টেন্ট --}}
+                <div class="flex-grow">
+                    {{-- উপরের অংশ: নাম এবং তারিখ --}}
+                    <div class="flex justify-between items-start mb-2">
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 leading-tight mb-0">{{ $review->name }}</h4>
+                            <div>
+                                <ul class="text-xs text-ratings flex items-center pt-22px md:pt-0 mb-10px">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <li class="pt-2">
+                                            <a href="#"><i class="{{ $i <= $review->rating ? 'fas fa-star' : 'far fa-star' }}"></i></a>
+                                        </li>
+                                    @endfor
+                                </ul>
+                            </div>
+                        </div>
+                        <p class="text-xs md:text-sm mb-5 md:mb-0 font-bold h-10 px-25px border-2 border-border-color-11 hover:border-secondary-color transition-all duration-300 text-nowrap rounded-[25px] box-border md:box-border inline-block">
+                            <span class="leading-9 md:leading-9">{{ $review->created_at->format('F d, Y') }}</span>
+                        </p>
                     </div>
 
+                    {{-- নিচের অংশ: কমেন্ট --}}
                     <div>
-                        <label for="comment" class="block text-sm font-medium text-gray-700">Your Comment</label>
-                        <textarea wire:model="comment" id="comment" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></textarea>
-                        @error('comment') <span class="text-red-500 text-sm mt-1">{{ $message }}</span> @enderror
+                        <p class="text-sm text-gray-600 leading-relaxed">
+                            {{ $review->comment }}
+                        </p>
                     </div>
+                </div>
+            </li>
+        @empty
+            <p>No reviews yet. Be the first one to review!</p>
+        @endforelse
+    </ul>
 
-                    <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700">
+    {{-- পেজিনেশন লিঙ্ক --}}
+    <div class="my-4">
+        {{ $this->reviews->links('vendor.pagination.custom-pagination') }}
+    </div>
+
+    <!-- add reviews -->
+    @auth
+        @if(session('review_success'))
+            <div class="alert alert-success">{{ session('review_success') }}</div>
+        @elseif(session('review_error'))
+            <div class="alert alert-danger">{{ session('review_error') }}</div>
+        @elseif($hasAlreadyReviewed)
+            <div class="alert alert-info">You have already submitted a review for this property.</div>
+        @else
+        <form wire:submit.prevent="submitReview" class="form-primary bg-white-5 shadow-box-shadow-2 px-25px pt-10 pb-50px md:p-50px md:pt-10 mt-5 mb-60px">
+            <h4 class="text-17px md:text-lg lg:text-xl font-bold text-heading-color mb-5">
+                <span class="leading-1.3 md:leading-1.3 lg:leading-1.3">
+                  Add a Review</span
+                >
+            </h4>
+
+            <div class="flex gap-15px items-center mb-30px">
+                <h5 class="text-sm md:text-15px lg:text-base font-bold text-heading-color mb-0">
+                    <span class="leading-1.3 md:leading-1.3 lg:leading-1.3">
+                        Your Ratings:
+                    </span>
+                </h5>
+
+                <div class="text-xs text-ratings flex items-center">
+                    @for ($i = 1; $i <= 5; $i++)
+                        <button type="button" wire:click="$set('rating', {{ $i }})">
+                            <i class="{{ $i <= $rating ? 'fas fa-star text-yellow-400' : 'far fa-star text-gray-400' }}"></i>
+                        </button>
+                    @endfor
+                </div>
+            </div>
+
+            <div class="grid gap-30px mb-35px">
+                <!-- name -->
+                <div class="relative">
+                    <input
+                        wire:model="name"
+                        @if(Auth::check()) readonly @endif
+                        type="text"
+                        placeholder="Type your name...."
+                        class="text-paragraph-color pl-5 pr-50px outline-none border-2 focus:border-0 bg-white border-white-5 h-65px block w-full rounded-none transition-none">
+                    @error('name') <span class="error">{{ $message }}</span> @enderror
+
+                    <span class="absolute top-1/2 -translate-y-1/2 right-4">
+                        <i class="fas fa-user text-sm lg:text-base text-secondary-color font-bold"></i>
+                    </span>
+                </div>
+
+                <!-- phone -->
+                <div class="relative">
+                    <input
+                        wire:model="phone"
+                        @if(Auth::check()) readonly @endif
+                        type="text"
+                        placeholder="Type your phone number...."
+                        class="text-paragraph-color pl-5 pr-50px outline-none border-2 focus:border-0 bg-white border-white-5 h-65px block w-full rounded-none transition-none">
+                    @error('phone') <span class="error">{{ $message }}</span> @enderror
+
+                    <span class="absolute top-1/2 -translate-y-1/2 right-4">
+                        <i class="fas fa-user text-sm lg:text-base text-secondary-color font-bold"></i>
+                    </span>
+                </div>
+
+                <!-- email -->
+                <div class="relative">
+                    <input
+                        wire:model="email"
+                        @if(Auth::check()) readonly @endif
+                        type="email"
+                        placeholder="Type your email...."
+                        class="text-paragraph-color pl-5 pr-50px outline-none border-2 focus:border-0 bg-white border-white-5 h-65px block w-full rounded-none transition-none">
+                    @error('email') <span class="error">{{ $message }}</span> @enderror
+
+                    <span class="absolute top-1/2 -translate-y-1/2 right-4">
+                        <i class="fas fa-envelope text-sm lg:text-base text-secondary-color font-bold"></i>
+                    </span>
+                </div>
+
+                <!-- message -->
+                <div class="relative mb-2">
+                    <textarea
+                          wire:model="comment"
+                          placeholder="Enter message"
+                          class="min-h-[150px] text-paragraph-color bg-white pl-5 pr-50px py-15px outline-none border-2 focus:border-0 border-white-5 h-65px block w-full rounded-none transition-none"></textarea>
+                    @error('comment') <span class="!text-red-500 font-semibold">{{ $message }}</span> @enderror
+
+                    <span class="absolute top-[30px] -translate-y-1/2 right-4">
+                        <i class="fas fa-pencil text-sm lg:text-base text-secondary-color font-bold"></i>
+                    </span>
+                </div>
+            </div>
+
+            <!-- submit button -->
+
+            <div>
+                <h5 class="uppercase text-sm md:text-base text-white relative group whitespace-nowrap font-normal mb-0 transition-all duration-300 border border-secondary-color hover:border-heading-color inline-block z-0">
+                    <span class="inline-block absolute top-0 right-0 w-full h-full bg-secondary-color group-hover:bg-black -z-1 group-hover:w-0 transition-all duration-300"></span>
+
+                    <button
+                        type="submit"
+                        class="relative z-1 px-5 md:px-25px lg:px-10 py-10px md:py-15px lg:py-17px group-hover:text-heading-color leading-23px uppercase"
+                    >
                         Submit Review
                     </button>
-                </form>
+                </h5>
             </div>
+        </form>
         @endif
     @else
-        <div class="mt-4">
-            <a href="{{ route('login') }}" class="text-indigo-600 hover:underline">Log in</a> to write a review.
+        <div class="bg-indigo-600 border-l-4 border-yellow-500 text-yellow-700 pl-5 mt-5" role="alert">
+            <p>You must be <a href="{{ route('filament.admin.auth.login') }}" class="font-bold underline">logged in</a> to submit a review.</p>
         </div>
     @endauth
-
-    {{-- আগের রিভিউগুলোর তালিকা --}}
-    <div class="mt-10">
-        <h3 class="text-lg font-medium text-gray-900">Existing Reviews ({{ $reviews->count() }})</h3>
-        <div class="mt-4 space-y-6">
-            @forelse ($reviews as $review)
-                <div class="p-4 border rounded-md">
-                    <div class="flex items-center">
-                        <div class="flex items-center">
-                            @for ($i = 1; $i <= 5; $i++)
-                                <svg class="h-5 w-5 {{ $review->rating >= $i ? 'text-yellow-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                </svg>
-                            @endfor
-                        </div>
-                        <p class="ml-3 text-sm font-medium text-gray-700">{{ $review->user->name }}</p>
-                    </div>
-                    <p class="mt-2 text-gray-600">{{ $review->comment }}</p>
-                    <p class="mt-2 text-xs text-gray-500">{{ $review->created_at->diffForHumans() }}</p>
-                </div>
-            @empty
-                <p class="text-gray-500">No reviews yet. Be the first to write one!</p>
-            @endforelse
-        </div>
-    </div>
 </div>
