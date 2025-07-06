@@ -49,6 +49,7 @@ class AdminPanelProvider extends PanelProvider
             ->login(Login::class)
             ->registration(Register::class)
             ->passwordReset()
+            ->databaseNotifications()
             ->colors([
                 'primary' => '#ff5a3c',
             ])

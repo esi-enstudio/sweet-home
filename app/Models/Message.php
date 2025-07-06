@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @method static create(array $array)
+ */
 class Message extends Model
 {
-    protected $fillable = ['property_id', 'user_id', 'message', 'is_read'];
+    protected $fillable = ['property_id', 'user_id','name','phone', 'message', 'is_read'];
 
     /**
      * Get the property that the message was sent for.
@@ -22,7 +25,7 @@ class Message extends Model
      * Get the user who sent the message (if they were logged in).
      * প্রতিটি মেসেজ একজন ব্যবহারকারীর হতে পারে (যদি তিনি লগইন করা থাকেন)।
      */
-    public function sender(): BelongsTo
+    public function user(): BelongsTo
     {
         // 'user_id' কলামকে sender() নামে রিলেশন দিচ্ছি, যা বেশি অর্থবহ
         return $this->belongsTo(User::class);

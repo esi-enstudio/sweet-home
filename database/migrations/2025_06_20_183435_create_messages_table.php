@@ -17,6 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(Property::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
+            $table->string('name');
+            $table->string('phone');
             $table->text('message');
             $table->boolean('is_read')->default(false);
             $table->timestamps();

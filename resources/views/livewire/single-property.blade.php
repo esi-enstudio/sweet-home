@@ -45,6 +45,8 @@
 
                     <!-- owner details -->
                     <x-single-property.sidebar.owner-info :owner="$property->user" />
+                    <!-- Drop Message For Inquiry -->
+                    @livewire('property-inquiry-form', ['property' => $property], key($property->id))
                     <x-single-property.booking-form :propertyId="$property->id" />
 
                     {{-- পুনরায় ব্যবহারযোগ্য সাইডবার উইজেট --}}
@@ -57,62 +59,8 @@
 
 
 
-                    <!-- Drop Message For Book -->
-                    <div
-                        class="px-5 pt-35px pb-10 xl:pl-35px xl:pr-30px mb-10 border-2 border-border-color-11"
-                    >
-                        <h4 class="text-lg font-semibold text-heading-color mb-25px">
-                  <span
-                      class="leading-1.3 pl-10px border-l-2 border-secondary-color"
-                  >Drop Messege For Book</span
-                  >
-                        </h4>
-
-                        <form>
-                            <div class="grid gap-30px mb-10">
-                                <!-- name -->
-                                <div class="relative">
-                                    <input
-                                        type="text"
-                                        placeholder="Your Name*"
-                                        class="text-paragraph-color px-5 py-15px outline-none border-2 border-border-color-9 focus:border focus:border-secondary-color h-65px block w-full rounded-none placeholder:text-sm placeholder:text-paragraph-color"
-                                    >
-                                </div>
-                                <!-- email -->
-                                <div class="relative">
-                                    <input
-                                        type="text"
-                                        placeholder="Your e-Mail*"
-                                        class="text-paragraph-color px-5 py-15px outline-none border-2 border-border-color-9 focus:border focus:border-secondary-color h-65px block w-full rounded-none placeholder:text-sm placeholder:text-paragraph-color"
-                                    >
-                                </div>
-                                <!-- message -->
-                                <div class="relative">
-                      <textarea
 
 
-                          placeholder="Write Message..."
-                          class="min-h-[150px] text-paragraph-color px-5 py-15px outline-none border-2 border-border-color-9 focus:border focus:border-secondary-color h-65px block w-full rounded-none placeholder:text-sm placeholder:text-paragraph-color"
-                      ></textarea>
-                                </div>
-                            </div>
-
-                            <!-- submit button -->
-
-                            <div>
-                                <h5
-                                    class="uppercase text-sm md:text-base text-white bg-secondary-color hover:bg-primary-color relative group whitespace-nowrap font-normal mb-0 transition-all duration-300 border border-secondary-color hover:border-heading-color inline-block z-0"
-                                >
-                                    <button
-                                        type="submit"
-                                        class="relative z-1 px-5 md:px-25px lg:px-10 py-10px md:py-15px lg:py-17px group-hover:text-white leading-23px uppercase"
-                                    >
-                                        Send Messege
-                                    </button>
-                                </h5>
-                            </div>
-                        </form>
-                    </div>
 
                     <!-- Top Rated Properties -->
                     <div
