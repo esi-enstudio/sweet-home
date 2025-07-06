@@ -12,25 +12,25 @@
 >>> TABLE OF CONTENTS:
 ===============================================================
 # Google fonts
-# tailwind directives 
+# tailwind directives
 # vaiables
 # default style
 # Typography
-# header 
-# banner 
+# header
+# banner
 # scrollbar
 # swiper slider
 # accordion
-# nice select 
-#  nice checkbox 
+# nice select
+#  nice checkbox
 # range
 # service cards
 # tab
-# popup gallery 
+# popup gallery
 # scroll up
 # brands
 # Google Map Locations
-# Price Filter Widget 
+# Price Filter Widget
 # responsiveness
 ============================================================= */
 
@@ -3522,6 +3522,16 @@ video {
   color: rgb(119 199 32 / var(--tw-text-opacity));
 }
 
+.text-green-sw{
+  --tw-text-opacity: 1;
+  color: rgb(127 235 10);
+}
+
+.text-warning-sw{
+  --tw-text-opacity: 1;
+  color: rgb(235, 220, 10);
+}
+
 .text-heading-color{
   --tw-text-opacity: 1;
   color: rgb(7 28 31 / var(--tw-text-opacity));
@@ -4318,7 +4328,7 @@ img {
   right: var(--right-15-per);
 }
 
-[dir="rtl"]  
+[dir="rtl"]
 .testimonial-quote-menu li:nth-child(7) img {
   right: 15%;
 }
@@ -4330,7 +4340,7 @@ img {
   right: var(--right-3-per);
 }
 
-[dir="rtl"]  
+[dir="rtl"]
 
 .testimonial-quote-menu2 li img {
   width: 125px !important;
@@ -5383,7 +5393,7 @@ input[type="range"]::-ms-thumb {
   margin-bottom: 0px;
 }
 
-/* 
+/*
 /*============= responsiveness =============*/
 
 /* tablet  */

@@ -78,10 +78,7 @@
                                             <!-- card thumbs -->
                                             <div class="relative leading-1 basis-full md:basis-2/5">
                                                 <div>
-                                                    <a
-                                                        href="{{ route('single.property', $property->slug) }}"
-                                                        class="overflow-hidden leading-1"
-                                                    >
+                                                    <a href="{{ route('single.property', $property->slug) }}" class="overflow-hidden leading-1">
                                                         <img
                                                             src="{{ $property->thumbnail && Storage::disk('public')->exists($property->thumbnail)
                                                                 ? Storage::url($property->thumbnail)
@@ -121,7 +118,7 @@
                                                         <a
                                                             href="{{ route('single.property', $property->slug) }}"
                                                             class="hover:text-secondary-color leading-1.3">
-                                                            {{ $property->title }}
+                                                            {{ \Illuminate\Support\Str::limit($property->title, 35) }}
                                                         </a>
                                                     </h4>
 
@@ -130,7 +127,7 @@
                                                             href="locations.html"
                                                             class="hover:text-secondary-color">
                                                             <i class="flaticon-pin text-secondary-color mr-0.5"></i>
-                                                            {{ $property->address }}
+                                                            {{ \Illuminate\Support\Str::limit($property->address, 48) }}
                                                         </a>
                                                     </div>
 
@@ -155,17 +152,12 @@
                                                     </ul>
 
                                                     <!-- card footer -->
-                                                    <div
-                                                        class="flex justify-between items-center flex-wrap-reverse gap-y-15px"
-                                                    >
+                                                    <div class="flex justify-between items-center flex-wrap-reverse gap-y-15px">
                                                         <!-- author -->
                                                         <div class="flex items-center gap-15px">
                                                             <div>
                                                                 <!-- avatar -->
-                                                                <a
-                                                                    href="team-details.html"
-                                                                    class="w-50px h-50px"
-                                                                >
+                                                                <a href="team-details.html" class="w-50px h-50px">
                                                                     <img
                                                                         src="{{ $property->user->avatar_url && Storage::disk('public')->exists($property->user->avatar_url)
                                                                          ? Storage::url($property->user->avatar_url)
@@ -177,11 +169,9 @@
                                                             </div>
                                                             <div>
                                                                 <h3 class="text-sm font-semibold mb-1">
-                                                                    <a
-                                                                        href="team-details.html"
-                                                                        class="leading-1.3"
-                                                                    >
-                                                                        {{$property->user->name}}</a>
+                                                                    <a href="team-details.html" class="leading-1.3">
+                                                                        {{$property->user->name}}
+                                                                    </a>
                                                                 </h3>
 
                                                                 @php
@@ -194,19 +184,10 @@
 
                                                             </div>
                                                         </div>
+
                                                         <!-- quick action -->
-                                                        <div
-                                                            class="flex gap-x-2 relative leading-1 transition-all duration-300"
-                                                        >
+                                                        <div class="flex gap-x-2 relative leading-1 transition-all duration-300">
                                                             <ul class="flex gap-x-2">
-                                                                <li>
-                                                                    <button
-                                                                        data-modal-index="1"
-                                                                        class="modal-open w-9 h-9 flex items-center justify-center bg-section-bg-1 text-center hover:bg-secondary-color hover:text-white font-bold"
-                                                                    >
-                                                                        <i class="flaticon-expand leading-1"></i>
-                                                                    </button>
-                                                                </li>
                                                                 <li>
                                                                     <button
                                                                         data-modal-index="2"
@@ -214,12 +195,6 @@
                                                                     >
                                                                         <i class="flaticon-heart-1 leading-1"></i>
                                                                     </button>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="product-details.html"
-                                                                        class="w-9 h-9 flex items-center justify-center bg-section-bg-1 text-center hover:bg-secondary-color hover:text-white font-bold"
-                                                                    ><i class="flaticon-add leading-1"></i
-                                                                        ></a>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -477,18 +452,10 @@
             <!-- modals -->
 
             <!-- modal apartment details-->
-            <div
-                class="modal hidden fixed top-0 left-0 w-full h-full z-xxl transition-all duration-500 bg-lightBlack opacity-0 overflow-y-auto"
-            >
-                <div
-                    class="modal-close fixed md:absolute top-0 left-0 w-full h-full z-xsmall cursor-zoom-out"
-                ></div>
-                <div
-                    class="modal-content transition-all duration-500 -translate-y-20 sm:max-w-500px lg:max-w-980px m-2 mt-150px sm:mx-auto relative z-small rounded-lg"
-                >
-                    <div
-                        class="grid grid-cols-1 lg:grid-cols-2 gap-x-30px p-30px bg-white relative"
-                    >
+            <div class="modal hidden fixed top-0 left-0 w-full h-full z-xxl transition-all duration-500 bg-lightBlack opacity-0 overflow-y-auto">
+                <div class="modal-close fixed md:absolute top-0 left-0 w-full h-full z-xsmall cursor-zoom-out"></div>
+                <div class="modal-content transition-all duration-500 -translate-y-20 sm:max-w-500px lg:max-w-980px m-2 mt-150px sm:mx-auto relative z-small rounded-lg">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-30px p-30px bg-white relative">
                         <div>
                             <img
                                 src="assets/img/product/4.png"
@@ -680,6 +647,68 @@
                 </div>
             </div>
 
+            <!-- modal wishlist 2-->
+            <div
+                class="modal hidden fixed top-0 left-0 w-full h-full z-xxl transition-all duration-500 bg-lightBlack opacity-0 overflow-y-auto"
+            >
+                <div
+                    class="modal-close fixed md:absolute top-0 left-0 w-full h-full z-xsmall cursor-zoom-out"
+                ></div>
+
+                <div
+                    class="modal-content transition-all duration-500 -translate-y-20 max-w-500px m-2 mt-150px sm:mx-auto relative z-small p-30px bg-white"
+                >
+                    <div class="flex">
+                        <div class="w-125px mr-5 flex-shrink-0">
+                            <img src="assets/img/product/4.png" class="w-full" alt="" >
+                        </div>
+
+                        <!-- card body -->
+                        <div class="pl-25px">
+                            <div class="absolute right-4 top-4">
+                                <button
+                                    class="modal-close w-10 h-10 leading-10 text-center bg-black bg-opacity-5 text-black text-25px inline-block"
+                                >
+                                    <span>×</span>
+                                </button>
+                            </div>
+
+                            <h4
+                                class="text-base lg:text-lg font-bold text-heading-color mb-10px"
+                            >
+                                <a
+                                    href="product-details.html"
+                                    class="leading-1.3 hover:text-secondary-color"
+                                >300 Rooms Manhattan</a
+                                >
+                            </h4>
+
+                            <p
+                                class="text-sm lg:text-base mb-5 md:mb-6  "
+                            >
+                                <i class="fa fa-check-circle leading-1 text-green float-left clear-both pr-1.5 mt-1.5"></i>
+                                Successfully added to your Wishlist
+                            </p>
+                            <!-- action -->
+                            <div>
+                                <h5
+                                    class="capitalize text-sm md:text-base text-white relative group whitespace-nowrap font-normal mb-0 transition-all duration-300 border border-secondary-color hover:border-heading-color inline-block"
+                                >
+                    <span
+                        class="inline-block absolute top-0 right-0 w-full h-full bg-secondary-color group-hover:bg-black hover:bg-primary-cogroup-lor z-1 group-hover:w-0 transition-all duration-300"
+                    ></span>
+                                    <a
+                                        href="wishlist.html"
+                                        class="relative z-10 px-5 py-5px group-hover:text-heading-color leading-23px"
+                                    >View Wishlist</a
+                                    >
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- modal wishlist 1-->
             <div
                 class="modal hidden fixed top-0 left-0 w-full h-full z-xxl transition-all duration-500 bg-lightBlack opacity-0 overflow-y-auto"
@@ -742,67 +771,7 @@
                 </div>
             </div>
 
-            <!-- modal wishlist 2-->
-            <div
-                class="modal hidden fixed top-0 left-0 w-full h-full z-xxl transition-all duration-500 bg-lightBlack opacity-0 overflow-y-auto"
-            >
-                <div
-                    class="modal-close fixed md:absolute top-0 left-0 w-full h-full z-xsmall cursor-zoom-out"
-                ></div>
 
-                <div
-                    class="modal-content transition-all duration-500 -translate-y-20 max-w-500px m-2 mt-150px sm:mx-auto relative z-small p-30px bg-white"
-                >
-                    <div class="flex">
-                        <div class="w-125px mr-5 flex-shrink-0">
-                            <img src="assets/img/product/4.png" class="w-full" alt="" >
-                        </div>
-
-                        <!-- card body -->
-                        <div class="pl-25px">
-                            <div class="absolute right-4 top-4">
-                                <button
-                                    class="modal-close w-10 h-10 leading-10 text-center bg-black bg-opacity-5 text-black text-25px inline-block"
-                                >
-                                    <span>×</span>
-                                </button>
-                            </div>
-
-                            <h4
-                                class="text-base lg:text-lg font-bold text-heading-color mb-10px"
-                            >
-                                <a
-                                    href="product-details.html"
-                                    class="leading-1.3 hover:text-secondary-color"
-                                >3 Rooms Manhattan</a
-                                >
-                            </h4>
-
-                            <p
-                                class="text-sm lg:text-base mb-5 md:mb-6  "
-                            >
-                                <i class="fa fa-check-circle leading-1 text-green float-left clear-both pr-1.5 mt-1.5"></i>
-                                Successfully added to your Wishlist
-                            </p>
-                            <!-- action -->
-                            <div>
-                                <h5
-                                    class="capitalize text-sm md:text-base text-white relative group whitespace-nowrap font-normal mb-0 transition-all duration-300 border border-secondary-color hover:border-heading-color inline-block"
-                                >
-                    <span
-                        class="inline-block absolute top-0 right-0 w-full h-full bg-secondary-color group-hover:bg-black hover:bg-primary-cogroup-lor z-1 group-hover:w-0 transition-all duration-300"
-                    ></span>
-                                    <a
-                                        href="wishlist.html"
-                                        class="relative z-10 px-5 py-5px group-hover:text-heading-color leading-23px"
-                                    >View Wishlist</a
-                                    >
-                                </h5>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 </main>

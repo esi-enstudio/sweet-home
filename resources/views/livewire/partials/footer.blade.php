@@ -27,11 +27,7 @@
                   <span
                       class="inline-block absolute top-0 right-0 w-full h-full bg-white group-hover:bg-secondary-color z-1 group-hover:w-0 transition-all duration-300"
                   ></span>
-                            <a
-                                href="contact.html"
-                                class="relative z-10 px-5 md:px-25px lg:px-10 py-10px md:py-3 lg:py-17px group-hover:text-white leading-23px"
-                            >Explore Properties <i class="icon-next"></i
-                                ></a>
+                            <a href="{{ route('properties') }}" class="relative z-10 px-5 md:px-25px lg:px-10 py-10px md:py-3 lg:py-17px group-hover:text-white leading-23px">Explore Properties <i class="icon-next"></i></a>
                         </h5>
                     </div>
                 </div>

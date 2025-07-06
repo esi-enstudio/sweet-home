@@ -6,7 +6,7 @@
 
     @if($this->reviewSummary['total'] > 0)
     <div>
-        <ul class="text-xs text-ratings flex items-center">
+        <ul class="text-ratings flex items-center">
             {{-- ডাইনামিক স্টার রেটিং --}}
             @for ($i = 1; $i <= 5; $i++)
             <li class="pt-2">
@@ -26,7 +26,7 @@
     <!-- reviews -->
     <ul class="mb-20px">
         @forelse($this->reviews as $review)
-            <li class="flex gap-x-30px gap-y-5 pb-30px @if(!$loop->iteration >= 1) border-t border-border-color-12 @endif">
+            <li class="flex gap-x-30px gap-y-5 pb-30px @if(!$loop->iteration > 1) border-t border-border-color-12 @endif">
                 {{-- বাম অংশ: প্রোফাইল ছবি --}}
                 <div class="flex-shrink-0">
                     @if($review->user && $review->user->avatar_url)
@@ -48,7 +48,7 @@
                                 <ul class="text-xs text-ratings flex items-center pt-22px md:pt-0 mb-10px">
                                     @for ($i = 1; $i <= 5; $i++)
                                         <li class="pt-2">
-                                            <a href="#"><i class="{{ $i <= $review->rating ? 'fas fa-star' : 'far fa-star' }}"></i></a>
+                                            <i class="{{ $i <= $review->rating ? 'fas fa-star' : 'far fa-star' }}"></i>
                                         </li>
                                     @endfor
                                 </ul>
@@ -72,19 +72,30 @@
         @endforelse
     </ul>
 
-    {{-- পেজিনেশন লিঙ্ক --}}
-    <div class="my-4">
-        {{ $this->reviews->links('vendor.pagination.custom-pagination') }}
-    </div>
+    {{-- "Load More" বাটন এবং লোডিং ইন্ডিকেটর --}}
+    @if ($this->reviews->hasMorePages())
+        <div class="text-center mt-4">
+            <button wire:click="loadMore" wire:loading.attr="disabled" class="btn btn-primary">
+                <span wire:loading.remove wire:target="loadMore">
+                    Load More Reviews
+                </span>
+                <span wire:loading wire:target="loadMore">
+                    Loading...
+                </span>
+            </button>
+        </div>
+    @endif
+
+
 
     <!-- add reviews -->
     @auth
         @if(session('review_success'))
-            <div class="alert alert-success">{{ session('review_success') }}</div>
+            <div class="text-green-sw">{{ session('review_success') }}</div>
         @elseif(session('review_error'))
-            <div class="alert alert-danger">{{ session('review_error') }}</div>
+            <div class="text-secondary-color">{{ session('review_error') }}</div>
         @elseif($hasAlreadyReviewed)
-            <div class="alert alert-info">You have already submitted a review for this property.</div>
+            <div class="text-warning-sw">You have already submitted a review for this property.</div>
         @else
         <form wire:submit.prevent="submitReview" class="form-primary bg-white-5 shadow-box-shadow-2 px-25px pt-10 pb-50px md:p-50px md:pt-10 mt-5 mb-60px">
             <h4 class="text-17px md:text-lg lg:text-xl font-bold text-heading-color mb-5">
@@ -100,13 +111,14 @@
                     </span>
                 </h5>
 
-                <div class="text-xs text-ratings flex items-center">
+                <div class="text-ratings flex items-center">
                     @for ($i = 1; $i <= 5; $i++)
                         <button type="button" wire:click="$set('rating', {{ $i }})">
                             <i class="{{ $i <= $rating ? 'fas fa-star text-yellow-400' : 'far fa-star text-gray-400' }}"></i>
                         </button>
                     @endfor
                 </div>
+                @error('rating') <span class="text-secondary-color font-semibold">{{ $message }}</span> @enderror
             </div>
 
             <div class="grid gap-30px mb-35px">
@@ -118,7 +130,7 @@
                         type="text"
                         placeholder="Type your name...."
                         class="text-paragraph-color pl-5 pr-50px outline-none border-2 focus:border-0 bg-white border-white-5 h-65px block w-full rounded-none transition-none">
-                    @error('name') <span class="error">{{ $message }}</span> @enderror
+                    @error('name') <span class="text-secondary-color font-semibold">{{ $message }}</span> @enderror
 
                     <span class="absolute top-1/2 -translate-y-1/2 right-4">
                         <i class="fas fa-user text-sm lg:text-base text-secondary-color font-bold"></i>
@@ -133,10 +145,10 @@
                         type="text"
                         placeholder="Type your phone number...."
                         class="text-paragraph-color pl-5 pr-50px outline-none border-2 focus:border-0 bg-white border-white-5 h-65px block w-full rounded-none transition-none">
-                    @error('phone') <span class="error">{{ $message }}</span> @enderror
+                    @error('phone') <span class="text-secondary-color font-semibold">{{ $message }}</span> @enderror
 
                     <span class="absolute top-1/2 -translate-y-1/2 right-4">
-                        <i class="fas fa-user text-sm lg:text-base text-secondary-color font-bold"></i>
+                        <i class="fas fa-phone text-sm lg:text-base text-secondary-color font-bold"></i>
                     </span>
                 </div>
 
@@ -148,7 +160,7 @@
                         type="email"
                         placeholder="Type your email...."
                         class="text-paragraph-color pl-5 pr-50px outline-none border-2 focus:border-0 bg-white border-white-5 h-65px block w-full rounded-none transition-none">
-                    @error('email') <span class="error">{{ $message }}</span> @enderror
+                    @error('email') <span class="text-secondary-color font-semibold">{{ $message }}</span> @enderror
 
                     <span class="absolute top-1/2 -translate-y-1/2 right-4">
                         <i class="fas fa-envelope text-sm lg:text-base text-secondary-color font-bold"></i>
@@ -161,7 +173,7 @@
                           wire:model="comment"
                           placeholder="Enter message"
                           class="min-h-[150px] text-paragraph-color bg-white pl-5 pr-50px py-15px outline-none border-2 focus:border-0 border-white-5 h-65px block w-full rounded-none transition-none"></textarea>
-                    @error('comment') <span class="!text-red-500 font-semibold">{{ $message }}</span> @enderror
+                    @error('comment') <span class="text-secondary-color font-semibold">{{ $message }}</span> @enderror
 
                     <span class="absolute top-[30px] -translate-y-1/2 right-4">
                         <i class="fas fa-pencil text-sm lg:text-base text-secondary-color font-bold"></i>
@@ -170,7 +182,6 @@
             </div>
 
             <!-- submit button -->
-
             <div>
                 <h5 class="uppercase text-sm md:text-base text-white relative group whitespace-nowrap font-normal mb-0 transition-all duration-300 border border-secondary-color hover:border-heading-color inline-block z-0">
                     <span class="inline-block absolute top-0 right-0 w-full h-full bg-secondary-color group-hover:bg-black -z-1 group-hover:w-0 transition-all duration-300"></span>
@@ -187,7 +198,7 @@
         @endif
     @else
         <div class="bg-indigo-600 border-l-4 border-yellow-500 text-yellow-700 pl-5 mt-5" role="alert">
-            <p>You must be <a href="{{ route('filament.admin.auth.login') }}" class="font-bold underline">logged in</a> to submit a review.</p>
+            <p>You must be <a target="_blank" href="{{ route('filament.admin.auth.login') }}" class="font-bold underline">logged in</a> to submit a review.</p>
         </div>
     @endauth
 </div>

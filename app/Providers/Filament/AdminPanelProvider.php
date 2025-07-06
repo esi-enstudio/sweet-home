@@ -9,6 +9,7 @@ use App\Livewire\CustomProfileComponent;
 use App\Livewire\CustomUserProfile;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Exception;
+use Filament\Facades\Filament;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -106,6 +107,10 @@ class AdminPanelProvider extends PanelProvider
 //                        AddressUserProfile::class,
                     ])
             ])
+            ->renderHook(
+                'panels::topbar.start', // অথবা 'panels::topbar.end'
+                fn () => view('components.topbar.custom-menu'),
+            )
             ->userMenuItems([
                 'profile' => MenuItem::make()
                     ->label(fn() => auth()->user()->name)

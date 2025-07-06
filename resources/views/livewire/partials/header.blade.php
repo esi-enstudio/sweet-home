@@ -44,13 +44,22 @@
                                 <i class="fab fa-dribbble font-bold"></i>
                             </a>
                         </li>
-                        <li>
-                            <a
-                                    href="add-listing.html"
-                                    class="px-4 md:px-5 py-0.5 md:py-10px ml-2 lg:ml-5 bg-secondary-color inline-block bg-opacity-100 hover:bg-opacity-60 hover:text-white">
-                                Add Listing
-                            </a>
-                        </li>
+
+                        @auth
+                            <li>
+                                <a target="_blank" href="{{ route('filament.admin.resources.properties.create') }}" class="px-4 md:px-5 py-0.5 md:py-10px ml-2 lg:ml-5 bg-secondary-color inline-block bg-opacity-100 hover:bg-opacity-60 hover:text-white">
+                                    Add Listing
+                                </a>
+                            </li>
+                        @endauth
+
+                        @guest
+                            <li>
+                                <a href="#" class="px-4 md:px-5 py-0.5 md:py-10px ml-2 lg:ml-5 bg-secondary-color inline-block bg-opacity-100 hover:bg-opacity-60 hover:text-white">
+                                    Sign in to Add Listing
+                                </a>
+                            </li>
+                        @endguest
                     </ul>
                 </div>
             </div>
@@ -59,9 +68,7 @@
 
     <!-- navbar main -->
     <div class="sticky-header z-xl bg-white transition-all duration-700">
-        <div
-                class="container flex flex-col md:flex-row justify-center md:justify-between items-center relative py-21px"
-        >
+        <div class="container flex flex-col md:flex-row justify-center md:justify-between items-center relative py-21px">
             <!-- logo area -->
             <div class="mt-10px mb-22px md:mt-0 md:mb-0 leading-1">
                 <a href="{{ route('home') }}">
@@ -69,6 +76,8 @@
                          alt="Sweet Home Logo">
                 </a>
             </div>
+
+            <!-- navigation menus area -->
             <nav class="flex-grow hidden xl:block">
                 <ul class="flex items-center justify-center gap-15px xl:gap-5">
                     <!-- Home -->
@@ -124,29 +133,6 @@
             <!-- header right -->
             <div>
                 <ul class="flex items-center gap-10px">
-                    <li class="relative search-form-container">
-                        <button
-                                class="search-toggle h-50px w-50px text-heading-color shadow-box-shadow-1 flex justify-center items-center hover:bg-secondary-color hover:text-white transition-all duration-300"
-                        >
-                            <i class="icon-search for-search-show font-bold"></i>
-                            <i class="icon-cancel for-search-close font-bold hidden"></i>
-                        </button>
-                        <div class="search-form h-0 overflow-hidden absolute right-0 top-full mt-15px transition-all duration-300 shadow-box-shadow-3 z-xl bg-white">
-                            <form class="w-80 p-15px relative">
-                                <input
-                                        type="text"
-                                        placeholder="Search here..."
-                                        class="text-sm text-paragraph-color pl-5 pr-50px placeholder:text-paragraph-color outline-none border-2 border-border-color-9 focus:border focus:border-secondary-color h-60px block w-full rounded-none"
-                                >
-                                <button
-                                        type="submit"
-                                        class="absolute top-1/2 -translate-y-1/2 right-7 text-heading-color"
-                                >
-                                    <i class="icon-search text-lg font-bold"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </li>
                     <li class="group relative">
                         <a
                                 href="#"
@@ -156,274 +142,41 @@
                         </a>
                         <!-- dropdown -->
                         <ul
-                                class="py-10px w-150px shadow-box-shadow-4 absolute right-0 top-full opacity-0 invisible translate-y-4 bg-white transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-xl"
-                        >
+                            class="py-10px w-150px shadow-box-shadow-4 absolute right-0 top-full opacity-0 invisible translate-y-4 bg-white transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-xl">
                             <li>
                                 <a
-                                        class="whitespace-nowrap px-15px py-5px"
-                                        href="login.html"
-                                >Sign in</a
-                                >
+                                    class="whitespace-nowrap px-15px py-5px"
+                                    target="_blank"
+                                    href="{{ route('filament.admin.auth.login') }}">Sign in</a>
                             </li>
+
                             <li>
                                 <a
-                                        class="whitespace-nowrap px-15px py-5px"
-                                        href="register.html"
-                                >Register</a
-                                >
+                                    class="whitespace-nowrap px-15px py-5px"
+                                    target="_blank"
+                                    href="{{ route('filament.admin.auth.register') }}">Register</a>
                             </li>
+
                             <li>
                                 <a
-                                        class="whitespace-nowrap px-15px py-5px"
-                                        href="account.html"
-                                >My Account</a
-                                >
+                                    class="whitespace-nowrap px-15px py-5px"
+                                    target="_blank"
+                                    href="{{ route('filament.admin.pages.dashboard') }}">My Account</a>
                             </li>
+
                             <li>
                                 <a
-                                        class="whitespace-nowrap px-15px py-5px"
-                                        href="wishlist.html"
-                                >Wishlist</a
-                                >
+                                    class="whitespace-nowrap px-15px py-5px"
+                                    target="_blank"
+                                    href="#">Wishlist</a>
                             </li>
                         </ul>
-                    </li>
-                    <li>
-                        <button
-                                class="show-drawer h-50px w-50px text-heading-color shadow-box-shadow-1 flex justify-center items-center hover:bg-secondary-color hover:text-white transition-all duration-300"
-                        >
-                            <i class="icon-shopping-cart font-bold text-lg"></i>
-                            <sup class="ml-1 text-sm font-semibold">2</sup>
-                        </button>
-                    </li>
-                    <li class="block xl:hidden">
-                        <div
-                                class="show-drawer d-xl-none h-50px w-50px text-heading-color shadow-box-shadow-1 flex justify-center items-center transition-all duration-300 relative"
-                        >
-                            <a href="#ltn__utilize-drawer " class="utilize-toggle">
-                                <svg viewBox="0 0 800 600">
-                                    <path
-                                            d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200"
-                                            id="top"
-                                    ></path>
-                                    <path d="M300,320 L540,320" id="middle"></path>
-                                    <path
-                                            d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190"
-                                            id="bottom"
-                                            transform="translate(480, 320) scale(1, -1) translate(-480, -318) "
-                                    ></path>
-                                </svg>
-                            </a>
-                        </div>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-    <!-- cart sidebar -->
-    <div class="drawer-container cart-container">
-        <div
-                class="drawer-overlay fixed top-0 left-0 w-full h-full bg-black -z-1 close-drawer opacity-0 transition-all duration-300 invisible cursor-zoom-out"
-        ></div>
-        <div
-                class="drawer cart fixed top-0 -right-[300px] xs:-right-[400px] pl-30px pr-10px py-5 w-300px xs:w-100 h-full transition-all duration-500 shadow-dropdown-secodary bg-whiteColor z-high bg-white"
-        >
-            <div class="h-full">
-                <!-- cart wrapper -->
-                <div class="h-full overflow-y-auto pr-5">
-                    <!-- cart top -->
-                    <div
-                            class="flex justify-between items-center border-b border-border-primary pt-3px pb-3 mb-25px"
-                    >
-                        <div>
-                            <span class="text-sm md:text-base font-bold">Cart</span>
-                        </div>
-                        <div>
-                            <button class="close-drawer text-black text-3xl px-15px py-2">
-                                ×
-                            </button>
-                        </div>
-                    </div>
 
-                    <!-- cart items -->
-                    <div
-                            class="max-h-[calc(100%-(360px))] cart-items overflow-y-auto"
-                    >
-                        <ul>
-                            <li class="accordion pl-10px pt-5 mb-5 flex gap-15px">
-                                <div class="relative">
-                                    <a href="product-details.html">
-                                        <img
-                                                src="{{ asset('assets/img/product/1.png') }}"
-                                                alt=""
-                                                class="w-20 inline-block"
-                                        >
-
-                                    </a>
-                                    <button
-                                            class="w-5 h-5 shadow-box-shadow-3 text-center text-10px bg-white hover:bg-secondary-color hover:text-white rounded-full absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 cursor-pointer"
-                                    >
-                                        <i class="icon-cancel leading-5"></i>
-                                    </button>
-                                </div>
-                                <div>
-                                    <h6 class="text-sm md:text-15px lg:text-base mb-5px">
-                                        <a
-                                                href="product-details.html"
-                                                class="leading-23px text-heading-color hover:text-secondary-color font-medium"
-                                        >
-                                            Wheel Bearing Retainer
-                                        </a>
-                                    </h6>
-                                    <div class="text-sm lg:text-base">
-                                        <span class="leading-22px">1 x $65.00</span>
-                                    </div>
-                                </div>
-                            </li>
-
-                            <li
-                                    class="border-t border-border-color-1 accordion pl-10px pt-5 mb-5 flex gap-15px"
-                            >
-                                <div>
-                                    <a href="product-details.html" class="relative">
-                                        <img
-                                                src="{{ asset('assets/img/product/2.png') }}"
-                                                alt=""
-                                                class="w-20 inline-block"
-                                        >
-                                        <span
-                                                class="w-5 h-5 shadow-box-shadow-3 text-center text-10px bg-white hover:bg-secondary-color hover:text-white rounded-full absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 cursor-pointer"
-                                        >
-                          <i class="icon-cancel leading-5"></i>
-                        </span>
-                                    </a>
-                                </div>
-                                <div>
-                                    <h6 class="text-sm md:text-15px lg:text-base mb-5px">
-                                        <a
-                                                href="product-details.html"
-                                                class="leading-23px text-heading-color hover:text-secondary-color font-medium"
-                                        >
-                                            3 Rooms Manhattan
-                                        </a>
-                                    </h6>
-                                    <div class="text-sm lg:text-base">
-                                        <span class="leading-22px">1 x $85.00</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li
-                                    class="border-t border-border-color-1 accordion pl-10px pt-5 mb-5 flex gap-15px"
-                            >
-                                <div>
-                                    <a href="product-details.html" class="relative">
-                                        <img
-                                                src="{{ asset('assets/img/product/3.png') }}"
-                                                alt=""
-                                                class="w-20 inline-block"
-                                        >
-                                        <span
-                                                class="w-5 h-5 shadow-box-shadow-3 text-center text-10px bg-white hover:bg-secondary-color hover:text-white rounded-full absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 cursor-pointer"
-                                        >
-                          <i class="icon-cancel leading-5"></i>
-                        </span>
-                                    </a>
-                                </div>
-                                <div>
-                                    <h6 class="text-sm md:text-15px lg:text-base mb-5px">
-                                        <a
-                                                href="product-details.html"
-                                                class="leading-23px text-heading-color hover:text-secondary-color font-medium"
-                                        >
-                                            OE Replica Wheels
-                                        </a>
-                                    </h6>
-                                    <div class="text-sm lg:text-base">
-                                        <span class="leading-22px">1 x $92.00</span>
-                                    </div>
-                                </div>
-                            </li>
-                            <li
-                                    class="border-t border-border-color-1 accordion pl-10px pt-5 mb-5 flex gap-15px"
-                            >
-                                <div>
-                                    <a href="product-details.html" class="relative">
-                                        <img
-                                                src="{{ asset('assets/img/product/4.png') }}"
-                                                alt=""
-                                                class="w-20 inline-block"
-                                        >
-                                        <span
-                                                class="w-5 h-5 shadow-box-shadow-3 text-center text-10px bg-white hover:bg-secondary-color hover:text-white rounded-full absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 cursor-pointer"
-                                        >
-                          <i class="icon-cancel leading-5"></i>
-                        </span>
-                                    </a>
-                                </div>
-                                <div>
-                                    <h6 class="text-sm md:text-15px lg:text-base mb-5px">
-                                        <a
-                                                href="product-details.html"
-                                                class="leading-23px text-heading-color hover:text-secondary-color font-medium"
-                                        >
-                                            Shock Mount Insulator
-                                        </a>
-                                    </h6>
-                                    <div class="text-sm lg:text-base">
-                                        <span class="leading-22px">1 x $68.00</span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Total price -->
-                    <div class="py-5 mt-25px border-y border-border-color-1">
-                        <h6
-                                class="lg:text-lg text-heading-color font-bold flex justify-between items-center mb-0"
-                        >
-                            <span>Subtotal: </span>
-                            <span class="text-secondary-color">$310.00</span>
-                        </h6>
-                    </div>
-
-                    <!-- action area -->
-                    <div class="pt-25px pb-15px flex justify-between">
-                        <h5
-                                class="uppercase text-sm text-white relative group whitespace-nowrap font-normal transition-all duration-300 border border-secondary-color hover:border-heading-color"
-                        >
-                  <span
-                          class="inline-block absolute top-0 right-0 w-full h-full bg-secondary-color group-hover:bg-black hover:bg-primary-cogroup-lor z-1 group-hover:w-0 transition-all duration-300"
-                  ></span>
-                            <a
-                                    href="cart.html"
-                                    class="relative z-10 px-5 md:px-25px lg:px-10 py-10px md:py-3 lg:py-17px group-hover:text-heading-color leading-23px"
-                            >view cart</a
-                            >
-                        </h5>
-                        <h5
-                                class="uppercase text-sm text-white relative group whitespace-nowrap font-normal transition-all duration-300 border border-black hover:border-secondary-color"
-                        >
-                  <span
-                          class="inline-block absolute top-0 left-0 w-full h-full bg-black group-hover:bg-secondary-color z-1 group-hover:w-0 transition-all duration-300"
-                  ></span>
-                            <a
-                                    href="checkout.html"
-                                    class="relative z-10 px-5 md:px-25px lg:px-10 py-10px md:py-3 lg:py-17px group-hover:text-secondary-color leading-23px"
-                            >checkout</a
-                            >
-                        </h5>
-                    </div>
-
-                    <div class="text-sm">
-                        <p class="leading-15px mb-0">
-                            Free Shipping on All Orders Over $100!
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- mobile menu -->
     <div class="drawer-container mobile-menu-container">
         <div
@@ -845,11 +598,7 @@
                                             <li class="mt-4">
                                                 <!-- accordion header -->
 
-                                                <a
-                                                        href="login.html"
-                                                        class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color"
-                                                >Sign in</a
-                                                >
+                                                <a href="login.html" class="!leading-22px text-darkdeep1 text-sm lg:text-base hover:text-secondary-color">Sign inn</a>
                                             </li>
                                             <li class="mt-4">
                                                 <!-- accordion header -->
