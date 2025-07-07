@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\Message;
+use App\Notifications\PropertyInquiry;
 use Filament\Notifications\Notification;
 
 class MessageObserver
@@ -17,21 +18,13 @@ class MessageObserver
         $message->load('property.user');
 
         // ২. প্রপার্টি এবং তার মালিককে খুঁজে বের করুন
-        $propertyOwner = $message->property->user;
+        $propertyOwner = $message->property?->user;
 
         // ৩. যদি মালিক বিদ্যমান থাকে, তাহলে তাকে নোটিফাই করুন
         if ($propertyOwner) {
-//            dd($message);
-            Notification::make()
-                ->title('New Inquiry for your property!')
-                ->body("You have received a new message from {$message->name} for your property: '{$message->property->title}'.")
-                ->icon('heroicon-o-chat-bubble-left-ellipsis')
-                // এখানে একটি অ্যাকশন বাটন যোগ করা যেতে পারে যা মেসেজটি দেখাবে
-                // ->actions([
-                //     NotificationAction::make('view')
-                //         ->url(MessageResource::getUrl('view', ['record' => $this->inquiry]))
-                // ])
-                ->sendToDatabase($propertyOwner);
+            // --- এখানে পরিবর্তন করা হয়েছে ---
+            // Laravel-এর নিজস্ব notify() মেথড ব্যবহার করা হচ্ছে
+            $propertyOwner->notify(new PropertyInquiry($message));
         }
     }
 
