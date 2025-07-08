@@ -57,7 +57,7 @@ class ReviewObserver
             // শুধুমাত্র অনুমোদিত রিভিউগুলো গণনা করুন
             $approvedReviews = $property->reviews()->where('is_approved', true);
 
-            $property->review_count = $approvedReviews->count();
+            $property->reviews_count = $approvedReviews->count();
             $property->average_rating = $approvedReviews->avg('rating') ?? 0;
 
             // `saveQuietly()` ব্যবহার করলে এটি আবার কোনো ইভেন্ট ফায়ার করবে না, যা ইনফিনিট লুপ প্রতিরোধ করে।

@@ -6,7 +6,6 @@ use App\Models\Property;
 use App\Models\Review;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Application;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +20,7 @@ class PropertyReviews extends Component
     public Property $property;
 
     // ফর্মের জন্য প্রোপার্টি
-    public int $rating = 0;
+    public float|int $rating = 0;
     public string $comment = '';
     public string $name = '';
     public string $phone = '';
@@ -90,7 +89,7 @@ class PropertyReviews extends Component
         }
 
         $validated = $this->validate([
-            'rating' => 'required|integer|min:1|max:5',
+            'rating' => 'required|numeric|min:0.5|max:5',
             'comment' => 'required|string|min:10',
             'name' => 'required|string|max:255',
             'phone' => 'required|digits:11',

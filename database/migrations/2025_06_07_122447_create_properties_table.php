@@ -74,7 +74,7 @@ return new class extends Migration
 
             // --- System Columns ---
             $table->unsignedBigInteger('views_count')->default(0);
-            $table->unsignedInteger('review_count')->default(0);
+            $table->unsignedInteger('reviews_count')->default(0);
             $table->decimal('average_rating', 2, 1)->default(0.0);
             $table->string('status')->default('pending');
             $table->softDeletes();

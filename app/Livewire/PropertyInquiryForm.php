@@ -16,7 +16,6 @@ class PropertyInquiryForm extends Component
     public string $name = '';
     public string $phone = '';
     public string $message = '';
-    public bool $messageSent = false;
 
     public function mount(Property $property): void
     {
@@ -38,7 +37,7 @@ class PropertyInquiryForm extends Component
         ]);
 
         // --- নতুন লজিক: user_id যোগ করা ---
-        Message::create([
+        $message = Message::create([
             'property_id' => $this->property->id,
             'user_id' => Auth::id(), // লগইন করা থাকলে আইডি, না থাকলে null
             'name' => $validatedData['name'],
@@ -47,7 +46,11 @@ class PropertyInquiryForm extends Component
         ]);
 
         $this->reset(['message']); // শুধু মেসেজ ফিল্ড রিসেট করি, নাম/ইমেইল নয়
-        $this->messageSent = true;
+
+        if ($message)
+        {
+            session()->flash('success','<span class="font-medium">Thank you!</span> Your message has been sent successfully. We will get back to you shortly.');
+        }
     }
 
     public function render(): Factory|View|Application

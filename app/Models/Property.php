@@ -29,7 +29,7 @@ class Property extends Model
     use HasCustomSlug, HasFactory;
 
     protected $fillable = [
-        'user_id','property_type_id','tenant_id','division_id','district_id','upazila_id','union_id','property_id','slug','title','description','listing_type','total_area','bedrooms','bathrooms','balconies','floor_number','facing','year_built','thumbnail','landmark','address','latitude','longitude','rent_amount','rent_negotiable','service_charge','security_deposit','rent_summary','available_from','is_available','is_featured','house_rules','contact_number_primary','contact_whatsapp','views_count','status','is_hero_featured','hero_order_column','is_spotlight','is_featured_showcase',
+        'user_id','property_type_id','tenant_id','division_id','district_id','upazila_id','union_id','property_id','slug','title','description','listing_type','total_area','bedrooms','bathrooms','balconies','floor_number','facing','year_built','thumbnail','landmark','address','latitude','longitude','rent_amount','rent_negotiable','service_charge','security_deposit','rent_summary','available_from','is_available','is_featured','is_spotlight','is_featured_showcase','is_hero_featured','hero_order_column','house_rules','contact_number_primary','contact_whatsapp','views_count','reviews_count','average_rating','status'
     ];
 
     public function getSluggableField(): string

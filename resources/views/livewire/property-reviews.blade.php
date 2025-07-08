@@ -5,19 +5,11 @@
     </h4>
 
     @if($this->reviewSummary['total'] > 0)
-    <div>
-        <ul class="text-ratings flex items-center">
-            {{-- ডাইনামিক স্টার রেটিং --}}
-            @for ($i = 1; $i <= 5; $i++)
-            <li class="pt-2">
-                <a href="#">
-                    <i class="{{ $i <= $this->reviewSummary['average'] ? 'fas fa-star' : 'far fa-star' }}"></i>
-                </a>
-            </li>
-            @endfor
-
-            <li class="pt-2"><a href="#"> ( {{ $this->reviewSummary['total'] }} Reviews )</a></li>
-        </ul>
+    <div class="flex items-center gap-1 font-semibold">
+        <x-star-rating :rating="$this->reviewSummary['average']" />
+        <p class="text-ratings">
+            <a href="#"> ( {{ $this->reviewSummary['total'] }} Reviews )</a>
+        </p>
     </div>
     @endif
 
@@ -43,15 +35,9 @@
                     {{-- উপরের অংশ: নাম এবং তারিখ --}}
                     <div class="flex justify-between items-start mb-2">
                         <div>
-                            <h4 class="text-lg font-semibold text-gray-900 leading-tight mb-0">{{ $review->name }}</h4>
+                            <h4 class="text-lg font-semibold text-gray-900 leading-tight mb-5px">{{ $review->name }}</h4>
                             <div>
-                                <ul class="text-xs text-ratings flex items-center pt-22px md:pt-0 mb-10px">
-                                    @for ($i = 1; $i <= 5; $i++)
-                                        <li class="pt-2">
-                                            <i class="{{ $i <= $review->rating ? 'fas fa-star' : 'far fa-star' }}"></i>
-                                        </li>
-                                    @endfor
-                                </ul>
+                                <x-star-rating :rating="$review->rating" class="text-xs pt-22px md:pt-0 mb-10px" />
                             </div>
                         </div>
                         <p class="text-xs md:text-sm mb-5 md:mb-0 font-bold h-10 px-25px border-2 border-border-color-11 hover:border-secondary-color transition-all duration-300 text-nowrap rounded-[25px] box-border md:box-border inline-block">
@@ -111,6 +97,9 @@
                     </span>
                 </h5>
 
+                {{-- নির্বাচিত রেটিং দেখানোর জন্য (ঐচ্ছিক) --}}
+                <span x-data="{ rating: @entangle('rating') }" x-text="rating > 0 ? rating.toFixed(1) + ' stars' : ''" class="ml-2 text-sm text-gray-500"></span>
+
                 <div class="text-ratings flex items-center">
                     @for ($i = 1; $i <= 5; $i++)
                         <button type="button" wire:click="$set('rating', {{ $i }})">
@@ -118,6 +107,7 @@
                         </button>
                     @endfor
                 </div>
+
                 @error('rating') <span class="text-secondary-color font-semibold">{{ $message }}</span> @enderror
             </div>
 

@@ -11,7 +11,7 @@
                     wire:model="name"
                     type="text"
                     placeholder="Your Name*"
-                    class="text-paragraph-color px-5 py-15px outline-none border-2 @error('name') border-red-500 @else border-border-color-9 @enderror focus:border focus:border-secondary-color h-65px block w-full rounded-none placeholder:text-sm placeholder:text-paragraph-color"
+                    class="text-paragraph-color px-5 py-15px outline-none border-2 @error('name') border-secondary-color @else border-border-color-9 @enderror focus:border focus:border-secondary-color h-65px block w-full rounded-none placeholder:text-sm placeholder:text-paragraph-color"
                 >
                 @error('name') <span class="text-secondary-color font-semibold text-sm mt-1">{{ $message }}</span> @enderror
             </div>
@@ -20,20 +20,20 @@
             <div class="relative">
                 <input
                     wire:model="phone"
-                    type="text"
+                    type="number"
                     placeholder="Your phone number*"
-                    class="text-paragraph-color px-5 py-15px outline-none border-2 @error('phone') border-red-500 @else border-border-color-9 @enderror focus:border focus:border-secondary-color h-65px block w-full rounded-none placeholder:text-sm placeholder:text-paragraph-color"
+                    class="text-paragraph-color px-5 py-15px outline-none border-2 @error('phone') border-secondary-color @else border-border-color-9 @enderror focus:border focus:border-secondary-color h-65px block w-full rounded-none placeholder:text-sm placeholder:text-paragraph-color"
                 >
                 @error('phone') <span class="text-secondary-color font-semibold text-sm mt-1">{{ $message }}</span> @enderror
             </div>
 
             <!-- message -->
             <div class="relative">
-                      <textarea
-                          wire:model="message"
-                          placeholder="Write Message..."
-                          class="min-h-[150px] text-paragraph-color px-5 py-15px outline-none border-2 @error('message') border-red-500 @else border-border-color-9 @enderror focus:border focus:border-secondary-color h-65px block w-full rounded-none placeholder:text-sm placeholder:text-paragraph-color"
-                      ></textarea>
+                  <textarea
+                      wire:model="message"
+                      placeholder="Write Message..."
+                      class="min-h-[150px] text-paragraph-color px-5 py-15px outline-none border-2 @error('message') border-secondary-color @else border-border-color-9 @enderror focus:border focus:border-secondary-color h-65px block w-full rounded-none placeholder:text-sm placeholder:text-paragraph-color"
+                  ></textarea>
                 @error('message') <span class="text-secondary-color font-semibold text-sm mt-1">{{ $message }}</span> @enderror
             </div>
         </div>
@@ -57,4 +57,9 @@
             </h5>
         </div>
     </form>
+
+    <!-- session flash message -->
+    @if(session('success'))
+        <div class="text-green-sw">{!! session('success') !!}</div>
+    @endif
 </div>
