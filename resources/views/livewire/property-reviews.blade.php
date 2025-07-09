@@ -97,9 +97,6 @@
                     </span>
                 </h5>
 
-                {{-- নির্বাচিত রেটিং দেখানোর জন্য (ঐচ্ছিক) --}}
-                <span x-data="{ rating: @entangle('rating') }" x-text="rating > 0 ? rating.toFixed(1) + ' stars' : ''" class="ml-2 text-sm text-gray-500"></span>
-
                 <div class="text-ratings flex items-center">
                     @for ($i = 1; $i <= 5; $i++)
                         <button type="button" wire:click="$set('rating', {{ $i }})">
@@ -107,6 +104,9 @@
                         </button>
                     @endfor
                 </div>
+
+                {{-- নির্বাচিত রেটিং দেখানোর জন্য (ঐচ্ছিক) --}}
+                <span x-data="{ rating: @entangle('rating') }" x-text="rating > 0 ? rating.toFixed(1) + ' stars' : ''" class="ml-2 text-sm text-gray-500"></span>
 
                 @error('rating') <span class="text-secondary-color font-semibold">{{ $message }}</span> @enderror
             </div>

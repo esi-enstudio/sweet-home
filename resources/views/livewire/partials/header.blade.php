@@ -55,8 +55,8 @@
 
                         @guest
                             <li>
-                                <a href="#" class="px-4 md:px-5 py-0.5 md:py-10px ml-2 lg:ml-5 bg-secondary-color inline-block bg-opacity-100 hover:bg-opacity-60 hover:text-white">
-                                    Sign in to Add Listing
+                                <a target="_blank" href="{{ route('filament.admin.auth.login') }}" class="px-4 md:px-5 py-0.5 md:py-10px ml-2 lg:ml-5 bg-secondary-color inline-block bg-opacity-100 hover:bg-opacity-60 hover:text-white">
+                                    Add Listing
                                 </a>
                             </li>
                         @endguest

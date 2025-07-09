@@ -5,6 +5,7 @@ use App\Livewire\HomeComponent;
 use App\Livewire\Properties;
 use App\Livewire\SingleProperty;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\PropertyViewController;
 
 Route::get('/', HomeComponent::class)->name('home');
 
@@ -15,5 +16,7 @@ Route::get('/properties', Properties::class)->name('properties');
 // এখানে Route Model Binding ব্যবহার করা হচ্ছে
 Route::get('/properties/{property:slug}', SingleProperty::class)->name('single.property');
 
-// এমিনিটি সম্বলিত প্রপার্টির তালিকা এবং ফিল্টারিং-এর জন্য
-Route::get('/amenities/{amenity:slug}', AmenityProperties::class)->name('amenity.properties');
+
+Route::post('/properties/{property:slug}/track-view', [PropertyViewController::class, 'store'])
+    ->name('properties.track-view')
+    ->middleware('throttle:5,1');

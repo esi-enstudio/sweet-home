@@ -5,55 +5,7 @@
         @include('livewire.sections.hero', ['heroProperties' => $this->heroProperties])
 
         <!-- pinned select area  -->
-        <div class="container mt-30 4xl:-mt-65px relative z-20">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-30px lg:gap-4 xl:gap-30px py-10 px-25px md:p-10 shadow-box-shadow-1 border border-border-color-1 bg-white">
-                <div>
-                    <select class="selectize">
-                        <option value="Choose Area" data-display="Select">
-                            Choose Area
-                        </option>
-                        <option value="Chicago">Chicago</option>
-                        <option value="London">London</option>
-                        <option value="Los Angeles">Los Angeles</option>
-                        <option value="New York">New York</option>
-                        <option value="New Jersey">New Jersey</option>
-                    </select>
-                </div>
-                <div>
-                    <select class="selectize">
-                        <option data-display="Select">Property Status</option>
-                        <option>Open house</option>
-                        <option>Rent</option>
-                        <option>Sale</option>
-                        <option>Sold</option>
-                    </select>
-                </div>
-                <div>
-                    <select class="selectize">
-                        <option data-display="Select">Property Type</option>
-                        <option>Apartment</option>
-                        <option>Co-op</option>
-                        <option>Condo</option>
-                        <option>Single Family Home</option>
-                    </select>
-                </div>
-
-                <div class="text-center">
-                    <h5
-                        class="uppercase text-sm md:text-base text-white relative group whitespace-nowrap font-normal mb-0 transition-all duration-300 border border-secondary-color hover:border-heading-color inline-block"
-                    >
-                <span
-                    class="inline-block absolute top-0 right-0 w-full h-full bg-secondary-color group-hover:bg-black hover:bg-primary-cogroup-lor z-1 group-hover:w-0 transition-all duration-300"
-                ></span>
-                        <a
-                            href="shop-right-sidebar.html"
-                            class="relative z-10 px-5 md:px-25px lg:px-10 py-10px md:py-3 lg:py-17px group-hover:text-heading-color leading-23px"
-                        >Find Now</a
-                        >
-                    </h5>
-                </div>
-            </div>
-        </div>
+        @livewire('property-search-form')
 
     </section>
 
@@ -140,542 +92,542 @@
     @include('livewire.sections.featured-listings', ['featuredListings' => $this->featuredListings])
 
     <!--  apartment plan section -->
-    <section>
-        <div class="container pb-30">
-            <!-- section heading -->
-            <div class="text-center mb-50px">
-                <p
-                    class="text-sm md:text-15px lg:text-base text-secondary-color bg-secondary-color bg-opacity-10 capitalize mb-15px py-0.5 px-5 rounded-full inline-block font-semibold"
-                >
-                    <span class="leading-1.3">Apartment Sketch</span>
-                </p>
-                <h2
-                    class="text-2xl sm:text-3xl md:text-26px lg:text-3xl xl:text-44px text-heading-color font-bold"
-                >
-                    <span class="leading-1.3">Apartments Plan </span>
-                </h2>
-            </div>
-            <!-- plan tab -->
-            <div class="tab plan-tab">
-                <div
-                    class="tab-links flex flex-wrap items-center justify-center gap-x-5 lg:gap-x-30px xl:gap-x-50px gap-y-10px text-sm lg:text-lg xl:text-xl text-heading-color mb-50px"
-                >
-                    <button
-                        class="p-1px border-b-2 border-transparent font-semibold relative leading-1.2 after:w-10px after:h-10px after:border-3px after:border-white after:bg-transparent after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:translate-y-1/2 after:z-10 after:rounded-100%"
-                    >
-                        The Studio
-                    </button>
+{{--    <section>--}}
+{{--        <div class="container pb-30">--}}
+{{--            <!-- section heading -->--}}
+{{--            <div class="text-center mb-50px">--}}
+{{--                <p--}}
+{{--                    class="text-sm md:text-15px lg:text-base text-secondary-color bg-secondary-color bg-opacity-10 capitalize mb-15px py-0.5 px-5 rounded-full inline-block font-semibold"--}}
+{{--                >--}}
+{{--                    <span class="leading-1.3">Apartment Sketch</span>--}}
+{{--                </p>--}}
+{{--                <h2--}}
+{{--                    class="text-2xl sm:text-3xl md:text-26px lg:text-3xl xl:text-44px text-heading-color font-bold"--}}
+{{--                >--}}
+{{--                    <span class="leading-1.3">Apartments Plan </span>--}}
+{{--                </h2>--}}
+{{--            </div>--}}
+{{--            <!-- plan tab -->--}}
+{{--            <div class="tab plan-tab">--}}
+{{--                <div--}}
+{{--                    class="tab-links flex flex-wrap items-center justify-center gap-x-5 lg:gap-x-30px xl:gap-x-50px gap-y-10px text-sm lg:text-lg xl:text-xl text-heading-color mb-50px"--}}
+{{--                >--}}
+{{--                    <button--}}
+{{--                        class="p-1px border-b-2 border-transparent font-semibold relative leading-1.2 after:w-10px after:h-10px after:border-3px after:border-white after:bg-transparent after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:translate-y-1/2 after:z-10 after:rounded-100%"--}}
+{{--                    >--}}
+{{--                        The Studio--}}
+{{--                    </button>--}}
 
-                    <button
-                        class="active p-1px border-b-2 border-transparent font-semibold relative leading-1.2 after:w-10px after:h-10px after:border-3px after:border-white after:bg-transparent after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:translate-y-1/2 after:z-10 after:rounded-100%"
-                    >
-                        Deluxe Portion
-                    </button>
+{{--                    <button--}}
+{{--                        class="active p-1px border-b-2 border-transparent font-semibold relative leading-1.2 after:w-10px after:h-10px after:border-3px after:border-white after:bg-transparent after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:translate-y-1/2 after:z-10 after:rounded-100%"--}}
+{{--                    >--}}
+{{--                        Deluxe Portion--}}
+{{--                    </button>--}}
 
-                    <button
-                        class="p-1px border-b-2 border-transparent font-semibold relative leading-1.2 after:w-10px after:h-10px after:border-3px after:border-white after:bg-transparent after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:translate-y-1/2 after:z-10 after:rounded-100%"
-                    >
-                        Penthouse
-                    </button>
+{{--                    <button--}}
+{{--                        class="p-1px border-b-2 border-transparent font-semibold relative leading-1.2 after:w-10px after:h-10px after:border-3px after:border-white after:bg-transparent after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:translate-y-1/2 after:z-10 after:rounded-100%"--}}
+{{--                    >--}}
+{{--                        Penthouse--}}
+{{--                    </button>--}}
 
-                    <button
-                        class="p-1px border-b-2 border-transparent font-semibold relative leading-1.2 after:w-10px after:h-10px after:border-3px after:border-white after:bg-transparent after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:translate-y-1/2 after:z-10 after:rounded-100%"
-                    >
-                        Top Garden
-                    </button>
+{{--                    <button--}}
+{{--                        class="p-1px border-b-2 border-transparent font-semibold relative leading-1.2 after:w-10px after:h-10px after:border-3px after:border-white after:bg-transparent after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:translate-y-1/2 after:z-10 after:rounded-100%"--}}
+{{--                    >--}}
+{{--                        Top Garden--}}
+{{--                    </button>--}}
 
-                    <button
-                        class="p-1px border-b-2 border-transparent font-semibold relative leading-1.2 after:w-10px after:h-10px after:border-3px after:border-white after:bg-transparent after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:translate-y-1/2 after:z-10 after:rounded-100%"
-                    >
-                        Double Height
-                    </button>
-                </div>
+{{--                    <button--}}
+{{--                        class="p-1px border-b-2 border-transparent font-semibold relative leading-1.2 after:w-10px after:h-10px after:border-3px after:border-white after:bg-transparent after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:translate-y-1/2 after:z-10 after:rounded-100%"--}}
+{{--                    >--}}
+{{--                        Double Height--}}
+{{--                    </button>--}}
+{{--                </div>--}}
 
-                <div class="tab-contents">
-                    <!-- content 1 -->
-                    <div class="hidden opacity-0">
-                        <div
-                            class="grid grid-cols-1 lg:grid-cols-2 gap-x-30px gap-y-50px"
-                        >
-                            <div class="p-30px md:p-70px bg-secondary-color">
-                                <h6
-                                    class="text-xl md:text-22px lg:text-26px xl:text-3xl font-bold text-white mb-15px leading-1.3"
-                                >
-                                    <span class="leading-1.3"> The Studio </span>
-                                </h6>
-                                <p class="text-sm lg:text-base text-white mb-10">
-                      <span class="leading-1.8"
-                      >Enimad minim veniam quis nostrud exercitation ullamco
-                        laboris. Lorem ipsum dolor sit amet cons aetetur
-                        adipisicing elit sedo eiusmod tempor.Incididunt labore
-                        et dolore magna aliqua. sed ayd minim veniam.</span
-                      >
-                                </p>
-                                <ul class="flex flex-col gap-y-10px items-stretch">
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Total Area
-                                            </li>
+{{--                <div class="tab-contents">--}}
+{{--                    <!-- content 1 -->--}}
+{{--                    <div class="hidden opacity-0">--}}
+{{--                        <div--}}
+{{--                            class="grid grid-cols-1 lg:grid-cols-2 gap-x-30px gap-y-50px"--}}
+{{--                        >--}}
+{{--                            <div class="p-30px md:p-70px bg-secondary-color">--}}
+{{--                                <h6--}}
+{{--                                    class="text-xl md:text-22px lg:text-26px xl:text-3xl font-bold text-white mb-15px leading-1.3"--}}
+{{--                                >--}}
+{{--                                    <span class="leading-1.3"> The Studio </span>--}}
+{{--                                </h6>--}}
+{{--                                <p class="text-sm lg:text-base text-white mb-10">--}}
+{{--                      <span class="leading-1.8"--}}
+{{--                      >Enimad minim veniam quis nostrud exercitation ullamco--}}
+{{--                        laboris. Lorem ipsum dolor sit amet cons aetetur--}}
+{{--                        adipisicing elit sedo eiusmod tempor.Incididunt labore--}}
+{{--                        et dolore magna aliqua. sed ayd minim veniam.</span--}}
+{{--                      >--}}
+{{--                                </p>--}}
+{{--                                <ul class="flex flex-col gap-y-10px items-stretch">--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Total Area--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                2800 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Bedroom
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                2800 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Bedroom--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                150 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Bathroom
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                150 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Bathroom--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                45 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Belcony/Pets
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                45 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Belcony/Pets--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                Allowed
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Lounge
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                Allowed--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Lounge--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                650 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div>
-                                <img
-                                    src="{{ asset('assets/img/others/10.png') }}"
-                                    class="w-full"
-                                    alt="#"
-                                >
-                            </div>
-                        </div>
-                    </div>
-                    <!-- content 2 -->
-                    <div class="opacity-100">
-                        <div
-                            class="grid grid-cols-1 lg:grid-cols-2 gap-x-30px gap-y-50px"
-                        >
-                            <div class="p-30px md:p-70px bg-secondary-color">
-                                <h6
-                                    class="text-xl md:text-22px lg:text-26px xl:text-3xl font-bold text-white mb-15px leading-1.3"
-                                >
-                                    <span class="leading-1.3"> Deluxe Portion </span>
-                                </h6>
-                                <p class="text-sm lg:text-base text-white mb-10">
-                      <span class="leading-1.8"
-                      >Enimad minim veniam quis nostrud exercitation ullamco
-                        laboris. Lorem ipsum dolor sit amet cons aetetur
-                        adipisicing elit sedo eiusmod tempor.Incididunt labore
-                        et dolore magna aliqua. sed ayd minim veniam.</span
-                      >
-                                </p>
-                                <ul class="flex flex-col gap-y-10px items-stretch">
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Total Area
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                650 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                            <div>--}}
+{{--                                <img--}}
+{{--                                    src="{{ asset('assets/img/others/10.png') }}"--}}
+{{--                                    class="w-full"--}}
+{{--                                    alt="#"--}}
+{{--                                >--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <!-- content 2 -->--}}
+{{--                    <div class="opacity-100">--}}
+{{--                        <div--}}
+{{--                            class="grid grid-cols-1 lg:grid-cols-2 gap-x-30px gap-y-50px"--}}
+{{--                        >--}}
+{{--                            <div class="p-30px md:p-70px bg-secondary-color">--}}
+{{--                                <h6--}}
+{{--                                    class="text-xl md:text-22px lg:text-26px xl:text-3xl font-bold text-white mb-15px leading-1.3"--}}
+{{--                                >--}}
+{{--                                    <span class="leading-1.3"> Deluxe Portion </span>--}}
+{{--                                </h6>--}}
+{{--                                <p class="text-sm lg:text-base text-white mb-10">--}}
+{{--                      <span class="leading-1.8"--}}
+{{--                      >Enimad minim veniam quis nostrud exercitation ullamco--}}
+{{--                        laboris. Lorem ipsum dolor sit amet cons aetetur--}}
+{{--                        adipisicing elit sedo eiusmod tempor.Incididunt labore--}}
+{{--                        et dolore magna aliqua. sed ayd minim veniam.</span--}}
+{{--                      >--}}
+{{--                                </p>--}}
+{{--                                <ul class="flex flex-col gap-y-10px items-stretch">--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Total Area--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                2800 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Bedroom
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                2800 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Bedroom--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                150 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Bathroom
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                150 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Bathroom--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                45 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Belcony/Pets
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                45 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Belcony/Pets--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                Allowed
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Lounge
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                Allowed--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Lounge--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                650 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div>
-                                <img
-                                    src="{{ asset('assets/img/others/10.png') }}"
-                                    class="w-full"
-                                    alt="#"
-                                >
-                            </div>
-                        </div>
-                    </div>
-                    <!-- content 3 -->
-                    <div class="hidden opacity-0">
-                        <div
-                            class="grid grid-cols-1 lg:grid-cols-2 gap-x-30px gap-y-50px"
-                        >
-                            <div class="p-30px md:p-70px bg-secondary-color">
-                                <h6
-                                    class="text-xl md:text-22px lg:text-26px xl:text-3xl font-bold text-white mb-15px leading-1.3"
-                                >
-                                    <span class="leading-1.3"> Penthouse </span>
-                                </h6>
-                                <p class="text-sm lg:text-base text-white mb-10">
-                      <span class="leading-1.8"
-                      >Enimad minim veniam quis nostrud exercitation ullamco
-                        laboris. Lorem ipsum dolor sit amet cons aetetur
-                        adipisicing elit sedo eiusmod tempor.Incididunt labore
-                        et dolore magna aliqua. sed ayd minim veniam.</span
-                      >
-                                </p>
-                                <ul class="flex flex-col gap-y-10px items-stretch">
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Total Area
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                650 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                            <div>--}}
+{{--                                <img--}}
+{{--                                    src="{{ asset('assets/img/others/10.png') }}"--}}
+{{--                                    class="w-full"--}}
+{{--                                    alt="#"--}}
+{{--                                >--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <!-- content 3 -->--}}
+{{--                    <div class="hidden opacity-0">--}}
+{{--                        <div--}}
+{{--                            class="grid grid-cols-1 lg:grid-cols-2 gap-x-30px gap-y-50px"--}}
+{{--                        >--}}
+{{--                            <div class="p-30px md:p-70px bg-secondary-color">--}}
+{{--                                <h6--}}
+{{--                                    class="text-xl md:text-22px lg:text-26px xl:text-3xl font-bold text-white mb-15px leading-1.3"--}}
+{{--                                >--}}
+{{--                                    <span class="leading-1.3"> Penthouse </span>--}}
+{{--                                </h6>--}}
+{{--                                <p class="text-sm lg:text-base text-white mb-10">--}}
+{{--                      <span class="leading-1.8"--}}
+{{--                      >Enimad minim veniam quis nostrud exercitation ullamco--}}
+{{--                        laboris. Lorem ipsum dolor sit amet cons aetetur--}}
+{{--                        adipisicing elit sedo eiusmod tempor.Incididunt labore--}}
+{{--                        et dolore magna aliqua. sed ayd minim veniam.</span--}}
+{{--                      >--}}
+{{--                                </p>--}}
+{{--                                <ul class="flex flex-col gap-y-10px items-stretch">--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Total Area--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                2800 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Bedroom
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                2800 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Bedroom--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                150 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Bathroom
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                150 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Bathroom--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                45 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Belcony/Pets
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                45 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Belcony/Pets--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                Allowed
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Lounge
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                Allowed--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Lounge--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                650 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div>
-                                <img
-                                    src="{{ asset('assets/img/others/10.png') }}"
-                                    class="w-full"
-                                    alt="#"
-                                >
-                            </div>
-                        </div>
-                    </div>
-                    <!-- content 4 -->
-                    <div class="hidden opacity-0">
-                        <div
-                            class="grid grid-cols-1 lg:grid-cols-2 gap-x-30px gap-y-50px"
-                        >
-                            <div class="p-30px md:p-70px bg-secondary-color">
-                                <h6
-                                    class="text-xl md:text-22px lg:text-26px xl:text-3xl font-bold text-white mb-15px leading-1.3"
-                                >
-                                    <span class="leading-1.3"> Top Garden </span>
-                                </h6>
-                                <p class="text-sm lg:text-base text-white mb-10">
-                      <span class="leading-1.8"
-                      >Enimad minim veniam quis nostrud exercitation ullamco
-                        laboris. Lorem ipsum dolor sit amet cons aetetur
-                        adipisicing elit sedo eiusmod tempor.Incididunt labore
-                        et dolore magna aliqua. sed ayd minim veniam.</span
-                      >
-                                </p>
-                                <ul class="flex flex-col gap-y-10px items-stretch">
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Total Area
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                650 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                            <div>--}}
+{{--                                <img--}}
+{{--                                    src="{{ asset('assets/img/others/10.png') }}"--}}
+{{--                                    class="w-full"--}}
+{{--                                    alt="#"--}}
+{{--                                >--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <!-- content 4 -->--}}
+{{--                    <div class="hidden opacity-0">--}}
+{{--                        <div--}}
+{{--                            class="grid grid-cols-1 lg:grid-cols-2 gap-x-30px gap-y-50px"--}}
+{{--                        >--}}
+{{--                            <div class="p-30px md:p-70px bg-secondary-color">--}}
+{{--                                <h6--}}
+{{--                                    class="text-xl md:text-22px lg:text-26px xl:text-3xl font-bold text-white mb-15px leading-1.3"--}}
+{{--                                >--}}
+{{--                                    <span class="leading-1.3"> Top Garden </span>--}}
+{{--                                </h6>--}}
+{{--                                <p class="text-sm lg:text-base text-white mb-10">--}}
+{{--                      <span class="leading-1.8"--}}
+{{--                      >Enimad minim veniam quis nostrud exercitation ullamco--}}
+{{--                        laboris. Lorem ipsum dolor sit amet cons aetetur--}}
+{{--                        adipisicing elit sedo eiusmod tempor.Incididunt labore--}}
+{{--                        et dolore magna aliqua. sed ayd minim veniam.</span--}}
+{{--                      >--}}
+{{--                                </p>--}}
+{{--                                <ul class="flex flex-col gap-y-10px items-stretch">--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Total Area--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                2800 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Bedroom
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                2800 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Bedroom--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                150 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Bathroom
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                150 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Bathroom--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                45 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Belcony/Pets
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                45 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Belcony/Pets--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                Allowed
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Lounge
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                Allowed--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Lounge--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                650 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div>
-                                <img
-                                    src="{{ asset('assets/img/others/10.png') }}"
-                                    class="w-full"
-                                    alt="#"
-                                >
-                            </div>
-                        </div>
-                    </div>
-                    <!-- content 5 -->
-                    <div class="hidden opacity-0">
-                        <div
-                            class="grid grid-cols-1 lg:grid-cols-2 gap-x-30px gap-y-50px"
-                        >
-                            <div class="p-30px md:p-70px bg-secondary-color">
-                                <h6
-                                    class="text-xl md:text-22px lg:text-26px xl:text-3xl font-bold text-white mb-15px leading-1.3"
-                                >
-                                    <span class="leading-1.3"> Double Height </span>
-                                </h6>
-                                <p class="text-sm lg:text-base text-white mb-10">
-                      <span class="leading-1.8"
-                      >Enimad minim veniam quis nostrud exercitation ullamco
-                        laboris. Lorem ipsum dolor sit amet cons aetetur
-                        adipisicing elit sedo eiusmod tempor.Incididunt labore
-                        et dolore magna aliqua. sed ayd minim veniam.</span
-                      >
-                                </p>
-                                <ul class="flex flex-col gap-y-10px items-stretch">
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Total Area
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                650 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                            <div>--}}
+{{--                                <img--}}
+{{--                                    src="{{ asset('assets/img/others/10.png') }}"--}}
+{{--                                    class="w-full"--}}
+{{--                                    alt="#"--}}
+{{--                                >--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <!-- content 5 -->--}}
+{{--                    <div class="hidden opacity-0">--}}
+{{--                        <div--}}
+{{--                            class="grid grid-cols-1 lg:grid-cols-2 gap-x-30px gap-y-50px"--}}
+{{--                        >--}}
+{{--                            <div class="p-30px md:p-70px bg-secondary-color">--}}
+{{--                                <h6--}}
+{{--                                    class="text-xl md:text-22px lg:text-26px xl:text-3xl font-bold text-white mb-15px leading-1.3"--}}
+{{--                                >--}}
+{{--                                    <span class="leading-1.3"> Double Height </span>--}}
+{{--                                </h6>--}}
+{{--                                <p class="text-sm lg:text-base text-white mb-10">--}}
+{{--                      <span class="leading-1.8"--}}
+{{--                      >Enimad minim veniam quis nostrud exercitation ullamco--}}
+{{--                        laboris. Lorem ipsum dolor sit amet cons aetetur--}}
+{{--                        adipisicing elit sedo eiusmod tempor.Incididunt labore--}}
+{{--                        et dolore magna aliqua. sed ayd minim veniam.</span--}}
+{{--                      >--}}
+{{--                                </p>--}}
+{{--                                <ul class="flex flex-col gap-y-10px items-stretch">--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Total Area--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                2800 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Bedroom
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                2800 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Bedroom--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                150 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Bathroom
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                150 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Bathroom--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                45 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Belcony/Pets
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                45 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Belcony/Pets--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                Allowed
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li
-                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"
-                                    >
-                                        <ul class="flex justify-between items-center">
-                                            <li class="leading-1.8 pr-10px bg-secondary-color">
-                                                Lounge
-                                            </li>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                Allowed--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                    <li--}}
+{{--                                        class="text-sm md:text-base text-white font-semibold relative z-0 before:w-full before:h-1 before:border-b before:border-dashed before:border-white before:absolute before:top-1/2 before:-translate-y-1/2 before:left-0 before:-z-1"--}}
+{{--                                    >--}}
+{{--                                        <ul class="flex justify-between items-center">--}}
+{{--                                            <li class="leading-1.8 pr-10px bg-secondary-color">--}}
+{{--                                                Lounge--}}
+{{--                                            </li>--}}
 
-                                            <li class="leading-1.8 pl-10px bg-secondary-color">
-                                                650 Sq. Ft
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div>
-                                <img
-                                    src="{{ asset('assets/img/others/10.png') }}"
-                                    class="w-full"
-                                    alt="#"
-                                >
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+{{--                                            <li class="leading-1.8 pl-10px bg-secondary-color">--}}
+{{--                                                650 Sq. Ft--}}
+{{--                                            </li>--}}
+{{--                                        </ul>--}}
+{{--                                    </li>--}}
+{{--                                </ul>--}}
+{{--                            </div>--}}
+{{--                            <div>--}}
+{{--                                <img--}}
+{{--                                    src="{{ asset('assets/img/others/10.png') }}"--}}
+{{--                                    class="w-full"--}}
+{{--                                    alt="#"--}}
+{{--                                >--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </section>--}}
 
     <!--  fixed popup-->
     <div

@@ -60,8 +60,8 @@
                     <li>
                         <a class="text-xs md:text-sm font-semibold" href="#">
                         <span class="leading-1.8 md:leading-1.8">
-                            <i class="far fa-comments text-secondary-color mr-5px"></i>
-                            35 Comments
+                            <i class="far fa-star text-secondary-color mr-5px"></i>
+                            {{ $property->reviews_count ?? 0 }}
                         </span>
                         </a>
                     </li>

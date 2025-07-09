@@ -13,6 +13,7 @@ use Livewire\Component;
 
 class TopRatedPropertiesWidget extends Component
 {
+    public int $propertyCount = 5;
     /**
      * টপ-রেটেড প্রপার্টিগুলো গণনা এবং ক্যাশে করে।
      */
@@ -38,7 +39,7 @@ class TopRatedPropertiesWidget extends Component
             // সর্বোচ্চ স্কোর অনুযায়ী সাজান
             ->orderByDesc('popularity_score')
             ->orderByDesc('created_at') // একই স্কোর হলে নতুনগুলো আগে
-            ->take(3) // সেরা ৩টি প্রপার্টি নিন
+            ->take($this->propertyCount) // সেরা প্রপার্টি নিন
             ->get();
     }
     public function render(): Factory|View|Application
