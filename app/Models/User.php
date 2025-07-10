@@ -15,6 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @method static where(string $string, mixed $value)
+ * @method static count()
  */
 class User extends Authenticatable implements HasAvatar
 {

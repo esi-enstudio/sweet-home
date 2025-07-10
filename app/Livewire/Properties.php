@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Amenity;
 use App\Models\Property;
 use App\Models\PropertyType;
+use App\Models\Tenant;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
@@ -29,6 +30,9 @@ class Properties extends Component
 
     #[Url()]
     public array $selectedTypes = [];
+
+    #[Url()]
+    public array $selectedTenant = [];
 
     #[Url()]
     public array $selectedAmenities = [];
@@ -60,7 +64,7 @@ class Properties extends Component
         $startTime = microtime(true);
 
         $properties = Property::query()
-            ->select(['id','user_id','thumbnail','listing_type','rent_amount','address','title','slug','bedrooms','bathrooms','balconies','total_area','created_at'])
+            ->select(['id','user_id','thumbnail','listing_type','rent_amount','address','title','slug','bedrooms','bathrooms','balconies','total_area','tenant_id','created_at'])
             ->with(['user:id,name,avatar_url', 'propertyType:id,name'])
             ->where('is_available', 1)
             ->where('status', 'approved')
@@ -68,6 +72,8 @@ class Properties extends Component
             ->when($this->search, fn($q) => $q->where('title', 'like', '%' . $this->search . '%')->orWhere('property_id', 'like', '%' . $this->search . '%'))
             // Property Type ফিল্টার (Checkbox)
             ->when($this->selectedTypes, fn($q) => $q->whereIn('property_type_id', $this->selectedTypes))
+            // Tenant Type ফিল্টার (Checkbox)
+            ->when($this->selectedTenant, fn($q) => $q->whereIn('tenant_id', $this->selectedTenant))
             // Amenities ফিল্টার (Checkbox - Many-to-Many)
             ->when($this->selectedAmenities, function ($q) {
                 $q->whereHas('amenities', function ($subQuery) {
@@ -105,6 +111,7 @@ class Properties extends Component
     {
         return [
             'propertyTypes' => PropertyType::withCount('properties')->get(),
+            'tenantTypes' => Tenant::withCount('properties')->get(),
             'amenities' => Amenity::withCount('properties')->get(),
             // Listing Type একটি enum, তাই এটি সরাসরি হার্ড-কোড করা যেতে পারে
         ];
@@ -113,7 +120,7 @@ class Properties extends Component
     // ফিল্টার পরিবর্তনের সময় পেজিনেশন রিসেট করার জন্য
     public function updated($property): void
     {
-        if (in_array($property, ['search', 'selectedTypes', 'selectedAmenities', 'bedrooms', 'bathrooms', 'balconies', 'selectedListingTypes'])) {
+        if (in_array($property, ['search', 'selectedTypes', 'selectedTenant', 'selectedAmenities', 'bedrooms', 'bathrooms', 'balconies', 'selectedListingTypes'])) {
             $this->resetPage();
         }
     }
@@ -135,6 +142,8 @@ class Properties extends Component
             ->when($this->search, fn($q) => $q->where('title', 'like', '%' . $this->search . '%'))
             // Property Type ফিল্টার (Checkbox)
             ->when($this->selectedTypes, fn($q) => $q->whereIn('property_type_id', $this->selectedTypes))
+            // Tenant Type ফিল্টার (Checkbox)
+            ->when($this->selectedTenant, fn($q) => $q->whereIn('tenant_id', $this->selectedTenant))
             // Amenities ফিল্টার (Checkbox - Many-to-Many)
             ->when($this->selectedAmenities, function ($q) {
                 $q->whereHas('amenities', function ($subQuery) {

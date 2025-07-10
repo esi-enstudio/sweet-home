@@ -13,137 +13,47 @@
                 <span class="leading-1.3">{{ app(\App\Settings\HomepageSettings::class)->our_service_section_title }}</span>
             </h2>
         </div>
-        <!-- services cards  -->
 
-        <div
-            class="service-cards flex flex-wrap justify-center items-center text-center -mx-15px"
-        >
-            <!-- card 1 -->
-            <div
-                class="service-card basis-full sm:basis-1/2 lg:basis-1/3 px-15px mb-30px"
-            >
-                <div
-                    class="border border-border-color-1 shadow-box-shadow-1 bg-white relative py-10 pb-35px px-30px transition-all duration-300"
-                >
-                    <div class="text-center mb-5">
-                        <img
-                            src="{{ asset('assets/img/icons/icon-img/21.png') }}"
-                            alt=""
-                            class="inline-block"
-                        >
+        <!-- services cards  -->
+        <div class="service-cards flex flex-wrap justify-center items-center text-center -mx-15px">
+            <!-- card -->
+            @if(!empty(app(\App\Settings\HomepageSettings::class)->services))
+                @foreach(app(\App\Settings\HomepageSettings::class)->services as $service)
+                    <div class="service-card basis-full sm:basis-1/2 lg:basis-1/3 px-15px mb-30px">
+                        <div class="border border-border-color-1 shadow-box-shadow-1 bg-white relative py-10 pb-35px px-30px transition-all duration-300">
+                            <div class="text-center mb-5">
+                                <img
+                                    src="{{ $service['icon'] && Storage::disk('public')->exists($service['icon']) ? Storage::url($service['icon']) : asset('assets/img/icons/icon-img/21.png') }}"
+                                    width="30%"
+                                    alt="{{ $service['title'] }}"
+                                    class="inline-block"
+                                >
+                            </div>
+
+                            <h6 class="text-lg md:text-xl lg:text-22px xl:text-2xl text-heading-color font-bold">
+                                <a class="hover:text-secondary-color leading-1.3 mb-1" href="{{ generate_link_from_settings($service) }}">
+                                    {{ $service['title'] }}
+                                </a>
+                            </h6>
+
+                            <p class="text-sm mb-25px">
+                                <span class="leading-1.8">
+                                    {{ $service['description'] }}
+                                </span>
+                            </p>
+
+                            <div class="text-sm text-color-1 font-bold">
+                                <a class="find-service hover:text-secondary-color flex items-center justify-center" href="{{ $service['button_link'] }}">
+                                    {{ $service['button_text'] }}
+                                    <i class="flaticon-right-arrow inline-block leading-1"></i>
+                                </a>
+                            </div>
+
+                            <span class="hover-line absolute bottom-0 left-0 w-0 h-1 bg-secondary-color transition-all duration-300 block"></span>
+                        </div>
                     </div>
-                    <h6
-                        class="text-lg md:text-xl lg:text-22px xl:text-2xl text-heading-color font-bold"
-                    >
-                        <a
-                            class="hover:text-secondary-color leading-1.3 mb-1"
-                            href="service-details.html"
-                        >Buy a home</a
-                        >
-                    </h6>
-                    <p class="text-sm mb-25px">
-                  <span class="leading-1.8"
-                  >over 1 million+ homes for sale available on the website, we
-                    can match you with a house you will want to call home.</span
-                  >
-                    </p>
-                    <div class="text-sm text-color-1 font-bold">
-                        <a
-                            class="find-service hover:text-secondary-color flex items-center justify-center"
-                            href="service-details.html"
-                        >Find A Home
-                            <i class="flaticon-right-arrow inline-block leading-1"></i
-                            ></a>
-                    </div>
-                    <span
-                        class="hover-line absolute bottom-0 left-0 w-0 h-1 bg-secondary-color transition-all duration-300 block"
-                    ></span>
-                </div>
-            </div>
-            <!-- card 2 -->
-            <div
-                class="service-card active basis-full sm:basis-1/2 lg:basis-1/3 px-15px mb-30px"
-            >
-                <div
-                    class="border border-border-color-1 shadow-box-shadow-1 bg-white relative py-10 pb-35px px-30px transition-all duration-300"
-                >
-                    <div class="text-center mb-5">
-                        <img
-                            src="{{ asset('assets/img/icons/icon-img/22.png') }}"
-                            alt=""
-                            class="inline-block"
-                        >
-                    </div>
-                    <h6
-                        class="text-lg md:text-xl lg:text-22px xl:text-2xl text-heading-color font-bold"
-                    >
-                        <a
-                            class="hover:text-secondary-color leading-1.3 mb-1"
-                            href="service-details.html"
-                        >Rent a home</a
-                        >
-                    </h6>
-                    <p class="text-sm mb-25px">
-                  <span class="leading-1.8"
-                  >over 1 million+ homes for sale available on the website, we
-                    can match you with a house you will want to call home.</span
-                  >
-                    </p>
-                    <div class="text-sm text-color-1 font-bold">
-                        <a
-                            class="find-service hover:text-secondary-color flex items-center justify-center"
-                            href="service-details.html"
-                        >Find A Home
-                            <i class="flaticon-right-arrow inline-block leading-1"></i
-                            ></a>
-                    </div>
-                    <span
-                        class="hover-line absolute bottom-0 left-0 w-0 h-1 bg-secondary-color transition-all duration-300 block"
-                    ></span>
-                </div>
-            </div>
-            <!-- card 3 -->
-            <div
-                class="service-card basis-full sm:basis-1/2 lg:basis-1/3 px-15px mb-30px"
-            >
-                <div
-                    class="border border-border-color-1 shadow-box-shadow-1 bg-white relative py-10 pb-35px px-30px transition-all duration-300"
-                >
-                    <div class="text-center mb-5">
-                        <img
-                            src="{{ asset('assets/img/icons/icon-img/23.png') }}"
-                            alt=""
-                            class="inline-block"
-                        >
-                    </div>
-                    <h6
-                        class="text-lg md:text-xl lg:text-22px xl:text-2xl text-heading-color font-bold"
-                    >
-                        <a
-                            class="hover:text-secondary-color leading-1.3 mb-1"
-                            href="service-details.html"
-                        >Sell a home</a
-                        >
-                    </h6>
-                    <p class="text-sm mb-25px">
-                  <span class="leading-1.8"
-                  >over 1 million+ homes for sale available on the website, we
-                    can match you with a house you will want to call home.</span
-                  >
-                    </p>
-                    <div class="text-sm text-color-1 font-bold">
-                        <a
-                            class="find-service hover:text-secondary-color flex items-center justify-center"
-                            href="service-details.html"
-                        >Find A Home
-                            <i class="flaticon-right-arrow inline-block leading-1"></i
-                            ></a>
-                    </div>
-                    <span
-                        class="hover-line absolute bottom-0 left-0 w-0 h-1 bg-secondary-color transition-all duration-300 block"
-                    ></span>
-                </div>
-            </div>
+                @endforeach
+            @endif
         </div>
     </div>
 </section>

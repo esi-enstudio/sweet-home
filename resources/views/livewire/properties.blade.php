@@ -245,23 +245,6 @@
 
                             <ul class="flex flex-col gap-y-15px">
                                 @forelse($this->sidebarData['propertyTypes'] as $type)
-{{--                                    <li class="text-sm font-bold">--}}
-{{--                                        <label--}}
-{{--                                            for="dishwasher-type"--}}
-{{--                                            class="checkbox-item leading-1.8 group flex items-center cursor-pointer"--}}
-{{--                                        ><input--}}
-{{--                                                type="checkbox"--}}
-{{--                                                id="dishwasher-type"--}}
-{{--                                                class="hidden"--}}
-{{--                                                checked--}}
-{{--                                            >--}}
-{{--                                            <span--}}
-{{--                                                class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"--}}
-{{--                                            ></span>--}}
-{{--                                            Air Conditioning--}}
-{{--                                        </label>--}}
-{{--                                    </li>--}}
-
                                     <li class="text-sm font-bold flex justify-between items-center">
                                         <label
                                             for="type-{{ $type->id }}"
@@ -281,6 +264,37 @@
                                     </li>
                                 @empty
                                     <p>No property type found.</p>
+                                @endforelse
+                            </ul>
+                        </div>
+
+                        <!-- tenant type filter -->
+                        <div class="pb-35px mb-35px border-b border-border-color-12 border-opacity-25">
+                            <h5 class="mb-25px text-lg text-heading-color font-semibold">
+                                <span class="leading-1.3">Tenant Type</span>
+                            </h5>
+
+                            <ul class="flex flex-col gap-y-15px">
+                                @forelse($this->sidebarData['tenantTypes'] as $tenant)
+                                    <li class="text-sm font-bold flex justify-between items-center">
+                                        <label
+                                            for="tenant-{{ $tenant->id }}"
+                                            class="checkbox-item leading-1.8 group flex items-center cursor-pointer">
+                                            <input
+                                                wire:model.live="selectedTenant"
+                                                id="tenant-{{ $tenant->id }}"
+                                                value="{{ $tenant->id }}"
+                                                type="checkbox"
+                                                class="checkmark w-4 h-4 bg-white group-hover:bg-secondary-color border border-border-color-16 transition-all duration-300 relative z-0 after:absolute after:left-1 after:top-0 after:w-[5px] after:h-10px after:rotate-[45deg] after:border after:border-t-0 after:opacity-0 after:border-l-0 after:border-white mr-15px inline-block leading-1"
+                                            >
+                                            {{ $tenant->name }}
+                                        </label>
+                                        <span class="leading-1.8">
+                                            {{ $tenant->properties_count }}
+                                        </span>
+                                    </li>
+                                @empty
+                                    <p>No tenant found.</p>
                                 @endforelse
                             </ul>
                         </div>

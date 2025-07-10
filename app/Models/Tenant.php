@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * @method static create(string[] $array)
+ * @method static withCount(string $string)
  */
 class Tenant extends Model
 {

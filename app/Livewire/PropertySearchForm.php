@@ -18,6 +18,20 @@ class PropertySearchForm extends Component
     public ?int $selectedType = null;
 
     /**
+     * চেক করে যে সার্চ বাটনটি ডিজেবল্‌ড থাকবে কি না।
+     */
+    #[Computed]
+    public function isSearchDisabled(): bool
+    {
+        // যদি সবকটি ফিল্টার null বা খালি স্ট্রিং হয়, তাহলে বাটন ডিজেবল্‌ড
+        $tenantIsEmpty = is_null($this->selectedTenant);
+        $listingIsEmpty = is_null($this->selectedListing) || $this->selectedListing === '';
+        $typeIsEmpty = is_null($this->selectedType);
+
+        return $tenantIsEmpty && $listingIsEmpty && $typeIsEmpty;
+    }
+
+    /**
      * ড্রপডাউনের অপশনগুলো লোড করে এবং ক্যাশে রাখে।
      */
     #[Computed(seconds: 86400, cache: true, key: 'search-form-options')] // ২৪ ঘণ্টা ক্যাশে থাকবে
@@ -38,7 +52,7 @@ class PropertySearchForm extends Component
     {
         // যে ফিল্টারগুলোর মান আছে, শুধু সেগুলো নিয়ে একটি অ্যারে তৈরি করুন
         $filters = array_filter([
-            'selectedTenants' => $this->selectedTenant ? [$this->selectedTenant] : [], // PropertyList কম্পোনেন্ট অ্যারে আশা করে
+            'selectedTenant' => $this->selectedTenant ? [$this->selectedTenant] : [], // PropertyList কম্পোনেন্ট অ্যারে আশা করে
             'selectedListingTypes' => $this->selectedListing ? [$this->selectedListing] : [],
             'selectedTypes' => $this->selectedType ? [$this->selectedType] : [],
         ]);
