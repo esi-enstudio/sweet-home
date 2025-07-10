@@ -86,13 +86,13 @@ class Homepage extends SettingsPage
 
                                                     Forms\Components\KeyValue::make('button_link_route_params')
                                                         ->label('Route Parameters')
-                                                        ->helperText('Enter key-value pairs for route parameters. E.g., key: selectedListingTypes, value: rent'),
+                                                        ->keyLabel('Filter Name') // Key ফিল্ডের লেবেল পরিবর্তন
+                                                        ->valueLabel('Filter Value') // Value ফিল্ডের লেবেল পরিবর্তন
+                                                        ->helperText('Enter filter name and its value. Examples: - **Key:** selectedListingTypes, **Value:** rent - **Key:** selectedTypes, **Value:** 1 (use Property Type ID) - **Key:** selectedAmenities, **Value:** 5 (use Amenity ID) - **Key:** bedrooms, **Value:** 3'
+                                                        )
+                                                        ->reorderable(),
                                                 ]),
                                         ])->columnSpanFull(),
-
-//                                    Forms\Components\TextInput::make('button_link')
-//                                        ->label('Button Link (Route)')
-//                                        ->required(),
                                 ])
                                 ->columnSpanFull()
                                 ->required()
