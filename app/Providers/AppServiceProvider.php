@@ -7,12 +7,14 @@ use App\Models\Media;
 use App\Models\Message;
 use App\Models\Property;
 use App\Models\Review;
+use App\Models\Testimonial;
 use App\Models\User;
 use App\Observers\FloorPlanObserver;
 use App\Observers\MediaObserver;
 use App\Observers\MessageObserver;
 use App\Observers\PropertyObserver;
 use App\Observers\ReviewObserver;
+use App\Observers\TestimonialObserver;
 use App\Observers\UserObserver;
 use BezhanSalleh\FilamentLanguageSwitch\LanguageSwitch;
 use Illuminate\Support\ServiceProvider;
@@ -38,6 +40,7 @@ class AppServiceProvider extends ServiceProvider
         Media::observe(MediaObserver::class);
         FloorPlan::observe(FloorPlanObserver::class);
         Message::observe(MessageObserver::class);
+        Testimonial::observe(TestimonialObserver::class);
 
         LanguageSwitch::configureUsing(function (LanguageSwitch $switch) {
             $switch

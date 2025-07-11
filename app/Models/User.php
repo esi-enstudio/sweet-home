@@ -5,9 +5,12 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Traits\HasCustomSlug;
 use Database\Factories\UserFactory;
+use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +20,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @method static where(string $string, mixed $value)
  * @method static count()
  */
-class User extends Authenticatable implements HasAvatar
+class User extends Authenticatable implements HasAvatar, FilamentUser
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, HasRoles, HasCustomSlug;
@@ -95,11 +98,39 @@ class User extends Authenticatable implements HasAvatar
     }
 
     /**
+     * একজন ইউজারের একটি টেস্টিমোনিয়াল।
+     */
+    public function testimonial(): HasOne
+    {
+        return $this->hasOne(Testimonial::class);
+    }
+
+    /**
      * Get all of the messages sent by the User.
      * একজন ব্যবহারকারী অনেকগুলো মেসেজ পাঠাতে পারেন।
      */
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        // --- প্যানেলের আইডি অনুযায়ী অ্যাক্সেস নিয়ন্ত্রণ ---
+
+        // যদি প্যানেলটি 'admin' হয়
+        if ($panel->getId() === 'admin') {
+            // শুধুমাত্র 'Admin' রোলের ব্যবহারকারীরাই প্রবেশ করতে পারবে
+            return $this->hasRole('super_admin');
+        }
+
+        // যদি প্যানেলটি 'app' (ইউজার প্যানেল) হয়
+        if ($panel->getId() === 'user') {
+            // অ্যাডমিন এবং অন্যান্য সব লগইন করা ব্যবহারকারী প্রবেশ করতে পারবে
+            return $this->hasRole('user');
+        }
+
+        // অন্য কোনো প্যানেল থাকলে ডিফল্টভাবে অ্যাক্সেস দেওয়া হবে না
+        return false;
     }
 }

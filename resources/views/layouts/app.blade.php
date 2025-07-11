@@ -61,6 +61,7 @@
 <script src="{{ asset('assets/js/main.js') }}"></script>
 
 @livewireScripts
+
 @stack('scripts')
 </body>
 </html>

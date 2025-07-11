@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\User\Resources;
 
-use App\Filament\Resources\PropertyResource\Pages;
 use App\Filament\Resources\PropertyResource\RelationManagers\AmenitiesRelationManager;
 use App\Filament\Resources\PropertyResource\RelationManagers\FloorPlansRelationManager;
 use App\Filament\Resources\PropertyResource\RelationManagers\MediaRelationManager;
 use App\Filament\Resources\PropertyResource\RelationManagers\MessagesRelationManager;
 use App\Filament\Resources\PropertyResource\RelationManagers\SpaceOverviewsRelationManager;
+use App\Filament\User\Resources\PropertyResource\Pages;
+use App\Filament\User\Resources\PropertyResource\RelationManagers;
 use App\Models\District;
 use App\Models\Property;
 use App\Models\Union;
 use App\Models\Upazila;
-use Exception;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
@@ -37,11 +37,10 @@ use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Laravel\Facades\Image;
-use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Illuminate\Support\Facades\Auth;
 
 class PropertyResource extends Resource
 {
@@ -363,18 +362,7 @@ class PropertyResource extends Resource
                                     ->label('')
                                     ->image()
                                     ->required()
-                                    ->saveUploadedFileUsing(function (TemporaryUploadedFile $file, $set){
-                                        // একটি ইউনিক ফাইলের নাম তৈরি করুন
-                                        $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
-
-                                        // --- ছোট (thumbnail) সংস্করণ তৈরি ---
-                                        $thumbnailPath = 'properties/thumbnails/' . $fileName;
-                                        $thumbnailImage = Image::read($file->getRealPath());
-                                        // cover() মেথডটি ছবিকে রিসাইজ এবং ক্রপ করে সঠিক অনুপাতে আনে
-                                        $thumbnailImage->cover(283, 217);
-                                        // public ডিস্কে সেভ করুন
-                                        Storage::disk('public')->put($thumbnailPath, (string) $thumbnailImage->encode());
-                                    })
+                                    ->imageEditor()
                                     ->helperText('বিজ্ঞাপনের প্রধান এবং সবচেয়ে আকর্ষণীয় ছবিটি এখানে আপলোড করুন।')
                                     ->directory('property/thumbnails'),
                             ]),
@@ -383,9 +371,6 @@ class PropertyResource extends Resource
             ->columns(3);
     }
 
-    /**
-     * @throws Exception
-     */
     public static function table(Table $table): Table
     {
         return $table
@@ -396,7 +381,6 @@ class PropertyResource extends Resource
                 'xl' => 2,
             ])
             ->columns([
-                TextColumn::make('property_id')->searchable(),
                 // Split কার্ডটিকে দুটি প্রধান অংশে ভাগ করবে: বামে ছবি, ডানে তথ্য
                 Split::make([
                     // --- বাম অংশ: ছবি ---
@@ -453,15 +437,40 @@ class PropertyResource extends Resource
                                         default => 'gray',
                                     })
                                     ->icon(fn(string $state): string => match ($state){
-                                    'approved' => 'heroicon-o-check-circle',
-                                    'pending' => 'heroicon-o-pause-circle',
-                                    'rejected' => 'heroicon-o-x-circle',
-                                }),
+                                        'approved' => 'heroicon-o-check-circle',
+                                        'pending' => 'heroicon-o-pause-circle',
+                                        'rejected' => 'heroicon-o-x-circle',
+                                    }),
                                 TextColumn::make('rent_amount')->label('Rent')->money('BDT')->weight(FontWeight::SemiBold),
-                        ]),
+                            ]),
                     ])->space(2), // স্ট্যাকের আইটেমগুলোর মধ্যে স্পেস
                 ])
                     ->from('md')->extraAttributes(['class' => 'mb-5']), // মিডিয়াম স্ক্রিন থেকে Split লেআউট শুরু হবে
+
+                // Panel প্রতিটি প্রপার্টিকে একটি আলাদা কার্ড হিসেবে দেখাবে
+//                Panel::make([
+//                    Grid::make()
+//                        ->schema([
+//                            Stack::make([
+//                                TextColumn::make('propertyType.name')
+//                                    ->label('Type')
+//                                    ->grow(false)
+//                                    ->icon('heroicon-o-tag'),
+//
+//                                TextColumn::make('listing_type')
+//                                    ->label('Listing For')
+//                                    ->grow(false)
+//                                    ->icon('heroicon-o-receipt-percent')
+//                                    ->formatStateUsing(fn($state) => Str::title($state))
+//                                    ->badge(),
+//
+//                                TextColumn::make('created_at')
+//                                    ->label('Listed On')
+//                                    ->grow(false)
+//                                    ->since(),
+//                            ])->space(1),
+//                        ]),
+//                ])->collapsed(),
             ])
             ->defaultPaginationPageOption(5)
             ->deferLoading()
@@ -474,7 +483,6 @@ class PropertyResource extends Resource
                 Tables\Filters\TernaryFilter::make('is_featured_showcase')->label('Showcase Property'),
             ], layout: Tables\Enums\FiltersLayout::AboveContentCollapsible)
             ->actions([
-//                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -486,7 +494,7 @@ class PropertyResource extends Resource
             ->emptyStateActions([
                 Action::make('create')
                     ->label('Add New')
-                    ->url(route('filament.admin.resources.properties.create'))
+                    ->url(route('filament.user.resources.properties.create'))
                     ->icon('heroicon-m-plus')
                     ->button(),
             ]);
@@ -513,8 +521,20 @@ class PropertyResource extends Resource
         ];
     }
 
+    /**
+     * Scope the query to only include properties belonging to the current user.
+     *
+     * @return Builder
+     */
+    public static function getEloquentQuery(): Builder
+    {
+        // parent::getEloquentQuery() মূল কুয়েরিটি রিটার্ন করে
+        // আমরা এর উপর একটি where() ক্লজ যোগ করছি
+        return parent::getEloquentQuery()->where('user_id', Auth::id());
+    }
+
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::count();
+        return static::getModel()::where('user_id', Auth::id())->count();
     }
 }

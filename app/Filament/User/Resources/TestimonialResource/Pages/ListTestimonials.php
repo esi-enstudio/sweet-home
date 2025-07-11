@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\TestimonialResource\Pages;
+namespace App\Filament\User\Resources\TestimonialResource\Pages;
 
-use App\Filament\Resources\TestimonialResource;
+use App\Filament\User\Resources\TestimonialResource;
 use App\Models\Testimonial;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;

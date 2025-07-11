@@ -60,7 +60,7 @@ class ListProperties extends ListRecords
                     return $this->getModel()::where('is_featured', 1)->where('status', 'approved')->count();
                 }),
 
-            'Others' => Tab::make()
+            'Regular' => Tab::make()
                 ->modifyQueryUsing(function (Builder $query){
                     $query->where('is_featured', '!=', 1)
                         ->where('is_hero_featured','!=', 1)

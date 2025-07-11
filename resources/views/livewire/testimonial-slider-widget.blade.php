@@ -68,16 +68,16 @@
                                             class="flex flex-wrap md:flex-nowrap gap-x-15px gap-y-10px items-center">
                                             <div class="w-60px h-60px flex-shrink-0">
                                                 <img
-                                                    src="{{ $testimonial->client_image && Storage::disk('public')->exists($testimonial->client_image)
-                                                                         ? Storage::url($testimonial->client_image)
+                                                    src="{{ $testimonial->user->avatar_url && Storage::disk('public')->exists($testimonial->user->avatar_url)
+                                                                         ? Storage::url($testimonial->user->avatar_url)
                                                                          : asset('assets/img/default-user-avatar.png') }}"
-                                                    alt="{{ $testimonial->client_name }}"
+                                                    alt="{{ $testimonial->user->name }}"
                                                     class="w-full h-full rounded-100%"
                                                 >
                                             </div>
                                             <div>
                                                 <h4 class="text-base lg:text-lg font-semibold text-heading-color mb-0">
-                                                    <span class="leading-1.3 hover:text-secondary-color">{{ $testimonial->client_name }}</span>
+                                                    <span class="leading-1.3 hover:text-secondary-color">{{ $testimonial->user->name }}</span>
                                                 </h4>
 
                                                 <span class="text-sm uppercase">{{ $testimonial->client_designation }}</span>

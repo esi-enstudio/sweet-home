@@ -32,6 +32,8 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-users';
 
+    protected static ?int $navigationSort = 2;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -117,7 +119,7 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                ImageColumn::make('avatar_url'),
+                ImageColumn::make('avatar_url')->label('Avatar')->circular(),
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')

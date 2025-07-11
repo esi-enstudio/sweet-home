@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,9 +14,8 @@ return new class extends Migration
     {
         Schema::create('testimonials', function (Blueprint $table) {
             $table->id();
-            $table->string('client_name');
-            $table->string('client_designation')->nullable(); // e.g., "Selling Agent"
-            $table->string('client_image')->nullable();
+            $table->foreignIdFor(User::class)->unique()->constrained()->cascadeOnDelete();
+            $table->string('client_designation');
             $table->text('feedback_text');
             $table->boolean('is_published')->default(false);
             $table->unsignedTinyInteger('order_column')->default(0);

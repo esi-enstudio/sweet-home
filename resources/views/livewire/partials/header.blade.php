@@ -47,7 +47,7 @@
 
                         @auth
                             <li>
-                                <a target="_blank" href="{{ route('filament.admin.resources.properties.create') }}" class="px-4 md:px-5 py-0.5 md:py-10px ml-2 lg:ml-5 bg-secondary-color inline-block bg-opacity-100 hover:bg-opacity-60 hover:text-white">
+                                <a target="_blank" href="{{ route('filament.user.resources.properties.create') }}" class="px-4 md:px-5 py-0.5 md:py-10px ml-2 lg:ml-5 bg-secondary-color inline-block bg-opacity-100 hover:bg-opacity-60 hover:text-white">
                                     Add Listing
                                 </a>
                             </li>
@@ -55,7 +55,7 @@
 
                         @guest
                             <li>
-                                <a target="_blank" href="{{ route('filament.admin.auth.login') }}" class="px-4 md:px-5 py-0.5 md:py-10px ml-2 lg:ml-5 bg-secondary-color inline-block bg-opacity-100 hover:bg-opacity-60 hover:text-white">
+                                <a target="_blank" href="{{ route('filament.user.auth.login') }}" class="px-4 md:px-5 py-0.5 md:py-10px ml-2 lg:ml-5 bg-secondary-color inline-block bg-opacity-100 hover:bg-opacity-60 hover:text-white">
                                     Add Listing
                                 </a>
                             </li>
@@ -83,8 +83,8 @@
                     <!-- Home -->
                     <li class="relative group">
                         <a
-                                href="{{ route('home') }}"
-                                class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px">
+                            href="{{ route('home') }}"
+                            class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px">
                             Home
                         </a>
                     </li>
@@ -147,21 +147,21 @@
                                 <a
                                     class="whitespace-nowrap px-15px py-5px"
                                     target="_blank"
-                                    href="{{ route('filament.admin.auth.login') }}">Sign in</a>
+                                    href="{{ route('filament.user.auth.login') }}">Sign in</a>
                             </li>
 
                             <li>
                                 <a
                                     class="whitespace-nowrap px-15px py-5px"
                                     target="_blank"
-                                    href="{{ route('filament.admin.auth.register') }}">Register</a>
+                                    href="{{ route('filament.user.auth.register') }}">Register</a>
                             </li>
 
                             <li>
                                 <a
                                     class="whitespace-nowrap px-15px py-5px"
                                     target="_blank"
-                                    href="{{ route('filament.admin.pages.dashboard') }}">My Account</a>
+                                    href="{{ route('filament.user.pages.dashboard') }}">My Account</a>
                             </li>
 
                             <li>

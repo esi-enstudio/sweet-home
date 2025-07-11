@@ -1,16 +1,21 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\User\Resources;
 
-use App\Filament\Resources\TestimonialResource\Pages;
-use App\Filament\Resources\TestimonialResource\RelationManagers;
+use App\Filament\User\Resources\TestimonialResource\Pages;
+use App\Filament\User\Resources\TestimonialResource\RelationManagers;
 use App\Models\Testimonial;
-use Filament\Forms;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 
 class TestimonialResource extends Resource
@@ -26,20 +31,14 @@ class TestimonialResource extends Resource
         return $form
             ->schema([
                 // user_id ফিল্ডটি স্বয়ংক্রিয়ভাবে সেট হবে
-                Forms\Components\Hidden::make('user_id')->default(Auth::id()),
-                Forms\Components\TextInput::make('client_designation')
-                    ->label('Designation')
-                    ->required(),
-
-                Forms\Components\Textarea::make('feedback_text')
+                Hidden::make('user_id')->default(Auth::id()),
+                TextInput::make('client_designation')->label('Designation')->required(),
+                Textarea::make('feedback_text')
                     ->required()
                     ->live()
                     ->maxLength(312) // Set the maximum character limit
                     ->hint(fn ($state, $component) => strlen($state) . '/' . $component->getMaxLength())
                     ->columnSpanFull(),
-
-                Forms\Components\Toggle::make('is_published')->default(false),
-                Forms\Components\TextInput::make('order_column')->numeric()->default(0),
             ]);
     }
 
@@ -56,9 +55,18 @@ class TestimonialResource extends Resource
 
                 Tables\Columns\TextColumn::make('client_designation')
                     ->searchable(),
-                Tables\Columns\ToggleColumn::make('is_published'),
+
+                IconColumn::make('is_published')
+                    ->icon(fn (string $state): string => match ($state) {
+                        '0' => 'heroicon-o-clock',
+                        '1' => 'heroicon-o-check-circle',
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        '0' => 'warning',
+                        '1' => 'success',
+                        default => 'gray',
+                    }),
             ])
-            ->reorderable('order_column')
             ->filters([
                 //
             ])
@@ -73,7 +81,7 @@ class TestimonialResource extends Resource
             ->emptyStateActions([
                 Action::make('create')
                     ->label('Add New')
-                    ->url(route('filament.admin.resources.testimonials.create'))
+                    ->url(route('filament.user.resources.testimonials.create'))
                     ->icon('heroicon-m-plus')
                     ->button(),
             ]);
@@ -93,5 +101,10 @@ class TestimonialResource extends Resource
             'create' => Pages\CreateTestimonial::route('/create'),
             'edit' => Pages\EditTestimonial::route('/{record}/edit'),
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('user_id', Auth::id());
     }
 }

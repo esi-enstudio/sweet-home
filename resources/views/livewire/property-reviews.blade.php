@@ -97,6 +97,8 @@
                     </span>
                 </h5>
 
+                <div class="demo"></div>
+
                 <div class="text-ratings flex items-center">
                     @for ($i = 1; $i <= 5; $i++)
                         <button type="button" wire:click="$set('rating', {{ $i }})">

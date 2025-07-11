@@ -4,7 +4,6 @@ namespace App\Providers\Filament;
 
 use App\Filament\Auth\Login;
 use App\Filament\Auth\Register;
-use App\Livewire\CustomProfileComponent;
 use App\Livewire\CustomUserProfile;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Exception;
@@ -30,7 +29,7 @@ use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
 use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
 
-class AdminPanelProvider extends PanelProvider
+class UserPanelProvider extends PanelProvider
 {
     /**
      * @throws Exception
@@ -38,22 +37,20 @@ class AdminPanelProvider extends PanelProvider
     public function panel(Panel $panel): Panel
     {
         return $panel
-            ->default()
-            ->id('admin')
-            ->path('admin')
+            ->id('user')
+            ->path('user')
             ->login(Login::class)
             ->registration(Register::class)
             ->passwordReset()
-            ->databaseNotifications()
             ->colors([
-                'primary' => Color::Green,
+                'primary' => '#ff5a3c',
             ])
-            ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
-            ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
+            ->discoverResources(in: app_path('Filament/User/Resources'), for: 'App\\Filament\\User\\Resources')
+            ->discoverPages(in: app_path('Filament/User/Pages'), for: 'App\\Filament\\User\\Pages')
             ->pages([
                 Pages\Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->discoverWidgets(in: app_path('Filament/User/Widgets'), for: 'App\\Filament\\User\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
@@ -68,6 +65,9 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+            ])
+            ->authMiddleware([
+                Authenticate::class,
             ])
             ->plugins([
                 SpatieLaravelTranslatablePlugin::make()
@@ -100,7 +100,6 @@ class AdminPanelProvider extends PanelProvider
                     )
                     ->customProfileComponents([
                         CustomUserProfile::class,
-//                        AddressUserProfile::class,
                     ])
             ])
             ->renderHook(
@@ -113,19 +112,11 @@ class AdminPanelProvider extends PanelProvider
                     ->url(fn (): string => EditProfilePage::getUrl())
                     ->icon('heroicon-m-user-circle'),
             ])
-            ->authMiddleware([
-                Authenticate::class,
-            ])
             ->navigationGroups([
                 // একটি নেভিগেশন গ্রুপ তৈরি করা হচ্ছে
                 NavigationGroup::make()
                     ->label('Settings')
                     ->icon('heroicon-o-cog-6-tooth'), // <-- গ্রুপের জন্য আইকন
-
-                // আপনি চাইলে আরও গ্রুপ যোগ করতে পারেন
-//                NavigationGroup::make()
-//                    ->label('Blog')
-//                    ->icon('heroicon-o-pencil-square'),
             ])
             ->spa();
     }

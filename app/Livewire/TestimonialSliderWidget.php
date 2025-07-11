@@ -15,7 +15,8 @@ class TestimonialSliderWidget extends Component
     #[Computed(seconds: 7200, cache: true, key: 'testimonials-for-homepage')]
     public function testimonials(): Collection
     {
-        return Testimonial::where('is_published', 1)
+        return Testimonial::with(['user'])
+            ->where('is_published', 1)
             ->orderBy('order_column')
             ->get();
     }
