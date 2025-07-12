@@ -1,6 +1,5 @@
 <?php
 
-use App\Livewire\AmenityProperties;
 use App\Livewire\HomeComponent;
 use App\Livewire\Properties;
 use App\Livewire\SingleProperty;

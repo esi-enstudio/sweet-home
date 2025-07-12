@@ -19,8 +19,6 @@
             <!-- card -->
             @if(!empty(app(\App\Settings\HomepageSettings::class)->services))
                 @foreach(app(\App\Settings\HomepageSettings::class)->services as $service)
-{{--                    {{ dd($service) }}--}}
-{{--                    {{ dd(generate_link_from_settings($service)) }}--}}
                     <div class="service-card basis-full sm:basis-1/2 lg:basis-1/3 px-15px mb-30px">
                         <div class="border border-border-color-1 shadow-box-shadow-1 bg-white relative py-10 pb-35px px-30px transition-all duration-300">
                             <div class="text-center mb-5">

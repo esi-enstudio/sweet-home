@@ -4,6 +4,7 @@
 >
     <!-- banner section -->
     <section>
+        {{ \Illuminate\Support\Str::upper(\Illuminate\Support\Str::random(10)) }}
         {{-- ব্যানার এবং ব্রেডক্রাম্ব সেকশন --}}
         <x-single-property.banner :title="$property->title" />
     </section>

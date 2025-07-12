@@ -17,6 +17,7 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Group;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
@@ -39,7 +40,11 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 use Intervention\Image\Laravel\Facades\Image;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
@@ -60,6 +65,8 @@ class PropertyResource extends Resource
                 // প্রধান কলাম (2/3 অংশ)
                 Group::make()
                     ->schema([
+                        Hidden::make('property_id'),
+
                         // --- Basic Information Section ---
                         Fieldset::make('Basic Information')
                             ->schema([
@@ -363,20 +370,8 @@ class PropertyResource extends Resource
                                     ->label('')
                                     ->image()
                                     ->required()
-                                    ->saveUploadedFileUsing(function (TemporaryUploadedFile $file, $set){
-                                        // একটি ইউনিক ফাইলের নাম তৈরি করুন
-                                        $fileName = uniqid() . '.' . $file->getClientOriginalExtension();
-
-                                        // --- ছোট (thumbnail) সংস্করণ তৈরি ---
-                                        $thumbnailPath = 'properties/thumbnails/' . $fileName;
-                                        $thumbnailImage = Image::read($file->getRealPath());
-                                        // cover() মেথডটি ছবিকে রিসাইজ এবং ক্রপ করে সঠিক অনুপাতে আনে
-                                        $thumbnailImage->cover(283, 217);
-                                        // public ডিস্কে সেভ করুন
-                                        Storage::disk('public')->put($thumbnailPath, (string) $thumbnailImage->encode());
-                                    })
-                                    ->helperText('বিজ্ঞাপনের প্রধান এবং সবচেয়ে আকর্ষণীয় ছবিটি এখানে আপলোড করুন।')
-                                    ->directory('property/thumbnails'),
+                                    ->directory('temp-thumbnails')
+                                    ->helperText('বিজ্ঞাপনের প্রধান এবং সবচেয়ে আকর্ষণীয় ছবিটি এখানে আপলোড করুন।'),
                             ]),
                     ])->columnSpan(['lg' => 1]),
             ])
@@ -396,7 +391,6 @@ class PropertyResource extends Resource
                 'xl' => 2,
             ])
             ->columns([
-                TextColumn::make('property_id')->searchable(),
                 // Split কার্ডটিকে দুটি প্রধান অংশে ভাগ করবে: বামে ছবি, ডানে তথ্য
                 Split::make([
                     // --- বাম অংশ: ছবি ---
@@ -460,8 +454,9 @@ class PropertyResource extends Resource
                                 TextColumn::make('rent_amount')->label('Rent')->money('BDT')->weight(FontWeight::SemiBold),
                         ]),
                     ])->space(2), // স্ট্যাকের আইটেমগুলোর মধ্যে স্পেস
-                ])
-                    ->from('md')->extraAttributes(['class' => 'mb-5']), // মিডিয়াম স্ক্রিন থেকে Split লেআউট শুরু হবে
+                ])->from('md')->extraAttributes(['class' => 'mb-5']), // মিডিয়াম স্ক্রিন থেকে Split লেআউট শুরু হবে
+
+                TextColumn::make('property_id')->searchable(),
             ])
             ->defaultPaginationPageOption(5)
             ->deferLoading()

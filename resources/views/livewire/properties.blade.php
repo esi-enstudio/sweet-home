@@ -118,13 +118,13 @@
                                                         <a
                                                             href="{{ route('single.property', $property->slug) }}"
                                                             class="hover:text-secondary-color leading-1.3">
-                                                            {{ \Illuminate\Support\Str::limit($property->title, 35) }}
+                                                            {{ \Illuminate\Support\Str::limit($property->title, 30) }}
                                                         </a>
                                                     </h4>
 
                                                     <div class="text-sm">
                                                         <a
-                                                            href="locations.html"
+                                                            href="#"
                                                             class="hover:text-secondary-color">
                                                             <i class="flaticon-pin text-secondary-color mr-0.5"></i>
                                                             {{ \Illuminate\Support\Str::limit($property->address, 48) }}

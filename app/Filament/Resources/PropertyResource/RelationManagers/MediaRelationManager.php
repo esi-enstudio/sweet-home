@@ -10,6 +10,10 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Drivers\Gd\Driver;
+use Intervention\Image\ImageManager;
 
 class MediaRelationManager extends RelationManager
 {
@@ -20,49 +24,59 @@ class MediaRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\Select::make('type')
-                    ->label('Image/Video Type')
+                    ->label('Media Type')
                     ->required()
+                    ->live() // এটি প্রয়োজন যাতে শর্তভিত্তিক ইনপুট রিয়েলটাইমে আপডেট হয়
+                    ->afterStateUpdated(fn (Forms\Set $set) => $set('path', null)) // টাইপ পরিবর্তন করলে ফাইল রিসেট হবে
                     ->options([
-                        'image' => 'Image',
+                        'gallery' => 'Gallery',
                         'video' => 'Video',
+                        'hero' => 'Hero Image',
                         'showcase' => 'Showcase Image',
                         'spotlight' => 'Spotlight Image',
-                    ])
-                    ->live(), // এটি প্রয়োজন যাতে শর্তভিত্তিক ইনপুট রিয়েলটাইমে আপডেট হয়
+                    ]),
 
                 Forms\Components\TextInput::make('caption')
                     ->label('Common Caption (Optional)')
                     ->placeholder('This caption will be applied to all uploaded images.'),
 
+                // Gallery (Multiple)
                 Forms\Components\FileUpload::make('path')
                     ->label('Upload Images')
                     ->multiple()
-                    ->imageEditor()
                     ->reorderable()
                     ->appendFiles()
                     ->image()
-                    ->directory('property/gallery')
-                    ->required(fn (callable $get) => $get('type') === 'image')
-                    ->visible(fn (callable $get) => $get('type') === 'image')
+                    ->directory('temp-uploads')
+                    ->required()
                     ->columnSpanFull(),
-
-                Forms\Components\FileUpload::make('showcase_image_path')
-                    ->label('Upload Showcase Image')
-                    ->imageEditor()
-                    ->image()
-                    ->directory('property/gallery/showcase')
-                    ->required(fn (callable $get) => $get('type') === 'showcase')
-                    ->visible(fn (callable $get) => $get('type') === 'showcase')
-                    ->columnSpanFull(),
-
-                Forms\Components\FileUpload::make('spotlight_image_path')
-                    ->label('Upload Spotlight Image')
-                    ->imageEditor()
-                    ->image()
-                    ->directory('property/gallery/spotlight')
-                    ->required(fn (callable $get) => $get('type') === 'spotlight')
-                    ->visible(fn (callable $get) => $get('type') === 'spotlight')
-                    ->columnSpanFull(),
+//
+//                // Hero (Single)
+//                Forms\Components\FileUpload::make('hero_image_path')
+//                    ->label('Upload Hero Image')
+//                    ->image()
+//                    ->directory('temp-uploads')
+//                    ->required(fn (callable $get) => $get('type') === 'hero')
+//                    ->visible(fn (callable $get) => $get('type') === 'hero')
+//                    ->columnSpanFull(),
+//
+//                // Showcase (Single)
+//                Forms\Components\FileUpload::make('showcase_image_path')
+//                    ->label('Upload Showcase Image')
+//                    ->image()
+//                    ->directory('temp-uploads')
+//                    ->required(fn (callable $get) => $get('type') === 'showcase')
+//                    ->visible(fn (callable $get) => $get('type') === 'showcase')
+//                    ->columnSpanFull(),
+//
+//                // Spotlight (Single)
+//                Forms\Components\FileUpload::make('spotlight_image_path')
+//                    ->label('Upload Spotlight Image')
+//                    ->image()
+//                    ->directory('temp-uploads')
+//                    ->required(fn (callable $get) => $get('type') === 'spotlight')
+//                    ->visible(fn (callable $get) => $get('type') === 'spotlight')
+//                    ->columnSpanFull(),
 
                 Forms\Components\TextInput::make('video_url')
                     ->label('Video URL')
@@ -111,36 +125,27 @@ class MediaRelationManager extends RelationManager
                     ->icon('heroicon-o-plus')
                     ->label('Add New')
                     ->using(function (array $data, RelationManager $livewire): Model {
+                        // ১. প্রপার্টির ইউনিক আইডি নিন
+                        $propertyId = $livewire->getOwnerRecord()->property_id;
+
+                        $imagePaths = $data['path'] ??
+                            ($data['hero_image_path'] ? [$data['hero_image_path']] : null) ??
+                            ($data['showcase_image_path'] ? [$data['showcase_image_path']] : null) ??
+                            ($data['spotlight_image_path'] ? [$data['spotlight_image_path']] : null) ??
+                            [];
+
                         $createdRecords = [];
 
-                        // $data['path'] এখন একটি অ্যারে, তাই আমরা লুপ চালাব
-                        if ($data['type'] === 'image') {
-                            foreach ($data['path'] as $filePath) {
-                                $createdRecords[] = $livewire->getRelationship()->create([
-                                    'type'      => $data['type'],
-                                    'path'      => $filePath,
-                                    'caption'   => $data['caption'],
-                                ]);
-                            }
-                        } elseif ($data['type'] === 'showcase') {
+                        foreach ($imagePaths as $tempPath) {
+                            $finalPath = $this->processAndSaveImage($tempPath, $propertyId, $data['type']);
+
                             $createdRecords[] = $livewire->getRelationship()->create([
-                                'type'                  => $data['type'],
-                                'showcase_image_path'   => $data['showcase_image_path'],
-                                'caption'               => $data['caption'],
-                            ]);
-                        } elseif ($data['type'] === 'spotlight') {
-                            $createdRecords[] = $livewire->getRelationship()->create([
-                                'type'                  => $data['type'],
-                                'spotlight_image_path'  => $data['spotlight_image_path'],
-                                'caption'               => $data['caption'],
-                            ]);
-                        } elseif ($data['type'] === 'video') {
-                            $createdRecords[] = $livewire->getRelationship()->create([
-                                'type'      => $data['type'],
-                                'video_url' => $data['video_url'], // এখানে এটা স্ট্রিং, যেমন ইউটিউব URL
-                                'caption'   => $data['caption'],
+                                'path' => $finalPath,
+                                'type' => $data['type'],
+                                'caption' => $data['caption'],
                             ]);
                         }
+
                         // ফিলামেন্টকে জানানোর জন্য শেষ রেকর্ডটি রিটার্ন করতে হবে
                         return last($createdRecords);
                     }),
@@ -172,5 +177,35 @@ class MediaRelationManager extends RelationManager
                 ]),
             ])
             ->reorderable('order_column'); // ছবি ড্র্যাগ করে সাজানোর জন্য
+    }
+
+    /**
+     * একটি প্রাইভেট হেল্পার মেথড যা ছবি প্রসেস এবং সেভ করে।
+     */
+    private function processAndSaveImage(?string $tempPath, string $propertyId, string $type): ?string
+    {
+        if (!$tempPath || !Storage::disk('public')->exists($tempPath)) {
+            return null;
+        }
+
+        try {
+            $manager = new ImageManager(new Driver());
+            $imageContent = Storage::disk('public')->get($tempPath);
+            $image = $manager->read($imageContent)
+                ->resize(1200, null, fn ($constraint) => $constraint->aspectRatio())
+                ->toJpeg(80);
+
+            $fileName = basename($tempPath);
+            // $type অনুযায়ী ফোল্ডারের নাম পরিবর্তন হবে
+            $finalPath = "property/{$propertyId}/{$type}/{$fileName}";
+
+            Storage::disk('public')->put($finalPath, (string) $image);
+            Storage::disk('public')->delete($tempPath);
+
+            return $finalPath;
+        } catch (\Throwable $e) {
+            Log::error("Image processing failed for {$type}: " . $e->getMessage());
+            return null;
+        }
     }
 }
