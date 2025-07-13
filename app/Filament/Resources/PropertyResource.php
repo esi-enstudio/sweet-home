@@ -58,6 +58,9 @@ class PropertyResource extends Resource
 
     protected static ?string $navigationLabel = 'My Properties';
 
+    /**
+     * @throws Exception
+     */
     public static function form(Form $form): Form
     {
         return $form
@@ -369,6 +372,8 @@ class PropertyResource extends Resource
                                 FileUpload::make('thumbnail')
                                     ->label('')
                                     ->image()
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png'])
+                                    ->rules(['mimes:jpg,jpeg,png']) // সার্ভার-সাইড ভ্যালিডেশন
                                     ->required()
                                     ->directory('temp-thumbnails')
                                     ->helperText('বিজ্ঞাপনের প্রধান এবং সবচেয়ে আকর্ষণীয় ছবিটি এখানে আপলোড করুন।'),
