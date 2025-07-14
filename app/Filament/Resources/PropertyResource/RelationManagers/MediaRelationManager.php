@@ -4,6 +4,7 @@ namespace App\Filament\Resources\PropertyResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -76,7 +77,7 @@ class MediaRelationManager extends RelationManager
                                             ->acceptedFileTypes(['image/jpeg', 'image/png'])
                                             ->rules(['mimes:jpg,jpeg,png']) // সার্ভার-সাইড ভ্যালিডেশন
                                             ->directory('temp-uploads')
-                                            ->required()
+                                            ->required(fn(Get $get) => in_array($get('type'), ['gallery','hero','showcase','spotlight']))
                                             ->columnSpanFull(),
 
                                         Forms\Components\Select::make('type')
@@ -95,18 +96,20 @@ class MediaRelationManager extends RelationManager
 
                                         Forms\Components\TextInput::make('width')
                                             ->label('Width (px)')
+                                            ->required()
                                             ->numeric()
-                                            ->required(),
+                                            ->helperText('<br>'),
 
                                         Forms\Components\TextInput::make('height')
                                             ->label('Height (px)')
-                                            ->numeric()
-                                            ->required(),
+                                            ->required()
+                                            ->numeric(),
                                     ]),
 
                                 Forms\Components\Tabs\Tab::make('Video')
                                     ->columns(2)
                                     ->schema([
+                                        Forms\Components\Hidden::make('type')->default('video'),
                                         Forms\Components\TextInput::make('video_url')
                                             ->label('Video URL')
                                             ->placeholder('https://youtube.com/...')
@@ -118,7 +121,54 @@ class MediaRelationManager extends RelationManager
                                     ]),
                             ])
                     ])
-                    ->using(fn (array $data, RelationManager $livewire): Model => $this->handleCreation($data, $livewire)),
+                    ->using(function (array $data, RelationManager $livewire): Model {
+                        $ownerRecord = $livewire->getOwnerRecord();
+
+                        // --- ভিডিও ট্যাব হ্যান্ডেল করুন ---
+                        if (!empty($data['video_url'])) {
+                            return $livewire->getRelationship()->create([
+                                'type' => 'video',
+                                'video_url' => $data['video_url'],
+                                'caption' => $data['caption'],
+                            ]);
+                        }
+
+                        // --- ইমেজ ট্যাব হ্যান্ডেল করুন ---
+                        // নিশ্চিত করুন যে path কী-টি আছে এবং এটি একটি অ্যারে
+                        if (!empty($data['path']) && is_array($data['path'])) {
+                            $createdRecords = [];
+                            $width = $data['width'] ?? null;
+                            $height = $data['height'] ?? null;
+                            $mediaType = $data['type']; // 'gallery', 'hero', etc.
+
+                            foreach ($data['path'] as $tempPath) {
+                                $finalPath = $this->processAndSaveImage(
+                                    $tempPath,
+                                    $ownerRecord->property_id,
+                                    $mediaType,
+                                    $width,
+                                    $height
+                                );
+
+                                if ($finalPath) {
+                                    $createdRecords[] = $livewire->getRelationship()->create([
+                                        'path' => $finalPath,
+                                        'type' => $mediaType,
+                                        'caption' => $data['caption'],
+                                    ]);
+                                }
+                            }
+
+                            // যদি কমপক্ষে একটি ছবি সফলভাবে সেভ হয়, তাহলে সর্বশেষটি রিটার্ন করুন
+                            if (!empty($createdRecords)) {
+                                return last($createdRecords);
+                            }
+                        }
+
+                        // যদি কোনো কিছু কাজ না করে বা কোনো ফাইল আপলোড না হয়,
+                        // তাহলে একটি এরর প্রতিরোধকারী ফলব্যাক রিটার্ন করুন।
+                        return $livewire->getRelationship()->make($data);
+                    })
             ])
             ->actions([
                 // EditAction এখন শুধুমাত্র একটি ছবির ক্যাপশন এডিট করতে ব্যবহৃত হবে
@@ -140,46 +190,6 @@ class MediaRelationManager extends RelationManager
     }
 
     /**
-     * Handles creation of media records.
-     * এটি এখন একটি Model ইনস্ট্যান্স রিটার্ন করবে।
-     */
-    protected function handleCreation(array $data, RelationManager $livewire): Model
-    {
-        $propertyId = $livewire->getOwnerRecord()->property_id;
-        $mediaType = $data['video_url'] ? 'video' : ($data['type'] ?? 'image');
-
-        // ভিডিওর জন্য
-        if ($mediaType === 'video') {
-            return $livewire->getRelationship()->create($data);
-        }
-
-        // ছবির জন্য
-        $imagePaths = is_array($data['path']) ? $data['path'] : [$data['path']];
-        $createdRecords = [];
-
-        foreach ($imagePaths as $tempPath) {
-            $finalPath = $this->processAndSaveImage($tempPath, $propertyId, $mediaType, $data['width'], $data['height']);
-            if ($finalPath) {
-                $createdRecords[] = $livewire->getRelationship()->create([
-                    'path' => $finalPath, 'type' => $mediaType, 'caption' => $data['caption']
-                ]);
-            }
-        }
-
-        // --- এখানে মূল পরিবর্তনটি করা হয়েছে ---
-
-        // যদি কমপক্ষে একটি রেকর্ড তৈরি হয়, তাহলে সর্বশেষটি রিটার্ন করুন
-        if (!empty($createdRecords)) {
-            return last($createdRecords);
-        }
-
-        // যদি কোনো রেকর্ড তৈরি না হয় (ব্যর্থতার ক্ষেত্রে),
-        // তাহলে একটি খালি, না-সেভ-হওয়া মডেল ইনস্ট্যান্স রিটার্ন করুন।
-        // এটি এরর প্রতিরোধ করবে।
-        return $livewire->getRelationship()->make($data);
-    }
-
-    /**
      * একটি প্রাইভেট হেল্পার মেথড যা ছবি প্রসেস এবং সেভ করে।
      */
     private function processAndSaveImage(?string $tempPath, string $propertyId, string $type, ?int $width, ?int $height): ?string
@@ -195,25 +205,29 @@ class MediaRelationManager extends RelationManager
             $image = $manager->read($imageContent);
 
             if ($width && $height) {
-                $image->cover($width, $height); // cover() রিসাইজ এবং ক্রপ দুটোই করে
+                $image->cover($width, $height);
             } else {
-                // একটি ফলব্যাক রিসাইজ
                 $image->scaleDown(width: 1200);
             }
 
-            $image->toJpeg(80); // কোয়ালিটিসহ JPEG-তে কনভার্ট করুন
+            // --- এখানে মূল পরিবর্তনটি করা হয়েছে ---
+            // toJpeg() বা toPng() ব্যবহার করে ইমেজটিকে একটি এনকোডেড স্ট্রিং-এ পরিণত করুন
+            $encodedImage = $image->toJpeg(80); // 80 হলো কোয়ালিটি
 
-            $fileName = basename($tempPath);
-            // $type অনুযায়ী সঠিক ফোল্ডারে সেভ করুন
+            $fileName = pathinfo($tempPath, PATHINFO_FILENAME) . '.jpg'; // আমরা JPEG-তে কনভার্ট করছি, তাই এক্সটেনশন .jpg হবে
             $finalPath = "property/{$propertyId}/{$type}/{$fileName}";
 
-            Storage::disk('public')->put($finalPath, (string) $image);
+            // এনকোড করা ইমেজ স্ট্রিংটি সেভ করুন
+            Storage::disk('public')->put($finalPath, (string) $encodedImage);
+
+            // অস্থায়ী ফাইলটি ডিলিট করুন
             Storage::disk('public')->delete($tempPath);
 
             Log::info("Image processed and saved to: " . $finalPath);
             return $finalPath;
+
         } catch (\Throwable $e) {
-            Log::error("Image processing failed for type {$type}: " . $e->getMessage());
+            Log::error("Image processing failed: " . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
             return null;
         }
     }
