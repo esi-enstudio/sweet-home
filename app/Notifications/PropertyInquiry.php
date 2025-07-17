@@ -4,8 +4,11 @@ namespace App\Notifications;
 
 use App\Models\Message;
 use App\Models\Property;
-use Illuminate\Bus\Queueable;
 use Filament\Notifications\Notification;
+use Illuminate\Bus\Queueable;
+use Filament\Notifications\Actions\Action as NotificationAction;
+use App\Filament\Resources\PropertyResource as AdminPropertyResource;
+use App\Filament\User\Resources\PropertyResource as UserPropertyResource;
 
 class PropertyInquiry extends \Illuminate\Notifications\Notification
 {
@@ -38,15 +41,31 @@ class PropertyInquiry extends \Illuminate\Notifications\Notification
      */
     public function toDatabase(object $notifiable): array
     {
+        $url = '';
+
+        // যদি নোটিফাই করা ব্যবহারকারীর 'Admin' রোল থাকে
+        if ($notifiable->hasRole('super-admin')) {
+            // অ্যাডমিন রিসোর্স ব্যবহার করে URL তৈরি করুন
+            // getUrl-এর দ্বিতীয় প্যারামিটারটি হলো প্যানেলের আইডি
+            $url = AdminPropertyResource::getUrl('edit', ['record' => $this->property], panel: 'admin');
+        } else {
+            // ইউজার রিসোর্স ব্যবহার করে URL তৈরি করুন
+            $url = UserPropertyResource::getUrl('edit', ['record' => $this->property], panel: 'user');
+        }
+
+
+
+
         return Notification::make()
-            ->title('New Inquiry for your property!')
-            ->body("You have received a new message from {$this->inquiry->name} for your property: '{$this->property->title}'.")
+            ->title("New Inquiry for: {$this->property->title}")
+            ->body("You received a new message from {$this->inquiry->name}.")
             ->icon('heroicon-o-chat-bubble-left-ellipsis')
-            // এখানে একটি অ্যাকশন বাটন যোগ করা যেতে পারে যা মেসেজটি দেখাবে
-            // ->actions([
-            //     NotificationAction::make('view')
-            //         ->url(MessageResource::getUrl('view', ['record' => $this->inquiry]))
-            // ])
+            ->actions([
+                NotificationAction::make('view_property')
+                    ->label('View Property')
+                    ->url($url)
+                    ->markAsRead(),
+            ])
             ->getDatabaseMessage();
     }
 

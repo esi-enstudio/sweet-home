@@ -28,7 +28,7 @@ class MessagesRelationManager extends RelationManager
             ->recordTitleAttribute('name')
             ->columns([
                 Tables\Columns\TextColumn::make('name')->searchable(),
-                Tables\Columns\TextColumn::make('email')->searchable(),
+                Tables\Columns\TextColumn::make('phone')->searchable(),
                 Tables\Columns\IconColumn::make('is_read')->boolean()->label('Read'),
                 Tables\Columns\TextColumn::make('created_at')->dateTime(),
             ])
@@ -41,7 +41,7 @@ class MessagesRelationManager extends RelationManager
             ->actions([
                 Tables\Actions\ViewAction::make()->form([
                     Forms\Components\TextInput::make('name')->disabled(),
-                    Forms\Components\TextInput::make('email')->disabled(),
+                    Forms\Components\TextInput::make('phone')->disabled(),
                     Forms\Components\Textarea::make('message')->columnSpanFull()->disabled(),
                 ]),
                 Tables\Actions\DeleteAction::make(),

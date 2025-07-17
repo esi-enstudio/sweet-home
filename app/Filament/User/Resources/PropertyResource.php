@@ -87,32 +87,32 @@ class PropertyResource extends Resource
                                     ->afterStateUpdated(fn (Set $set) => $set('district_id', null)),
 
                                 Select::make('district_id')
-                                    ->required()
-                                    ->helperText('প্রপার্টিটি কোন জেলায় অবস্থিত তা নির্বাচন করুন।')
+                                    ->label('District')
                                     ->options(fn (Get $get): Collection => District::query()
                                         ->where('division_id', $get('division_id'))
                                         ->pluck('bn_name', 'id'))
-                                    ->searchable()
-                                    ->preload()
-                                    ->live()
-                                    ->afterStateUpdated(fn (Set $set) => $set('upazila_id', null)),
+                                    ->getOptionLabelUsing(fn ($value): ?string => District::find($value)?->bn_name)
+                                    ->searchable()->live()->preload()
+                                    ->afterStateUpdated(fn (Set $set) => $set('upazila_id', null))
+                                    ->required(),
 
                                 Select::make('upazila_id')
-                                    ->required()
-                                    ->helperText('প্রপার্টিটি কোন উপজেলায় অবস্থিত তা নির্বাচন করুন।')
+                                    ->label('Upazila')
                                     ->options(fn (Get $get): Collection => Upazila::query()
                                         ->where('district_id', $get('district_id'))
                                         ->pluck('bn_name', 'id'))
-                                    ->searchable()
-                                    ->preload()
-                                    ->live()
-                                    ->afterStateUpdated(fn (Set $set) => $set('union_id', null)),
+                                    // --- এখানে getOptionLabel() যোগ করা হয়েছে ---
+                                    ->getOptionLabelUsing(fn ($value): ?string => Upazila::find($value)?->bn_name)
+                                    ->searchable()->live()->preload()
+                                    ->afterStateUpdated(fn (Set $set) => $set('union_id', null))
+                                    ->required(),
 
                                 Select::make('union_id')
                                     ->helperText('প্রপার্টিটি কোন ইউনিয়নে অবস্থিত তা নির্বাচন করুন (যদি থাকে)।')
                                     ->options(fn (Get $get): Collection => Union::query()
                                         ->where('upazila_id', $get('upazila_id'))
                                         ->pluck('bn_name', 'id'))
+                                    ->getOptionLabelUsing(fn ($value): ?string => Union::find($value)?->bn_name)
                                     ->searchable()
                                     ->preload()
                                     ->nullable(),
@@ -211,6 +211,7 @@ class PropertyResource extends Resource
                     ->schema([
                         // --- Status & Association Section ---
                         Fieldset::make('Homepage Properties')
+                            ->visible(fn() => Auth::user()->hasRole('super-admin'))
                             ->columns(1)
                             ->schema([
                                 Toggle::make('is_hero_featured')
