@@ -118,12 +118,9 @@
                         </a>
                     </li>
 
-                    <!-- Contact -->
+                    <!-- ContactPage -->
                     <li>
-                        <a
-                                href="#"
-                                class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px"
-                        >
+                        <a href="{{ route('contact') }}" class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px">
                             Contact
                         </a>
                     </li>

@@ -94,6 +94,7 @@ class PropertyResource extends Resource
                                     ->getOptionLabelUsing(fn ($value): ?string => District::find($value)?->bn_name)
                                     ->searchable()->live()->preload()
                                     ->afterStateUpdated(fn (Set $set) => $set('upazila_id', null))
+                                    ->helperText('প্রপার্টিটি কোন জেলায় অবস্থিত তা নির্বাচন করুন।')
                                     ->required(),
 
                                 Select::make('upazila_id')
@@ -105,16 +106,17 @@ class PropertyResource extends Resource
                                     ->getOptionLabelUsing(fn ($value): ?string => Upazila::find($value)?->bn_name)
                                     ->searchable()->live()->preload()
                                     ->afterStateUpdated(fn (Set $set) => $set('union_id', null))
+                                    ->helperText('প্রপার্টিটি কোন উপজেলায় অবস্থিত তা নির্বাচন করুন।')
                                     ->required(),
 
                                 Select::make('union_id')
-                                    ->helperText('প্রপার্টিটি কোন ইউনিয়নে অবস্থিত তা নির্বাচন করুন (যদি থাকে)।')
                                     ->options(fn (Get $get): Collection => Union::query()
                                         ->where('upazila_id', $get('upazila_id'))
                                         ->pluck('bn_name', 'id'))
                                     ->getOptionLabelUsing(fn ($value): ?string => Union::find($value)?->bn_name)
                                     ->searchable()
                                     ->preload()
+                                    ->helperText('প্রপার্টিটি কোন ইউনিয়নে অবস্থিত তা নির্বাচন করুন। (যদি থাকে)')
                                     ->nullable(),
 
                                 TextInput::make('latitude')
@@ -152,8 +154,7 @@ class PropertyResource extends Resource
                                     ->helperText('শুধুমাত্র সংখ্যা লিখুন, যেমন- 25000।')
                                     ->numeric()
                                     ->required()
-                                    ->prefix('BDT')
-                                    ->nullable(),
+                                    ->prefix('BDT'),
 
                                 TextInput::make('service_charge')
                                     ->helperText('লিফট, জেনারেটর, নিরাপত্তা ইত্যাদি সহ মাসিক সার্ভিস চার্জ উল্লেখ করুন। (যদি থাকে)')
@@ -168,6 +169,7 @@ class PropertyResource extends Resource
                                     ->nullable(),
 
                                 Select::make('rent_negotiable')
+                                    ->required()
                                     ->helperText('ভাড়া নিয়ে আলোচনার সুযোগ আছে কি না তা নির্বাচন করুন।')
                                     ->options(['negotiable' => 'Negotiable', 'fixed' => 'Fixed'])
                                     ->default('negotiable'),
@@ -179,8 +181,8 @@ class PropertyResource extends Resource
                                     ->columnSpanFull(),
                             ])->columns(2),
 
-                        // --- Rules & Contact Section ---
-                        Fieldset::make('Rules & Contact')
+                        // --- Rules & ContactPage Section ---
+                        Fieldset::make('Rules & ContactPage')
                             ->schema([
                                 TextInput::make('contact_number_primary')
                                     ->helperText('গ্রাহকরা এই নম্বরে সরাসরি যোগাযোগ করবে।')
@@ -249,7 +251,7 @@ class PropertyResource extends Resource
                                     ->content(fn(?Model $record) => 'ID: ' . $record?->property_id),
 
                                 Select::make('status')
-                                    ->visibleOn(['edit'])
+                                    ->visible(fn() => Auth::user()->hasRole(['super-admin']))
                                     ->options([
                                         'pending' => 'Pending',
                                         'approved' => 'Approved',

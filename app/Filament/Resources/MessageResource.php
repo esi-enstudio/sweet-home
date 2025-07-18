@@ -8,11 +8,12 @@ use App\Models\Message;
 use Exception;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Fieldset;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class MessageResource extends Resource
 {
@@ -76,7 +77,31 @@ class MessageResource extends Resource
         return [
             'index' => Pages\ListMessages::route('/'),
             'create' => Pages\CreateMessage::route('/create'),
+            'view' => Pages\ViewMessage::route('/{record}'),
             'edit' => Pages\EditMessage::route('/{record}/edit'),
         ];
+    }
+
+    /**
+     * Define the info-list schema for the resource.
+     */
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Fieldset::make('Full Message')->schema([
+                    TextEntry::make('name')
+                        ->label('Sender Name')
+                        ->icon('heroicon-o-user'),
+
+                    TextEntry::make('phone')
+                        ->label('Phone Number')
+                        ->icon('heroicon-o-phone')
+                        ->copyable(),
+
+                    TextEntry::make('message')
+                        ->columnSpanFull(),
+                ])
+            ]);
     }
 }

@@ -4,6 +4,10 @@ namespace App\Filament\Resources\PropertyResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\Fieldset;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -25,7 +29,7 @@ class MessagesRelationManager extends RelationManager
     public function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('name')
+            ->recordTitleAttribute('phone')
             ->columns([
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('phone')->searchable(),
@@ -39,11 +43,16 @@ class MessagesRelationManager extends RelationManager
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make()->form([
-                    Forms\Components\TextInput::make('name')->disabled(),
-                    Forms\Components\TextInput::make('phone')->disabled(),
-                    Forms\Components\Textarea::make('message')->columnSpanFull()->disabled(),
-                ]),
+                Tables\Actions\ViewAction::make()
+                    // infolist() এখানে ডিফাইন করলে, এটি পেজ না খুঁজে মডাল ব্যবহার করবে
+                    ->infolist([
+                        Section::make('Message Details')
+                            ->schema([
+                                TextEntry::make('name'),
+                                TextEntry::make('phone'),
+                                TextEntry::make('message')->columnSpanFull(),
+                            ])->columns(2),
+                    ]),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

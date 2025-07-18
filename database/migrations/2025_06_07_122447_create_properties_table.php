@@ -68,7 +68,7 @@ return new class extends Migration
             $table->unsignedInteger('hero_order_column')->nullable();
             $table->text('house_rules')->nullable();
 
-            // --- Contact Details ---
+            // --- ContactPage Details ---
             $table->string('contact_number_primary')->unique();
             $table->string('contact_whatsapp')->unique()->nullable();
 
