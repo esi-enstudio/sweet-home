@@ -86,10 +86,6 @@ class MediaResource extends Resource
                                     ->columnSpanFull(),
                             ]),
                     ]),
-
-
-
-
             ]);
     }
 

@@ -9,7 +9,7 @@ trait MarksAsRead
     /**
      * Mark the given record as read if it hasn't been already.
      */
-    protected function markAsRead(Model $record): void
+    protected static function markAsRead(Model $record): void
     {
         // নিশ্চিত করুন যে মডেলে 'is_read' নামে একটি কলাম আছে
         if (isset($record->is_read) && !$record->is_read) {

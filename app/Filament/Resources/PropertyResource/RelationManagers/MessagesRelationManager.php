@@ -3,10 +3,12 @@
 namespace App\Filament\Resources\PropertyResource\RelationManagers;
 
 use App\Traits\MarksAsRead;
+use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\Fieldset;
 use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\Split;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Infolist;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -27,7 +29,12 @@ class MessagesRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('property_id')
+                    ->relationship('property', 'title'),
+                Forms\Components\TextInput::make('name'),
+                Forms\Components\TextInput::make('phone'),
+                Forms\Components\Textarea::make('message')->columnSpanFull(),
+                Forms\Components\Toggle::make('is_read')->label('Mark as Read'),
             ]);
     }
 
@@ -35,12 +42,24 @@ class MessagesRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('phone')
+            ->modifyQueryUsing(fn(Builder $query) => $query->orderBy('messages.is_read', 'asc'))
             ->columns([
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('phone')->searchable(),
                 Tables\Columns\IconColumn::make('is_read')->boolean()->label('Read'),
-                Tables\Columns\TextColumn::make('created_at')->dateTime(),
+                Tables\Columns\TextColumn::make('read_at')
+                    ->dateTime()
+                    ->formatStateUsing(fn($state) => Carbon::parse($state)->diffForHumans())
+                    ->description(fn($state) => Carbon::parse($state)->toDayDateTimeString())
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Send at')
+                    ->dateTime()
+                    ->formatStateUsing(fn($state) => Carbon::parse($state)->diffForHumans())
+                    ->description(fn($state) => Carbon::parse($state)->toDayDateTimeString())
+                    ->sortable(),
             ])
+            ->defaultPaginationPageOption(5)
             ->filters([
                 //
             ])
@@ -49,23 +68,35 @@ class MessagesRelationManager extends RelationManager
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
+                    ->modalHeading('View message from')
                     // ভিউ করার আগে এই ফাংশনটি চলবে
                     ->mutateRecordDataUsing(function (Model $record) {
                         // রেকর্ডটিকে "read" হিসেবে মার্ক করুন
-                        $this->markAsRead($record);
+                        static::markAsRead($record);
 
                         // মূল রেকর্ড ডেটা রিটার্ন করুন, কোনো পরিবর্তন ছাড়াই
                         return $record->toArray();
                     })
                     ->infolist([
-                        Section::make('Message Details')
+                        Fieldset::make('Sender Info')
                             ->schema([
-                                TextEntry::make('name'),
-                                TextEntry::make('phone'),
-                                TextEntry::make('message')->columnSpanFull(),
-                            ])->columns(2),
+                                Split::make([
+                                    TextEntry::make('name'),
+
+                                    TextEntry::make('phone')
+                                        ->label('Phone Number'),
+                                ])
+                            ]),
+
+                        Fieldset::make('Message')
+                            ->schema([
+                                TextEntry::make('message')
+                                    ->label('')
+                                    ->columnSpanFull(),
+                            ]),
                     ]),
 
+                Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([

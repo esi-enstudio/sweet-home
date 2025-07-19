@@ -46,14 +46,14 @@
                                 {{ $showcaseProperty->bedrooms }}
                                 <i class="flaticon-bed ml-1"></i>
                             </p>
-                            <p class="leading-1.8">Bedrooms</p>
+                            <p class="leading-1.8">Bed</p>
                         </li>
                         <li class="text-sm pr-4 border-r border-primary-color border-opacity-20">
                             <p class="leading-1.8 font-bold">
                                 {{ $showcaseProperty->bathrooms }}
                                 <i class="flaticon-clean ml-1"></i>
                             </p>
-                            <p class="leading-1.8">Bathrooms</p>
+                            <p class="leading-1.8">Bath</p>
                         </li>
                         <li class="text-sm pr-4 border-r border-primary-color border-opacity-20">
                             <p class="leading-1.8 font-bold">
@@ -67,7 +67,7 @@
                                 {{ $showcaseProperty->total_area }}
                                 <i class="flaticon-square-shape-design-interface-tool-symbol ml-1"></i>
                             </p>
-                            <p class="leading-1.8">square Ft</p>
+                            <p class="leading-1.8">sq Ft</p>
                         </li>
                     </ul>
 

@@ -7,8 +7,8 @@ use App\Models\Property;
 use Filament\Notifications\Notification;
 use Illuminate\Bus\Queueable;
 use Filament\Notifications\Actions\Action as NotificationAction;
-use App\Filament\Resources\PropertyResource as AdminPropertyResource;
-use App\Filament\User\Resources\PropertyResource as UserPropertyResource;
+use App\Filament\Resources\MessageResource as AdminMessageResource;
+use App\Filament\User\Resources\MessageResource as UserMessageResource;
 
 class PropertyInquiry extends \Illuminate\Notifications\Notification
 {
@@ -47,22 +47,19 @@ class PropertyInquiry extends \Illuminate\Notifications\Notification
         if ($notifiable->hasRole('super-admin')) {
             // অ্যাডমিন রিসোর্স ব্যবহার করে URL তৈরি করুন
             // getUrl-এর দ্বিতীয় প্যারামিটারটি হলো প্যানেলের আইডি
-            $url = AdminPropertyResource::getUrl('edit', ['record' => $this->property], panel: 'admin');
+            $url = AdminMessageResource::getUrl('index', [], panel: 'admin');
         } else {
             // ইউজার রিসোর্স ব্যবহার করে URL তৈরি করুন
-            $url = UserPropertyResource::getUrl('edit', ['record' => $this->property], panel: 'user');
+            $url = UserMessageResource::getUrl('index', [], panel: 'user');
         }
-
-
-
 
         return Notification::make()
             ->title("New Inquiry for: {$this->property->title}")
             ->body("You received a new message from {$this->inquiry->name}.")
             ->icon('heroicon-o-chat-bubble-left-ellipsis')
             ->actions([
-                NotificationAction::make('view_property')
-                    ->label('View Property')
+                NotificationAction::make('view_message')
+                    ->label('View message')
                     ->url($url)
                     ->markAsRead(),
             ])

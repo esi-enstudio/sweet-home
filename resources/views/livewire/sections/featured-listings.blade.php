@@ -29,10 +29,8 @@
                                 >
                                     <!-- card thumbs -->
                                     <div class="relative leading-1">
-                                        <a
-                                            href="{{ route('single.property', $listing->slug) }}"
-                                            class="overflow-hidden"
-                                        >
+                                        <a href="{{ route('single.property', $listing->slug) }}"
+                                            class="overflow-hidden">
                                             <img
                                                 src="{{ $listing->thumbnail && Storage::disk('public')->exists($listing->thumbnail)
                                                      ? Storage::url($listing->thumbnail)
@@ -40,19 +38,14 @@
                                                 alt="{{ $listing->title }}"
                                             >
                                         </a>
-                                        <div
-                                            class="absolute w-full left-0 bottom-0 px-15px pb-15px lg:px-30px bg-transparent bg-gradient-color-5"
-                                        >
-                                            <div
-                                                class="text-sm text-white flex justify-between items-center"
-                                            >
-                                                <a
-                                                    href="{{ route('single.property', $listing->slug) }}"
-                                                    class="hover:text-secondary-color"
-                                                >
+
+                                        <div class="absolute w-full left-0 bottom-0 px-15px pb-15px lg:px-30px bg-transparent bg-gradient-color-5">
+                                            <div class="text-sm text-white flex justify-between items-center">
+                                                <a href="{{ route('single.property', $listing->slug) }}" class="hover:text-secondary-color">
                                                     <i class="flaticon-pin"></i>
-                                                    {{ $listing?->address }}
+                                                    {{ \Illuminate\Support\Str::limit($listing?->address, 25) }}
                                                 </a>
+
                                                 <ul class="flex gap-10px">
                                                     <li>
                                                         <a
@@ -112,23 +105,24 @@
                                                 href="{{ route('single.property', $listing->slug) }}"
                                                 class="hover:text-secondary-color leading-1.3"
                                             >
-                                                {{ $listing?->title }}
+                                                {{ \Illuminate\Support\Str::limit($listing?->title, 25) }}
                                             </a>
                                         </h4>
                                         <p class="text-sm mb-15px">
                                             <span class="leading-1.8">
-                                                {{ $listing?->description }}
+                                                {{ \Illuminate\Support\Str::limit($listing?->description, 90) }}
                                             </span>
                                         </p>
 
-                                        <ul class="flex flex-wrap gap-15px py-4">
+{{--                                        <ul class="flex flex-wrap gap-15px py-4">--}}
+                                        <ul class="flex justify-between gap-15px py-4">
                                             <li
                                                 class="text-sm pr-4 border-r border-primary-color border-opacity-20"
                                             >
                                                 <p class="leading-1.8 font-bold">
                                                     {{ $listing?->bedrooms }}<i class="flaticon-bed ml-1"></i>
                                                 </p>
-                                                <p class="leading-1.8">Bedrooms</p>
+                                                <p class="leading-1.8">Beds</p>
                                             </li>
                                             <li
                                                 class="text-sm pr-4 border-r border-primary-color border-opacity-20"
@@ -136,14 +130,14 @@
                                                 <p class="leading-1.8 font-bold">
                                                     {{ $listing?->bathrooms }}<i class="flaticon-clean ml-1"></i>
                                                 </p>
-                                                <p class="leading-1.8">Bathrooms</p>
+                                                <p class="leading-1.8">Baths</p>
                                             </li>
 
                                             <li class="text-sm">
                                                 <p class="leading-1.8 font-bold">
                                                     {{ $listing?->total_area }}<i class="flaticon-square-shape-design-interface-tool-symbol ml-1"></i>
                                                 </p>
-                                                <p class="leading-1.8">square Ft</p>
+                                                <p class="leading-1.8">sq Ft</p>
                                             </li>
                                         </ul>
                                     </div>

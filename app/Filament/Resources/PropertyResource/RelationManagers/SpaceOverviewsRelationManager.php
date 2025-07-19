@@ -46,6 +46,7 @@ class SpaceOverviewsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('pivot.width')->label('Width (ft)'),
                 Tables\Columns\TextColumn::make('pivot.total_sq_feet')->label('Total Area (sq. ft.)')->weight('bold'),
             ])
+            ->defaultPaginationPageOption(5)
             ->filters([
                 //
             ])

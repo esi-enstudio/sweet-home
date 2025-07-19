@@ -33,6 +33,7 @@ class FactAndFeaturesRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('pivot.dimensions')->label('Dimensions'),
             ])
+            ->defaultPaginationPageOption(5)
             ->filters([
                 //
             ])

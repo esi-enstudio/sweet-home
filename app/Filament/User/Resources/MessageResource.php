@@ -1,21 +1,23 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\User\Resources;
 
-use App\Filament\Resources\MessageResource\Pages;
-use App\Filament\Resources\MessageResource\RelationManagers;
+use App\Filament\Resources\PropertyResource;
+use App\Filament\User\Resources\MessageResource\Pages;
+use App\Filament\User\Resources\MessageResource\RelationManagers;
 use App\Models\Message;
+use App\Models\Property;
 use App\Traits\MarksAsRead;
 use Carbon\Carbon;
-use Exception;
-use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Filament\Infolists;
 use Filament\Infolists\Infolist;
-use Illuminate\Database\Eloquent\Model;
 
 class MessageResource extends Resource
 {
@@ -25,25 +27,18 @@ class MessageResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?int $navigationSort = 8;
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('property_id')
-                    ->searchable()
-                    ->preload()
-                    ->relationship('property', 'property_id'),
-                Forms\Components\TextInput::make('name'),
-                Forms\Components\TextInput::make('phone'),
-                Forms\Components\Textarea::make('message')->columnSpanFull(),
-                Forms\Components\Toggle::make('is_read')->label('Mark as Read'),
+                //
             ]);
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public static function table(Table $table): Table
     {
@@ -55,7 +50,8 @@ class MessageResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Sender Name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('phone')->searchable(),
+                Tables\Columns\TextColumn::make('phone')
+                    ->searchable(),
                 Tables\Columns\IconColumn::make('is_read')->boolean(),
                 Tables\Columns\TextColumn::make('read_at')
                     ->dateTime()
@@ -75,7 +71,6 @@ class MessageResource extends Resource
             ])
             ->actions([
                 Tables\Actions\ViewAction::make()
-                    ->name('view')
                     ->mutateRecordDataUsing(function (Model $record) {
                         // আমাদের Trait-এর markAsRead মেথডটি কল করুন
                         static::markAsRead($record);
@@ -83,9 +78,6 @@ class MessageResource extends Resource
                         // মূল রেকর্ড ডেটা রিটার্ন করুন
                         return $record->toArray();
                     }),
-
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -134,8 +126,19 @@ class MessageResource extends Resource
         ];
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        $propertiesId = Property::query()
+            ->where('user_id', Auth::id())->pluck('id');
+
+        return parent::getEloquentQuery()->whereIn('property_id', $propertiesId);
+    }
+
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::where('is_read', false)->count();
+        $propertiesId = Property::query()
+            ->where('user_id', Auth::id())->pluck('id');
+
+        return static::getModel()::whereIn('property_id', $propertiesId)->where('is_read', false)->count();
     }
 }

@@ -59,6 +59,7 @@ class FloorPlansRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('total_area')
                     ->suffix(' sq. ft.'),
             ])
+            ->defaultPaginationPageOption(5)
             ->filters([
                 //
             ])

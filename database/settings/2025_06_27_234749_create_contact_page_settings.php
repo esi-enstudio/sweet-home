@@ -6,8 +6,8 @@ return new class extends SettingsMigration
 {
     public function up(): void
     {
-        $this->migrator->add('contact_page.banner_title', 'ContactPage Us');
-        $this->migrator->add('contact_page.form_title', 'Get A ContactPage');
+        $this->migrator->add('contact_page.banner_title', 'Contact Us');
+        $this->migrator->add('contact_page.form_title', 'Get A Contact');
         $this->migrator->add('contact_page.contact_cards', []);
     }
 

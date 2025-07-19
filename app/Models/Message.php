@@ -10,7 +10,40 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class Message extends Model
 {
-    protected $fillable = ['property_id', 'user_id','name','phone', 'message', 'is_read'];
+    protected $fillable = ['property_id', 'user_id','name','phone', 'message', 'is_read', 'read_at'];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'is_read' => 'boolean',
+        'read_at' => 'datetime', // <-- $casts-এ যোগ করুন
+    ];
+
+    /**
+     * The "booted" method of the model.
+     */
+    protected static function booted(): void
+    {
+        static::saving(function (Message $message) {
+            // isDirty() চেক করে যে is_read ফিল্ডটি এই সেভ অপারেশনে পরিবর্তন হচ্ছে কি না
+            if ($message->isDirty('is_read')) {
+
+                // যদি is_read-কে true করা হয়
+                if ($message->is_read) {
+                    // read_at কলামে বর্তমান সময় সেট করুন
+                    $message->read_at = now();
+                }
+                // যদি is_read-কে false করা হয়
+                else {
+                    // read_at কলামটিকে null করে দিন
+                    $message->read_at = null;
+                }
+            }
+        });
+    }
 
     /**
      * Get the property that the message was sent for.
