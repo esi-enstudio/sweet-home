@@ -1,5 +1,6 @@
 <section>
-    <div class="bg-[url('../img/bg/20.jpg')] bg-top bg-no-repeat">
+    @if($this->testimonials->isNotEmpty())
+        <div class="bg-[url('../img/bg/20.jpg')] bg-top bg-no-repeat">
         <div class="container pt-115px pb-55px">
             <!-- section heading -->
             <div class="text-center mb-50px">
@@ -112,4 +113,6 @@
             @endif
         </div>
     </div>
+    @endif
 </section>
+

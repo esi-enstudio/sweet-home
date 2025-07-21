@@ -2,6 +2,7 @@
 
 use App\Livewire\ContactPage;
 use App\Livewire\HomeComponent;
+use App\Livewire\OurInspirationPage;
 use App\Livewire\Properties;
 use App\Livewire\SingleProperty;
 use Illuminate\Support\Facades\Route;
@@ -20,5 +21,7 @@ Route::get('/properties/{property:slug}', SingleProperty::class)->name('single.p
 Route::post('/properties/{property:slug}/track-view', [PropertyViewController::class, 'store'])
     ->name('properties.track-view')
     ->middleware('throttle:5,1');
+
+Route::get('/inspiration', OurInspirationPage::class)->name('inspiration');
 
 Route::get('/contact', ContactPage::class)->name('contact');
