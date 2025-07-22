@@ -61,16 +61,39 @@
                                 <!-- social links -->
                                 @if(!empty($member->social_links))
                                     <ul class="text-sm lg:text-base flex gap-15px justify-center items-center">
-                                        @foreach($member->social_links as $link)
-                                            @if($link['profile_url'])
-                                                <li class="leading-1.8 lg:leading-1.8">
-                                                    <a href="{{ $link['profile_url'] }}" target="_blank">
-                                                        {{-- আইকন দেখানোর জন্য --}}
-                                                        <i class="{{ strtolower($link['icon_class']) }}"></i>
-                                                    </a>
-                                                </li>
-                                            @endif
-                                        @endforeach
+
+                                        {{-- Facebook --}}
+                                        @if(isset($member->social_links['facebook']))
+                                            <li><a href="{{ $member->social_links['facebook'] }}" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                                        @endif
+
+                                        {{-- X --}}
+                                        @if(isset($member->social_links['x']))
+                                            <li><a href="{{ $member->social_links['twitter'] }}" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                        @endif
+
+                                        {{-- LinkedIn --}}
+                                        @if(isset($member->social_links['linkedin']))
+                                            <li><a href="{{ $member->social_links['linkedin'] }}" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                                        @endif
+
+                                        {{-- Instagram --}}
+                                        @if(isset($member->social_links['linkedin']))
+                                            <li><a href="{{ $member->social_links['instagram'] }}" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                                        @endif
+
+
+
+{{--                                        @foreach($member->social_links as $link)--}}
+{{--                                            @if($link['profile_url'])--}}
+{{--                                                <li class="leading-1.8 lg:leading-1.8">--}}
+{{--                                                    <a href="{{ $link['profile_url'] }}" target="_blank">--}}
+{{--                                                        --}}{{-- আইকন দেখানোর জন্য --}}
+{{--                                                        <i class="{{ strtolower($link['icon_class']) }}"></i>--}}
+{{--                                                    </a>--}}
+{{--                                                </li>--}}
+{{--                                            @endif--}}
+{{--                                        @endforeach--}}
                                     </ul>
                                 @endif
                             </div>

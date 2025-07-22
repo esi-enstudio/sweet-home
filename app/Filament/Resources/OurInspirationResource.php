@@ -46,36 +46,23 @@ class OurInspirationResource extends Resource
                                 Forms\Components\FileUpload::make('photo')
                                     ->label('')
                                     ->image()
-                                    ->disk('public')
-                                    ->directory('property/our-inspiration/photos'),
+                                    ->acceptedFileTypes(['image/jpeg', 'image/png'])
+                                    ->rules(['mimes:jpg,jpeg,png'])
+                                    ->directory('temp-uploads'),
                             ]),
                         ]),
                 ]),
 
-
-
                 Forms\Components\Fieldset::make('Social Links')
                     ->schema([
-                        Forms\Components\Repeater::make('social_links')
-                            ->label('')
-                            ->addActionLabel('Add member')
-                            ->addActionAlignment(Alignment::Start)
-                            ->reorderableWithButtons()
-                            ->collapsible()
-                            ->cloneable()
+                        Forms\Components\KeyValue::make('social_links')
+                            ->label('Social Media Links')
+                            ->keyLabel('Platform Name') // Key ফিল্ডের লেবেল
+                            ->valueLabel('Profile URL') // Value ফিল্ডের লেবেল
+                            ->reorderable()
+                            ->addActionLabel('Add Social Link')
                             ->columnSpanFull()
-                            ->schema([
-                                Forms\Components\Grid::make([
-                                    'default' => 1,
-                                    'sm' => 2,
-                                    'md' => 3,
-                                ])
-                                    ->schema([
-                                        Forms\Components\TextInput::make('platform')->required(),
-                                        Forms\Components\TextInput::make('profile_url')->url()->required(),
-                                        Forms\Components\TextInput::make('icon_class')->required(),
-                                    ]),
-                            ]),
+                            ->helperText('Enter the social media platform name (e.g., facebook, twitter) and the full URL.'),
                     ]),
             ]);
     }
@@ -91,6 +78,7 @@ class OurInspirationResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -2,22 +2,24 @@
 
 namespace App\Filament\Resources\PropertyResource\RelationManagers;
 
+use App\Traits\ImageProcessingTrait;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
 
 class MediaRelationManager extends RelationManager
 {
+    use ImageProcessingTrait;
+
     protected static string $relationship = 'media';
 
     public function form(Form $form): Form
@@ -49,8 +51,15 @@ class MediaRelationManager extends RelationManager
                     ->width(100)
                     ->height(100),
 
-                Tables\Columns\TextColumn::make('type')->searchable(),
-                Tables\Columns\TextColumn::make('video_url')->searchable()->wrap(),
+                Tables\Columns\TextColumn::make('type')
+                    ->badge()
+                    ->formatStateUsing(fn($state) => Str::title($state))
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('video_url')
+                    ->searchable()
+                    ->wrap(),
+
                 Tables\Columns\TextColumn::make('caption')->searchable(),
             ])
             ->deferLoading()
@@ -69,20 +78,9 @@ class MediaRelationManager extends RelationManager
                                 Forms\Components\Tabs\Tab::make('Image')
                                     ->columns(2)
                                     ->schema([
-                                        Forms\Components\FileUpload::make('path')
-                                            ->label('Upload Images')
-                                            ->multiple()
-                                            ->reorderable()
-                                            ->image()
-                                            ->acceptedFileTypes(['image/jpeg', 'image/png'])
-                                            ->rules(['mimes:jpg,jpeg,png']) // সার্ভার-সাইড ভ্যালিডেশন
-                                            ->directory('temp-uploads')
-                                            ->required(fn(Get $get) => in_array($get('type'), ['gallery','hero','showcase','spotlight']))
-                                            ->columnSpanFull(),
-
                                         Forms\Components\Select::make('type')
                                             ->label('Media Type')
-                                            ->required()
+                                            ->required(fn(Get $get) => in_array($get('type'), ['gallery','hero','showcase','spotlight']))
                                             ->options([
                                                 'gallery' => 'Gallery',
                                                 'hero' => 'Hero',
@@ -94,22 +92,22 @@ class MediaRelationManager extends RelationManager
                                             ->label('Caption (Optional)')
                                             ->placeholder('This caption will be applied to all uploaded images.'),
 
-                                        Forms\Components\TextInput::make('width')
-                                            ->label('Width (px)')
-                                            ->required()
-                                            ->numeric()
-                                            ->helperText('<br>'),
-
-                                        Forms\Components\TextInput::make('height')
-                                            ->label('Height (px)')
-                                            ->required()
-                                            ->numeric(),
+                                        Forms\Components\FileUpload::make('path')
+                                            ->label('Upload Images')
+                                            ->multiple()
+                                            ->reorderable()
+                                            ->image()
+                                            ->acceptedFileTypes(['image/jpeg', 'image/png'])
+                                            ->rules(['mimes:jpg,jpeg,png']) // সার্ভার-সাইড ভ্যালিডেশন
+                                            ->directory('temp-uploads')
+                                            ->required(fn(Get $get) => in_array($get('type'), ['gallery','hero','showcase','spotlight']))
+                                            ->columnSpanFull(),
                                     ]),
 
                                 Forms\Components\Tabs\Tab::make('Video')
                                     ->columns(2)
                                     ->schema([
-                                        Forms\Components\Hidden::make('type')->default('video'),
+//                                        Forms\Components\Hidden::make('type')->default('video'),
                                         Forms\Components\TextInput::make('video_url')
                                             ->label('Video URL')
                                             ->placeholder('https://youtube.com/...')
@@ -137,14 +135,13 @@ class MediaRelationManager extends RelationManager
                         // নিশ্চিত করুন যে path কী-টি আছে এবং এটি একটি অ্যারে
                         if (!empty($data['path']) && is_array($data['path'])) {
                             $createdRecords = [];
-                            $width = $data['width'] ?? null;
-                            $height = $data['height'] ?? null;
                             $mediaType = $data['type']; // 'gallery', 'hero', etc.
+                            [$width, $height] = $this->getDimensionsForType($mediaType); // Trait থেকে ডাইমেনশন নিন
 
                             foreach ($data['path'] as $tempPath) {
                                 $finalPath = $this->processAndSaveImage(
                                     $tempPath,
-                                    $ownerRecord->property_id,
+                                    "property/{$ownerRecord->property_id}",
                                     $mediaType,
                                     $width,
                                     $height
@@ -173,11 +170,11 @@ class MediaRelationManager extends RelationManager
             ->actions([
                 // EditAction এখন শুধুমাত্র একটি ছবির ক্যাপশন এডিট করতে ব্যবহৃত হবে
                 Tables\Actions\EditAction::make()
-                    ->modalHeading('Edit Image Details'),
+                    ->modalHeading('Edit'),
                 Tables\Actions\DeleteAction::make()
 
-                    ->modalHeading('Delete Images')
-                    ->modalDescription('Are you sure you want to delete the selected images? This action cannot be undone.'),
+                    ->modalHeading('Delete Record?')
+                    ->modalDescription('Are you sure you want to delete the selected record? This action cannot be undone.'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -187,48 +184,5 @@ class MediaRelationManager extends RelationManager
                 ]),
             ])
             ->reorderable('order_column'); // ছবি ড্র্যাগ করে সাজানোর জন্য
-    }
-
-    /**
-     * একটি প্রাইভেট হেল্পার মেথড যা ছবি প্রসেস এবং সেভ করে।
-     */
-    private function processAndSaveImage(?string $tempPath, string $propertyId, string $type, ?int $width, ?int $height): ?string
-    {
-        if (!$tempPath || !Storage::disk('public')->exists($tempPath)) {
-            Log::warning("Temporary file not found for processing: " . $tempPath);
-            return null;
-        }
-
-        try {
-            $manager = new ImageManager(new Driver());
-            $imageContent = Storage::disk('public')->get($tempPath);
-            $image = $manager->read($imageContent);
-
-            if ($width && $height) {
-                $image->cover($width, $height);
-            } else {
-                $image->scaleDown(width: 1200);
-            }
-
-            // --- এখানে মূল পরিবর্তনটি করা হয়েছে ---
-            // toJpeg() বা toPng() ব্যবহার করে ইমেজটিকে একটি এনকোডেড স্ট্রিং-এ পরিণত করুন
-            $encodedImage = $image->toJpeg(80); // 80 হলো কোয়ালিটি
-
-            $fileName = pathinfo($tempPath, PATHINFO_FILENAME) . '.jpg'; // আমরা JPEG-তে কনভার্ট করছি, তাই এক্সটেনশন .jpg হবে
-            $finalPath = "property/{$propertyId}/{$type}/{$fileName}";
-
-            // এনকোড করা ইমেজ স্ট্রিংটি সেভ করুন
-            Storage::disk('public')->put($finalPath, (string) $encodedImage);
-
-            // অস্থায়ী ফাইলটি ডিলিট করুন
-            Storage::disk('public')->delete($tempPath);
-
-            Log::info("Image processed and saved to: " . $finalPath);
-            return $finalPath;
-
-        } catch (\Throwable $e) {
-            Log::error("Image processing failed: " . $e->getMessage(), ['trace' => $e->getTraceAsString()]);
-            return null;
-        }
     }
 }
