@@ -46,9 +46,6 @@ class Property extends Model
             if (auth()->check() && !$property->user_id) {
                 $property->user_id = auth()->id();
             }
-
-            // --- নতুন Property ID জেনারেট করার লজিক ---
-//            $property->property_id = self::generateUniquePropertyId($property);
         });
 
 
@@ -171,6 +168,13 @@ class Property extends Model
     public function messages(): HasMany
     {
         return $this->hasMany(Message::class);
+    }
+
+    public function wishlistedByUsers(): BelongsToMany
+    {
+        // একটি প্রপার্টি অনেক ইউজার দ্বারা wishlisted হতে পারে
+        return $this->belongsToMany(User::class, 'wishlists')
+            ->withTimestamps();
     }
 
     /**

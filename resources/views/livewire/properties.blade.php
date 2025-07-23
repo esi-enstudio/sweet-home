@@ -4,15 +4,12 @@
         <!-- banner section -->
         <div
             style="background-image: url('{{ asset('assets/img/bg/14.jpg') }}')"
-            class="w-full bg-no-repeat bg-cover bg-center relative z-0 after:w-full after:h-full after:absolute after:top-0 after:left-0 after:bg-white after:bg-opacity-30 after:-z-1"
-        >
+            class="w-full bg-no-repeat bg-cover bg-center relative z-0 after:w-full after:h-full after:absolute after:top-0 after:left-0 after:bg-white after:bg-opacity-30 after:-z-1">
             <div class="container py-110px">
                 <h1 class="text-2xl sm:text-3xl md:text-26px lg:text-3xl xl:text-4xl font-bold text-heading-color mb-15px">
                     <span class="leading-1.3 md:leading-1.3 lg:leading-1.3 xl:leading-1.3">Property List</span>
                 </h1>
-                <ul
-                    class="breadcrumb flex gap-30px items-center text-sm lg:text-base font-bold pt-4"
-                >
+                <ul class="breadcrumb flex gap-30px items-center text-sm lg:text-base font-bold pt-4">
                     <li class="home relative leading-1.8 lg:leading-1.8">
                         <a href="{{ route('home') }}">
                             <i class="fas fa-home text-secondary-color"></i> Home
@@ -189,12 +186,8 @@
                                                         <div class="flex gap-x-2 relative leading-1 transition-all duration-300">
                                                             <ul class="flex gap-x-2">
                                                                 <li>
-                                                                    <button
-                                                                        data-modal-index="2"
-                                                                        class="modal-open w-9 h-9 flex items-center justify-center bg-section-bg-1 text-center hover:bg-secondary-color hover:text-white font-bold"
-                                                                    >
-                                                                        <i class="flaticon-heart-1 leading-1"></i>
-                                                                    </button>
+                                                                    @livewire('extra.wishlist-button',
+                                                                    ['property' => $property], key($property->id))
                                                                 </li>
                                                             </ul>
                                                         </div>

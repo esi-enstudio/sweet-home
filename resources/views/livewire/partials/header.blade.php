@@ -55,7 +55,7 @@
 
                         @guest
                             <li>
-                                <a target="_blank" href="{{ route('filament.user.auth.login') }}" class="px-4 md:px-5 py-0.5 md:py-10px ml-2 lg:ml-5 bg-secondary-color inline-block bg-opacity-100 hover:bg-opacity-60 hover:text-white">
+                                <a target="_blank" href="{{ route(' ') }}" class="px-4 md:px-5 py-0.5 md:py-10px ml-2 lg:ml-5 bg-secondary-color inline-block bg-opacity-100 hover:bg-opacity-60 hover:text-white">
                                     Add Listing
                                 </a>
                             </li>
@@ -129,14 +129,12 @@
 
             <!-- header right -->
             <div>
-                <ul class="flex items-center gap-10px">
+                <ul class="flex items-center gap-5">
                     <li class="group relative">
-                        <a
-                            href="#"
-                            class="h-50px w-50px text-heading-color shadow-box-shadow-1 flex justify-center items-center hover:bg-secondary-color hover:text-white transition-all duration-300"
-                        >
+                        <button
+                            class="text-heading-color flex justify-center items-center text-secondary-color transition-all duration-300">
                             <i class="fa-regular fa-user font-bold text-2xl"></i>
-                        </a>
+                        </button>
                         <!-- dropdown -->
                         <ul class="py-10px w-150px shadow-box-shadow-4 absolute left-0 top-full opacity-0 invisible translate-y-4 bg-white transition-all duration-300 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-xl">
                             <li>
@@ -156,8 +154,7 @@
 
                     <li>
                         <button
-                            class="show-drawer h-50px w-50px text-heading-color shadow-box-shadow-1 flex justify-center items-center hover:bg-secondary-color hover:text-white transition-all duration-300"
-                        >
+                            class="show-drawer flex justify-center items-center text-secondary-color transition-all duration-300">
                             <i class="fa-regular fa-heart font-bold text-2xl"></i>
                             <sup class="ml-1 text-sm font-semibold">2</sup>
                         </button>

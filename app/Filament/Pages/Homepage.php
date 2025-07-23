@@ -23,23 +23,27 @@ class Homepage extends SettingsPage
             ->columns(3)
             ->schema([
                 Forms\Components\Group::make([
-                    Forms\Components\Fieldset::make('Spotlight Section')
+                    Forms\Components\Section::make('Spotlight Section')
+                        ->collapsible()
                         ->schema([
                             Forms\Components\TextInput::make('spotlight_section_title')->label('Title')->required(),
                             Forms\Components\TextInput::make('spotlight_section_btn_label')->label('Button Text')->required(),
                         ]),
 
-                    Forms\Components\Fieldset::make('Featured Showcase Section')
+                    Forms\Components\Section::make('Featured Showcase Section')
+                        ->collapsed()
                         ->schema([
                             Forms\Components\TextInput::make('featured_showcase_section_title')->label('Title')->required(),
                         ]),
 
-                    Forms\Components\Fieldset::make('Our Service Section')
+                    Forms\Components\Section::make('Our Service Section')
+                        ->collapsed()
                         ->schema([
                             Forms\Components\TextInput::make('our_service_section_name')->label('Name')->required(),
                             Forms\Components\TextInput::make('our_service_section_title')->label('Title')->required(),
                             Forms\Components\Repeater::make('services')
                                 ->label('Service Cards')
+                                ->collapsible()
                                 ->schema([
                                     Forms\Components\FileUpload::make('icon')
                                         ->label('Icon Image')
@@ -56,6 +60,9 @@ class Homepage extends SettingsPage
 
                                     Forms\Components\Textarea::make('description')
                                         ->label('Card Description')
+                                        ->live()
+                                        ->maxLength(235) // Set the maximum character limit
+                                        ->hint(fn ($state, $component) => strlen($state) . '/' . $component->getMaxLength())
                                         ->rows(3)
                                         ->columnSpanFull()
                                         ->required(),
@@ -102,7 +109,8 @@ class Homepage extends SettingsPage
                                 ->addActionLabel('Add New Service Card'),
                         ]),
 
-                    Forms\Components\Fieldset::make('Amenity Section')
+                    Forms\Components\Section::make('Amenity Section')
+                        ->collapsed()
                         ->schema([
                             Forms\Components\TextInput::make('amenity_section_name')->label('Name')->required(),
                             Forms\Components\TextInput::make('amenity_section_title')->label('Title')->required(),

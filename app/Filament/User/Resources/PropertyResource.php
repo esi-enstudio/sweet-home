@@ -9,6 +9,7 @@ use App\Filament\Resources\PropertyResource\RelationManagers\MessagesRelationMan
 use App\Filament\Resources\PropertyResource\RelationManagers\SpaceOverviewsRelationManager;
 use App\Filament\User\Resources\PropertyResource\Pages;
 use App\Filament\User\Resources\PropertyResource\RelationManagers;
+use App\Filament\User\Resources\PropertyResource\RelationManagers\WishlistedByUsersRelationManager;
 use App\Models\District;
 use App\Models\Property;
 use App\Models\Union;
@@ -511,6 +512,7 @@ class PropertyResource extends Resource
             FloorPlansRelationManager::class,
             SpaceOverviewsRelationManager::class,
             MessagesRelationManager::class,
+            WishlistedByUsersRelationManager::class,
         ];
     }
 

@@ -4,7 +4,7 @@
         $title = \Illuminate\Support\Str::limit($spotlightProperty?->title, 40);
         $description = \Illuminate\Support\Str::limit($spotlightProperty?->description, 190);
         $rentSummary = \Illuminate\Support\Str::limit($spotlightProperty?->rent_summary, 140);
-        $spotlightImage = $spotlightProperty->media->firstWhere('type','spotlight')->spotlight_image_path;
+        $spotlightImage = $spotlightProperty->media->firstWhere('type','spotlight')->path;
     @endphp
 
     <section>
@@ -12,7 +12,12 @@
         <div class="grid grid-cols-1 lg:grid-cols-2 lg:gap-30px">
             <!-- spotlight left -->
             <div class="lg:mr-30px relative mb-10 lg:mb-0">
-                <img src="{{ \Illuminate\Support\Facades\Storage::url($spotlightImage) }}" alt="{{ $spotlightProperty->title }}" class="max-w-full" >
+                <img
+                    src="{{ \Illuminate\Support\Facades\Storage::url($spotlightImage) }}"
+                    alt="{{ $spotlightProperty->title }}"
+                    class="max-w-full"
+                >
+
                 <div class="absolute left-[10px] bottom-[70px] w-150px md:w-300px">
                     <div class="relative">
                         <img

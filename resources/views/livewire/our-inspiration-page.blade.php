@@ -64,36 +64,67 @@
 
                                         {{-- Facebook --}}
                                         @if(isset($member->social_links['facebook']))
-                                            <li><a href="{{ $member->social_links['facebook'] }}" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                                            <li class="leading-1.8 lg:leading-1.8">
+                                                <a href="{{ $member->social_links['facebook'] }}" target="_blank">
+                                                    <i class="fa-brands fa-facebook-f"></i>
+                                                </a>
+                                            </li>
                                         @endif
 
-                                        {{-- X --}}
-                                        @if(isset($member->social_links['x']))
-                                            <li><a href="{{ $member->social_links['twitter'] }}" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                        {{-- X-Twitter --}}
+                                        @if(isset($member->social_links['x-twitter']))
+                                            <li class="leading-1.8 lg:leading-1.8">
+                                                <a href="{{ $member->social_links['x-twitter'] }}" target="_blank">
+                                                    <i class="fa-brands fa-x-twitter"></i>
+                                                </a>
+                                            </li>
                                         @endif
 
                                         {{-- LinkedIn --}}
                                         @if(isset($member->social_links['linkedin']))
-                                            <li><a href="{{ $member->social_links['linkedin'] }}" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                                            <li class="leading-1.8 lg:leading-1.8">
+                                                <a href="{{ $member->social_links['linkedin'] }}" target="_blank">
+                                                    <i class="fa-brands fa-linkedin-in"></i>
+                                                </a>
+                                            </li>
                                         @endif
 
                                         {{-- Instagram --}}
-                                        @if(isset($member->social_links['linkedin']))
-                                            <li><a href="{{ $member->social_links['instagram'] }}" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                                        @if(isset($member->social_links['instagram']))
+                                            <li class="leading-1.8 lg:leading-1.8">
+                                                <a href="{{ $member->social_links['instagram'] }}" target="_blank">
+                                                    <i class="fa-brands fa-instagram"></i>
+                                                </a>
+                                            </li>
                                         @endif
 
+                                        {{-- Youtube --}}
+                                        @if(isset($member->social_links['youtube']))
+                                            <li class="leading-1.8 lg:leading-1.8">
+                                                <a href="{{ $member->social_links['youtube'] }}" target="_blank">
+                                                    <i class="fa-brands fa-youtube"></i>
+                                                </a>
+                                            </li>
+                                        @endif
 
+                                        {{-- TikTok --}}
+                                        @if(isset($member->social_links['tiktok']))
+                                            <li class="leading-1.8 lg:leading-1.8">
+                                                <a href="{{ $member->social_links['tiktok'] }}" target="_blank">
+                                                    <i class="fa-brands fa-tiktok"></i>
+                                                </a>
+                                            </li>
+                                        @endif
 
-{{--                                        @foreach($member->social_links as $link)--}}
-{{--                                            @if($link['profile_url'])--}}
-{{--                                                <li class="leading-1.8 lg:leading-1.8">--}}
-{{--                                                    <a href="{{ $link['profile_url'] }}" target="_blank">--}}
-{{--                                                        --}}{{-- আইকন দেখানোর জন্য --}}
-{{--                                                        <i class="{{ strtolower($link['icon_class']) }}"></i>--}}
-{{--                                                    </a>--}}
-{{--                                                </li>--}}
-{{--                                            @endif--}}
-{{--                                        @endforeach--}}
+                                        {{-- Threads --}}
+                                        @if(isset($member->social_links['threads']))
+                                            <li class="leading-1.8 lg:leading-1.8">
+                                                <a href="{{ $member->social_links['threads'] }}" target="_blank">
+                                                    <i class="fa-brands fa-threads"></i>
+                                                </a>
+                                            </li>
+                                        @endif
+
                                     </ul>
                                 @endif
                             </div>
@@ -101,6 +132,20 @@
                     </div>
                     @endforeach
                 </div>
+
+                {{-- --- "Load More" বাটন এবং লোডিং ইন্ডিকেটর --- --}}
+                @if($perPage < $totalMembers)
+                    <div class="text-center mt-4">
+                        <button type="submit" wire:click="loadMore" wire:loading.attr="disabled" class="lg:text-base text-white bg-secondary-color hover:bg-primary-color px-5 py-3 rounded-lg">
+                            <span wire:loading.remove wire:target="loadMore">
+                                Load More
+                            </span>
+                                    <span wire:loading wire:target="loadMore">
+                                Loading...
+                            </span>
+                        </button>
+                    </div>
+                @endif
             @else
                 <div class="text-center">
                     <p>No inspiration members to show at the moment.</p>

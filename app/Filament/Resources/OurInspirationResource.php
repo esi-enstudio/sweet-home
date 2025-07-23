@@ -8,10 +8,15 @@ use App\Models\OurInspiration;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Support\Enums\Alignment;
+use Filament\Support\View\Components\Modal;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 
 class OurInspirationResource extends Resource
 {
@@ -71,7 +76,16 @@ class OurInspirationResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\ImageColumn::make('photo')->extraImgAttributes(['class' => 'rounded-lg']),
+                Tables\Columns\TextColumn::make('name')
+                    ->description(fn(Model $record) => Str::title($record->title)),
+
+                ViewColumn::make('social_links')
+                    ->label('Platforms')
+                    // একটি ডেডিকেটেড Blade ভিউ ফাইল ব্যবহার করা হচ্ছে
+                    ->view('tables.columns.social-links'),
+
+                Tables\Columns\ToggleColumn::make('is_visible'),
             ])
             ->filters([
                 //

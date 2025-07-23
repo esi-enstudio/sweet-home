@@ -9,6 +9,7 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -114,6 +115,28 @@ class User extends Authenticatable implements HasAvatar, FilamentUser
         return $this->hasMany(Message::class);
     }
 
+    public function wishlistedProperties(): BelongsToMany
+    {
+        // একজন ইউজারের অনেকগুলো wishlisted প্রপার্টি থাকতে পারে
+        return $this->belongsToMany(Property::class, 'wishlists')
+            ->withTimestamps();
+    }
+
+    /**
+     * একটি helper মেথড, যা চেক করে একটি প্রপার্টি wishlisted কি না।
+     *
+     * @param Property $property
+     * @return bool
+     */
+    public function hasWishlisted(Property $property): bool
+    {
+        // --- এখানে মূল পরিবর্তনটি করা হয়েছে ---
+        return $this->wishlistedProperties()
+            // পিভট টেবিলের নাম ('wishlists') সহ কলামের নাম উল্লেখ করা হচ্ছে
+            ->where('wishlists.property_id', $property->id)
+            ->exists();
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         // --- প্যানেলের আইডি অনুযায়ী অ্যাক্সেস নিয়ন্ত্রণ ---
@@ -133,4 +156,5 @@ class User extends Authenticatable implements HasAvatar, FilamentUser
         // অন্য কোনো প্যানেল থাকলে ডিফল্টভাবে অ্যাক্সেস দেওয়া হবে না
         return false;
     }
+
 }

@@ -1,4 +1,3 @@
-{{--{{ dd($heroProperties) }}--}}
 @if(isset($heroProperties))
     <div class="hero hero-primary overflow-hidden relative z-10">
     <!-- Swiper -->
@@ -30,6 +29,7 @@
                                         {{ \Illuminate\Support\Str::limit($property->address, 50) }}
                                     </span>
                                 </p>
+
                                 <div class="mt-5 lg:mt-10 mb-30px xl:mb-0 animated">
                                     <h5 class="capitalize text-sm md:text-base text-white relative group whitespace-nowrap font-normal transition-all duration-300 border border-secondary-color hover:border-heading-color inline-block mr-15px">
                                         <span class="inline-block absolute top-0 right-0 w-full h-full bg-secondary-color group-hover:bg-primary-color z-1 group-hover:w-0 transition-all duration-300"></span>
@@ -66,7 +66,9 @@
                             <div class="4xl:absolute right-[60px] xl:right-[150px] bottom-[100px] 4xl:h-[70%] 4xl:w-[45%]">
                                 <img
                                     class="4xl:h-full 4xl:ml-auto"
-                                    src="{{ Storage::url($property->thumbnail) }}"
+                                    src="{{ $property->media->contains('type', 'hero') ?
+                                        Storage::url($property->media->firstWhere('type','hero')->path) :
+                                        asset('assets/img/default-hero-image.png') }}"
                                     alt="{{ $property->title }}"
                                 >
                             </div>
