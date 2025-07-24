@@ -55,7 +55,7 @@
 
                         @guest
                             <li>
-                                <a target="_blank" href="{{ route(' ') }}" class="px-4 md:px-5 py-0.5 md:py-10px ml-2 lg:ml-5 bg-secondary-color inline-block bg-opacity-100 hover:bg-opacity-60 hover:text-white">
+                                <a target="_blank" href="{{ route('filament.user.auth.login') }}" class="px-4 md:px-5 py-0.5 md:py-10px ml-2 lg:ml-5 bg-secondary-color inline-block bg-opacity-100 hover:bg-opacity-60 hover:text-white">
                                     Add Listing
                                 </a>
                             </li>
@@ -153,11 +153,9 @@
                     </li>
 
                     <li>
-                        <button
-                            class="show-drawer flex justify-center items-center text-secondary-color transition-all duration-300">
-                            <i class="fa-regular fa-heart font-bold text-2xl"></i>
-                            <sup class="ml-1 text-sm font-semibold">2</sup>
-                        </button>
+                        @auth {{-- শুধুমাত্র লগইন করা ব্যবহারকারীদের জন্য দেখানো হবে --}}
+                            @livewire('extra.header-wishlist-counter')
+                        @endauth
                     </li>
 
                     <li class="block xl:hidden">
@@ -176,89 +174,8 @@
         </div>
     </div>
 
-    <!-- cart sidebar -->
-    <div class="drawer-container cart-container">
-        <div
-            class="drawer-overlay fixed top-0 left-0 w-full h-full bg-black -z-1 close-drawer opacity-0 transition-all duration-300 invisible cursor-zoom-out"></div>
-        <div class="drawer cart fixed top-0 -right-[300px] xs:-right-[400px] pl-30px pr-10px py-5 w-300px xs:w-100 h-full transition-all duration-500 shadow-dropdown-secodary bg-whiteColor z-high bg-white">
-            <div class="h-full">
-                <!-- cart wrapper -->
-                <div class="h-full overflow-y-auto pr-5">
-                    <!-- cart top -->
-                    <div class="flex justify-between items-center border-b border-border-primary pt-3px pb-3 mb-25px">
-                        <div>
-                            <span class="text-sm md:text-base font-bold">Wishlist</span>
-                        </div>
-                        <div>
-                            <button class="close-drawer text-black text-3xl px-15px py-2">
-                                ×
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- cart items -->
-                    <div class="max-h-[calc(100%-(360px))] cart-items overflow-y-auto">
-                        <ul>
-                            <li class="accordion pl-10px pt-5 mb-5 flex gap-15px">
-                                <div class="relative">
-                                    <a href="product-details.html" >
-                                        <img
-                                            src="assets/img/product/1.png"
-                                            alt=""
-                                            class="w-20 inline-block"
-                                        >
-                                    </a>
-                                    <button
-                                        class="w-5 h-5 shadow-box-shadow-3 text-center text-10px bg-white hover:bg-secondary-color hover:text-white rounded-full absolute top-0 left-0 -translate-x-1/2 -translate-y-1/2 transition-all duration-300 cursor-pointer"
-                                    >
-                                        <i class="icon-cancel leading-5"></i>
-                                    </button>
-                                </div>
-
-                                <div>
-                                    <h6 class="text-sm md:text-15px lg:text-base mb-5px">
-                                        <a
-                                            href="product-details.html"
-                                            class="leading-23px text-heading-color hover:text-secondary-color font-medium"
-                                        >
-                                            Wheel Bearing Retainer
-                                        </a>
-                                    </h6>
-                                    <div class="text-sm lg:text-base">
-                                        <span class="leading-22px">1 x $65.00</span>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <!-- Total price -->
-{{--                    <div class="py-5 mt-25px border-y border-border-color-1">--}}
-{{--                        <h6--}}
-{{--                            class="lg:text-lg text-heading-color font-bold flex justify-between items-center mb-0"--}}
-{{--                        >--}}
-{{--                            <span>Subtotal: </span>--}}
-{{--                            <span class="text-secondary-color">$310.00</span>--}}
-{{--                        </h6>--}}
-{{--                    </div>--}}
-
-                    <!-- action area -->
-                    <div class="pt-25px pb-15px text-center">
-                        <h5 class="uppercase text-sm text-white relative group whitespace-nowrap font-normal transition-all duration-300 border border-secondary-color hover:border-heading-color">
-                            <span class="inline-block absolute top-0 right-0 w-full h-full bg-secondary-color group-hover:bg-black hover:bg-primary-cogroup-lor z-1 group-hover:w-0 transition-all duration-300"></span>
-                            <a href="#" class="relative z-10 px-5 md:px-25px lg:px-10 py-10px md:py-3 lg:py-17px group-hover:text-heading-color leading-23px">view wishlists</a>
-                        </h5>
-                    </div>
-
-{{--                    <div class="text-sm">--}}
-{{--                        <p class="leading-15px mb-0">--}}
-{{--                            Free Shipping on All Orders Over $100!--}}
-{{--                        </p>--}}
-{{--                    </div>--}}
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- wishlist sidebar -->
+    @livewire('extra.wishlist-sidebar')
 
     <!-- mobile menu -->
     <div class="drawer-container mobile-menu-container">

@@ -164,6 +164,7 @@
                                                                     >
                                                                 </a>
                                                             </div>
+
                                                             <div>
                                                                 <h3 class="text-sm font-semibold mb-1">
                                                                     <a href="team-details.html" class="leading-1.3">
@@ -186,8 +187,10 @@
                                                         <div class="flex gap-x-2 relative leading-1 transition-all duration-300">
                                                             <ul class="flex gap-x-2">
                                                                 <li>
-                                                                    @livewire('extra.wishlist-button',
-                                                                    ['property' => $property], key($property->id))
+                                                                    <livewire:extra.wishlist-button
+                                                                        :property="$property"
+                                                                        :wire:key="'wishlist-btn-' . $property->id"
+                                                                    />
                                                                 </li>
                                                             </ul>
                                                         </div>

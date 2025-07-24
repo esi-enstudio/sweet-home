@@ -7,6 +7,7 @@ use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class WishlistButton extends Component
@@ -17,7 +18,17 @@ class WishlistButton extends Component
     public function mount(Property $property): void
     {
         $this->property = $property;
-        $this->updateStatus();
+        $this->checkIfWishlisted();
+    }
+
+    /**
+     * 'wishlist-updated' ইভেন্টটি শোনার পর এই মেথডটি চলবে।
+     */
+    #[On('wishlist-updated')]
+    public function checkIfWishlisted(): void
+    {
+        // isWishlisted প্রোপার্টিটির মান নতুন করে ডেটাবেস থেকে চেক করে আপডেট করুন
+        $this->isWishlisted = Auth::check() && Auth::user()->hasWishlisted($this->property);
     }
 
     public function toggleWishlist()
@@ -38,7 +49,7 @@ class WishlistButton extends Component
         }
 
         // স্ট্যাটাস আপডেট করুন এবং একটি ইভেন্ট পাঠান (ঐচ্ছিক)
-        $this->updateStatus();
+        $this->checkIfWishlisted();
         $this->dispatch('wishlist-updated');
     }
 

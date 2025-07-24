@@ -45,7 +45,7 @@ class UserResource extends Resource
                 TextInput::make('phone')
                     ->label('Phone Number')
                     ->required()
-                    ->numeric()
+                    ->tel()
                     ->minLength(11)
                     ->maxLength(11)
                     ->rule('digits:11')
@@ -98,8 +98,6 @@ class UserResource extends Resource
                         'active' => 'Active',
                         'inactive' => 'Inactive',
                     ]),
-
-                Forms\Components\TextInput::make('custom_fields'),
 
                 Forms\Components\Select::make('roles')
                     ->relationship('roles', 'name')

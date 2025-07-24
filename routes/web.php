@@ -15,7 +15,7 @@ Route::get('/properties', Properties::class)->name('properties');
 
 // সিঙ্গেল প্রপার্টির ডিটেইলস দেখানোর জন্য
 // এখানে Route Model Binding ব্যবহার করা হচ্ছে
-Route::get('/properties/{property:slug}', SingleProperty::class)->name('single.property');
+Route::get('/property/{property:slug}', SingleProperty::class)->name('single.property');
 
 
 Route::post('/properties/{property:slug}/track-view', [PropertyViewController::class, 'store'])

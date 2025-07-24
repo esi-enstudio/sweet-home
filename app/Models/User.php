@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Traits\HasCustomSlug;
 use Database\Factories\UserFactory;
+use Exception;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
@@ -14,7 +15,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Traits\HasRoles;
 
 /**
@@ -137,6 +140,12 @@ class User extends Authenticatable implements HasAvatar, FilamentUser
             ->exists();
     }
 
+    public function wishlists(): HasMany
+    {
+        // একজন ইউজারের অনেকগুলো wishlist এন্ট্রি থাকতে পারে
+        return $this->hasMany(Wishlist::class);
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         // --- প্যানেলের আইডি অনুযায়ী অ্যাক্সেস নিয়ন্ত্রণ ---
@@ -150,7 +159,7 @@ class User extends Authenticatable implements HasAvatar, FilamentUser
         // যদি প্যানেলটি 'app' (ইউজার প্যানেল) হয়
         if ($panel->getId() === 'user') {
             // অ্যাডমিন এবং অন্যান্য সব লগইন করা ব্যবহারকারী প্রবেশ করতে পারবে
-            return $this->hasRole('user');
+            return $this->hasRole(['user','super-admin']);
         }
 
         // অন্য কোনো প্যানেল থাকলে ডিফল্টভাবে অ্যাক্সেস দেওয়া হবে না

@@ -77,25 +77,21 @@ class HomeComponent extends Component
      * is_featured = true
      * সাথে ছবি ও ভিডিওর সংখ্যা গণনা করে।
      */
-    #[Computed(seconds: 15, cache: true, key: 'featured-listings')]
+    #[Computed(seconds: 21600, cache: true, key: 'featured-listings')]
     public function featuredListings(): Collection
     {
         return Property::select([
-                'user_id','listing_type','thumbnail','address','rent_amount','title','slug','description','bedrooms','bathrooms','total_area'
+            'id','slug','title','thumbnail','address','rent_amount','bedrooms','bathrooms','total_area','user_id','listing_type','description',
             ])
             ->withCount([
                 // 'images' নামে একটি নতুন অ্যাট্রিবিউট যোগ হবে
-                'media as images_count' => function($query){
-                    // media টেবিলের type কলাম 'image' হলে গণনা কর
-                    $query->where('type','image');
-                },
+                'media as images_count' => fn($query) => $query->where('type', 'image'),
 
                 // 'videos' নামে একটি নতুন অ্যাট্রিবিউট যোগ হবে
-                'media as videos_count' => function($query){
-                    $query->where('type','video');
-                },
+                'media as videos_count' => fn($query) => $query->where('type', 'video'),
             ])
-            ->with(['user'])
+            // user রিলেশন এবং তার প্রয়োজনীয় কলামগুলো ইগার লোড করুন
+            ->with(['user:id,name,avatar_url', 'user.roles:name'])
             ->where('is_featured', 1)
             ->where('is_available', 1)
             ->where('status', 'approved')
