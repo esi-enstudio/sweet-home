@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\FallbackController;
 use App\Livewire\ContactPage;
 use App\Livewire\HomeComponent;
+use App\Livewire\LegalPageShow;
 use App\Livewire\OurInspirationPage;
 use App\Livewire\Properties;
 use App\Livewire\SingleProperty;
@@ -25,3 +27,9 @@ Route::post('/properties/{property:slug}/track-view', [PropertyViewController::c
 Route::get('/inspiration', OurInspirationPage::class)->name('inspiration');
 
 Route::get('/contact', ContactPage::class)->name('contact');
+
+// এই রাউটটি '/terms-and-conditions', '/privacy-policy' ইত্যাদি হ্যান্ডেল করবে
+Route::get('/{page:slug}', LegalPageShow::class)->name('legal.page');
+
+// --- ফলব্যাক রাউটটি অবশ্যই সব রাউটের শেষে থাকবে ---
+Route::fallback(FallbackController::class);

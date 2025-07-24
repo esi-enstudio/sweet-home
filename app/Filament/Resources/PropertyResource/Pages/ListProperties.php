@@ -24,16 +24,22 @@ class ListProperties extends ListRecords
     public function getTabs(): array
     {
         return [
-            'Pending' => Tab::make()
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('status', 'pending')->latest('updated_at'))
+            'Regular' => Tab::make()
+                ->modifyQueryUsing(function (Builder $query){
+                    $query->where('is_featured', '!=', 1)
+                        ->where('is_hero_featured','!=', 1)
+                        ->where('is_spotlight','!=', 1)
+                        ->where('is_featured_showcase','!=', 1)
+                        ->where('status', 'approved')
+                        ->latest();
+                })
                 ->badge(function () {
-                    return $this->getModel()::where('status', 'pending')->count();
-                }),
-
-            'Rejected' => Tab::make()
-                ->modifyQueryUsing(fn(Builder $query) => $query->where('status', 'rejected')->latest())
-                ->badge(function () {
-                    return $this->getModel()::where('status', 'rejected')->count();
+                    return $this->getModel()::where('is_featured','!=', 1)
+                        ->where('is_hero_featured','!=', 1)
+                        ->where('is_spotlight','!=', 1)
+                        ->where('is_featured_showcase','!=', 1)
+                        ->where('status', 'approved')
+                        ->count();
                 }),
 
             'Hero' => Tab::make()
@@ -60,22 +66,16 @@ class ListProperties extends ListRecords
                     return $this->getModel()::where('is_featured', 1)->where('status', 'approved')->count();
                 }),
 
-            'Regular' => Tab::make()
-                ->modifyQueryUsing(function (Builder $query){
-                    $query->where('is_featured', '!=', 1)
-                        ->where('is_hero_featured','!=', 1)
-                        ->where('is_spotlight','!=', 1)
-                        ->where('is_featured_showcase','!=', 1)
-                        ->where('status', 'approved')
-                        ->latest();
-                })
+            'Pending' => Tab::make()
+                ->modifyQueryUsing(fn(Builder $query) => $query->where('status', 'pending')->latest('updated_at'))
                 ->badge(function () {
-                    return $this->getModel()::where('is_featured','!=', 1)
-                        ->where('is_hero_featured','!=', 1)
-                        ->where('is_spotlight','!=', 1)
-                        ->where('is_featured_showcase','!=', 1)
-                        ->where('status', 'approved')
-                        ->count();
+                    return $this->getModel()::where('status', 'pending')->count();
+                }),
+
+            'Rejected' => Tab::make()
+                ->modifyQueryUsing(fn(Builder $query) => $query->where('status', 'rejected')->latest())
+                ->badge(function () {
+                    return $this->getModel()::where('status', 'rejected')->count();
                 }),
         ];
     }

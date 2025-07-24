@@ -14,6 +14,7 @@ use Filament\Infolists\Infolist;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -42,8 +43,11 @@ class MessagesRelationManager extends RelationManager
     {
         return $table
             ->recordTitleAttribute('phone')
-            ->modifyQueryUsing(fn(Builder $query) => $query->orderBy('messages.is_read', 'asc'))
+            ->modifyQueryUsing(fn(Builder $query) => $query->with('user')->orderBy('messages.is_read', 'asc'))
             ->columns([
+                ViewColumn::make('is_guest')
+                    ->label('Sender Type') // কলামের লেবেল পরিবর্তন
+                    ->view('tables.columns.message-sender'), // কাস্টম Blade ভিউ
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('phone')->searchable(),
                 Tables\Columns\IconColumn::make('is_read')->boolean()->label('Read'),

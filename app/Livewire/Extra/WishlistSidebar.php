@@ -17,8 +17,7 @@ class WishlistSidebar extends Component
     {
         // নিশ্চিত করুন যে ব্যবহারকারী লগইন করা আছে
         if (!Auth::check()) {
-//            return collect(); // খালি কালেকশন রিটার্ন করুন
-            return $this->redirect(route('filament.user.auth.login'));
+            return collect(); // খালি কালেকশন রিটার্ন করুন
         }
 
         return Auth::user()->wishlists() // User মডেলের রিলেশন ব্যবহার করা ভালো
