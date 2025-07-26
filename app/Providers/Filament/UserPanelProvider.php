@@ -41,6 +41,7 @@ class UserPanelProvider extends PanelProvider
             ->path('user')
             ->login(Login::class)
             ->registration(Register::class)
+            ->brandLogo(fn () => view('filament.admin.auth.brand'))
             ->passwordReset()
             ->databaseNotifications()
             ->colors([

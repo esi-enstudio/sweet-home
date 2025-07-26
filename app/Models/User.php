@@ -146,6 +146,24 @@ class User extends Authenticatable implements HasAvatar, FilamentUser
         return $this->hasMany(Wishlist::class);
     }
 
+    /**
+     * Get all of the posts for the User.
+     * একজন User (লেখক) অনেকগুলো Post তৈরি করতে পারে।
+     */
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    /**
+     * Get all the comments for the User.
+     * একজন User অনেকগুলো Comment করতে পারে।
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         // --- প্যানেলের আইডি অনুযায়ী অ্যাক্সেস নিয়ন্ত্রণ ---

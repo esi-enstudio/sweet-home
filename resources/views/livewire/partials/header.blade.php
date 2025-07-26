@@ -82,38 +82,28 @@
                 <ul class="flex items-center justify-center gap-15px xl:gap-5">
                     <!-- Home -->
                     <li class="relative group">
-                        <a
-                            href="{{ route('home') }}"
-                            class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px">
+                        <a href="{{ route('home') }}" class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px">
                             Home
                         </a>
                     </li>
 
                     <!-- Inspiration -->
                     <li class="relative group">
-                        <a
-                            href="{{ route('inspiration') }}"
-                            class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px">
+                        <a href="{{ route('inspiration') }}" class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px">
                             Our Inspiration
                         </a>
                     </li>
 
                     <!-- Property -->
                     <li class="relative group">
-                        <a
-                                href="{{ route('properties') }}"
-                                class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px"
-                        >
+                        <a href="{{ route('properties') }}" class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px">
                             Properties
                         </a>
                     </li>
 
                     <!-- News -->
                     <li class="relative group">
-                        <a
-                                href="#"
-                                class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px"
-                        >
+                        <a href="#" class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px">
                             News
                         </a>
                     </li>
@@ -153,9 +143,7 @@
                     </li>
 
                     <li>
-                        @auth {{-- শুধুমাত্র লগইন করা ব্যবহারকারীদের জন্য দেখানো হবে --}}
-                            @livewire('extra.header-wishlist-counter')
-                        @endauth
+                        @livewire('extra.header-wishlist-counter')
                     </li>
 
                     <li class="block xl:hidden">
@@ -228,8 +216,8 @@
 
                             <!-- inspiration -->
                             <li class="mt-4">
-                                <a href="#" class="accordion-controller flex items-center justify-between cursor-pointer hover:text-secondary-color uppercase text-sm lg:text-base py-2 lg:py-2.5">
-                                    inspiration
+                                <a href="{{ route('inspiration') }}" class="accordion-controller flex items-center justify-between cursor-pointer hover:text-secondary-color uppercase text-sm lg:text-base py-2 lg:py-2.5">
+                                    Our Inspiration
                                 </a>
                             </li>
 
@@ -261,9 +249,12 @@
                         <ul class="mb-30px pb-5 pt-5px border-b border-border-primary">
                             <li class="group mt-4">
                                 <!-- accordion header -->
-                                <a href="{{ route('filament.user.pages.dashboard') }}" class="text-sm lg:text-base">
+                                <a href="{{ route('filament.user.pages.dashboard') }}"
+                                   class="text-sm lg:text-base"
+                                    target="_blank">
                                     <span class="inline-block h-50px w-50px border-2 border-border-color-1 text-center leading-50px mr-3">
-                                        <i class="far fa-user"></i></span>
+                                        <i class="far fa-user"></i>
+                                    </span>
                                     My Account
                                 </a>
                             </li>
@@ -275,17 +266,6 @@
                                         <i class="far fa-heart"></i><sup class="pl-0.5">3</sup>
                                     </span>
                                     Wishlist
-                                </a>
-                            </li>
-
-                            <li class="group mt-4">
-                                <!-- accordion header -->
-                                <a href="#" class="text-sm lg:text-base">
-                                    <span class="inline-block h-50px w-50px border-2 border-border-color-1 text-center leading-50px mr-3">
-                                        <i class="fas fa-shopping-cart"></i>
-                                        <sup>5</sup>
-                                    </span>
-                                    Shoping Cart
                                 </a>
                             </li>
                         </ul>

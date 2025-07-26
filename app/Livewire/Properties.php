@@ -169,6 +169,6 @@ class Properties extends Component
     public function render(): Factory|View|Application
     {
         return view('livewire.properties')
-            ->title('List Properties' .' :: '. config('app.name'));
+            ->title('List Properties' .' - '. config('app.name'));
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FallbackController;
+use App\Livewire\Blog\BlogDetailsPage;
 use App\Livewire\ContactPage;
 use App\Livewire\HomeComponent;
 use App\Livewire\LegalPageShow;
@@ -30,6 +31,8 @@ Route::get('/contact', ContactPage::class)->name('contact');
 
 // এই রাউটটি '/terms-and-conditions', '/privacy-policy' ইত্যাদি হ্যান্ডেল করবে
 Route::get('/{page:slug}', LegalPageShow::class)->name('legal.page');
+
+Route::get('/blog/{post:slug}', BlogDetailsPage::class)->name('blog.show');
 
 // --- ফলব্যাক রাউটটি অবশ্যই সব রাউটের শেষে থাকবে ---
 Route::fallback(FallbackController::class);

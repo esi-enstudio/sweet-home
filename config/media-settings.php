@@ -26,6 +26,10 @@ return [
             'width' => env('MEDIA_INSPIRATION_WIDTH', 368),
             'height' => env('MEDIA_INSPIRATION_HEIGHT', 368),
         ],
+        'post_thumbnail' => [
+            'width' => env('MEDIA_POST_THUMBNAIL_WIDTH', 800),
+            'height' => env('MEDIA_POST_THUMBNAIL_HEIGHT', 478),
+        ],
         'default' => [
             'width' => env('MEDIA_DEFAULT_WIDTH', 1200),
             'height' => env('MEDIA_DEFAULT_HEIGHT', null),
