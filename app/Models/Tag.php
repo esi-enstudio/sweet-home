@@ -6,6 +6,9 @@ use App\Traits\HasCustomSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @method static withCount(string $string)
+ */
 class Tag extends Model
 {
     use HasCustomSlug;

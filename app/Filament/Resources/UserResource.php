@@ -92,6 +92,16 @@ class UserResource extends Resource
                     ->dehydrated(fn ($state) => filled($state)) // Ignore empty values on update
                     ->same('password'),
 
+                Forms\Components\Textarea::make('bio')
+                    ->rows(3)
+                    ->columnSpanFull(),
+
+                Select::make('type')
+                    ->options([
+                        'house_owner' => 'House Owner',
+                        'tenant' => 'Tenant',
+                    ]),
+
                 Select::make('status')
                     ->default('active')
                     ->options([

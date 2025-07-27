@@ -6,6 +6,10 @@ use App\Traits\HasCustomSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @method static find(mixed $getOriginal)
+ * @method static where(string $string, string $string1, int $int)
+ */
 class PostCategory extends Model
 {
     use HasCustomSlug;

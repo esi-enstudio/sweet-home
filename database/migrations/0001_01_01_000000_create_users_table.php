@@ -18,9 +18,14 @@ return new class extends Migration
             $table->string('phone')->unique();
             $table->string('email')->unique()->nullable();
             $table->string('password');
+            $table->string('bio')->nullable();
+            $table->json('social_links')->nullable();
+            $table->unsignedInteger('reviews_count')->default(0);
+            $table->decimal('average_rating', 2, 1)->default(0.0);
+            $table->string('type')->nullable();
+            $table->string('status')->default('active');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
-            $table->string('status')->default('active');
             $table->timestamps();
         });
 

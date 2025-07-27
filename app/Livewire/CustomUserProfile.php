@@ -13,6 +13,7 @@ use Joaopaulolndev\FilamentEditProfile\Livewire\EditProfileForm;
 
 class CustomUserProfile extends EditProfileForm
 {
+    protected static int $sort = 1;
     public function mount(): void
     {
         $this->user = $this->getUser();
@@ -33,8 +34,9 @@ class CustomUserProfile extends EditProfileForm
         return $form
             ->schema([
                 Section::make(__('filament-edit-profile::default.profile_information'))
+                    ->icon('heroicon-o-user-circle')
                     ->aside()
-                    ->description(__('filament-edit-profile::default.profile_information_description'))
+                    ->description('আপনার অ্যাকাউন্টের প্রোফাইল তথ্য ও ইমেইল ঠিকানা আপডেট করুন।')
                     ->schema([
                         FileUpload::make(config('filament-edit-profile.avatar_column', 'avatar_url'))
                             ->label(__('filament-edit-profile::default.avatar'))

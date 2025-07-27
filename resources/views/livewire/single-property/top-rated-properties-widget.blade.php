@@ -6,7 +6,8 @@
     @if($this->topProperties->isNotEmpty())
         <ul>
             @foreach($this->topProperties as $key => $property)
-                <li class="pb-25px mb-25px border-b border-white-4">
+                <li wire:key="latest-property-{{ $property->id }}"
+                    class="@if(!$loop->last)pb-25px mb-25px border-b border-white-4 @endif">
                     <div class="flex gap-x-15px xl:gap-x-5">
                         <div class="w-70px xl:w-90px flex-shrink-0">
                             <a href="{{ route('single.property', $property->slug) }}">

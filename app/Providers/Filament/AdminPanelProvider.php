@@ -4,8 +4,9 @@ namespace App\Providers\Filament;
 
 use App\Filament\Auth\Login;
 use App\Filament\Auth\Register;
-use App\Livewire\CustomProfileComponent;
 use App\Livewire\CustomUserProfile;
+use App\Livewire\User\BioComponent;
+use App\Livewire\User\SocialLinksComponent;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Exception;
 use Filament\Http\Middleware\Authenticate;
@@ -101,7 +102,8 @@ class AdminPanelProvider extends PanelProvider
                     )
                     ->customProfileComponents([
                         CustomUserProfile::class,
-//                        AddressUserProfile::class,
+                        SocialLinksComponent::class,
+                        BioComponent::class,
                     ])
             ])
             ->renderHook(

@@ -49,16 +49,16 @@
                     <x-single-property.sidebar.owner-info :owner="$property->user" />
 
                     <!-- Drop Message For Inquiry -->
-                    @livewire('property-inquiry-form', ['property' => $property], key($property->id))
+                    <livewire:property-inquiry-form :property="$property" wire:key="$property->id"/>
 
                     <!-- Top Rated Properties -->
-                    @livewire('single-property.top-rated-properties-widget')
+                    <livewire:single-property.top-rated-properties-widget />
 
                     <!-- Top Categories-->
-                    @livewire('single-property.top-categories-widget')
+                    <livewire:single-property.top-categories-widget />
 
                     <!-- Popular Properties-->
-                    @livewire('single-property.popular-properties-widget')
+                    <livewire:single-property.popular-properties-widget />
 
                 </div>
             </div>
