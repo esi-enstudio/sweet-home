@@ -34,6 +34,7 @@ return new class extends Migration
             // SEO Fields
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
+            $table->unsignedBigInteger('views_count')->default(0);
             $table->timestamps();
         });
     }

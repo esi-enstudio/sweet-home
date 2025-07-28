@@ -56,7 +56,7 @@ trait TracksViews
         if ($request->user()) {
             // আপনি একটি আলাদা 'property_views' টেবিল তৈরি করতে পারেন
             // যেখানে user_id এবং property_id থাকবে, যাতে একজন ইউজার মাত্র একবারই ভিউ কাউন্ট করতে পারে।
-            // return ! $this->views()->where('user_id', $request->user()->id)->exists();
+//             return ! $this->views()->where('user_id', $request->user()->id)->exists();
         }
 
         return true;

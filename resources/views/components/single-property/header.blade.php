@@ -1,10 +1,5 @@
 @props(['property'])
 
-{{--        <li>--}}
-{{--            <a href="#reviews"><i class="far fa-comments ..."></i> {{ $property->reviews->count() }} Comments</a>--}}
-{{--        </li>--}}
-{{--    </ul>--}}
-
 <div>
     <div class="flex items-center justify-between">
         <ul class="flex flex-wrap gap-x-15px md:gap-x-35px gap-y-15px items-center mb-30px">

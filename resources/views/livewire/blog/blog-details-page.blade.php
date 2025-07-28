@@ -1,4 +1,7 @@
-<main>
+<main
+    x-data="newsViewTracker(@js($post->slug))"
+    x-init="startTimer()"
+>
     <!-- banner section -->
     <section>
         <!-- banner section -->
@@ -39,7 +42,7 @@
                         <img
                             src="{{ $post->featured_image && Storage::disk('public')->exists($post->featured_image) ? Storage::url($post->featured_image) : '' }}"
                             class="w-full -mb-1 rounded-lg"
-                            alt=""
+                            alt="{{ $post->title }}"
                         >
                     </div>
 
@@ -50,7 +53,7 @@
                                     {{-- ক্যাটাগরি --}}
                                     <a
                                         class="text-xs md:text-sm uppercase text-white px-15px pt-5px pb-0.5 bg-secondary-color hover:bg-primary-color hover:text-white font-semibold"
-                                        href="#"
+                                        href="{{ route('blog.index', ['category' => $post->category->slug]) }}"
                                     >
                                         <span class="leading-1.8 md:leading-1.8">
                                             {{ $post->category->name }}
@@ -66,7 +69,7 @@
                             <ul class="flex gap-x-15px md:gap-x-30px items-center mb-5">
                                 <li>
                                     <div>
-                                        <a href="team-details.html" class="flex items-center gap-10px text-xs md:text-sm font-semibold">
+                                        <a href="{{ route('blog.index', ['user' => $post->user->slug]) }}" class="flex items-center gap-10px text-xs md:text-sm font-semibold">
                                             <img
                                                 src="{{ $post->user->avatar_url && Storage::disk('public')->exists($post->user->avatar_url)
                                                                          ? Storage::url($post->user->avatar_url)
@@ -93,6 +96,15 @@
                                         <span class="leading-1.8 md:leading-1.8">
                                             <i class="far fa-comments text-secondary-color mr-5px"></i>
                                             {{ $post->comments->count() }}
+                                        </span>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="text-xs md:text-sm font-semibold" href="#">
+                                        <span class="leading-1.8 md:leading-1.8">
+                                            <i class="far fa-eye text-secondary-color mr-5px"></i>
+                                            {{ $post->views_count }}
                                         </span>
                                     </a>
                                 </li>
@@ -246,239 +258,8 @@
                             </div>
 
                             <!-- Comments -->
-                            <div class="mt-50px">
-                                <h4
-                                    class="text-22px font-semibold leading-1.3 pl-10px border-l-2 border-secondary-color text-heading-color mb-30px"
-                                >
-                                    03 Comments
-                                </h4>
-                                <ul class="mb-20px">
-                                    <li
-                                        class="flex flex-col md:flex-row gap-x-30px gap-y-5 pb-30px"
-                                    >
-                                        <div class="flex-shrink-0">
-                                            <img
-                                                src="assets/img/testimonial/1.jpg"
-                                                alt=""
-                                                class="w-20 h-20 md:w-100px md:h-100px rounded-100%"
-                                            >
-                                        </div>
-                                        <div class="relative">
-                                            <h4
-                                                class="text-lg text-heading-color font-semibold mb-5px"
-                                            >
-                                                <a href="#" class="leading-1.3">Adam Smit</a>
-                                            </h4>
-                                            <h6
-                                                class="text-13px text-secondary-color font-bold mb-10px"
-                                            >
-                                                <span class="leading-1.3">20th May 2024</span>
-                                            </h6>
+                            <livewire:blog.comments :post="$post" :wire:key="$post->id"/>
 
-                                            <p class="text-sm mb-5 md:mb-0">
-                            <span class="leading-1.8"
-                            >Lorem ipsum dolor sit amet, consectetur
-                              adipisicing elit. Doloribus, omnis fugit corporis
-                              iste magnam ratione.</span
-                            >
-                                            </p>
-                                            <p
-                                                class="text-xs md:text-sm font-bold h-10 px-25px border-2 border-border-color-11 hover:border-secondary-color transition-all duration-300 text-nowrap md:absolute md:top-0 md:right-0 rounded-[25px] box-border md:box-border inline-block"
-                                            >
-                            <span class="leading-9 md:leading-9"
-                            ><i class="icon-reply-1 mr-1"></i> Reply</span
-                            >
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li
-                                        class="flex flex-col md:flex-row gap-x-30px gap-y-5 py-30px border-t border-border-color-12 ml-0 md:ml-[70px]"
-                                    >
-                                        <div class="flex-shrink-0">
-                                            <img
-                                                src="assets/img/testimonial/3.jpg"
-                                                alt=""
-                                                class="w-20 h-20 md:w-100px md:h-100px rounded-100%"
-                                            >
-                                        </div>
-                                        <div class="relative">
-                                            <h4
-                                                class="text-lg text-heading-color font-semibold mb-5px"
-                                            >
-                                                <a href="#" class="leading-1.3">Jhone Doe</a>
-                                            </h4>
-                                            <h6
-                                                class="text-13px text-secondary-color font-bold mb-10px"
-                                            >
-                                                <span class="leading-1.3">20th May 2024</span>
-                                            </h6>
-
-                                            <p class="text-sm mb-5 md:mb-0">
-                            <span class="leading-1.8"
-                            >Lorem ipsum dolor sit amet, consectetur
-                              adipisicing elit. Doloribus, omnis fugit corporis
-                              iste magnam ratione.</span
-                            >
-                                            </p>
-                                            <p
-                                                class="text-xs md:text-sm font-bold h-10 px-25px border-2 border-border-color-11 hover:border-secondary-color transition-all duration-300 text-nowrap md:absolute md:top-0 md:right-0 rounded-[25px] box-border md:box-border inline-block"
-                                            >
-                            <span class="leading-9 md:leading-9"
-                            ><i class="icon-reply-1 mr-1"></i> Reply</span
-                            >
-                                            </p>
-                                        </div>
-                                    </li>
-                                    <li
-                                        class="flex flex-col md:flex-row gap-x-30px gap-y-5 py-30px border-t border-border-color-12"
-                                    >
-                                        <div class="flex-shrink-0">
-                                            <img
-                                                src="assets/img/testimonial/4.jpg"
-                                                alt=""
-                                                class="w-20 h-20 md:w-100px md:h-100px rounded-100%"
-                                            >
-                                        </div>
-                                        <div class="relative">
-                                            <h4
-                                                class="text-lg text-heading-color font-semibold mb-5px"
-                                            >
-                                                <a href="#" class="leading-1.3">Arnold Jack</a>
-                                            </h4>
-                                            <h6
-                                                class="text-13px text-secondary-color font-bold mb-10px"
-                                            >
-                                                <span class="leading-1.3">20th May 2024</span>
-                                            </h6>
-
-                                            <p class="text-sm mb-5 md:mb-0">
-                            <span class="leading-1.8"
-                            >Lorem ipsum dolor sit amet, consectetur
-                              adipisicing elit. Doloribus, omnis fugit corporis
-                              iste magnam ratione.</span
-                            >
-                                            </p>
-                                            <p
-                                                class="text-xs md:text-sm font-bold h-10 px-25px border-2 border-border-color-11 hover:border-secondary-color transition-all duration-300 text-nowrap md:absolute md:top-0 md:right-0 rounded-[25px] box-border md:box-border inline-block"
-                                            >
-                            <span class="leading-9 md:leading-9"
-                            ><i class="icon-reply-1 mr-1"></i> Reply</span
-                            >
-                                            </p>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <hr class="my-50px border-b border-border-color-12 opacity-25">
-
-                            <!-- Post Comment -->
-                            <div>
-                                <h4
-                                    class="text-22px font-semibold leading-1.3 pl-10px border-l-2 border-secondary-color text-heading-color mb-30px"
-                                >
-                                    Post Comment
-                                </h4>
-
-                                <form
-                                    class="form-primary bg-white-5 shadow-box-shadow-2 px-25px pt-10 pb-50px md:p-50px md:pt-10"
-                                >
-                                    <div class="grid gap-30px mb-35px">
-                                        <!-- message -->
-                                        <div class="relative mb-2">
-                          <textarea
-
-
-                              placeholder="Type your comments...."
-                              class="min-h-[150px] text-paragraph-color bg-white pl-5 pr-50px py-15px outline-none border-2 focus:border-0 border-white-5 h-65px block w-full rounded-none transition-none"
-                          ></textarea>
-                                            <span
-                                                class="absolute top-[30px] -translate-y-1/2 right-4"
-                                            >
-                            <i
-                                class="fas fa-pencil text-sm lg:text-base text-secondary-color font-bold"
-                            ></i>
-                          </span>
-                                        </div>
-                                        <!-- name -->
-                                        <div class="relative">
-                                            <input
-                                                type="text"
-                                                placeholder="Type your name...."
-                                                class="text-paragraph-color pl-5 pr-50px outline-none border-2 focus:border-0 bg-white border-white-5 h-65px block w-full rounded-none transition-none"
-                                            >
-                                            <span
-                                                class="absolute top-1/2 -translate-y-1/2 right-4"
-                                            >
-                            <i
-                                class="fas fa-user text-sm lg:text-base text-secondary-color font-bold"
-                            ></i>
-                          </span>
-                                        </div>
-                                        <!-- email -->
-                                        <div class="relative">
-                                            <input
-                                                type="text"
-                                                placeholder="Type your email...."
-                                                class="text-paragraph-color pl-5 pr-50px outline-none border-2 focus:border-0 bg-white border-white-5 h-65px block w-full rounded-none transition-none"
-                                            >
-                                            <span
-                                                class="absolute top-1/2 -translate-y-1/2 right-4"
-                                            >
-                            <i
-                                class="fas fa-envelope text-sm lg:text-base text-secondary-color font-bold"
-                            ></i>
-                          </span>
-                                        </div>
-
-                                        <!-- website -->
-                                        <div class="relative">
-                                            <input
-                                                type="text"
-                                                placeholder="Type your website...."
-                                                class="text-paragraph-color pl-5 pr-50px outline-none border-2 focus:border-0 bg-white border-white-5 h-65px block w-full rounded-none transition-none"
-                                            >
-                                            <span
-                                                class="absolute top-1/2 -translate-y-1/2 right-4"
-                                            >
-                            <i
-                                class="fas fa-globe text-sm lg:text-base text-secondary-color font-bold"
-                            ></i>
-                          </span>
-                                        </div>
-                                    </div>
-                                    <!-- agree -->
-                                    <div class="text-sm mb-35px">
-                                        <input
-                                            type="checkbox"
-                                            id="agree"
-                                            class="float-left clear-both mt-0.5"
-                                        >
-                                        <label for="agree" class="text-sm ml-1">
-                                            Save my name, email, and website in this browser for
-                                            the next time I comment.
-                                        </label>
-                                    </div>
-
-                                    <!-- submit button -->
-
-                                    <div>
-                                        <h5
-                                            class="uppercase text-sm md:text-base text-white relative group whitespace-nowrap font-normal mb-0 transition-all duration-300 border border-secondary-color hover:border-heading-color inline-block z-0"
-                                        >
-                          <span
-                              class="inline-block absolute top-0 right-0 w-full h-full bg-secondary-color group-hover:bg-black -z-1 group-hover:w-0 transition-all duration-300"
-                          ></span>
-                                            <button
-                                                type="submit"
-                                                class="relative z-1 px-5 md:px-25px lg:px-10 py-10px md:py-15px lg:py-17px group-hover:text-heading-color leading-23px uppercase"
-                                            >
-                                                <i class="far fa-comments"></i> Post Comment
-                                            </button>
-                                        </h5>
-                                    </div>
-                                </form>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -487,9 +268,6 @@
                 <div class="lg:col-start-9 lg:col-span-4 pt-100px lg:pt-0">
                     <!-- author details -->
                     <x-blog.sidebar.author-details :author="$post->user" />
-
-                    <!-- Search Objects -->
-                    <livewire:blog.sidebar-search />
 
                     <!-- Top Rated Properties -->
                     <livewire:single-property.top-rated-properties-widget />
@@ -672,3 +450,44 @@
         </div>
     </section>
 </main>
+
+@push('scripts')
+    <script>
+        function newsViewTracker(postSlug) {
+            return {
+                postSlug: postSlug,
+                timeoutId: null,
+
+                startTimer() {
+                    // ১০ সেকেন্ডের (10000 মিলিসেকেন্ড) টাইমার সেট করুন
+                    this.timeoutId = setTimeout(() => {
+                        this.trackView();
+                    }, 20000);
+
+                    // ব্যবহারকারী পেজটি ত্যাগ করলে টাইমার বন্ধ করুন
+                    window.addEventListener('beforeunload', () => {
+                        clearTimeout(this.timeoutId);
+                    });
+                },
+
+                trackView() {
+                    // API-তে AJAX (fetch) রিকোয়েস্ট পাঠান
+                    fetch(`/news/${this.postSlug}/track-view`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                            'Accept': 'application/json',
+                        }
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('View tracking response:', data.message);
+                        })
+                        .catch(error => {
+                            console.error('Error tracking view:', error);
+                        });
+                }
+            };
+        }
+    </script>
+@endpush

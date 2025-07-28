@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasCustomSlug;
+use App\Traits\TracksViews;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -12,12 +13,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property mixed $is_published
  * @property mixed $published_at
  * @method static where(string $string, string $string1, mixed $id)
+ * @method trackView(\Illuminate\Http\Request $request)
  */
 class Post extends Model
 {
-    use HasCustomSlug;
+    use HasCustomSlug, TracksViews;
 
-    protected $fillable = ['user_id','post_category_id','title','slug','content','featured_image','excerpt','is_published','published_at','meta_title','meta_description'];
+    protected $fillable = ['user_id','post_category_id','title','slug','content','featured_image','excerpt','is_published','published_at','meta_title','meta_description','views_count'];
 
     public function getSluggableField(): string
     {

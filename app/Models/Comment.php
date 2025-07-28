@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @method static create(array $array)
+ */
 class Comment extends Model
 {
     protected $fillable = ['post_id','user_id','parent_id','name','phone','email','comment','is_approved'];
@@ -31,11 +34,20 @@ class Comment extends Model
     }
 
     /**
+     * Get the parent comment.
+     */
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(Comment::class, 'parent_id');
+    }
+
+    /**
      * Get the replies for the comment.
-     * একটি কমেন্টের অনেকগুলো রিপ্লাই থাকতে পারে।
      */
     public function replies(): HasMany
     {
-        return $this->hasMany(Comment::class, 'parent_id')->latest();
+        return $this->hasMany(Comment::class, 'parent_id')
+            ->with('user', 'replies.user')
+            ->latest();
     }
 }

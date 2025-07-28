@@ -3,7 +3,8 @@
     <section>
         <!-- banner section -->
         <div
-            class="w-full bg-[url('../img/bg/14.html')] bg-no-repeat bg-cover bg-center relative z-0 after:w-full after:h-full after:absolute after:top-0 after:left-0 after:bg-white after:bg-opacity-30 after:-z-1">
+            style="background-image: url('{{ asset('assets/img/bg/14.jpg') }}')"
+            class="w-full bg-no-repeat bg-cover bg-center relative z-0 after:w-full after:h-full after:absolute after:top-0 after:left-0 after:bg-white after:bg-opacity-30 after:-z-1">
             <div class="container py-110px">
                 <h1
                     class="text-2xl sm:text-3xl md:text-26px lg:text-3xl xl:text-4xl font-bold text-heading-color mb-15px"
@@ -32,10 +33,7 @@
 
             <form wire:submit.prevent class="mb-30px">
                 <div class="flex items-center">
-                    <input wire:model.live.debounce.500ms="search" type="text" placeholder="Search your keyword..." class="flex-grow text-paragraph-color text-sm font-semibold bg-section-bg-1 px-5 outline-none border-2 border-r-0 border-border-color-9 focus:border focus:border-secondary-color h-60px placeholder:text-heading-color block rounded-none">
-{{--                    <button type="submit" class="flex-shrink-0 text-sm lg:text-base h-60px w-14 flex items-center justify-center text-white bg-secondary-color hover:bg-primary-color">--}}
-{{--                        <i class="fas fa-search"></i>--}}
-{{--                    </button>--}}
+                    <input wire:model.live.debounce.500ms="search" type="text" placeholder="Search your keyword..." class="flex-grow text-paragraph-color text-sm font-semibold bg-section-bg-1 px-5 outline-none border-2 border-border-color-9 focus:border focus:border-secondary-color h-60px placeholder:text-heading-color block rounded-none">
                 </div>
             </form>
 
@@ -61,21 +59,21 @@
                             <ul class="mb-15px flex gap-x-25px items-center">
                                 <li class="text-xs md:text-sm font-semibold">
                                     <a
-                                        href="#"
+                                        href="{{ route('blog.index', ['user' => $post->user->slug]) }}"
                                         class="leading-1.8 hover:text-secondary-color flex gap-5px items-center"
                                     >
                                         <i class="far fa-user text-secondary-color"></i>
-                                        {{ $post->user->name }}
+                                        {{ $post->user?->name }}
                                     </a>
                                 </li>
 
                                 <li class="text-xs md:text-sm font-semibold">
                                     <a
-                                        href="#"
+                                        href="{{ route('blog.index', ['category' => $post->category->slug]) }}"
                                         class="leading-1.8 hover:text-secondary-color flex gap-5px items-center"
                                     >
                                         <i class="fas fa-tags text-secondary-color"></i>
-                                        {{ $post->category->name }}
+                                        {{ $post->category?->name }}
                                     </a>
                                 </li>
                             </ul>
@@ -111,6 +109,8 @@
                     </div>
                     @endforeach
                 </div>
+            @else
+                <p>No news found.</p>
             @endif
 
             <!-- pagination -->

@@ -9,7 +9,10 @@
     <ul>
         @foreach($this->categories as $category)
             <li>
-                <a href="#" class="text-sm font-bold flex justify-between items-center group mt-15px">
+                <a
+                    {{-- blog.index হলো আপনার BlogPage কম্পোনেন্টের রাউটের নাম --}}
+                    href="{{ route('blog.index', ['category' => $category->slug]) }}"
+                    class="text-sm font-bold flex justify-between items-center group mt-15px">
                     <span class="leading-1.8">{{ $category->name }}</span>
                     <span class="leading-1.8 group-hover:text-paragraph-color">
                         ({{ $category->posts_count }})

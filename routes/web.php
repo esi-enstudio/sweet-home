@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\FallbackController;
+use App\Http\Controllers\NewsViewController;
+use App\Http\Controllers\PropertyViewController;
 use App\Livewire\Blog\BlogDetailsPage;
 use App\Livewire\Blog\BlogPage;
 use App\Livewire\ContactPage;
@@ -10,32 +12,42 @@ use App\Livewire\OurInspirationPage;
 use App\Livewire\Properties;
 use App\Livewire\SingleProperty;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\PropertyViewController;
+
 
 Route::get('/', HomeComponent::class)->name('home');
 
+
+// --- সুনির্দিষ্ট রাউটগুলো আগে ---
 // প্রপার্টির তালিকা এবং ফিল্টারিং-এর জন্য
+Route::get('/inspiration', OurInspirationPage::class)->name('inspiration');
+
 Route::get('/properties', Properties::class)->name('properties');
 
-// সিঙ্গেল প্রপার্টির ডিটেইলস দেখানোর জন্য
-// এখানে Route Model Binding ব্যবহার করা হচ্ছে
 Route::get('/property/{property:slug}', SingleProperty::class)->name('single.property');
-
 
 Route::post('/properties/{property:slug}/track-view', [PropertyViewController::class, 'store'])
     ->name('properties.track-view')
     ->middleware('throttle:5,1');
 
-Route::get('/inspiration', OurInspirationPage::class)->name('inspiration');
+Route::get('/news', BlogPage::class)->name('blog.index');
+Route::get('/news/{post:slug}', BlogDetailsPage::class)->name('blog.show');
+Route::post('/news/{post:slug}/track-view', [NewsViewController::class, 'store'])
+    ->name('news.track-view')
+    ->middleware('throttle:5,1');
 
 Route::get('/contact', ContactPage::class)->name('contact');
 
+
+
+
+
+
+
+
+
+// --- সাধারণ বা ওয়াইল্ডকার্ড রাউটগুলো পরে ---
 // এই রাউটটি '/terms-and-conditions', '/privacy-policy' ইত্যাদি হ্যান্ডেল করবে
 Route::get('/{page:slug}', LegalPageShow::class)->name('legal.page');
-
-
-Route::get('/news', BlogPage::class)->name('blog.index');
-Route::get('/news/{post:slug}', BlogDetailsPage::class)->name('blog.show');
 
 // --- ফলব্যাক রাউটটি অবশ্যই সব রাউটের শেষে থাকবে ---
 Route::fallback(FallbackController::class);

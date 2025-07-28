@@ -24,6 +24,9 @@ return new class extends Migration
             $table->text('comment');
             $table->boolean('is_approved')->default(false);
             $table->timestamps();
+
+            // parent_id কলামটি id কলামকে রেফারেন্স করবে (একই টেবিলে)
+            $table->foreign('parent_id')->references('id')->on('comments')->onDelete('cascade');
         });
     }
 
