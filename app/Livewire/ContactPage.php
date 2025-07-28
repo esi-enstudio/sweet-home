@@ -50,6 +50,7 @@ class ContactPage extends Component
 
     public function render(): Factory|View|Application
     {
-        return view('livewire.contact-page')->title($this->settings['banner_title'] ?? 'ContactPage Us');
+        return view('livewire.contact-page')
+            ->title('Contact Us' .' - '. config('app.name'));
     }
 }

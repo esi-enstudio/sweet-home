@@ -103,7 +103,7 @@
 
                     <!-- News -->
                     <li class="relative group">
-                        <a href="#" class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px">
+                        <a href="{{ route('blog.index') }}" class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px">
                             News
                         </a>
                     </li>
@@ -187,23 +187,6 @@
                         </div>
                     </div>
 
-                    <!-- search input  -->
-{{--                    <div class="mb-50px">--}}
-{{--                        <form class="w-full relative">--}}
-{{--                            <input--}}
-{{--                                type="text"--}}
-{{--                                placeholder="Search..."--}}
-{{--                                class="text-sm text-paragraph-color pl-5 pr-50px placeholder:text-paragraph-color outline-none border-2 border-border-color-9 focus:border focus:border-secondary-color h-65px block w-full rounded-none"--}}
-{{--                            >--}}
-{{--                            <button--}}
-{{--                                type="submit"--}}
-{{--                                class="absolute top-1/2 -translate-y-1/2 right-7 text-heading-color"--}}
-{{--                            >--}}
-{{--                                <i class="icon-search text-lg font-bold"></i>--}}
-{{--                            </button>--}}
-{{--                        </form>--}}
-{{--                    </div>--}}
-
                     <!-- mobile menu -->
                     <div class="border-b border-border-primary dark:border-borderColor-dark pb-8">
                         <ul class="accordion-container">
@@ -230,7 +213,7 @@
 
                             <!-- news -->
                             <li class="mt-4">
-                                <a href="#" class="accordion-controller flex items-center justify-between cursor-pointer hover:text-secondary-color uppercase text-sm lg:text-base py-2 lg:py-2.5">
+                                <a href="{{ route('blog.index') }}" class="accordion-controller flex items-center justify-between cursor-pointer hover:text-secondary-color uppercase text-sm lg:text-base py-2 lg:py-2.5">
                                     news
                                 </a>
                             </li>
