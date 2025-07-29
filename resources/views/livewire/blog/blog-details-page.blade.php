@@ -104,7 +104,7 @@
                                     <a class="text-xs md:text-sm font-semibold" href="#">
                                         <span class="leading-1.8 md:leading-1.8">
                                             <i class="far fa-eye text-secondary-color mr-5px"></i>
-                                            {{ $post->views_count }}
+                                            {{ $post->views_count ?? 0 }}
                                         </span>
                                     </a>
                                 </li>

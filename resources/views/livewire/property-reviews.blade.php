@@ -18,7 +18,7 @@
     <!-- reviews -->
     <ul class="mb-20px">
         @forelse($this->reviews as $review)
-            <li class="flex gap-x-30px gap-y-5 pb-30px @if(!$loop->iteration > 1) border-t border-border-color-12 @endif">
+            <li class="flex flex-col md:flex-row gap-x-30px gap-y-5 pb-30px @if(!$loop->iteration > 1) border-t border-border-color-12 @endif">
                 {{-- বাম অংশ: প্রোফাইল ছবি --}}
                 <div class="flex-shrink-0">
                     @if($review->user && $review->user->avatar_url)
@@ -31,26 +31,29 @@
                 </div>
 
                 {{-- ডান অংশ: রিভিউয়ের সম্পূর্ণ কন্টেন্ট --}}
-                <div class="flex-grow">
-                    {{-- উপরের অংশ: নাম এবং তারিখ --}}
-                    <div class="flex justify-between items-start mb-2">
-                        <div>
-                            <h4 class="text-lg font-semibold text-gray-900 leading-tight mb-5px">{{ $review->name }}</h4>
-                            <div>
-                                <x-star-rating :rating="$review->rating" class="text-xs pt-22px md:pt-0 mb-10px" />
-                            </div>
-                        </div>
-                        <p class="text-xs md:text-sm mb-5 md:mb-0 font-bold h-10 px-25px border-2 border-border-color-11 hover:border-secondary-color transition-all duration-300 text-nowrap rounded-[25px] box-border md:box-border inline-block">
+                <div class="w-full">
+
+                    <div class="flex items-center justify-between">
+                        <h4 class="text-lg text-heading-color font-semibold mb-5px">
+                            <a href="#" class="leading-1.3">{{ $review->name }}</a>
+                        </h4>
+
+                        <p class="text-xs sm:hidden md:block md:text-sm mb-5 md:mb-0 font-bold h-10 px-25px border-2 border-border-color-11 hover:border-secondary-color transition-all duration-300 text-nowrap rounded-[25px] box-border md:box-border inline-block">
                             <span class="leading-9 md:leading-9">{{ $review->created_at->format('F d, Y') }}</span>
                         </p>
                     </div>
 
-                    {{-- নিচের অংশ: কমেন্ট --}}
                     <div>
-                        <p class="text-sm text-gray-600 leading-relaxed">
-                            {{ $review->comment }}
-                        </p>
+                        <x-star-rating :rating="$review->rating" class="text-xs pt-22px md:pt-0 mb-10px" />
                     </div>
+
+                    <p class="text-sm mb-5 md:mb-0">
+                        <span class="leading-1.8">{{ $review->comment }}</span>
+                    </p>
+
+                    <p class="text-xs md:text-sm mb-5 md:mb-0 font-bold h-10 px-25px border-2 border-border-color-11 hover:border-secondary-color transition-all duration-300 text-nowrap md:absolute md:top-0 md:right-0 rounded-[25px] box-border md:box-border inline-block">
+                        <span class="leading-9 md:leading-9">{{ $review->created_at->format('F d, Y') }}</span>
+                    </p>
                 </div>
             </li>
         @empty
@@ -71,8 +74,6 @@
             </button>
         </div>
     @endif
-
-
 
     <!-- add reviews -->
     @auth

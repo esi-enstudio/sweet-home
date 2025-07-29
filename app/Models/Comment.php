@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * @method static create(array $array)
@@ -47,7 +48,13 @@ class Comment extends Model
     public function replies(): HasMany
     {
         return $this->hasMany(Comment::class, 'parent_id')
-            ->with('user', 'replies.user')
+            ->with('user', 'replies', 'reactions')
             ->latest();
+    }
+
+    // রিঅ্যাকশনের জন্য Polymorphic রিলেশন
+    public function reactions(): MorphMany
+    {
+        return $this->morphMany(Reaction::class, 'reactable');
     }
 }

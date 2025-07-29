@@ -168,6 +168,11 @@ class User extends Authenticatable implements HasAvatar, FilamentUser
         return $this->hasMany(Comment::class);
     }
 
+    public function reactions(): HasMany
+    {
+        return $this->hasMany(Reaction::class);
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         // --- প্যানেলের আইডি অনুযায়ী অ্যাক্সেস নিয়ন্ত্রণ ---

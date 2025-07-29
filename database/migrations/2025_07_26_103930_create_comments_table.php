@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
@@ -16,17 +17,21 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Post::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete(); // লগইন করা ইউজারের জন্য
-            $table->unsignedBigInteger('parent_id')->nullable(); // নেস্টেড কমেন্টের জন্য
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete(); // লগইন করা ইউজার আবশ্যক
+
+            // --- এটিই নেস্টেড কমেন্টের মূল ভিত্তি ---
+            // parent_id কলামটি অন্য একটি কমেন্টের id-কে নির্দেশ করবে
+            $table->foreignIdFor(Comment::class, 'parent_id')
+                ->nullable()
+                ->constrained('comments')
+                ->cascadeOnDelete();
+
             $table->string('name'); // গেস্টদের জন্য
             $table->string('phone');
             $table->string('email');
             $table->text('comment');
-            $table->boolean('is_approved')->default(false);
+            $table->boolean('is_approved')->default(true);
             $table->timestamps();
-
-            // parent_id কলামটি id কলামকে রেফারেন্স করবে (একই টেবিলে)
-            $table->foreign('parent_id')->references('id')->on('comments')->onDelete('cascade');
         });
     }
 

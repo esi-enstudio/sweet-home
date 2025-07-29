@@ -119,6 +119,7 @@ class PostResource extends Resource
                     ->dateTime()
                     ->sortable(),
             ])
+            ->defaultPaginationPageOption(5)
             ->filters([
                 //
             ])

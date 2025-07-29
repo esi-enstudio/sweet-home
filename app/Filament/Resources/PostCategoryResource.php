@@ -43,6 +43,7 @@ class PostCategoryResource extends Resource
                 TextColumn::make('name')->searchable(),
                 TextColumn::make('slug'),
             ])
+            ->defaultPaginationPageOption(5)
             ->filters([
                 //
             ])
@@ -76,5 +77,10 @@ class PostCategoryResource extends Resource
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->latest();
     }
 }

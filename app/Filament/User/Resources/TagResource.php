@@ -23,6 +23,8 @@ class TagResource extends Resource
 
     protected static ?string $navigationGroup = 'Blog';
 
+    protected static ?string $navigationParentItem = 'Posts';
+
     public static function form(Form $form): Form
     {
         return $form
