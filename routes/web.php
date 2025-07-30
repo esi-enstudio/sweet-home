@@ -3,8 +3,8 @@
 use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\NewsViewController;
 use App\Http\Controllers\PropertyViewController;
-use App\Livewire\Blog\BlogDetailsPage;
-use App\Livewire\Blog\BlogPage;
+use App\Livewire\News\NewsDetailsPage;
+use App\Livewire\News\NewsPage;
 use App\Livewire\ContactPage;
 use App\Livewire\HomeComponent;
 use App\Livewire\LegalPageShow;
@@ -29,8 +29,8 @@ Route::post('/properties/{property:slug}/track-view', [PropertyViewController::c
     ->name('properties.track-view')
     ->middleware('throttle:5,1');
 
-Route::get('/news', BlogPage::class)->name('blog.index');
-Route::get('/news/{post:slug}', BlogDetailsPage::class)->name('blog.show');
+Route::get('/news', NewsPage::class)->name('news.index');
+Route::get('/news/{post:slug}', NewsDetailsPage::class)->name('news.show');
 Route::post('/news/{post:slug}/track-view', [NewsViewController::class, 'store'])
     ->name('news.track-view')
     ->middleware('throttle:5,1');

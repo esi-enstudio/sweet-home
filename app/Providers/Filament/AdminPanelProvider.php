@@ -127,7 +127,7 @@ class AdminPanelProvider extends PanelProvider
 
                 // আপনি চাইলে আরও গ্রুপ যোগ করতে পারেন
 //                NavigationGroup::make()
-//                    ->label('Blog')
+//                    ->label('News')
 //                    ->icon('heroicon-o-pencil-square'),
             ])
             ->spa();

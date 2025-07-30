@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Blog;
+namespace App\Livewire\News;
 
 use App\Models\Tag;
 use Illuminate\Contracts\View\Factory;
@@ -23,6 +23,6 @@ class SidebarPopularTags extends Component
 
     public function render(): Factory|View|Application
     {
-        return view('livewire.blog.sidebar-popular-tags');
+        return view('livewire.news.sidebar-popular-tags');
     }
 }

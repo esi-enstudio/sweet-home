@@ -21,7 +21,7 @@ class TagResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Blog';
+    protected static ?string $navigationGroup = 'News';
 
     protected static ?string $navigationParentItem = 'Posts';
 

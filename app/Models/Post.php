@@ -83,7 +83,7 @@ class Post extends Model
     }
 
     /**
-     * Get the comments for the blog post.
+     * Get the comments for the news post.
      * একটি পোস্টের অনেকগুলো Comment থাকতে পারে।
      *
      * @return HasMany

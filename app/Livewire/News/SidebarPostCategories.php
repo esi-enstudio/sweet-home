@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Blog;
+namespace App\Livewire\News;
 
 use App\Models\PostCategory;
 use Illuminate\Contracts\View\Factory;
@@ -21,6 +21,6 @@ class SidebarPostCategories extends Component
 
     public function render(): Factory|View|Application
     {
-        return view('livewire.blog.sidebar-post-categories');
+        return view('livewire.news.sidebar-post-categories');
     }
 }

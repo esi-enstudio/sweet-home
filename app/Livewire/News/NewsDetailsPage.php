@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Blog;
+namespace App\Livewire\News;
 
 use App\Models\Post;
 use Illuminate\Contracts\View\Factory;
@@ -12,7 +12,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 
 #[Layout('layouts.app')]
-class BlogDetailsPage extends Component
+class NewsDetailsPage extends Component
 {
     public Post $post;
 
@@ -61,7 +61,7 @@ class BlogDetailsPage extends Component
 
     public function render(): Factory|View|Application
     {
-        return view('livewire.blog.blog-details-page')
+        return view('livewire.news.news-details-page')
         ->title($this->post->meta_title ?? $this->post->title .' - '. config('app.name'));
     }
 }

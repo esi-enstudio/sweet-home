@@ -1659,7 +1659,7 @@
                                             <div class="absolute top-10 lg:top-5 right-[30px]">
                                                 <a href="team-details.html" class="w-50px h-50px"
                                                 ><img
-                                                        src="{{ asset('assets/img/blog/author.jpg') }}"
+                                                        src="{{ asset('assets/img/news/author.jpg') }}"
                                                         alt=""
                                                         class="w-full h-full rounded-100% group-hover:scale-110 border-3px border-border-color-1 transition-all duration-300"
                                                     ></a>
@@ -1775,7 +1775,7 @@
                                             <div class="absolute top-10 lg:top-5 right-[30px]">
                                                 <a href="team-details.html" class="w-50px h-50px"
                                                 ><img
-                                                        src="{{ asset('assets/img/blog/author.jpg') }}"
+                                                        src="{{ asset('assets/img/news/author.jpg') }}"
                                                         alt=""
                                                         class="w-full h-full rounded-100% group-hover:scale-110 border-3px border-border-color-1 transition-all duration-300"
                                                     ></a>
@@ -2588,7 +2588,7 @@
                                                             href="team-details.html"
                                                             class="w-50px h-50px"
                                                         ><img
-                                                                src="{{ asset('assets/img/blog/author.jpg') }}"
+                                                                src="{{ asset('assets/img/news/author.jpg') }}"
                                                                 alt=""
                                                                 class="w-full h-full rounded-100% group-hover:scale-110 border-3px border-border-color-1 transition-all duration-300"
                                                             ></a>
@@ -2674,7 +2674,7 @@
                                                             href="team-details.html"
                                                             class="w-50px h-50px"
                                                         ><img
-                                                                src="{{ asset('assets/img/blog/author.jpg') }}"
+                                                                src="{{ asset('assets/img/news/author.jpg') }}"
                                                                 alt=""
                                                                 class="w-full h-full rounded-100% group-hover:scale-110 border-3px border-border-color-1 transition-all duration-300"
                                                             ></a>
@@ -2760,7 +2760,7 @@
                                                             href="team-details.html"
                                                             class="w-50px h-50px"
                                                         ><img
-                                                                src="{{ asset('assets/img/blog/author.jpg') }}"
+                                                                src="{{ asset('assets/img/news/author.jpg') }}"
                                                                 alt=""
                                                                 class="w-full h-full rounded-100% group-hover:scale-110 border-3px border-border-color-1 transition-all duration-300"
                                                             ></a>

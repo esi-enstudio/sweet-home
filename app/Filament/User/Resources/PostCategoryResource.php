@@ -23,7 +23,7 @@ class PostCategoryResource extends Resource
 
     protected static ?string $modelLabel = 'Category';
 
-    protected static ?string $navigationGroup = 'Blog';
+    protected static ?string $navigationGroup = 'News';
 
     protected static ?string $navigationParentItem = 'Posts';
 

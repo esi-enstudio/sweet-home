@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Blog;
+namespace App\Livewire\News;
 
 use App\Models\Post;
 use Illuminate\Contracts\View\Factory;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Application;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
-class SidebarLatestBlogs extends Component
+class SidebarLatestNews extends Component
 {
     public ?int $exclude = null; // বর্তমান পোস্টের আইডি বাদ দেওয়ার জন্য
 
@@ -27,6 +27,6 @@ class SidebarLatestBlogs extends Component
 
     public function render(): Factory|View|Application
     {
-        return view('livewire.blog.sidebar-latest-blogs');
+        return view('livewire.news.sidebar-latest-news');
     }
 }

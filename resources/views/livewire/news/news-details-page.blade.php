@@ -24,7 +24,7 @@
                         ><i class="fas fa-home text-secondary-color"></i> Home</a>
                     </li>
                     <li class="leading-1.8 lg:leading-1.8 text-heading-color">
-                        Blog Details
+                        News Details
                     </li>
                 </ul>
             </div>
@@ -53,7 +53,7 @@
                                     {{-- ক্যাটাগরি --}}
                                     <a
                                         class="text-xs md:text-sm uppercase text-white px-15px pt-5px pb-0.5 bg-secondary-color hover:bg-primary-color hover:text-white font-semibold"
-                                        href="{{ route('blog.index', ['category' => $post->category->slug]) }}"
+                                        href="{{ route('news.index', ['category' => $post->category->slug]) }}"
                                     >
                                         <span class="leading-1.8 md:leading-1.8">
                                             {{ $post->category->name }}
@@ -69,7 +69,7 @@
                             <ul class="flex gap-x-15px md:gap-x-30px items-center mb-5">
                                 <li>
                                     <div>
-                                        <a href="{{ route('blog.index', ['user' => $post->user->slug]) }}" class="flex items-center gap-10px text-xs md:text-sm font-semibold">
+                                        <a href="{{ route('news.index', ['user' => $post->user->slug]) }}" class="flex items-center gap-10px text-xs md:text-sm font-semibold">
                                             <img
                                                 src="{{ $post->user->avatar_url && Storage::disk('public')->exists($post->user->avatar_url)
                                                                          ? Storage::url($post->user->avatar_url)
@@ -174,7 +174,7 @@
                             <div
                                 class="grid grid-cols-1 lg:grid-cols-2 relative z-0 after:content-['\e958'] after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:text-3xl after:font-icomoon after:z-1 after:text-secondary-color"
                             >
-                                <!-- prev blog -->
+                                <!-- prev news -->
                                 <div>
                                     @if($this->previousPost)
                                         <h4 class="text-sm md:text-15px lg:text-base font-bold text-secondary-color mb-3">
@@ -183,7 +183,7 @@
 
                                         <h4 class="text-lg lg:text-2xl font-semibold text-heading-color">
                                             <a
-                                                href="{{ route('blog.show', $this->previousPost->slug) }}"
+                                                href="{{ route('news.show', $this->previousPost->slug) }}"
                                                 class="leading-1.3 md:leading-1.3 xl:leading-1.3">
                                                 {{ \Illuminate\Support\Str::limit($this->previousPost->title, 20) }}
                                             </a>
@@ -191,7 +191,7 @@
                                     @endif
                                 </div>
 
-                                <!-- next  blog -->
+                                <!-- next  news -->
                                 <div class="text-end">
                                     @if($this->nextPost)
                                         <h4 class="text-sm md:text-15px lg:text-base font-bold text-secondary-color mb-3">
@@ -200,7 +200,7 @@
 
                                         <h4 class="text-lg lg:text-2xl font-semibold text-heading-color">
                                             <a
-                                                href="{{ route('blog.show', $this->nextPost->slug) }}"
+                                                href="{{ route('news.show', $this->nextPost->slug) }}"
                                                 class="leading-1.3 md:leading-1.3 xl:leading-1.3">
                                                 {{ \Illuminate\Support\Str::limit($this->nextPost->title, 20) }}
                                             </a>
@@ -222,7 +222,7 @@
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-30px mb-20">
                                     <!-- card -->
                                     @foreach($this->relatedPosts as $relatedPost)
-                                        <x-blog.post-card :post="$relatedPost" />
+                                        <x-news.post-card :post="$relatedPost" />
                                     @endforeach
                                 </div>
                             </div>
@@ -259,11 +259,11 @@
                             </div>
 
                             <!-- Comments -->
-                            <livewire:blog.comment-list :post="$post" :wire:key="'comment-list-'. $post->id" />
+                            <livewire:news.comment-list :post="$post" :wire:key="'comment-list-'. $post->id" />
 
                             <!-- Post Comment -->
                             @auth
-                                <livewire:blog.comment-form :post="$post" :wire:key="'comment-form-'. $post->id" />
+                                <livewire:news.comment-form :post="$post" :wire:key="'comment-form-'. $post->id" />
                             @else
 
                                 <p class="mt-5">
@@ -279,19 +279,19 @@
                 <!-- sidebar -->
                 <div class="lg:col-start-9 lg:col-span-4 pt-100px lg:pt-0">
                     <!-- author details -->
-                    <x-blog.sidebar.author-details :author="$post->user" />
+                    <x-news.sidebar.author-details :author="$post->user" />
 
                     <!-- Top Rated Properties -->
                     <livewire:single-property.top-rated-properties-widget />
 
                     <!-- Top Categories-->
-                    <livewire:blog.sidebar-post-categories />
+                    <livewire:news.sidebar-post-categories />
 
                     <!-- Popular Properties-->
                     <livewire:single-property.popular-properties-widget />
 
                     <!-- Latest Blogs -->
-                    <livewire:blog.sidebar-latest-blogs :exclude="$post->id"/>
+                    <livewire:news.sidebar-latest-blogs :exclude="$post->id"/>
 
                     <!-- Twitter Feeds -->
                     <div
@@ -456,7 +456,7 @@
                     </div>
 
                     <!-- Popular Tags -->
-                    <livewire:blog.sidebar-popular-tags />
+                    <livewire:news.sidebar-popular-tags />
                 </div>
             </div>
         </div>

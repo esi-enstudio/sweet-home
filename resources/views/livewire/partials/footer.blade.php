@@ -162,7 +162,7 @@
                                     class="text-secondary-color pr-15px opacity-0 group-hover:opacity-100 transition-all duration-300"
                                 >//</span
                                 >
-                                Blog</a
+                                News</a
                             >
                         </li>
                         <li>

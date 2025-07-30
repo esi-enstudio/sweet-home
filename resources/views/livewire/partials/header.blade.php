@@ -103,7 +103,7 @@
 
                     <!-- News -->
                     <li class="relative group">
-                        <a href="{{ route('blog.index') }}" class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px">
+                        <a href="{{ route('news.index') }}" class="text-lg xl:text-15px 2xl:text-lg text-heading-color hover:text-secondary-color font-semibold whitespace-nowrap pl-10px py-22px">
                             News
                         </a>
                     </li>
@@ -213,7 +213,7 @@
 
                             <!-- news -->
                             <li class="mt-4">
-                                <a href="{{ route('blog.index') }}" class="accordion-controller flex items-center justify-between cursor-pointer hover:text-secondary-color uppercase text-sm lg:text-base py-2 lg:py-2.5">
+                                <a href="{{ route('news.index') }}" class="accordion-controller flex items-center justify-between cursor-pointer hover:text-secondary-color uppercase text-sm lg:text-base py-2 lg:py-2.5">
                                     news
                                 </a>
                             </li>

@@ -13,14 +13,14 @@
             >
                 <div class="flex gap-x-5">
                     <div class="w-20 flex-shrink-0">
-                        <a href="{{ route('blog.show', $post->slug) }}">
+                        <a href="{{ route('news.show', $post->slug) }}">
                             <img src="{{ $post->featured_image && Storage::disk('public')->exists($post->featured_image) ? Storage::url($post->featured_image) : '' }}" alt="{{ $post->title }}">
                         </a>
                     </div>
 
                     <div>
                         <h6 class="text-sm font-medium mb-5px">
-                            <a href="{{ route('blog.show', $post->slug) }}" class="leading-1.3">
+                            <a href="{{ route('news.show', $post->slug) }}" class="leading-1.3">
                                 {{ \Illuminate\Support\Str::limit($post->title, 45) }}
                             </a>
                         </h6>

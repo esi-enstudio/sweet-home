@@ -23,7 +23,7 @@ class PostCategoryResource extends Resource
 
     protected static ?string $modelLabel = 'Category';
 
-    protected static ?string $navigationGroup = 'Blog';
+    protected static ?string $navigationGroup = 'News';
 
     protected static ?string $navigationParentItem = 'Posts';
 
@@ -42,6 +42,7 @@ class PostCategoryResource extends Resource
             ->columns([
                 TextColumn::make('name')->searchable(),
                 TextColumn::make('slug'),
+                TextColumn::make('posts_count')->badge(),
             ])
             ->defaultPaginationPageOption(5)
             ->filters([

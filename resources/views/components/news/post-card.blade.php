@@ -3,7 +3,7 @@
 <div class="group shadow-box-shadow-5">
     <!-- card thumbs -->
     <div class="relative leading-1">
-        <a href="{{ route('blog.show', $post->slug) }}" class="overflow-hidden">
+        <a href="{{ route('news.show', $post->slug) }}" class="overflow-hidden">
             <img src="{{ $post->featured_image && Storage::disk('public')->exists($post->featured_image) ? Storage::url($post->featured_image) : '' }}"
                  class="w-full transition-all duration-700"
                  alt="{{ $post->title }}"
@@ -22,7 +22,7 @@
 
         <h4 class="text-xl font-semibold text-heading-color mb-5">
             <a
-                href="{{ route('blog.show', $post->slug) }}"
+                href="{{ route('news.show', $post->slug) }}"
                 class="hover:text-secondary-color leading-1.3">
                 {{ \Illuminate\Support\Str::limit($post->title, 45) }}
             </a>

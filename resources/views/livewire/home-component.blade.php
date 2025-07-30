@@ -621,7 +621,7 @@
                                             class="overflow-hidden"
                                         >
                                             <img
-                                                src="{{ asset('assets/img/blog/1.jpg') }}"
+                                                src="{{ asset('assets/img/news/1.jpg') }}"
                                                 class="w-full group-hover:scale-110 transition-all duration-700"
                                                 alt=""
                                             >
@@ -693,7 +693,7 @@
                                             class="overflow-hidden"
                                         >
                                             <img
-                                                src="{{ asset('assets/img/blog/2.jpg') }}"
+                                                src="{{ asset('assets/img/news/2.jpg') }}"
                                                 class="w-full group-hover:scale-110 transition-all duration-700"
                                                 alt=""
                                             >
@@ -765,7 +765,7 @@
                                             class="overflow-hidden"
                                         >
                                             <img
-                                                src="{{ asset('assets/img/blog/3.jpg') }}"
+                                                src="{{ asset('assets/img/news/3.jpg') }}"
                                                 class="w-full group-hover:scale-110 transition-all duration-700"
                                                 alt=""
                                             >
@@ -837,7 +837,7 @@
                                             class="overflow-hidden"
                                         >
                                             <img
-                                                src="{{ asset('assets/img/blog/4.jpg') }}"
+                                                src="{{ asset('assets/img/news/4.jpg') }}"
                                                 class="w-full group-hover:scale-110 transition-all duration-700"
                                                 alt=""
                                             >
@@ -910,7 +910,7 @@
                                             class="overflow-hidden"
                                         >
                                             <img
-                                                src="{{ asset('assets/img/blog/5.jpg') }}"
+                                                src="{{ asset('assets/img/news/5.jpg') }}"
                                                 class="w-full group-hover:scale-110 transition-all duration-700"
                                                 alt=""
                                             >

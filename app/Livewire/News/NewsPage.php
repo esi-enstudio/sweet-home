@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Blog;
+namespace App\Livewire\News;
 
 use App\Models\Post;
 use Illuminate\Contracts\View\Factory;
@@ -14,7 +14,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Layout('layouts.app')]
-class BlogPage extends Component
+class NewsPage extends Component
 {
     use WithPagination;
 
@@ -75,6 +75,6 @@ class BlogPage extends Component
 
     public function render(): Factory|View|Application
     {
-        return view('livewire.blog.blog-page')->title('News - ' . config('app.name'));
+        return view('livewire.news.news-page')->title('News - ' . config('app.name'));
     }
 }

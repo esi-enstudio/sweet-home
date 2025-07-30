@@ -20,24 +20,24 @@
                         >
                     </li>
                     <li class="leading-1.8 lg:leading-1.8 text-heading-color">
-                        Blogs
+                        News
                     </li>
                 </ul>
             </div>
         </div>
     </section>
 
-    <!-- blog grid section -->
+    <!-- news grid section -->
     <section>
         <div class="container modal-container property-tab pt-30 pb-140px lg:pb-30">
 
-            <form wire:submit.prevent class="mb-30px">
-                <div class="flex items-center">
-                    <input wire:model.live.debounce.500ms="search" type="text" placeholder="Search your keyword..." class="flex-grow text-paragraph-color text-sm font-semibold bg-section-bg-1 px-5 outline-none border-2 border-border-color-9 focus:border focus:border-secondary-color h-60px placeholder:text-heading-color block rounded-none">
-                </div>
-            </form>
-
             @if($this->posts->total() > 0)
+                <form wire:submit.prevent class="mb-30px">
+                    <div class="flex items-center">
+                        <input wire:model.live.debounce.500ms="search" type="text" placeholder="Search your keyword..." class="flex-grow text-paragraph-color text-sm font-semibold bg-section-bg-1 px-5 outline-none border-2 border-border-color-9 focus:border focus:border-secondary-color h-60px placeholder:text-heading-color block rounded-none">
+                    </div>
+                </form>
+
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-30px gap-y-50px mb-50px">
 
                     <!-- card -->
@@ -45,7 +45,7 @@
                         <div wire:key="blog-post-{{ $post->id }}" class="group">
                         <!-- card thumbs -->
                         <div class="relative leading-1">
-                            <a href="{{ route('blog.show', $post->slug) }}" class="overflow-hidden">
+                            <a href="{{ route('news.show', $post->slug) }}" class="overflow-hidden">
                                 <img
                                     src="{{ $post->featured_image && Storage::disk('public')->exists($post->featured_image) ? Storage::url($post->featured_image) : '' }}"
                                     class="w-full group-hover:scale-110 transition-all duration-700"
@@ -59,7 +59,7 @@
                             <ul class="mb-15px flex gap-x-25px items-center">
                                 <li class="text-xs md:text-sm font-semibold">
                                     <a
-                                        href="{{ route('blog.index', ['user' => $post->user->slug]) }}"
+                                        href="{{ route('news.index', ['user' => $post->user->slug]) }}"
                                         class="leading-1.8 hover:text-secondary-color flex gap-5px items-center"
                                     >
                                         <i class="far fa-user text-secondary-color"></i>
@@ -69,7 +69,7 @@
 
                                 <li class="text-xs md:text-sm font-semibold">
                                     <a
-                                        href="{{ route('blog.index', ['category' => $post->category->slug]) }}"
+                                        href="{{ route('news.index', ['category' => $post->category->slug]) }}"
                                         class="leading-1.8 hover:text-secondary-color flex gap-5px items-center"
                                     >
                                         <i class="fas fa-tags text-secondary-color"></i>
@@ -80,7 +80,7 @@
 
                             <h4 class="text-lg md:text-xl lg:text-22px font-semibold text-heading-color">
                                 <a
-                                    href="{{ route('blog.show', $post->slug) }}"
+                                    href="{{ route('news.show', $post->slug) }}"
                                     class="hover:text-secondary-color leading-1.3">
                                     {{ Str::limit($post->title, 45) }}
                                 </a>
@@ -97,7 +97,7 @@
 
                                     <li class="text-xs md:text-sm font-semibold">
                                         <a
-                                            href="{{ route('blog.show', $post->slug) }}"
+                                            href="{{ route('news.show', $post->slug) }}"
                                             class="leading-1.8 text-secondary-color uppercase"
                                         >
                                             Read more
