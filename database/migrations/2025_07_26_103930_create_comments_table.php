@@ -26,9 +26,6 @@ return new class extends Migration
                 ->constrained('comments')
                 ->cascadeOnDelete();
 
-            $table->string('name'); // গেস্টদের জন্য
-            $table->string('phone');
-            $table->string('email');
             $table->text('comment');
             $table->boolean('is_approved')->default(true);
             $table->timestamps();

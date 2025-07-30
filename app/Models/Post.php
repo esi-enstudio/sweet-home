@@ -85,11 +85,18 @@ class Post extends Model
     /**
      * Get the comments for the blog post.
      * একটি পোস্টের অনেকগুলো Comment থাকতে পারে।
+     *
+     * @return HasMany
      */
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class)
-            ->whereNull('parent_id')
-            ->latest();
+        // এই রিলেশনটি শুধুমাত্র মূল কমেন্টগুলো (যাদের parent_id null) নিয়ে আসবে
+        return $this->hasMany(Comment::class)->whereNull('parent_id');
+    }
+
+    // এই নতুন রিলেশনটি যোগ করুন, যা রিপ্লাইসহ সব কমেন্ট গণনা করতে সাহায্য করবে
+    public function allComments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 }

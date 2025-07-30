@@ -2,65 +2,43 @@
 
 namespace App\Livewire\Blog;
 
+use App\Models\Comment;
+use App\Models\Post;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class CommentForm extends Component
 {
-    // প্যারেন্ট কম্পোনেন্ট থেকে এই মানগুলো আসবে
-    public int $postId;
-    public ?int $parentId = null; // রিপ্লাইয়ের জন্য, ডিফল্ট null
+    public Post $post;
+    public ?int $parentCommentId = null;
+    public ?string $replyToName = null;
 
-    // ফর্মের জন্য প্রোপার্টি
     public string $comment = '';
 
-    // ভ্যালিডেশনের নিয়ম
-    protected array $rules = [
-        'comment' => 'required|string|min:2',
-    ];
+    protected $listeners = ['setReplyTo'];
 
-    public function mount(int $postId, ?int $parentId = null): void
+    public function setReplyTo(int $commentId, string $name): void
     {
-        $this->postId = $postId;
-        $this->parentId = $parentId;
+        $this->parentCommentId = $commentId;
+        $this->replyToName = $name;
+        $this->comment = "@{$name} ";
     }
 
-    /**
-     * কমেন্ট বা রিপ্লাই পোস্ট করে।
-     */
     public function postComment(): void
     {
-        // নিশ্চিত করুন যে ব্যবহারকারী লগইন করা আছে
-        if (!Auth::check()) {
-            // আপনি চাইলে এখানে একটি ইভেন্ট পাঠাতে পারেন যা লগইন মডাল দেখাবে
-            // $this->dispatch('show-login-modal');
-            return;
-        }
+        $this->validate(['comment' => 'required|string']);
 
-        $this->validate();
-
-        $newComment = Auth::user()->comments()->create([
-            'post_id' => $this->postId,
-            'parent_id' => $this->parentId, // নতুন কমেন্টের জন্য null, রিপ্লাইয়ের জন্য id থাকবে
+        $newComment = Comment::create([
+            'post_id' => $this->post->id,
+            'user_id' => auth()->id(),
+            'parent_id' => $this->parentCommentId,
             'comment' => $this->comment,
-            'is_approved' => true, // ডিফল্ট অ্যাপ্রুভড
         ]);
 
-        // ফর্ম রিসেট করুন
-        $this->reset('comment');
-
-        // প্যারেন্ট কম্পোনেন্টগুলোকে জানানোর জন্য ইভেন্ট পাঠান
-        $this->dispatch('commentAdded');
-
-        // যদি এটি একটি রিপ্লাই ফর্ম হয়, তাহলে সেটিকে বন্ধ করার জন্য ইভেন্ট পাঠান
-        if ($this->parentId) {
-            $this->dispatch('replyFormSubmitted');
-        }
-
-        session()->flash('comment_success', 'Your comment has been posted!');
+        $this->reset(['comment', 'parentCommentId', 'replyToName']);
+        $this->dispatch('commentPosted', $newComment->id);
     }
 
     public function render(): Factory|View|Application

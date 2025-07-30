@@ -243,6 +243,7 @@
                                     <h6 class="text-sm text-secondary-color font-bold mb-0">
                                         <span class="leading-1.3">Written by</span>
                                     </h6>
+
                                     <h2
                                         class="text-xl md:text-22px lg:text-26px xl:text-3xl text-heading-color font-bold mb-10px"
                                     >
@@ -258,7 +259,18 @@
                             </div>
 
                             <!-- Comments -->
-                            <livewire:blog.comments :post="$post" :wire:key="$post->id"/>
+                            <livewire:blog.comment-list :post="$post" :wire:key="'comment-list-'. $post->id" />
+
+                            <!-- Post Comment -->
+                            @auth
+                                <livewire:blog.comment-form :post="$post" :wire:key="'comment-form-'. $post->id" />
+                            @else
+
+                                <p class="mt-5">
+                                    Please
+                                    <a target="_blank" class="text-secondary-color font-bold mb-0" href="{{ route('filament.user.auth.login') }}">login</a> to post a comment.
+                                </p>
+                            @endauth
 
                         </div>
                     </div>

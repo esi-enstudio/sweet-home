@@ -9,10 +9,11 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 /**
  * @method static create(array $array)
+ * @method static find(int $commentId)
  */
 class Comment extends Model
 {
-    protected $fillable = ['post_id','user_id','parent_id','name','phone','email','comment','is_approved'];
+    protected $fillable = ['post_id','user_id','parent_id','comment','is_approved'];
 
     protected $casts = ['is_approved' => 'boolean'];
 
@@ -52,9 +53,9 @@ class Comment extends Model
             ->latest();
     }
 
-    // রিঅ্যাকশনের জন্য Polymorphic রিলেশন
-    public function reactions(): MorphMany
+    // রিঅ্যাকশনের সাথে সম্পর্ক
+    public function reactions(): HasMany
     {
-        return $this->morphMany(Reaction::class, 'reactable');
+        return $this->hasMany(CommentReaction::class);
     }
 }
