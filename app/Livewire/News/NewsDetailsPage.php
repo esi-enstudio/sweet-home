@@ -61,7 +61,18 @@ class NewsDetailsPage extends Component
 
     public function render(): Factory|View|Application
     {
+        // OG Image-এর জন্য একটি সম্পূর্ণ URL তৈরি করুন
+        $ogImageUrl = $this->post->featured_image
+            ? asset('storage/' . $this->post->featured_image)
+            : asset('path/to/default-social-image.jpg');
+
+
         return view('livewire.news.news-details-page')
-        ->title($this->post->meta_title ?? $this->post->title .' - '. config('app.name'));
+        ->title($this->post->meta_title ?? $this->post->title .' - '. config('app.name'))->with([
+                'metaDescription' => $this->post->meta_description,
+                'ogTitle' => $this->post->meta_title ?? $this->post->title,
+                'ogDescription' => $this->post->meta_description,
+                'ogImage' => $ogImageUrl,
+            ]);
     }
 }

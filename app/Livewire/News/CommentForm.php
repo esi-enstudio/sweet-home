@@ -23,7 +23,18 @@ class CommentForm extends Component
     {
         $this->parentCommentId = $commentId;
         $this->replyToName = $name;
-        $this->comment = "@{$name} ";
+        $this->comment = "@{$name}: ";
+
+        // ব্রাউজারে একটি ইভেন্ট পাঠানো হচ্ছে
+        $this->dispatch('focus-comment-form');
+    }
+
+    /**
+     * রিপ্লাই মোড বাতিল করে এবং ফর্ম রিসেট করে।
+     */
+    public function cancelReply(): void
+    {
+        $this->reset('parentCommentId', 'replyToName', 'comment');
     }
 
     public function postComment(): void

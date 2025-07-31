@@ -49,8 +49,7 @@ class Comment extends Model
     public function replies(): HasMany
     {
         return $this->hasMany(Comment::class, 'parent_id')
-            ->with('user', 'replies', 'reactions')
-            ->latest();
+            ->with('user', 'replies', 'reactions');
     }
 
     // রিঅ্যাকশনের সাথে সম্পর্ক

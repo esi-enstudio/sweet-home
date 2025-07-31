@@ -138,42 +138,13 @@
                                 </div>
 
                                 <!-- social -->
-                                <div>
-                                    <h4 class="text-17px md:text-lg lg:text-xl font-bold text-heading-color mb-15px mt-30px lg:mt-0">
-                                        <span class="leading-1.3 md:leading-1.3 xl:leading-1.3">Social Share</span>
-                                    </h4>
-
-                                    <ul class="text-sm lg:text-base flex gap-18px justify-center items-center text-color-1">
-                                        <li class="leading-1.8 lg:leading-1.8">
-                                            <a href="https://www.facebook.com/"
-                                            ><i class="fab fa-facebook-f"></i
-                                                ></a>
-                                        </li>
-                                        <li class="leading-1.8 lg:leading-1.8">
-                                            <a href="https://x.com/"
-                                            ><i class="fab fa-twitter"></i
-                                                ></a>
-                                        </li>
-                                        <li class="leading-1.8 lg:leading-1.8">
-                                            <a href="https://www.linkedin.com/"
-                                            ><i class="fab fa-linkedin"></i
-                                                ></a>
-                                        </li>
-                                        <li class="leading-1.8 lg:leading-1.8">
-                                            <a href="https://www.youtube.com/"
-                                            ><i class="fab fa-youtube"></i
-                                                ></a>
-                                        </li>
-                                    </ul>
-                                </div>
+                                <x-news.social-share :title="$post->title" />
                             </div>
 
                             <hr class="my-50px border-b border-border-color-12 opacity-25">
 
                             <!-- navigation -->
-                            <div
-                                class="grid grid-cols-1 lg:grid-cols-2 relative z-0 after:content-['\e958'] after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:text-3xl after:font-icomoon after:z-1 after:text-secondary-color"
-                            >
+                            <div class="grid grid-cols-1 lg:grid-cols-2 relative z-0 after:content-['\e958'] after:absolute after:left-1/2 after:top-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:text-3xl after:font-icomoon after:z-1 after:text-secondary-color">
                                 <!-- prev news -->
                                 <div>
                                     @if($this->previousPost)
@@ -191,7 +162,7 @@
                                     @endif
                                 </div>
 
-                                <!-- next  news -->
+                                <!-- next news -->
                                 <div class="text-end">
                                     @if($this->nextPost)
                                         <h4 class="text-sm md:text-15px lg:text-base font-bold text-secondary-color mb-3">
@@ -216,7 +187,7 @@
                                 <h4
                                     class="text-22px font-semibold leading-1.3 pl-10px border-l-2 border-secondary-color text-heading-color mb-30px"
                                 >
-                                    Related Post
+                                    Related News
                                 </h4>
 
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-30px mb-20">
@@ -265,10 +236,9 @@
                             @auth
                                 <livewire:news.comment-form :post="$post" :wire:key="'comment-form-'. $post->id" />
                             @else
-
                                 <p class="mt-5">
                                     Please
-                                    <a target="_blank" class="text-secondary-color font-bold mb-0" href="{{ route('filament.user.auth.login') }}">login</a> to post a comment.
+                                    <a target="_blank" class="text-secondary-color font-bold mb-0" href="{{ route('filament.user.auth.login') }}">login</a> to post a comment or replay.
                                 </p>
                             @endauth
 
@@ -291,138 +261,129 @@
                     <livewire:single-property.popular-properties-widget />
 
                     <!-- Latest Blogs -->
-                    <livewire:news.sidebar-latest-blogs :exclude="$post->id"/>
+                    <livewire:news.sidebar-latest-news :exclude="$post->id"/>
 
                     <!-- Twitter Feeds -->
-                    <div
-                        class="px-5 pt-35px pb-10 xl:pl-35px xl:pr-30px mb-10 border-2 border-border-color-11"
-                    >
-                        <h4 class="text-lg font-semibold text-heading-color mb-25px">
-                  <span
-                      class="leading-1.3 pl-10px border-l-2 border-secondary-color"
-                  >Twitter Feeds</span
-                  >
-                        </h4>
+{{--                    <div class="px-5 pt-35px pb-10 xl:pl-35px xl:pr-30px mb-10 border-2 border-border-color-11">--}}
+{{--                        <h4 class="text-lg font-semibold text-heading-color mb-25px">--}}
+{{--                            <span class="leading-1.3 pl-10px border-l-2 border-secondary-color">Twitter Feeds</span>--}}
+{{--                        </h4>--}}
 
-                        <ul class="text-sm lg:text-base">
-                            <li class="pb-30px mb-30px border-b border-border-color-1">
-                                <div class="flex gap-x-5">
-                                    <div class="flex-shrink-0">
-                                        <a
-                                            href="blog-details.html"
-                                            class="leading-1.8 lg:leading-11.8 text-secondary-color"
-                                        >
-                                            <i class="fab fa-twitter"></i
-                                            ></a>
-                                    </div>
+{{--                        <ul class="text-sm lg:text-base">--}}
+{{--                            <li class="pb-30px mb-30px border-b border-border-color-1">--}}
+{{--                                <div class="flex gap-x-5">--}}
+{{--                                    <div class="flex-shrink-0">--}}
+{{--                                        <a--}}
+{{--                                            href="blog-details.html"--}}
+{{--                                            class="leading-1.8 lg:leading-11.8 text-secondary-color"--}}
+{{--                                        >--}}
+{{--                                            <i class="fab fa-twitter"></i--}}
+{{--                                            ></a>--}}
+{{--                                    </div>--}}
 
-                                    <div>
-                                        <div class="mb-2">
-                                            <p class="leading-1.3 lg:leading-1.3">
-                                                Carsafe - #Gutenberg ready @wordpress Theme for Car
-                                                Service, Auto Parts, Car Dealer available on <br >
-                                                @website
-                                            </p>
-                                            <a
-                                                href="blog-details.html"
-                                                class="leading-1.3 lg:leading-1.3 text-secondary-color"
-                                            >https://website.net</a
-                                            >
-                                        </div>
-                                        <div
-                                            class="text-xs md:text-sm font-semibold text-secondary-color"
-                                        >
-                                            <a href="#" class="leading-1.8 md:leading-1.8"
-                                            ><i class="far fa-calendar-alt"></i> June 22,
-                                                2024</a
-                                            >
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="pb-30px mb-30px border-b border-border-color-1">
-                                <div class="flex gap-x-5">
-                                    <div class="flex-shrink-0">
-                                        <a
-                                            href="blog-details.html"
-                                            class="leading-1.8 lg:leading-11.8 text-secondary-color"
-                                        >
-                                            <i class="fab fa-twitter"></i
-                                            ></a>
-                                    </div>
+{{--                                    <div>--}}
+{{--                                        <div class="mb-2">--}}
+{{--                                            <p class="leading-1.3 lg:leading-1.3">--}}
+{{--                                                Carsafe - #Gutenberg ready @wordpress Theme for Car--}}
+{{--                                                Service, Auto Parts, Car Dealer available on <br >--}}
+{{--                                                @website--}}
+{{--                                            </p>--}}
+{{--                                            <a--}}
+{{--                                                href="blog-details.html"--}}
+{{--                                                class="leading-1.3 lg:leading-1.3 text-secondary-color"--}}
+{{--                                            >https://website.net</a--}}
+{{--                                            >--}}
+{{--                                        </div>--}}
+{{--                                        <div--}}
+{{--                                            class="text-xs md:text-sm font-semibold text-secondary-color"--}}
+{{--                                        >--}}
+{{--                                            <a href="#" class="leading-1.8 md:leading-1.8"--}}
+{{--                                            ><i class="far fa-calendar-alt"></i> June 22,--}}
+{{--                                                2024</a--}}
+{{--                                            >--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
+{{--                            <li class="pb-30px mb-30px border-b border-border-color-1">--}}
+{{--                                <div class="flex gap-x-5">--}}
+{{--                                    <div class="flex-shrink-0">--}}
+{{--                                        <a--}}
+{{--                                            href="blog-details.html"--}}
+{{--                                            class="leading-1.8 lg:leading-11.8 text-secondary-color"--}}
+{{--                                        >--}}
+{{--                                            <i class="fab fa-twitter"></i--}}
+{{--                                            ></a>--}}
+{{--                                    </div>--}}
 
-                                    <div>
-                                        <div class="mb-2">
-                                            <p class="leading-1.3 lg:leading-1.3">
-                                                Carsafe - #Gutenberg ready @wordpress Theme for Car
-                                                Service, Auto Parts, Car Dealer available on <br >
-                                                @website
-                                            </p>
-                                            <a
-                                                href="blog-details.html"
-                                                class="leading-1.3 lg:leading-1.3 text-secondary-color"
-                                            >https://website.net</a
-                                            >
-                                        </div>
-                                        <div
-                                            class="text-xs md:text-sm font-semibold text-secondary-color"
-                                        >
-                                            <a href="#" class="leading-1.8 md:leading-1.8"
-                                            ><i class="far fa-calendar-alt"></i> June 22,
-                                                2024</a
-                                            >
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="flex gap-x-5">
-                                    <div class="flex-shrink-0">
-                                        <a
-                                            href="blog-details.html"
-                                            class="leading-1.8 lg:leading-11.8 text-secondary-color"
-                                        >
-                                            <i class="fab fa-twitter"></i
-                                            ></a>
-                                    </div>
+{{--                                    <div>--}}
+{{--                                        <div class="mb-2">--}}
+{{--                                            <p class="leading-1.3 lg:leading-1.3">--}}
+{{--                                                Carsafe - #Gutenberg ready @wordpress Theme for Car--}}
+{{--                                                Service, Auto Parts, Car Dealer available on <br >--}}
+{{--                                                @website--}}
+{{--                                            </p>--}}
+{{--                                            <a--}}
+{{--                                                href="blog-details.html"--}}
+{{--                                                class="leading-1.3 lg:leading-1.3 text-secondary-color"--}}
+{{--                                            >https://website.net</a--}}
+{{--                                            >--}}
+{{--                                        </div>--}}
+{{--                                        <div--}}
+{{--                                            class="text-xs md:text-sm font-semibold text-secondary-color"--}}
+{{--                                        >--}}
+{{--                                            <a href="#" class="leading-1.8 md:leading-1.8"--}}
+{{--                                            ><i class="far fa-calendar-alt"></i> June 22,--}}
+{{--                                                2024</a--}}
+{{--                                            >--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
+{{--                            <li>--}}
+{{--                                <div class="flex gap-x-5">--}}
+{{--                                    <div class="flex-shrink-0">--}}
+{{--                                        <a--}}
+{{--                                            href="blog-details.html"--}}
+{{--                                            class="leading-1.8 lg:leading-11.8 text-secondary-color"--}}
+{{--                                        >--}}
+{{--                                            <i class="fab fa-twitter"></i--}}
+{{--                                            ></a>--}}
+{{--                                    </div>--}}
 
-                                    <div>
-                                        <div class="mb-2">
-                                            <p class="leading-1.3 lg:leading-1.3">
-                                                Carsafe - #Gutenberg ready @wordpress Theme for Car
-                                                Service, Auto Parts, Car Dealer available on <br >
-                                                @website
-                                            </p>
-                                            <a
-                                                href="blog-details.html"
-                                                class="leading-1.3 lg:leading-1.3 text-secondary-color"
-                                            >https://website.net</a
-                                            >
-                                        </div>
-                                        <div
-                                            class="text-xs md:text-sm font-semibold text-secondary-color"
-                                        >
-                                            <a href="#" class="leading-1.8 md:leading-1.8"
-                                            ><i class="far fa-calendar-alt"></i> June 22,
-                                                2024</a
-                                            >
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+{{--                                    <div>--}}
+{{--                                        <div class="mb-2">--}}
+{{--                                            <p class="leading-1.3 lg:leading-1.3">--}}
+{{--                                                Carsafe - #Gutenberg ready @wordpress Theme for Car--}}
+{{--                                                Service, Auto Parts, Car Dealer available on <br >--}}
+{{--                                                @website--}}
+{{--                                            </p>--}}
+{{--                                            <a--}}
+{{--                                                href="blog-details.html"--}}
+{{--                                                class="leading-1.3 lg:leading-1.3 text-secondary-color"--}}
+{{--                                            >https://website.net</a--}}
+{{--                                            >--}}
+{{--                                        </div>--}}
+{{--                                        <div--}}
+{{--                                            class="text-xs md:text-sm font-semibold text-secondary-color"--}}
+{{--                                        >--}}
+{{--                                            <a href="#" class="leading-1.8 md:leading-1.8"--}}
+{{--                                            ><i class="far fa-calendar-alt"></i> June 22,--}}
+{{--                                                2024</a--}}
+{{--                                            >--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                    </div>--}}
 
                     <!-- Follow Us -->
-                    <div
-                        class="px-5 pt-35px pb-10 xl:pl-35px xl:pr-30px mb-10 border-2 border-border-color-11"
-                    >
+                    <div class="px-5 pt-35px pb-10 xl:pl-35px xl:pr-30px mb-10 border-2 border-border-color-11">
                         <h4 class="text-lg font-semibold text-heading-color mb-25px">
-                  <span
-                      class="leading-1.3 pl-10px border-l-2 border-secondary-color"
-                  >Follow Us</span
-                  >
+                            <span class="leading-1.3 pl-10px border-l-2 border-secondary-color">Follow Us</span>
                         </h4>
+
                         <ul class="flex gap-x-15px pt-4">
                             <li>
                                 <a

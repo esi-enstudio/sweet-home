@@ -7,26 +7,37 @@
             Post Comment
         </h4>
 
-        <form wire:submit.prevent="postComment" class="form-primary bg-white-5 shadow-box-shadow-2 px-25px pt-10 pb-50px md:p-50px md:pt-10">
+        @if($replyToName)
+            <p>Replying to {{ $replyToName }}
+                <button
+                    wire:click.prevent="cancelReply"
+                    type="button"
+                    class="text-secondary-color font-semibold"
+                >
+                    &times; Cancel
+                </button>
+            </p>
+        @endif
+
+        <form
+            wire:submit.prevent="postComment"
+            @focus-comment-form.window="$nextTick(() => $refs.commentTextarea.focus())"
+            class="form-primary shadow-box-shadow-2"
+        >
             <div class="grid gap-30px">
                 <!-- message -->
-                <div class="relative mb-2">
-                    @if($replyToName)
-                        <p>Replying to {{ $replyToName }} <button wire:click.prevent="$set('parentCommentId', null); $set('replyToName', null); $set('comment', '')" type="button">×</button></p>
-                    @endif
+                <div class="w-full">
+                    <div class="flex items-center">
+                        <textarea
+                            wire:model="comment"
+                            x-ref="commentTextarea"
+                            placeholder="Type your comments...."
+                            class="text-paragraph-color bg-white pl-5 pr-50px py-15px outline-none border-2 focus:border-0 border-white-5 h-65px block w-full rounded-none transition-none"></textarea>
 
-                        <div
-                            class="flex items-center">
-                            <input
-                                wire:model="comment"
-                                type="text"
-                                placeholder="Type your comments...."
-                                class="flex-grow text-paragraph-color text-sm font-semibold bg-section-bg-1 px-5 outline-none border-2 border-r-0 border-border-color-9 focus:border focus:border-secondary-color h-60px placeholder:text-heading-color block rounded-none">
-
-                            <button type="submit" class="flex-shrink-0 text-sm lg:text-base h-60px w-14 flex items-center justify-center text-white bg-secondary-color hover:bg-primary-color">
-                                <i class="fas fa-paper-plane"></i>
-                            </button>
-                        </div>
+                        <button type="submit" class="flex-shrink-0 text-sm lg:text-base h-60px w-14 flex items-center justify-center text-white bg-secondary-color hover:bg-primary-color">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
                     @error('comment') <span class="font-semibold text-secondary-color">{{ $message }}</span> @enderror
                 </div>
             </div>

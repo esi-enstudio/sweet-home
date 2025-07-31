@@ -69,12 +69,14 @@ class CommentList extends Component
     /**
      * একটি কমেন্টে রিঅ্যাকশন যোগ বা ডিলিট করে।
      */
+    #[On('reactionToggled')]
     public function toggleReaction(int $commentId): void
     {
-        if (!Auth::check()) {
-            $this->redirect(route('login'));
-            return;
-        }
+        // যদি এমন হয় যে শুধুমাত্র লগইন করা ইউজাররা কমেন্টে রিয়েকশন দিতে পারবে তাহলে এই কোডটি আনকমেন্ট করুন।
+//        if (!Auth::check()) {
+//            $this->redirect(route('filament.user.auth.login'));
+//            return;
+//        }
 
         $userId = Auth::id();
         $comment = Comment::find($commentId);
@@ -91,7 +93,7 @@ class CommentList extends Component
             // যদি না করে থাকে, তাহলে নতুন রিঅ্যাকশন যোগ করুন
             $comment->reactions()->create([
                 'user_id' => $userId,
-                'reaction_type' => 'like', // আপাতত শুধু 'like'
+                'reaction_type' => 'love', // আপাতত শুধু 'love'
             ]);
         }
 

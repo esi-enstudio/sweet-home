@@ -3,12 +3,17 @@
         {{ $this->totalComments }} Comments
     </h4>
     <ul class="mb-20px">
-        @foreach($this->comments as $comment)
-            <x-blog.comment-item :comment="$comment" :level="0" />
-        @endforeach
+        @forelse($this->comments as $comment)
+            {{-- রিকার্সিভ কম্পোনেন্ট কল করা হচ্ছে --}}
+            <x-news.comment-item :comment="$comment" :level="0" :loop="$loop" />
+        @empty
+            <li class="text-center py-4">No comments yet.</li>
+        @endforelse
     </ul>
 
     @if ($this->comments->hasMorePages())
-        <button wire:click="loadMore">Load More Comments</button>
+        <div class="text-center mt-4">
+            <button wire:click="loadMore">Load More Comments</button>
+        </div>
     @endif
 </div>

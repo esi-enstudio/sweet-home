@@ -33,14 +33,14 @@ class PostResource extends Resource
 
     protected static ?string $navigationGroup = 'News';
 
-
+    protected static ?int $navigationSort = 1;
 
     public static function form(Form $form): Form
     {
         return $form->schema([
             Group::make()->schema([
                 Section::make('Post Details')->schema([
-                    TextInput::make('title')
+                    Textarea::make('title')
                         ->required(),
 
                     TinyEditor::make('content')
@@ -109,15 +109,16 @@ class PostResource extends Resource
                 ImageColumn::make('featured_image'),
                 TextColumn::make('title')
                     ->searchable()
+                    ->wrap()
                     ->sortable()
                     ->description(fn (Post $record): string => 'By ' . $record->user->name),
                 TextColumn::make('category.name')->sortable(),
                 ToggleColumn::make('is_published'),
                 TextColumn::make('published_at')
                     ->formatStateUsing(fn($state) => Carbon::parse($state)->diffForHumans())
-                    ->description(fn($state) => Carbon::parse($state)->toFormattedDayDateString())
-                    ->dateTime()
+                    ->description(fn($state) => Carbon::parse($state)->toDayDateTimeString())
                     ->sortable(),
+
             ])
             ->defaultPaginationPageOption(5)
             ->filters([

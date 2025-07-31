@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('comment_reactions', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Comment::class)->constrained()->cascadeOnDelete();
-            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->nullable()->constrained()->nullOnDelete();
             $table->string('reaction_type'); // e.g., 'like', 'love'
             $table->timestamps();
 

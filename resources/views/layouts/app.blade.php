@@ -4,6 +4,22 @@
     <meta charset="UTF-8" >
     <meta name="viewport" content="width=device-width, initial-scale=1.0" >
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    {{-- SEO এবং OG ট্যাগ --}}
+    <meta name="description" content="{{ $metaDescription ?? 'Default description for your website.' }}">
+
+    {{-- Open Graph / Facebook --}}
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:title" content="{{ $ogTitle ?? ($title ?? config('app.name')) }}">
+    <meta property="og:description" content="{{ $ogDescription ?? ($metaDescription ?? '') }}">
+    <meta property="og:image" content="{{ $ogImage ?? asset('path/to/default-social-image.jpg') }}">
+
+    {{-- Twitter Card --}}
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="{{ url()->current() }}">
+    <meta property="twitter:title" content="{{ $ogTitle ?? ($title ?? config('app.name')) }}">
+    <meta property="twitter:description" content="{{ $ogDescription ?? ($metaDescription ?? '') }}">
+    <meta property="twitter:image" content="{{ $ogImage ?? asset('path/to/default-social-image.jpg') }}">
     <title>{{ $title ?? config('app.name', 'Laravel') }}</title>
     <link
         rel="shortcut icon"
